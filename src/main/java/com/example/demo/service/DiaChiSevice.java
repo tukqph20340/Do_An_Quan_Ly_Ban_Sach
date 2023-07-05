@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 public interface DiaChiSevice {
     Page<DiaChi> getAll(Pageable pageable);
+    ArrayList<DiaChi> getAll();
     void delete (UUID id);
     DiaChi addAndUpdate(DiaChi diaChi);
     DiaChi getOne(UUID id);
