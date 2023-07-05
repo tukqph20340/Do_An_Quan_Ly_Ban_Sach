@@ -23,21 +23,17 @@ public class Sach {
     @JoinColumn(name = "id_ncc")
     private NhaCungCap nhaCungCap;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_tac_gia")
-//    private TacGia tacGia;
+    @ManyToOne
+    @JoinColumn(name = "id_tac_gia")
+    private TacGia tacGia;
 
     @ManyToOne
     @JoinColumn(name = "id_nxb")
     private NhaXuatBan nhaXuatBan;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_the_loai")
-//    private TheLoai theLoai;
-
     @ManyToOne
-    @JoinColumn(name = "id_khuyen_mai")
-    private KhuyenMai khuyenMai;
+    @JoinColumn(name = "id_the_loai")
+    private TheLoai theLoai;
 
     @Column(name = "ma")
     private String ma;
