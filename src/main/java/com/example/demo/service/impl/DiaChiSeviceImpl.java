@@ -4,6 +4,8 @@ import com.example.demo.entity.DiaChi;
 import com.example.demo.repository.DiaChiRepository;
 import com.example.demo.service.DiaChiSevice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ public class DiaChiSeviceImpl implements DiaChiSevice {
     DiaChiRepository repository;
 
     @Override
-    public ArrayList<DiaChi> getAll() {
-        return (ArrayList<DiaChi>) repository.findAll();
+    public Page<DiaChi> getAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override

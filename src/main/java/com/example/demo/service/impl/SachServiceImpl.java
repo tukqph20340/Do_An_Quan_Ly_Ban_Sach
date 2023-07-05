@@ -5,9 +5,10 @@ import com.example.demo.repository.SachRepository;
 import com.example.demo.service.SachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -43,6 +44,10 @@ public class SachServiceImpl implements SachService {
 
     @Override
     public Page<Sach> phanTrang(Pageable pageable) {
-        return null;
+        return sachRepository.findAll(pageable);
     }
-}
+
+    public ArrayList<Sach> sapXep(Sort sort) {
+        return (ArrayList<Sach>) sachRepository.findAll(sort);
+    }
+    }
