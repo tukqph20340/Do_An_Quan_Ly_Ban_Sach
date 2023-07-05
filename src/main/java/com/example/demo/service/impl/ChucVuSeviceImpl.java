@@ -5,6 +5,8 @@ import com.example.demo.entity.ChucVu;
 import com.example.demo.repository.ChucVuRepository;
 import com.example.demo.service.ChucVuSevice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,9 +15,15 @@ import java.util.UUID;
 public class ChucVuSeviceImpl implements ChucVuSevice {
     @Autowired
     ChucVuRepository repository;
+
     @Override
     public ArrayList<ChucVu> getAll() {
         return (ArrayList<ChucVu>) repository.findAll();
+    }
+
+    @Override
+    public Page<ChucVu> getAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override

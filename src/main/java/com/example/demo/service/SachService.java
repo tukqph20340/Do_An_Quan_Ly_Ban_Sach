@@ -3,8 +3,9 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Sach;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -19,5 +20,7 @@ public interface SachService {
 
     Sach update(Sach sach);
 
-    Page<Sach> phanTrang(Pageable pageable);
+    Page<Sach> phanTrang( Pageable pageable);
+
+    ArrayList<Sach> sapXep(Sort sort);
 }

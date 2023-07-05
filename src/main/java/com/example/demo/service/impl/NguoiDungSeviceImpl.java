@@ -4,6 +4,8 @@ import com.example.demo.entity.NguoiDung;
 import com.example.demo.repository.NguoiDungRepository;
 import com.example.demo.service.NguoiDungSevice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,8 +16,8 @@ public class NguoiDungSeviceImpl implements NguoiDungSevice {
     NguoiDungRepository repository;
 
     @Override
-    public ArrayList<NguoiDung> getAll() {
-        return (ArrayList<NguoiDung>) repository.findAll();
+    public Page<NguoiDung> getAll(Pageable pageable) {
+        return  repository.findAll(pageable);
     }
 
     @Override
