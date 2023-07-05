@@ -9,4 +9,5 @@ public interface TacGiaSevice {
     void delete (UUID id);
     TacGia addAndUpdate(TacGia tacGia);
     TacGia getOne(UUID id);
+    ArrayList<TacGia> timKiem(String maTG, String hoVaTen);
 }

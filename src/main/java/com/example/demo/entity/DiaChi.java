@@ -30,7 +30,6 @@ public class DiaChi {
     @Column(name = "ma")
     private String maDC;
 
-
     @Column(name = "dia_chi")
     private String diaChi;
 

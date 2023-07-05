@@ -4,6 +4,7 @@ import com.example.demo.entity.GiayPhep;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -17,6 +18,8 @@ public interface GiayPhepService {
     GiayPhep add(GiayPhep giayPhep);
 
     GiayPhep update(GiayPhep giayPhep);
+
+    ArrayList<GiayPhep> timKiem(Date ngayBatDau, Date ngayHetHan);
 
     Page<GiayPhep> phanTrang(Pageable pageable);
 }

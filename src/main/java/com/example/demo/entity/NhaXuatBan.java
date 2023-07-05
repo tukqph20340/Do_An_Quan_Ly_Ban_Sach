@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity
-@Table(name = "nha_xuat-ban")
+@Table(name = "nha_xuat_ban")
 public class NhaXuatBan {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -36,7 +36,6 @@ public class KhachHang {
     @JoinColumn(name = "id_dia_chi")
     private DiaChi diaChi;
 
-
     @Column(name = "ma")
     private String maKH;
 
@@ -48,7 +47,6 @@ public class KhachHang {
 
     @Column(name = "ngay_sinh")
     private Date ngaySinh;
-
 
     @Column(name = "email")
     private String email;

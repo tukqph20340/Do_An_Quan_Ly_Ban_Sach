@@ -41,7 +41,6 @@ public class TacGia {
     @Column(name = "dia_chi")
     private String diaChi;
 
-
     @Column(name = "trang_thai")
     private Integer trangThai;
 }

@@ -32,4 +32,9 @@ public class TacGiaSeviceImpl implements TacGiaSevice {
     public TacGia getOne(UUID id) {
         return repository.getOne(id);
     }
+
+    @Override
+    public ArrayList<TacGia> timKiem(String maTG, String hoVaTen) {
+        return repository.findByMaTGAndHoVaTen(maTG, hoVaTen);
+    }
 }

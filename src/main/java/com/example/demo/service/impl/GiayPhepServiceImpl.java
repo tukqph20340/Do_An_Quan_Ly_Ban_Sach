@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -39,6 +40,11 @@ public class GiayPhepServiceImpl implements GiayPhepService {
     @Override
     public GiayPhep update(GiayPhep giayPhep) {
         return giayPhepRepository.save(giayPhep);
+    }
+
+    @Override
+    public ArrayList<GiayPhep> timKiem(Date ngayBatDau, Date ngayHetHan) {
+        return giayPhepRepository.findByNgayBatDauAndNgayHetHan(ngayBatDau, ngayHetHan);
     }
 
     @Override

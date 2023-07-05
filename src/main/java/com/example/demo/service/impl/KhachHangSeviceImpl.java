@@ -19,8 +19,8 @@ public class KhachHangSeviceImpl implements KhachHangSevice {
     }
 
     @Override
-    public void delete(UUID id) {
-        repository.deleteById(id);
+    public void delete(UUID idKH) {
+        repository.deleteById(idKH);
     }
 
     @Override
@@ -29,8 +29,13 @@ public class KhachHangSeviceImpl implements KhachHangSevice {
     }
 
     @Override
-    public KhachHang getOne(UUID id) {
-        return repository.getOne(id);
+    public KhachHang getOne(UUID idKH) {
+        return repository.getOne(idKH);
+    }
+
+    @Override
+    public ArrayList<KhachHang> timKiem(String ma, String hoVaTen) {
+        return repository.findByMaKHAndHoVaTen(ma, hoVaTen);
     }
 
 }
