@@ -21,6 +21,11 @@ public class DiaChiSeviceImpl implements DiaChiSevice {
     }
 
     @Override
+    public ArrayList<DiaChi> getAll() {
+        return (ArrayList<DiaChi>) repository.findAll();
+    }
+
+    @Override
     public void delete(UUID id) {
         repository.deleteById(id);
     }
