@@ -5,6 +5,7 @@ import com.example.demo.repository.NhaCungCapRepository;
 import com.example.demo.service.NhaCungCapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,11 @@ public class NhaCungCapServiceImpl implements NhaCungCapService {
     @Autowired
     NhaCungCapRepository nhaCungCapRepository;
 
+
     @Override
-    public ArrayList<NhaCungCap> getAll() {
-        return (ArrayList<NhaCungCap>) nhaCungCapRepository.findAll();
+    public Page<NhaCungCap> getAll(Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo,size);
+        return nhaCungCapRepository.findAll(pageable);
     }
 
     @Override
@@ -28,21 +31,28 @@ public class NhaCungCapServiceImpl implements NhaCungCapService {
 
     @Override
     public NhaCungCap detail(UUID id) {
-        return nhaCungCapRepository.getOne(id);
+        return nhaCungCapRepository.getReferenceById(id);
     }
 
     @Override
-    public NhaCungCap add(NhaCungCap nhaCungCap) {
-        return nhaCungCapRepository.save(nhaCungCap);
+    public void add(NhaCungCap nhaCungCap) {
+        nhaCungCapRepository.save(nhaCungCap);
     }
 
     @Override
-    public NhaCungCap update(NhaCungCap nhaCungCap) {
-        return nhaCungCapRepository.save(nhaCungCap);
+    public void update(NhaCungCap nhaCungCap,UUID id) {
+        NhaCungCap ncc = nhaCungCapRepository.getReferenceById(id);
+        ncc.setMa(nhaCungCap.getMa());
+        ncc.setTen(nhaCungCap.getTen());
+        ncc.setDiaChi(nhaCungCap.getDiaChi());
+        ncc.setSdt(nhaCungCap.getSdt());
+        ncc.setMoTa(nhaCungCap.getMoTa());
+        ncc.setTrangThai(nhaCungCap.getTrangThai());
+        nhaCungCapRepository.save(nhaCungCap);
     }
 
     @Override
-    public Page<NhaCungCap> phanTrang(Pageable pageable) {
-        return null;
+    public ArrayList<NhaCungCap> getAll() {
+        return (ArrayList<NhaCungCap>) nhaCungCapRepository.findAll();
     }
 }

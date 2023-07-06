@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 @Controller
 @RequestMapping("/admin")
 
@@ -59,6 +62,9 @@ public class AdminController {
     @Autowired
     DiaChiSevice diaChiSevice;
 
+    @Autowired
+    KhuyenMaiService khuyenMaiService;
+
 
     // Sản Phẩm
     @GetMapping("/san-pham/hien-thi")
@@ -79,7 +85,6 @@ public class AdminController {
         model.addAttribute("listTl", listTL);
         return "admin/sanpham/san-pham";
     }
-
 
 
     @GetMapping("/san-pham/viewUpdate")
@@ -782,7 +787,7 @@ public class AdminController {
         return "redirect:/admin/tac-gia/hien-thi";
     }
 
-//    @GetMapping("tac-gia/tim-kiem")
+    //    @GetMapping("tac-gia/tim-kiem")
 //    public String timKiem1(Model model,
 //                          @RequestParam("maTG") String maTG,
 //                          @RequestParam("hoVaTen") String hoVaTen
@@ -791,4 +796,141 @@ public class AdminController {
 //        model.addAttribute("list", timKiem);
 //        return "/admin/tacgia/tac-gia";
 //    }
+    @GetMapping("nha-cung-cap/hien-thi")
+    public String hienThi(Model model, @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 4);
+        Page<NhaCungCap> page = nhaCungCapService.getAll(pageable.getPageNumber(), pageable.getPageSize());
+        model.addAttribute("list", page);
+        model.addAttribute("ncc", new NhaCungCap());
+        return "/admin/nhacungcap/Nha_Cung_Cap";
+    }
+
+    @GetMapping("nha-cung-cap/delete/{id}")
+    public String delete(@PathVariable("id") String id) {
+        nhaCungCapService.delete(UUID.fromString(id));
+        return "redirect:/admin/nha-cung-cap/hien-thi";
+    }
+
+    @GetMapping("nha-cung-cap/viewUpdate/{id}")
+    public String viewupdate(@PathVariable("id") UUID id, Model model) {
+        NhaCungCap ncc = nhaCungCapService.detail(id);
+        model.addAttribute("detail", ncc);
+        return "/admin/nhacungcap/update_Nha_Cung_Cap";
+    }
+
+    @PostMapping("nha-cung-cap/add")
+    public String Add(@ModelAttribute("ncc") NhaCungCap nhaCungCap, Model model) {
+        nhaCungCapService.add(nhaCungCap);
+        return "redirect:/admin/nha-cung-cap/hien-thi";
+    }
+
+    @PostMapping("nha-cung-cap/update/{id}")
+    public String update(@ModelAttribute("ncc") NhaCungCap nhaCungCap, @PathVariable("id") UUID id) {
+        nhaCungCapService.update(nhaCungCap, id);
+        return "redirect:/admin/nha-cung-cap/hien-thi";
+    }
+
+    @GetMapping("nha-xuat-ban/hien-thi")
+    public String hienThiNXB(Model model, @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 4);
+        Page<NhaXuatBan> page = nhaXuatBanService.getAll(pageable.getPageNumber(), pageable.getPageSize());
+        model.addAttribute("list", page);
+        model.addAttribute("nxb", new NhaXuatBan());
+        return "/admin/nhaxuatban/nha_xuat_ban";
+    }
+
+    @GetMapping("nha-xuat-ban/delete/{id}")
+    public String deleteNXB(@PathVariable("id") String id) {
+        nhaXuatBanService.delete(UUID.fromString(id));
+        return "redirect:/admin/nha-xuat-ban/hien-thi";
+    }
+
+    @GetMapping("nha-xuat-ban/viewUpdate/{id}")
+    public String viewupdateNXB(@PathVariable("id") UUID id, Model model) {
+        NhaXuatBan ncc = nhaXuatBanService.detail(id);
+        model.addAttribute("detail", ncc);
+        return "/admin/nhaxuatban/update_nha_xuat_ban";
+    }
+
+    @PostMapping("nha-xuat-ban/add")
+    public String AddNXB(@ModelAttribute("nxb") NhaXuatBan nhaXuatBan, Model model) {
+        nhaXuatBanService.add(nhaXuatBan);
+        return "redirect:/admin/nha-xuat-ban/hien-thi";
+    }
+
+    @PostMapping("nha-xuat-ban/update/{id}")
+    public String updateNXB(@ModelAttribute("nxb") NhaXuatBan nhaXuatBan, @PathVariable("id") UUID id) {
+        nhaXuatBanService.update(nhaXuatBan, id);
+        return "redirect:/admin/nha-xuat-ban/hien-thi";
+    }
+
+    @GetMapping("the-loai/hien-thi")
+    public String hienThiTL(Model model, @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 4);
+        Page<TheLoai> page = theLoaiSevice.getAll(pageable.getPageNumber(), pageable.getPageSize());
+        model.addAttribute("list", page);
+        model.addAttribute("tl", new TheLoai());
+        return "/admin/theloai/the_loai";
+    }
+
+    @GetMapping("the-loai/delete/{id}")
+    public String deleteTL(@PathVariable("id") String id) {
+        theLoaiSevice.delete(UUID.fromString(id));
+        return "redirect:/admin/the-loai/hien-thi";
+    }
+
+    @GetMapping("the-loai/viewUpdate/{id}")
+    public String viewupdateTL(@PathVariable("id") UUID id, Model model) {
+        TheLoai tl = theLoaiSevice.detail(id);
+        model.addAttribute("detail", tl);
+        return "/admin/theloai/update_the_loai";
+    }
+
+    @PostMapping("the-loai/add")
+    public String AddTL (@ModelAttribute("tl") TheLoai theLoai, Model model) {
+        theLoaiSevice.add(theLoai);
+        return "redirect:/admin/the-loai/hien-thi";
+    }
+
+    @PostMapping("the-loai/update/{idTL}")
+    public String updateTL(@ModelAttribute("tl") TheLoai theLoai, @PathVariable("idTL") UUID id) {
+        theLoaiSevice.update(theLoai, id);
+        return "redirect:/admin/the-loai/hien-thi";
+    }
+
+    //khuyeens mai
+
+    @GetMapping("khuyen-mai/hien-thi")
+    public String hienThiKM(Model model, @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 4);
+        Page<KhuyenMai> page = khuyenMaiService.getAll(pageable.getPageNumber(), pageable.getPageSize());
+        model.addAttribute("list", page);
+        model.addAttribute("khuyenmai", new KhuyenMai());
+        return "/admin/khuyenmai/khuyen_mai";
+    }
+
+    @GetMapping("khuyen-mai/delete/{id}")
+    public String deleteKM(@PathVariable("id") String id) {
+        khuyenMaiService.delete(UUID.fromString(id));
+        return "redirect:/admin/khuyen-mai/hien-thi";
+    }
+
+    @GetMapping("khuyen-mai/viewUpdate/{id}")
+    public String viewupdateKM(@PathVariable("id") UUID id, Model model) {
+        KhuyenMai tl = khuyenMaiService.detail(id);
+        model.addAttribute("detail", tl);
+        return "/admin/khuyenmai/update_khuyen_mai";
+    }
+
+    @PostMapping("khuyen-mai/add")
+    public String AddKM (@ModelAttribute("khuyenmai") KhuyenMai khuyenMai, Model model) {
+        khuyenMaiService.add(khuyenMai);
+        return "redirect:/admin/khuyen-mai/hien-thi";
+    }
+
+    @PostMapping("khuyen-mai/update/{id}")
+    public String updateKM(@ModelAttribute("khuyenmai") KhuyenMai khuyenMai, @PathVariable("id") UUID id) {
+        khuyenMaiService.update(khuyenMai, id);
+        return "redirect:/admin/khuyen-mai/hien-thi";
+    }
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -26,13 +27,13 @@ public class KhuyenMai {
     private String ten;
 
     @Column(name = "ngay_tao")
-    private Date ngayTao;
+    private LocalDate ngayTao;
 
     @Column(name = "ngay_bat_dau")
-    private Date ngayBatDau;
+    private LocalDate ngayBatDau;
 
     @Column(name = "ngay_ket_thuc")
-    private Date ngayKetThuc;
+    private LocalDate ngayKetThuc;
 
     @Column(name = "mo_ta")
     private String moTa;
