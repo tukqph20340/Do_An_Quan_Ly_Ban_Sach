@@ -16,8 +16,7 @@
             rel="stylesheet">
     <title>Category</title>
 </head>
-<body>
-<div class="container-fluid">
+<body><div class="container-fluid">
     <div class="row">
         <div class="col-2 p-4 shadow"
              style="background-color: #0a3d62; height: 100vh">
@@ -31,17 +30,23 @@
             <hr>
             <div class="list-group">
                 <p class="text-secondary fw-bold">Components</p>
-                <a href="/admin/tai-khoan/hien-thi" class="list-group-item list-group-item-action border-0"
+                <a href="/admin/chuc-vu/hien-thi" class="list-group-item list-group-item-action border-0"
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                        class="fa-solid fa-gauge-high fs-6 px-1"></i></span> Tài Khoản
-                </a> <a href="/admin/nhan-vien/hien-thi"
+                        class="fa-solid fa-gauge-high fs-6 px-1"></i></span> Chức Vụ
+                </a> <a href="/admin/nguoi-dung/hien-thi"
                         class="list-group-item list-group-item-action border-0"
                         style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                    class="fa-solid fa-user fs-6 px-1"></i></span> Nhân Viên
+                    class="fa-solid fa-user fs-6 px-1"></i></span> Người Dùng
             </a> <a href="/admin/san-pham/hien-thi"
                     class="list-group-item list-group-item-action border-0 "
                     style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                    class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Sản Phẩm
+                    class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Sách
+            </a> <a href="/admin/dia-chi/hien-thi"
+                    class="list-group-item list-group-item-action border-0  "
+                    style="background-color: #0a3d62; color: #dcdde1"> <span>
+							<i class="fa-solid fa-money-check-dollar fs-6 px-1">
+                            </i>
+					</span>Địa Chỉ
             </a> <a href="/admin/khach-hang/hien-thi"
                     class="list-group-item list-group-item-action border-0 "
                     style="background-color: #0a3d62; color: #dcdde1"> <span><i
@@ -49,22 +54,19 @@
             </a> <a href="/admin/giay-phep/hien-thi"
                     class="list-group-item list-group-item-action border-0  "
                     style="background-color: #0a3d62; color: #dcdde1"> <span>
-							<i class="fa-solid fa-money-check-dollar fs-6 px-1"></i>
+							<i class="fa-solid fa-money-check-dollar fs-6 px-1">
+                            </i>
 					</span> Giấy Phép
-            </a> <a href="/admin/voucher/hien-thi"
-                    class="list-group-item list-group-item-action border-0  "
-                    style="background-color: #0a3d62; color: #dcdde1"> <span>
-							<i class="fa-solid fa-arrow-down-9-1 fs-6 px-1"></i>
-					</span> Voucher
-            </a> <a href="/admin/ban-quyen/hien-thi"
-                    class="list-group-item list-group-item-action border-0  "
-                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
+            </a><a href="/admin/ban-quyen/hien-thi"
+                   class="list-group-item list-group-item-action border-0  "
+                   style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-truck-fast fs-6 px-1"></i></span> Bản Quyền
-            </a> <a href="/admin/hoa-don-chi-tiet/hien-thi"
-                    class="list-group-item list-group-item-action border-0  "
-                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                    class="fa-solid fa-calendar-check fs-6 px-1"></i></span> Hóa Đơn Chi Tiết
             </a>
+                <a href="/admin/hoa-don-chi-tiet/hien-thi"
+                   class="list-group-item list-group-item-action border-0  "
+                   style="background-color: #0a3d62; color: #dcdde1"> <span><i
+                        class="fa-solid fa-calendar-check fs-6 px-1"></i></span> Hóa Đơn Chi Tiết
+                </a>
                 <p class="text-secondary fw-bold">Extras</p>
                 <a href="/admin/tac-gia/hien-thi" class="list-group-item list-group-item-action border-0"
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
@@ -82,6 +84,11 @@
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Thể Loại
             </a>
+                <a href="/admin/khuyen-mai/hien-thi"
+                   class="list-group-item list-group-item-action border-0 "
+                   style="background-color: #0a3d62; color: #dcdde1"> <span><i
+                        class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Khuyến mãi
+                </a>
             </div>
         </div>
         <div class="col-10 px-0">
