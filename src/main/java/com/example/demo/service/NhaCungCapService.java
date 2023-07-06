@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public interface NhaCungCapService {
-    ArrayList<NhaCungCap> getAll();
+    Page<NhaCungCap> getAll(Integer pageNo,Integer size);
 
     void delete(UUID id);
 
     NhaCungCap detail(UUID id);
 
-    NhaCungCap add(NhaCungCap nhaCungCap);
+    void add(NhaCungCap nhaCungCap);
 
-    NhaCungCap update(NhaCungCap nhaCungCap);
+    void update(NhaCungCap nhaCungCap, UUID id);
 
-    Page<NhaCungCap> phanTrang(Pageable pageable);
+    ArrayList<NhaCungCap> getAll();
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.NhaCungCap;
 import com.example.demo.entity.NhaXuatBan;
 import org.springframework.data.domain.Page;
 
@@ -8,15 +9,15 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public interface NhaXuatBanService {
-    ArrayList<NhaXuatBan> getAll();
+    Page<NhaXuatBan> getAll(Integer pageNo, Integer size);
 
     void delete(UUID id);
 
     NhaXuatBan detail(UUID id);
 
-    NhaXuatBan add(NhaXuatBan nhaXuatBan);
+    void add(NhaXuatBan nhaXuatBan);
 
-    NhaXuatBan update(NhaXuatBan nhaXuatBan);
+    void update(NhaXuatBan nhaXuatBan, UUID id);
 
-    Page<NhaXuatBan> phanTrang(Pageable pageable);
+    ArrayList<NhaXuatBan> getAll();
 }

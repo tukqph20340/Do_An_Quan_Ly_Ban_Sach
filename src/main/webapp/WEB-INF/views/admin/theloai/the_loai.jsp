@@ -141,11 +141,11 @@
                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/admin/chuc-vu/add" method="post">
+                                        <form action="/admin/the-loai/add" method="post">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <label>Mã Chức Vụ</label>
-                                                    <input type="text" class="form-control" name="ma"/>
+                                                    <label>Mã</label>
+                                                    <input type="text" class="form-control" name="maTL"/>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -158,6 +158,12 @@
                                                 <div class="col-12">
                                                     <label>Mô Tả</label>
                                                     <input type="text" class="form-control" name="moTa"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label>Trạng Thái </label>
+                                                    <input type="text" class="form-control" name="trangThai"/>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -182,26 +188,28 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Id Chức Vụ</th>
+                        <th>Id</th>
                         <th>Mã</th>
                         <th>Tên</th>
                         <th>Mô Tả</th>
+                        <th>Trạng Thái</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${ list.content}" var="l">
                         <tr>
-                            <td>${l.idCV}</td>
-                            <td>${l.maCV}</td>
-                            <td>${l.tenCV}</td>
+                            <td>${l.idTL}</td>
+                            <td>${l.maTL}</td>
+                            <td>${l.ten}</td>
                             <td>${l.moTa}</td>
+                            <td>${l.trangThai == 0 ? "Còn":"Không còn"}</td>
                             <td>
                                 <button class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#modalUpdate_${l.idCV}">
+                                        data-bs-target="#modalUpdate_${l.idTL}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button> <!-- Modal update -->
-                                <div class="modal fade" id="modalUpdate_${l.idCV}"
+                                <div class="modal fade" id="modalUpdate_${l.idTL}"
                                      data-bs-backdrop="static" data-bs-keyboard="false"
                                      tabindex="-1" aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
@@ -218,7 +226,7 @@
                                             <div class="modal-body">
                                                 <p>Warning : Bạn Có Muốn Sửa Không !</p>
                                                 <a role="button"
-                                                   href="/admin/chuc-vu/viewUpdate?id=${l.idCV}"
+                                                   href="/admin/the-loai/viewUpdate/${l.idTL}"
                                                    class="btn btn-danger w-100 "> Update </a>
                                             </div>
                                         </div>
@@ -227,10 +235,10 @@
                             </td>
                             <td class="text-center">
                                 <button class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#modalDelte_${l.idCV}">
+                                        data-bs-target="#modalDelte_${l.idTL}">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button> <!-- Modal delete -->
-                                <div class="modal fade" id="modalDelte_${l.idCV}"
+                                <div class="modal fade" id="modalDelte_${l.idTL}"
                                      data-bs-backdrop="static" data-bs-keyboard="false"
                                      tabindex="-1" aria-labelledby="staticBackdropLabel"
                                      aria-hidden="true">
@@ -250,7 +258,7 @@
                                                 <p>Warning : Bạn Có Muốn Xóa Không
                                                     !</p>
                                                 <a role="button"
-                                                   href="/admin/chuc-vu/delete?id=${l.idCV}"
+                                                   href="/admin/the-loai/delete/${l.idTL}"
                                                    class="btn btn-danger w-100 "> Delete </a>
                                             </div>
                                         </div>
@@ -270,7 +278,7 @@
                     <c:forEach var="index" begin="0" end="${ list.totalPages - 1 }">
                         <li class="page-item mx-1"><a
                                 class="page-link ${ index==page?'bg-black text-white':'' }"
-                                href="/admin/chuc-vu/hien-thi?page=${ index }">${ index + 1 }</a>
+                                href="/admin/the-loai/hien-thi?page=${ index }">${ index + 1 }</a>
                         </li>
                     </c:forEach>
                 </ul>

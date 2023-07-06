@@ -83,7 +83,7 @@
                    class="list-group-item list-group-item-action border-0 "
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Thể Loại
-            </a><a href="/admin/the-loai/hien-thi"
+            </a><a href="/admin/khuyen-mai/hien-thi"
                    class="list-group-item list-group-item-action border-0 "
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Khuyến Mãi
