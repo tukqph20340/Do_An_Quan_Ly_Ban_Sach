@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/home")
 public class HomeController {
     @Autowired
     NhaCungCapService nhaCungCapService;
@@ -27,7 +27,7 @@ public class HomeController {
 
     @GetMapping("/hien-thi")
     public String hien(Model model){
-        return "admin/trang-chu";
+        return "home/home";
 
 
     }

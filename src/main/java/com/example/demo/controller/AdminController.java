@@ -67,6 +67,12 @@ public class AdminController {
 
 
     // Sản Phẩm
+
+    @GetMapping("/hien-thi")
+    public String hienThi(Model model) {
+        return "admin/trang-chu";
+    }
+
     @GetMapping("/san-pham/hien-thi")
     public String hienThiSach(Model model
             , @RequestParam(defaultValue = "0", name = "page") Integer number) {
@@ -183,7 +189,7 @@ public class AdminController {
             sach.setGiaNhap(giaNhap);
             sach.setSoLuong(soLuong);
             sach.setMoTa(moTa);
-            sach.setTrangThai(1);
+            sach.setTrangThai(0);
             sachService.add(sach);
             return "redirect:/admin/san-pham/hien-thi";
         }
@@ -264,7 +270,7 @@ public class AdminController {
             sach.setGiaNhap(giaNhap);
             sach.setSoLuong(soLuong);
             sach.setMoTa(moTa);
-            sach.setTrangThai(1);
+            sach.setTrangThai(0);
             sachService.add(sach);
             return "redirect:/admin/san-pham/hien-thi";
         }
