@@ -29,10 +29,10 @@
             <hr>
             <div class="list-group">
                 <p class="text-secondary fw-bold">Components</p>
-                <a href="/admin/tai-khoan/hien-thi" class="list-group-item list-group-item-action border-0"
+                <a href="/admin/chuc-vu/hien-thi" class="list-group-item list-group-item-action border-0"
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
                         class="fa-solid fa-gauge-high fs-6 px-1"></i></span> Chức Vụ
-                </a> <a href="/admin/nhan-vien/hien-thi"
+                </a> <a href="/admin/nguoi-dung/hien-thi"
                         class="list-group-item list-group-item-action border-0"
                         style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-user fs-6 px-1"></i></span> Người Dùng
@@ -40,7 +40,7 @@
                     class="list-group-item list-group-item-action border-0 "
                     style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Sách
-            </a> <a href="/admin/giay-phep/hien-thi"
+            </a> <a href="/admin/dia-chi/hien-thi"
                     class="list-group-item list-group-item-action border-0  "
                     style="background-color: #0a3d62; color: #dcdde1"> <span>
 							<i class="fa-solid fa-money-check-dollar fs-6 px-1">
