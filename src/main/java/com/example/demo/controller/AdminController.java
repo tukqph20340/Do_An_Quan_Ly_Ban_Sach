@@ -65,6 +65,8 @@ public class AdminController {
     @Autowired
     KhuyenMaiService khuyenMaiService;
 
+    @Autowired
+    Hoa_Don_Chi_Tiet_Service hoa_don_chi_tiet_service;
 
     // Sản Phẩm
 
@@ -498,8 +500,9 @@ public class AdminController {
     }
 
     @GetMapping("khach-hang/hien-thi")
-    public String khachHang(Model model) {
-        ArrayList<KhachHang> listNV = khachHangSevice.getAll();
+    public String khachHang(Model model , @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 4);
+        Page<KhachHang> listNV = khachHangSevice.phanTrang(pageable);
         ArrayList<DiaChi> listDC = diaChiSevice.getAll();
         model.addAttribute("list", listNV);
         model.addAttribute("listDC", listDC);
@@ -585,8 +588,9 @@ public class AdminController {
 //    }
 
     @GetMapping("giay-phep/hien-thi")
-    public String giayPhep(Model model) {
-        ArrayList<GiayPhep> listGP = giayPhepService.getAll();
+    public String giayPhep(Model model , @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 4);
+        Page<GiayPhep> listGP = giayPhepService.phanTrang(pageable);
         model.addAttribute("list", listGP);
         return "/admin/giayphep/giay-phep";
     }
@@ -654,8 +658,9 @@ public class AdminController {
 //    }
 
     @GetMapping("ban-quyen/hien-thi")
-    public String banQuyen(Model model) {
-        ArrayList<Ban_Quyen> listBQ = ban_quyen_service.getAll();
+    public String banQuyen(Model model , @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 4);
+        Page<Ban_Quyen> listBQ = ban_quyen_service.phanTrang(pageable);
         ArrayList<GiayPhep> listGP = giayPhepService.getAll();
         ArrayList<Sach> listS = sachService.getAll();
         model.addAttribute("list", listBQ);
@@ -735,8 +740,9 @@ public class AdminController {
 //    }
 
     @GetMapping("tac-gia/hien-thi")
-    public String tacGia(Model model) {
-        ArrayList<TacGia> listTG = tacGiaSevice.getAll();
+    public String tacGia(Model model , @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 6);
+        Page<TacGia> listTG = tacGiaSevice.phanTrang(pageable);
         model.addAttribute("list", listTG);
         return "/admin/tacgia/tac-gia";
     }
@@ -938,5 +944,15 @@ public class AdminController {
     public String updateKM(@ModelAttribute("khuyenmai") KhuyenMai khuyenMai, @PathVariable("id") UUID id) {
         khuyenMaiService.update(khuyenMai, id);
         return "redirect:/admin/khuyen-mai/hien-thi";
+    }
+
+    @GetMapping("/hoa-don-chi-tiet/hien-thi")
+    public String hoaDonChiTiet(Model model
+            , @RequestParam(defaultValue = "0", name = "page") Integer number) {
+        Pageable pageable = PageRequest.of(number, 7);
+        Page<Hoa_Don_Chi_Tiet> listHoaDon = hoa_don_chi_tiet_service.getAll(pageable);
+        model.addAttribute("list", listHoaDon);
+
+        return "admin/hoadonchitiet/hoa-don-chi-tiet";
     }
 }

@@ -99,141 +99,99 @@
             <nav class="navbar navbar-expand-lg shadow-sm"
                  style="background-color: #ffffff">
                 <div class="container-fluid">
+                    <a class="navbar-brand" href="#"></a>
+                    <button class="navbar-toggler" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#navbarText"
+                            aria-controls="navbarText" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link active"
-                                                    aria-current="page" href="/home/hien-thi">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/home/truyen-tranh">Truyện Tranh</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="/home/tieng-viet">Sách Tiếng Việt</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="/home/tieng-anh">Sách Tiếng Anh</a>
-                            </li>
+                                                    aria-current="page" href="/home">Home</a></li>
                         </ul>
                         <span class="navbar-text" id="dropAccount" role="button"
                               data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-user fs-4"></i>
+									<span>
+
+									</span>
+							 <i class="fa-solid fa-user fs-4"></i>
 							</span>
                         <ul class="dropdown-menu" aria-labelledby="dropAccount"
                             style="left: auto; right: 10px">
+                            <li><a class="dropdown-item" href="/home">Home</a></li>
                             <li><a class="dropdown-item" href="/logout">Log out</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
-            <div class="px-4 p-3">
-                <div class="modal-body">
-                    <form action="/admin/san-pham/update" method="post">
-                        <div class="row">
-                            <div class="col-12">
-                                <input type="hidden" class="form-control" name="id" value="${detail.id}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Tên Nhà Cung Cấp</label>
-                                <br>
-                                <select name="tenNhaCungCap">
-                                    <c:forEach items="${listNCC}" var="l">
-                                        <option value="${l.id}" ${detail.nhaCungCap.id==l.id?"selected":""} >${l.ten}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Tên Nhà Xuất Bản</label>
-                                <br>
-                                <select name="tenNhaXuatBan">
-                                    <c:forEach items="${listNXB}" var="l">
-                                        <option value="${l.id}" ${detail.nhaXuatBan.id==l.id?"selected":""}>${l.ten}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Tên Tác Giả</label>
-                                <br>
-                                <select name="tenTacGia">
-                                    <c:forEach items="${listTG}" var="l">
-                                        <option value="${l.idTG}" ${detail.tacGia.idTG==l.idTG?"selected":""}>${l.hoVaTen}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-8">
-                                <label>Thể loại</label>
-                                <br>
-                                <select name="theLoai">
-                                    <c:forEach items="${listTl}" var="l">
-                                        <option value="${l.idTL}" ${detail.theLoai.idTL==l.idTL?"selected":""}>${l.ten}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Mã Sách</label>
-                                <input type="text" class="form-control" name="ma"value="${detail.ma}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Tên</label>
-                                <input type="text" class="form-control" name="ten"value="${detail.ten}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Link Ảnh</label>
-                                <input type="text" class="form-control" name="linkAnh" value="${detail.fileAnh}"/>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Ngày Xuất Bản</label>
-                                <input type="date" class="form-control" name="ngayXuatBan"
-                                       value="${detail.ngayXuatBan}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Giá Nhập</label>
-                                <input type="number" class="form-control" name="giaNhap" value="${detail.giaNhap}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Giá Bán</label>
-                                <input type="number" class="form-control" name="giaBan" value="${detail.giaBan}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>Số Lượng</label>
-                                <input type="number" class="form-control" name="soLuong" value="${detail.soLuong}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label>moTa</label>
-                                <input type="text" class="form-control" name="moTa" value="${detail.moTa}"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row mt-4" style="justify-content: center">
-                                    <button class="btn btn-success col-1 m-3" type="submit">
-                                        Update
-                                    </button>
+            <div class="px-4 p-3">
+                <div class="row">
+                    <div class="col-3">
+                        <button class="btn btn-info text-white" data-bs-toggle="modal"
+                                data-bs-target="#modalAdd">Tìm Kiếm
+                        </button>
+                        <!-- Modal add -->
+                        <div class="modal fade" id="modalAdd" data-bs-backdrop="static"
+                             data-bs-keyboard="false" tabindex="-1"
+                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Add a
+                                            new category</h5>
+                                        <button type="button" class="btn-close"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+            </div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Ngày Đặt Hàng</th>
+                        <th>Ngày Thanh Toán</th>
+                        <th>Tên Sách</th>
+                        <th>Số Lượng</th>
+                        <th>Tổng Giá</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${ list.content}" var="l">
+                        <tr>
+                            <td>${l.idHDCT}</td>
+                            <td>${l.hoa_don.ngayDatHang}</td>
+                            <td>${l.hoa_don.ngayThanhToan}</td>
+                            <td>${l.sach.ten}</td>
+                            <td>${l.soLuong}</td>
+                            <td>${l.tongGiaTien}</td>
+                            <td>${l.trangThai}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="row">
+                <ul class="pagination justify-content-center">
+                    <c:forEach var="index" begin="0" end="${ list.totalPages - 1 }">
+                        <li class="page-item mx-1"><a
+                                class="page-link ${ index==page?'bg-black text-white':'' }"
+                                href="/admin/hoa-don-chi-tiet/hien-thi?page=${ index }">${ index + 1 }</a>
+                        </li>
+                    </c:forEach>
+                </ul>
             </div>
         </div>
     </div>

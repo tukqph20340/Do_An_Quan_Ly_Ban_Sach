@@ -51,6 +51,6 @@ public class Ban_Quyen_Serviceimpl implements Ban_Quyen_Service {
 
     @Override
     public Page<Ban_Quyen> phanTrang(Pageable pageable) {
-        return null;
+        return ban_quyen_repository.findAll(pageable);
     }
 }
