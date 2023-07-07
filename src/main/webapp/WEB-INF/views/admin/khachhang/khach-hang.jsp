@@ -16,7 +16,8 @@
             rel="stylesheet">
     <title>Category</title>
 </head>
-<body><div class="container-fluid">
+<body>
+<div class="container-fluid">
     <div class="row">
         <div class="col-2 p-4 shadow"
              style="background-color: #0a3d62; height: 100vh">
@@ -30,30 +31,18 @@
             <hr>
             <div class="list-group">
                 <p class="text-secondary fw-bold">Components</p>
-                <a href="/admin/chuc-vu/hien-thi" class="list-group-item list-group-item-action border-0"
+                <a href="/admin/san-pham/hien-thi"
+                   class="list-group-item list-group-item-action border-0 "
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                        class="fa-solid fa-gauge-high fs-6 px-1"></i></span> Chức Vụ
-                </a> <a href="/admin/nguoi-dung/hien-thi"
-                        class="list-group-item list-group-item-action border-0"
-                        style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                    class="fa-solid fa-user fs-6 px-1"></i></span> Người Dùng
-            </a> <a href="/admin/san-pham/hien-thi"
-                    class="list-group-item list-group-item-action border-0 "
-                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                    class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Sách
-            </a> <a href="/admin/dia-chi/hien-thi"
-                    class="list-group-item list-group-item-action border-0  "
-                    style="background-color: #0a3d62; color: #dcdde1"> <span>
-							<i class="fa-solid fa-money-check-dollar fs-6 px-1">
-                            </i>
-					</span>Địa Chỉ
-            </a> <a href="/admin/khach-hang/hien-thi"
-                    class="list-group-item list-group-item-action border-0 "
-                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                    class="fa-solid fa-share-nodes fs-6 px-1"></i></span> Khách Hàng
-            </a> <a href="/admin/giay-phep/hien-thi"
-                    class="list-group-item list-group-item-action border-0  "
-                    style="background-color: #0a3d62; color: #dcdde1"> <span>
+                        class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Sách
+                </a>
+                <a href="/admin/hoa-don-chi-tiet/hien-thi"
+                   class="list-group-item list-group-item-action border-0  "
+                   style="background-color: #0a3d62; color: #dcdde1"> <span><i
+                        class="fa-solid fa-calendar-check fs-6 px-1"></i></span> Hóa Đơn Chi Tiết
+                </a><a href="/admin/giay-phep/hien-thi"
+                       class="list-group-item list-group-item-action border-0  "
+                       style="background-color: #0a3d62; color: #dcdde1"> <span>
 							<i class="fa-solid fa-money-check-dollar fs-6 px-1">
                             </i>
 					</span> Giấy Phép
@@ -62,12 +51,31 @@
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-truck-fast fs-6 px-1"></i></span> Bản Quyền
             </a>
-                <a href="/admin/hoa-don-chi-tiet/hien-thi"
-                   class="list-group-item list-group-item-action border-0  "
+                <a href="/admin/khuyen-mai/hien-thi"
+                   class="list-group-item list-group-item-action border-0 "
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                        class="fa-solid fa-calendar-check fs-6 px-1"></i></span> Hóa Đơn Chi Tiết
+                        class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Khuyến mãi
                 </a>
                 <p class="text-secondary fw-bold">Extras</p>
+                <a href="/admin/chuc-vu/hien-thi" class="list-group-item list-group-item-action border-0"
+                   style="background-color: #0a3d62; color: #dcdde1"> <span><i
+                        class="fa-solid fa-gauge-high fs-6 px-1"></i></span> Chức Vụ
+                </a> <a href="/admin/nguoi-dung/hien-thi"
+                        class="list-group-item list-group-item-action border-0"
+                        style="background-color: #0a3d62; color: #dcdde1"> <span><i
+                    class="fa-solid fa-user fs-6 px-1"></i></span> Người Dùng
+            </a>
+                <a href="/admin/dia-chi/hien-thi"
+                   class="list-group-item list-group-item-action border-0  "
+                   style="background-color: #0a3d62; color: #dcdde1"> <span>
+							<i class="fa-solid fa-money-check-dollar fs-6 px-1">
+                            </i>
+					</span>Địa Chỉ
+                </a> <a href="/admin/khach-hang/hien-thi"
+                        class="list-group-item list-group-item-action border-0 "
+                        style="background-color: #0a3d62; color: #dcdde1"> <span><i
+                    class="fa-solid fa-share-nodes fs-6 px-1"></i></span> Khách Hàng
+            </a>
                 <a href="/admin/tac-gia/hien-thi" class="list-group-item list-group-item-action border-0"
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
                         class="fa-solid fa-gauge-high fs-6 px-1"></i></span> Tác Giả
@@ -84,11 +92,7 @@
                    style="background-color: #0a3d62; color: #dcdde1"> <span><i
                     class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Thể Loại
             </a>
-                <a href="/admin/khuyen-mai/hien-thi"
-                   class="list-group-item list-group-item-action border-0 "
-                   style="background-color: #0a3d62; color: #dcdde1"> <span><i
-                        class="fa-solid fa-cart-shopping fs-6 px-1"></i></span> Khuyến mãi
-                </a>
+
             </div>
         </div>
         <div class="col-10 px-0">
@@ -99,12 +103,6 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link active"
                                                     aria-current="page" href="/home/hien-thi">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/home/truyen-tranh">Truyện Tranh</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="/home/tieng-viet">Sách Tiếng Việt</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="/home/tieng-anh">Sách Tiếng Anh</a>
-                            </li>
                         </ul>
                         <span class="navbar-text" id="dropAccount" role="button"
                               data-bs-toggle="dropdown" aria-expanded="false">
@@ -212,50 +210,50 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 offset-6">
-                        <button class="btn btn-info text-white" data-bs-toggle="modal"
-                                data-bs-target="#modaltk">Lọc
-                        </button>
-                        <!-- Modal add -->
-                        <div class="modal fade" id="modaltk" data-bs-backdrop="static"
-                             data-bs-keyboard="false" tabindex="-1"
-                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel"> </h5>
-                                        <button type="button" class="btn-close"
-                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="/admin/khach-hang/tim-kiem" method="get">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label> Mã Khách Hàng </label>
-                                                    <input type="text" class="form-control" name="maKH"/>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label>Tên Khách Hàng</label>
-                                                    <input type="text" class="form-control" name="hoVaTen"/>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="row mt-4" style="justify-content: center">
-                                                        <button class="btn btn-success col-1 m-3" type="submit">
-                                                            Tìm Kiếm
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<%--                    <div class="col-3 offset-6">--%>
+<%--                        <button class="btn btn-info text-white" data-bs-toggle="modal"--%>
+<%--                                data-bs-target="#modaltk">Lọc--%>
+<%--                        </button>--%>
+<%--                        <!-- Modal add -->--%>
+<%--                        <div class="modal fade" id="modaltk" data-bs-backdrop="static"--%>
+<%--                             data-bs-keyboard="false" tabindex="-1"--%>
+<%--                             aria-labelledby="staticBackdropLabel" aria-hidden="true">--%>
+<%--                            <div class="modal-dialog">--%>
+<%--                                <div class="modal-content">--%>
+<%--                                    <div class="modal-header">--%>
+<%--                                        <h5 class="modal-title" id="staticBackdropLabel"> </h5>--%>
+<%--                                        <button type="button" class="btn-close"--%>
+<%--                                                data-bs-dismiss="modal" aria-label="Close"></button>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="modal-body">--%>
+<%--                                        <form action="/admin/khach-hang/tim-kiem" method="get">--%>
+<%--                                            <div class="row">--%>
+<%--                                                <div class="col-12">--%>
+<%--                                                    <label> Mã Khách Hàng </label>--%>
+<%--                                                    <input type="text" class="form-control" name="maKH"/>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="row">--%>
+<%--                                                <div class="col-12">--%>
+<%--                                                    <label>Tên Khách Hàng</label>--%>
+<%--                                                    <input type="text" class="form-control" name="hoVaTen"/>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                            <div class="row">--%>
+<%--                                                <div class="col-12">--%>
+<%--                                                    <div class="row mt-4" style="justify-content: center">--%>
+<%--                                                        <button class="btn btn-success col-1 m-3" type="submit">--%>
+<%--                                                            Tìm Kiếm--%>
+<%--                                                        </button>--%>
+<%--                                                    </div>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </form>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 
                     <div class="table-responsive mt-5" style="overflow-x: auto">
                         <table class="table table-bordered">
@@ -275,7 +273,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${ list}" var="l">
+                            <c:forEach items="${ list.content}" var="l">
                                 <tr>
                                     <td>${l.idKH}</td>
                                     <td>${l.diaChi.diaChi}</td>
@@ -353,16 +351,16 @@
                     </div>
 
 
-<%--                    <div class="row">--%>
-<%--                        <ul class="pagination justify-content-center">--%>
-<%--                            <c:forEach var="index" begin="0" end="${ list.totalPages - 1 }">--%>
-<%--                                <li class="page-item mx-1"><a--%>
-<%--                                        class="page-link ${ index==page?'bg-black text-white':'' }"--%>
-<%--                                        href="/admin/khach-hang/hien-thi?page=${ index }">${ index + 1 }</a>--%>
-<%--                                </li>--%>
-<%--                            </c:forEach>--%>
-<%--                        </ul>--%>
-<%--                    </div>--%>
+                    <div class="row">
+                        <ul class="pagination justify-content-center">
+                            <c:forEach var="index" begin="0" end="${ list.totalPages - 1 }">
+                                <li class="page-item mx-1"><a
+                                        class="page-link ${ index==page?'bg-black text-white':'' }"
+                                        href="/admin/khach-hang/hien-thi?page=${ index }">${ index + 1 }</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

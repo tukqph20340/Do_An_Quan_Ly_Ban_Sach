@@ -4,6 +4,8 @@ import com.example.demo.entity.KhachHang;
 import com.example.demo.repository.KhachHangRepository;
 import com.example.demo.service.KhachHangSevice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,6 +33,11 @@ public class KhachHangSeviceImpl implements KhachHangSevice {
     @Override
     public KhachHang getOne(UUID id) {
         return repository.getOne(id);
+    }
+
+    @Override
+    public Page<KhachHang> phanTrang(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
 }

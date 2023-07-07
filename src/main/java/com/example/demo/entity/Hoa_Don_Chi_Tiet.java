@@ -5,26 +5,37 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
 @Table(name="hoa_don_chi_tiet")
-@NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Hoa_Don_Chi_Tiet {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID idHDCT;
+
+    @ManyToOne
+    @JoinColumn(name = "id_hoa_don")
+    private Hoa_Don hoa_don;
+
+    @ManyToOne
+    @JoinColumn(name = "id_sach")
+    private Sach sach;
 
     @Column(name = "so_luong")
     private Integer soLuong;

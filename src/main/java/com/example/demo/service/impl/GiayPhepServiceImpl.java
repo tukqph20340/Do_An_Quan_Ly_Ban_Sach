@@ -43,6 +43,6 @@ public class GiayPhepServiceImpl implements GiayPhepService {
 
     @Override
     public Page<GiayPhep> phanTrang(Pageable pageable) {
-        return null;
+        return giayPhepRepository.findAll(pageable);
     }
 }
