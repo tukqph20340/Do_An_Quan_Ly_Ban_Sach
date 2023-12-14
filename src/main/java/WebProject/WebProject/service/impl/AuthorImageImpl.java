@@ -2,9 +2,7 @@ package WebProject.WebProject.service.impl;
 
 import WebProject.WebProject.entity.AuthorImage;
 import WebProject.WebProject.repository.AuthorImageRepository;
-import WebProject.WebProject.repository.AuthorRepository;
 import WebProject.WebProject.service.AuthorImageService;
-import WebProject.WebProject.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

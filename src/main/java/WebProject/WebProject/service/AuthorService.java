@@ -1,7 +1,6 @@
 package WebProject.WebProject.service;
 
 import WebProject.WebProject.entity.Author;
-import WebProject.WebProject.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

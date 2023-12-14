@@ -1,18 +1,11 @@
 package WebProject.WebProject.controller;
 
-import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import WebProject.WebProject.entity.Cart;
+import WebProject.WebProject.entity.User;
 import WebProject.WebProject.entity.Wallet;
+import WebProject.WebProject.model.Mail;
 import WebProject.WebProject.repository.WalletRepository;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
+import WebProject.WebProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,18 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import WebProject.WebProject.service.CloudinaryService;
-
-import WebProject.WebProject.entity.Cart;
-import WebProject.WebProject.entity.User;
-import WebProject.WebProject.model.Mail;
-import WebProject.WebProject.service.CartService;
-import WebProject.WebProject.service.CookieService;
-import WebProject.WebProject.service.MailService;
-import WebProject.WebProject.service.UserService;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
 
 @Controller
 public class UserController {

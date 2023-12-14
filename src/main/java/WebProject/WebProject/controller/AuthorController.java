@@ -2,9 +2,6 @@ package WebProject.WebProject.controller;
 
 import WebProject.WebProject.entity.Author;
 import WebProject.WebProject.entity.AuthorImage;
-import WebProject.WebProject.entity.Category;
-import WebProject.WebProject.entity.Product;
-import WebProject.WebProject.entity.ProductImage;
 import WebProject.WebProject.entity.User;
 import WebProject.WebProject.service.AuthorImageService;
 import WebProject.WebProject.service.AuthorService;
@@ -22,10 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
 import java.util.List;
 
 @Controller

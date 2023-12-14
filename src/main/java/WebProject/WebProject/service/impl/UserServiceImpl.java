@@ -1,18 +1,15 @@
 package WebProject.WebProject.service.impl;
 
-import java.util.List;
-
-import org.hibernate.Session;
+import WebProject.WebProject.entity.User;
+import WebProject.WebProject.repository.UserRepository;
+import WebProject.WebProject.service.UserService;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
-import WebProject.WebProject.entity.User;
-import WebProject.WebProject.repository.UserRepository;
-import WebProject.WebProject.service.UserService;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{

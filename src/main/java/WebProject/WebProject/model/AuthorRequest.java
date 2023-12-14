@@ -4,9 +4,7 @@ package WebProject.WebProject.model;
 import WebProject.WebProject.entity.AuthorImage;
 import WebProject.WebProject.entity.Product;
 import lombok.Getter;
-
 import lombok.Setter;
-
 
 import javax.validation.constraints.NotNull;
 import java.util.List;

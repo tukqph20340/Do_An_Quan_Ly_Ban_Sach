@@ -1,16 +1,14 @@
 package WebProject.WebProject.service.impl;
 
-import java.util.List;
-import java.util.Optional;
-
+import WebProject.WebProject.entity.Product;
+import WebProject.WebProject.repository.ProductRepository;
+import WebProject.WebProject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import WebProject.WebProject.entity.Product;
-import WebProject.WebProject.repository.ProductRepository;
-import WebProject.WebProject.service.ProductService;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
