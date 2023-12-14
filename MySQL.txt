@@ -1,0 +1,365 @@
+create database fashionstore;
+use test;
+-- Tạo bảng
+
+
+select * from product;
+create table cart (
+id integer not null auto_increment,
+ count long not null, 
+ product_id integer,
+ user_id varchar(255),
+ primary key (id)) engine=InnoDB;
+ 
+ INSERT INTO `fashionstore`.`user` (`id`, `login_Type`, `role`, `password`, `user_Name`, `avatar`, `email`, `phone_Number`) VALUES ('user', 'default', 'user', 'MQ==', 'Nguyen Trung Anh', 'https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang-den.png', 'thanhlol2k3@gmail.com', '0799197703');
+INSERT INTO `fashionstore`.`user` (`id`, `login_Type`, `role`, `password`, `user_Name`, `avatar`, `email`, `phone_Number`) VALUES ('admin', 'default', 'admin', 'MQ==', 'Nguyen Trung Anh', 'https://haycafe.vn/wp-content/uploads/2022/02/Avatar-trang-den.png', 'nguyentrunganhnta43@gmail.com', '0799197703');
+
+create table category (
+id integer not null auto_increment,
+ category_name nvarchar(1111),
+ primary key (id)) engine=InnoDB;
+ 
+ 
+ select * from  `order`;
+create table `order` (
+id integer not null auto_increment,
+ address nvarchar(1111), booking_date datetime,
+ country nvarchar(1111), email nvarchar(1111), 
+ fullname nvarchar(1111), note nvarchar(1111),
+ payment_method nvarchar(1111),
+ phone nvarchar(1111),
+ status nvarchar(1111), 
+ total long,
+ user_id varchar(255),
+ primary key (id)) engine=InnoDB;
+ 
+ ALTER TABLE `order`
+MODIFY COLUMN delivery_failed_date datetime;
+
+
+ 
+create table order_item (
+id integer not null auto_increment,
+ count integer, 
+ order_id integer,
+ product_id integer,
+ primary key (id)) engine=InnoDB;
+ 
+ 
+ 
+SELECT
+    CASE
+        WHEN ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo') THEN 'Nạp tiền'
+        WHEN  otm.payment_Method = 'ví' THEN 'Trừ tiền'
+    END AS tinh_trang,
+    CASE
+        WHEN ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo') THEN otm.delivery_failed_date
+        WHEN  otm.payment_Method = 'ví' THEN otm.booking_date
+    END AS ngay,
+    otm.total AS tien
+FROM
+    `order` otm
+JOIN
+    active_order ao ON otm.active_order_id = ao.id
+WHERE
+    (ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo')) and user_id ='kqt2k3'
+    OR ( otm.payment_Method = 'ví')and user_id ='kqt2k3'
+    ;
+    
+    SELECT
+    CASE
+        WHEN ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo') THEN 'Nạp tiền'
+        WHEN otm.payment_Method = 'ví' THEN 'Trừ tiền'
+    END AS tinh_trang,
+    CASE
+        WHEN ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo') THEN otm.delivery_failed_date
+        WHEN otm.payment_Method = 'ví' THEN otm.booking_date
+    END AS ngay,
+    otm.total AS tien
+FROM
+    `order` otm
+JOIN
+    active_order ao ON otm.active_order_id = ao.id
+WHERE
+    (ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo')) AND otm.user_id = 'kqt2k3'
+    OR (otm.payment_Method = 'ví') AND otm.user_id = 'kqt2k3';
+    
+    
+    
+    
+    
+select* from `order` where active_order_id = '7' AND (payment_Method = 'ví' OR payment_Method = 'Payment with momo');
+select* from `order` where payment_Method = 'ví';
+select* from product_image;
+
+ select* from order_item
+ 
+ 
+ 
+ 
+ select * from `user`;
+create table product (
+id integer not null auto_increment, 
+created_at date,
+ description nvarchar(11111), 
+is_active integer,
+ is_selling integer, 
+price long, 
+product_name nvarchar(1111), 
+quantity integer, 
+sold integer, 
+category_id integer, 
+primary key (id)) engine=InnoDB;
+
+
+
+create table author (
+id integer not null auto_increment,
+name_author nvarchar(1111),
+primary key(id)
+)engine=InnoDB;
+alter table author add column address nvarchar(1111);
+alter table author add column description nvarchar(11111);
+
+
+alter table `order` add column wards nvarchar(1111);
+alter table `order` add column total_ship int;
+
+
+
+
+create table author_image(
+id integer not null auto_increment,
+url_image varchar(1111),
+author_id integer,
+primary key(id)
+)engine=InnoDB;
+
+create table producer(
+id integer not null auto_increment,
+name_producer nvarchar(1111),
+phone nvarchar(10),
+email nvarchar(1111),
+address nvarchar(1111),
+description nvarchar(11111),
+primary key(id)
+)engine=InnoDB;
+
+create table book_cover(
+id integer not null auto_increment,
+cover_tpye nvarchar(1111),
+desciption nvarchar(11111),
+primary key(id)
+)engine=InnoDB;
+
+alter table product add column producer_id integer;
+alter table product add column author_id integer;
+alter table product add column bookcover_id integer;
+
+alter table product add constraint fk_author_id_134 foreign key (author_id) references author(id);
+alter table product add constraint fk_bookcover_id_134 foreign key (bookcover_id) references book_cover(id);
+alter table product add constraint fk_producer_id_134 foreign key (producer_id) references producer(id);
+alter table product add column book_size nvarchar(1111);
+alter table product add column page_number nvarchar(1111);
+alter table product add column  year_publication int;
+alter table product add column  language nvarchar(1111);
+
+
+select*from `promotion`;
+CREATE TABLE `promotion` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `coupon_code` varchar(255) DEFAULT NULL,
+  `created_at` datetime(6) DEFAULT NULL,
+  `discount_type` int DEFAULT NULL,
+  `discount_value` bigint DEFAULT NULL,
+  `expired_at` datetime(6) DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT NULL,
+  `is_public` tinyint(1) DEFAULT NULL,
+  `maximum_discount_value` bigint DEFAULT NULL,
+  `name` varchar(300) 	 NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_acld676f1gyc04nofpb7t2ecn` (`coupon_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+alter table `order` add column promotion_id int;
+alter table `order` add constraint fk_promotion_13 foreign key (promotion_id) references promotion(id); 
+alter table author_image add constraint fk_author_id foreign key (author_id) references author(id);
+
+alter table `order` add column total_discount float;
+SELECT  * FROM `order` WHERE expired_at > now() AND coupon_code = 1;
+create table product_image (
+id integer not null auto_increment,
+ url_image nvarchar(1111),
+ product_id integer, 
+ primary key (id)) engine=InnoDB;
+ 
+create table user (
+id varchar(255) not null,
+ avatar nvarchar(1111),
+ email nvarchar(1111),
+ login_type nvarchar(1111),
+ password nvarchar(1111),
+ phone_number nvarchar(1111),
+ role nvarchar(1111), 
+ user_name nvarchar(1111),
+ primary key (id)) engine=InnoDB;
+ 
+ 
+
+ 
+
+ 
+alter table cart add constraint FK3d704slv66tw6x5hmbm6p2x3u foreign key (product_id) references product (id);
+alter table cart add constraint FKl70asp4l4w0jmbm1tqyofho4o foreign key (user_id) references user (id);
+alter table `order` add constraint FKcpl0mjoeqhxvgeeeq5piwpd3i foreign key (user_id) references user (id);
+alter table order_item add constraint FKs234mi6jususbx4b37k44cipy foreign key (order_id) references `order` (id);
+alter table order_item add constraint FK551losx9j75ss5d6bfsqvijna foreign key (product_id) references product (id);
+alter table product add constraint FK1mtsbur82frn64de7balymq9s foreign key (category_id) references category (id);
+alter table product_image add constraint FK6oo0cvcdtb6qmwsga468uuukk foreign key (product_id) references product (id);
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+SET @@sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+INSERT INTO `fashionstore`.`category` (`category_Name`) VALUES ('Áo');
+INSERT INTO `fashionstore`.`category` (`category_Name`) VALUES ('Quần');
+INSERT INTO `fashionstore`.`category` (`category_Name`) VALUES ('Giày');
+INSERT INTO `fashionstore`.`category` (`category_Name`) VALUES ('Mũ');
+INSERT INTO `fashionstore`.`category` (`category_Name`) VALUES ('Kính');
+
+
+
+
+create table active_order(
+id integer not null auto_increment,
+code_active int,
+date_update date,
+description varchar(11111),
+primary key(id)
+)engine=InnoDB;
+
+select * from active_order;
+
+alter table `order` add column active_order_id integer;
+alter table `order` add constraint fk_order_active foreign key (active_order_id) references active_order (id);
+
+create table statistic(
+id integer not null auto_increment,
+create_at date,
+star_rating int,
+description nvarchar(11111),
+order_id integer,
+user_id varchar(255),
+primary key(id)
+)engine=InnoDB;
+
+select * from `order`where active_order_id ='6';
+
+SELECT
+    DATE_FORMAT(booking_Date, '%Y-%m-%d') AS ngay,
+    COUNT(active_order_id = 1 ) AS trangThai1Count,
+    COUNT(active_order_id = 2) AS trangThai2Count,
+    COUNT(active_order_id = 3) AS trangThai3Count,
+    COUNT( active_order_id = 4 ) AS trangThai4Count,
+    COUNT(  active_order_id = 5 ) AS trangThai5Count,
+    COUNT(  active_order_id = 6 ) AS trangThai6Count,
+    COUNT(  active_order_id = 7 ) AS trangThai7Count,
+    COUNT(  active_order_id = 8) AS trangThai8Count,
+    COUNT(  active_order_id = 9) AS trangThai9Count,
+    COUNT( active_order_id = 10 ) AS trangThai10Count
+FROM
+    `Order`
+GROUP BY
+    DATE_FORMAT(booking_Date, '%Y-%m-%d');
+
+
+SELECT
+    DATE_FORMAT(booking_date, '%Y-%m-%d') AS ngay,
+    SUM(CASE WHEN active_order_id = 1 THEN 1 ELSE 0 END) AS trangThai1Count,
+    SUM(CASE WHEN active_order_id = 2 THEN 1 ELSE 0 END) AS trangThai2Count,
+    SUM(CASE WHEN active_order_id = 3 THEN 1 ELSE 0 END) AS trangThai3Count,
+    SUM(CASE WHEN active_order_id = 4 THEN 1 ELSE 0 END) AS trangThai4Count,
+    SUM(CASE WHEN active_order_id = 5 THEN 1 ELSE 0 END) AS trangThai5Count,
+    SUM(CASE WHEN active_order_id = 6 THEN 1 ELSE 0 END) AS trangThai6Count,
+    SUM(CASE WHEN active_order_id = 7 THEN 1 ELSE 0 END) AS trangThai7Count,
+    SUM(CASE WHEN active_order_id = 8 THEN 1 ELSE 0 END) AS trangThai8Count,
+    SUM(CASE WHEN active_order_id = 9 THEN 1 ELSE 0 END) AS trangThai9Count,
+    SUM(CASE WHEN active_order_id = 10 THEN 1 ELSE 0 END) AS trangThai10Count
+FROM
+    `Order`
+GROUP BY
+    DATE_FORMAT(booking_date, '%Y-%m-%d');
+
+3 1 1 1
+SELECT c.category_name, COALESCE(SUM(p.quantity), 0) AS sLTon, COALESCE(SUM(ot.count), 0) AS slBan
+FROM category AS c
+LEFT JOIN product AS p ON c.id = p.category_id
+LEFT JOIN order_item AS ot ON p.id = ot.product_id
+GROUP BY c.category_name
+LIMIT 0, 400;
+
+select * from `order` WHere active_order_id BETWEEN  5 AND 7 AND user_id = 'kqt2k3';
+
+alter table statistic add constraint fk_order_id_st foreign key (order_id) references `order` (id);
+alter table statistic add constraint fk_user_id_st foreign key(user_id) references user(id);
+
+alter table `order` add column confirm_date date;
+alter table `order` add column pickup_date date;
+alter table `order` add column delivery_date date;
+alter table `order` add column delivery_succesful_date date;
+alter table `order` add column delivery_failed_date datetime;
+
+create table order_cancellation(
+id integer not null auto_increment,
+order_id integer,
+reason varchar(11111),
+cancellation_date date,
+primary key (id)
+)engine=InnoDB;
+alter table order_cancellation add constraint fk_order_cancel foreign key (order_id) references `order` (id);
+alter table order_cancellation add column active_cancel boolean default 1;
+
+
+alter table statistic add column product_id integer;
+
+alter table statistic add constraint fk_stacajdjadj foreign key(product_id) references product(id);
+
+alter table user add column province nvarchar(1111);
+alter table user add column districts nvarchar(1111);
+alter table user add column wards nvarchar(1111);
+
+create table wallet(
+id integer not null auto_increment,
+user_id varchar(255),
+price float,
+ primary key (id)) engine=InnoDB;
+
+select * from `order`;
+select * from wallet;
+alter table wallet add constraint fk_wallet1 foreign key(user_id) references user(id);
+
+
+
+select * from `returns`;
+select * from returns_image;
+
+create table `returns`(
+id integer not null auto_increment,
+order_id integer,
+reason varchar(11111),
+returns_date date,
+status integer,
+primary key (id)
+)engine=InnoDB;
+
+alter table  `returns` add constraint fk_11111 foreign key(order_id) references `order`(id);
+create table returns_image (
+id integer not null auto_increment,
+url_image nvarchar(1111),
+returns_id integer, 
+ primary key (id)) engine=InnoDB;
+ 
+ alter table  returns_image add constraint fk_returns_id foreign key(returns_id) references `returns`(id);
+ 
+
+
+
