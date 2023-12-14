@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Male-Fashion</title>
+    <link rel="icon" href="/img/logo-3.png">
+    <link rel="stylesheet" href="css/invoice.css">
+</head>
+<link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+
+<link rel="stylesheet" href="listeo/css/style.css">
+<link rel="stylesheet" href="listeo/css/main-color.css" id="colors">
+<link rel="stylesheet" href="css/invoice.css">
+<style>
+    div.stars {
+        width: 270px;
+        display: inline-block;
+    }
+
+    input.star {
+        display: none;
+    }
+
+    label.star {
+        float: right;
+        padding: 10px;
+        font-size: 36px;
+        color: #444;
+        transition: all .2s;
+    }
+
+    .stars {
+        text-align: center;
+        display: flex;
+        justify-content: center; /* Canh giữa theo chiều ngang */
+        align-items: center; /* Canh giữa theo chiều dọc */
+    }
+
+
+    input.star:checked ~ label.star:before {
+        content: '\f005';
+        color: #FD4;
+        transition: all .25s;
+    }
+
+    input.star-5:checked ~ label.star:before {
+        color: #FE7;
+        text-shadow: 0 0 20px #952;
+    }
+
+    input.star-1:checked ~ label.star:before {
+        color: #F62;
+    }
+
+    label.star:hover {
+        transform: rotate(-15deg) scale(1.3);
+    }
+
+    label.star:before {
+        content: '\f006';
+        font-family: FontAwesome;
+    }
+
+    .wrapper a {
+        display: inline-block;
+        text-decoration: none;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 3px;
+        text-transform: uppercase;
+        color: #585858;
+    }
+
+    .modal {
+        visibility: hidden;
+        opacity: 0;
+        position: fixed; /* Đặt vị trí là fixed để modal không bị cuốn khi cuộn trang */
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(77, 77, 77, .7);
+        transition: all .4s;
+        z-index: 999; /* Đặt z-index cao để modal nằm trên các phần còn lại của trang */
+    }
+
+
+    .modal:target {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .modal__content {
+        border-radius: 4px;
+        position: relative;
+        width: 500px;
+        max-width: 90%;
+        background: #fff;
+        padding: 1em 2em;
+    }
+
+    .modal__close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #585858;
+        text-decoration: none;
+    }
+</style>
+<body>
+
+<!-- Print Button -->
+<div style="display: flex;">
+    <a th:if="${invoiceView == null}" th:href="@{/home}" class="print-button">Tiếp Tục Mua Hàng</a>
+    <a th:if="${invoiceView != null}" th:href="@{/myhistory}" class="print-button">Lịch Sử Đã Mua</a>
+    <a
+            href="javascript:window.print()" class="print-button">In cái này
+        hóa đơn</a>
+</div>
+
+
+<!-- Invoice -->
+<div id="invoice">
+
+    <!-- Header -->
+    <div class="row">
+        <div class="col-md-6">
+            <div id="logo">
+                <img src="img/logo.png" alt="">
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <p id="details">
+                <strong>Mã Hóa Đơn: </strong><i th:text="'#' + ${order.id}"></i><br>
+                <strong>Ngày: </strong><i  th:text="${order.booking_Date}"></i><br>
+            </p>
+        </div>
+    </div>
+    <!-- Client & Supplier -->
+    <div class="row">
+        <div class="col-md-6">
+            <strong class="margin-bottom-5">Khách Hàng</strong>
+            <p>
+                <i th:text="${order.fullname}"></i> <br> <i
+                    th:text="'SĐT: ' + ${order.phone}"></i> <br> <i
+                    th:text="'Email: ' + ${order.email}"></i> <br>
+            </p>
+        </div>
+    </div>
+    <!-- Invoice -->
+    <div class="row">
+        <div class="col-md-12">
+            <table class="margin-top-20">
+                <tr>
+                    <th>Sản Phẩm</th>
+                    <th>Ảnh</th>
+                    <th>Số Lượng</th>
+                    <th>Giá</th>
+                </tr>
+                <th:block th:each="y: ${listOrder_Item}">
+                    <tr>
+                        <td th:text="${y.product.product_Name}"></td>
+                        <td th:text="${y.count}"></td>
+                        <td th:text="${#numbers.formatDecimal(y.product.price * y.count, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                    </tr>
+                </th:block>
+            </table>
+            <p>
+                <strong class="margin-bottom-5">Địa Chỉ: </strong>
+                <i th:text="${order.address}"></i><br>
+                <strong class="margin-bottom-5">Hình Thức Thanh Toán: </strong>
+                <i>[[${order.payment_Method=="Payment on delivery"?"Thanh Toán Khi Nhận Hàng":"Thanh Toán Ví
+                    MoMo"}]]</i>
+            </p>
+
+            <div class="col-md-4 col-md-offset-8">
+
+                <table id="totals">
+                    <tr>
+                        <th>Phí Vận Chuyển</th>
+                        <th><span
+                                th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Tổng Giá</th>
+                        <th><span
+                                th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                        </th>
+
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <br>
+            <hr>
+            <strong class="margin-bottom-5">Lý Do: </strong>
+            <h4 style="color: black">[[${lyDo}]]</h4>
+            <br>
+            <strong style="color: black">Ảnh Khách Hàng Gửi</strong>
+            <br>
+            <br>
+            <th:block th:each="y: ${returnsImages}">
+                <div class="col-md-2">
+                    <img th:src="${y.urlImage}" height="100px" width="100px">
+                </div>
+            </th:block>
+
+        </div>
+
+
+    </div>
+    <br>
+    <br>
+    <div style="text-align: right">
+        <a th:href="@{/xac-nhan-hang/{id}(id=${order.id})}" class="button gray reject"><i
+                class="sl sl-icon-close"></i>Xác Nhận Trả Hàng</a>
+        <a class="button gray approve" href="#return"><i
+                class="sl sl-icon-close"></i>Từ Chối Trả Hàng</a>
+
+        <div id="return" class="modal">
+            <div class="modal__content modal-fragment">
+                <br>
+                <form th:action="@{/tu-choi-hang/{id}(id=${order.id})}" method="post">
+                    <input type="hidden" th:value="${order.email}" name="email">
+                    <br>
+                    <textarea name="description"
+                              placeholder="Viết Phản Hồi"></textarea>
+                    <input type="submit" value="Đánh giá" class="button gray">
+                    <a href="#" class="modal__close">&times;</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+</html>

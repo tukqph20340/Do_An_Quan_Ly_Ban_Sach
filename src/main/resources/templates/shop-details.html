@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion</title>
+    <link rel="icon" href="/img/logo-3.png">
+    <!-- Google Font -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+            rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<style>
+    div.stars {
+        width: 270px;
+        display: inline-block;
+    }
+
+    input.star {
+        display: none;
+    }
+
+    label.star {
+        float: right;
+        padding: 10px;
+        font-size: 36px;
+        color: #444;
+        transition: all .2s;
+    }
+
+    .stars {
+        text-align: center;
+        display: flex;
+        justify-content: center; /* Canh giữa theo chiều ngang */
+        align-items: center; /* Canh giữa theo chiều dọc */
+    }
+
+
+    input.star:checked ~ label.star:before {
+        content: '\f005';
+        color: #FD4;
+        transition: all .25s;
+    }
+
+    input.star-5:checked ~ label.star:before {
+        color: #FE7;
+        text-shadow: 0 0 20px #952;
+    }
+
+    input.star-1:checked ~ label.star:before {
+        color: #F62;
+    }
+
+    label.star:hover {
+        transform: rotate(-15deg) scale(1.3);
+    }
+
+    label.star:before {
+        content: '\f006';
+        font-family: FontAwesome;
+    }
+</style>
+<body>
+<script th:if="${session.AddToCartErr != null}">
+    swal("Lỗi", "Vui lòng đăng nhập trước khi thực hiện thao tác!", "error");
+</script>
+<p th:if="${session.AddToCartErr != null}"
+   th:text="${#session.setAttribute('AddToCartErr', null)}"
+   style="display: none;"></p>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+        <div class="offcanvas__links">
+            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                th:if="${session.acc != null}" th:text="${session.acc.user_Name}"
+                style="color: white;"></a> <a th:if="${session.acc != null}"
+                                              th:href="@{/signout}">Đăng Xuất</a><a href="#">Câu hỏi thường gặp</a>
+        </div>
+        <div class="offcanvas__top__hover">
+            <span>USD <i class="arrow_carrot-down"></i></span>
+            <ul>
+                <li>USD</li>
+                <li>EUR</li>
+                <li>USD</li>
+            </ul>
+        </div>
+    </div>
+    <div class="offcanvas__nav__option">
+        <a href="#" class="search-switch"><img src="img/icon/search.png"
+                                               alt=""></a> <a href="#"><img src="img/icon/heart.png" alt=""></a>
+        <a th:href="@{/cart}"><img src="img/icon/cart.png" alt="">
+            <span th:text="${session.countCart}"></span></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__text">
+
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right">
+                        <div class="header__top__links">
+                            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                                th:if="${session.acc != null}"
+                                th:text="${session.acc.user_Name}" style="color: white;"></a> <a
+                                th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{/home}"><img src="/images/logo3.png" alt="" style="
+    margin-top: -30px;"></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li ><a th:href="@{/home}">Trang Chủ</a></li>
+                        <li class="active"><a th:href="@{/shop}">Cửa Hàng</a></li>
+                        <li><a href="#">Thông Tin</a>
+                            <ul class="dropdown">
+                                <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+                                <li><a th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
+                                <li><a th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
+                                <li><a th:href="@{/about}">Về Chúng Tôi</a></li>
+                            </ul>
+                        </li>
+                        <li><a th:href="@{/blog}">Tin Tức</a></li>
+                        <li><a th:href="@{/contact}">Liên Lạc</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img
+                            src="img/icon/search.png" alt=""></a>
+                    <a href="/thong-tin" class=""><img
+                            src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
+                    </a> <a th:href="@{/cart}"><img
+                        src="img/icon/cart.png" alt=""> <span
+                        th:text="${session.countCart}"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Shop Details Section Begin -->
+<section class="shop-details">
+    <div class="product__details__pic">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__details__breadcrumb">
+                        <a th:href="@{/home}">Home</a> <a th:href="@{/shop}">Shop</a> <span>Product
+								Details</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <th:block th:if="${yStat.index == 0}"
+                                  th:each="y : ${product.productImage}">
+                            <li class="nav-item"><a class="nav-link active"
+                                                    data-toggle="tab" th:href="'#tabs-'+${yStat.index + 1}"
+                                                    role="tab">
+                                <div class="product__thumb__pic set-bg"
+                                     th:data-setbg="${y.url_Image}"></div>
+                            </a></li>
+                        </th:block>
+                        <th:block th:if="${yStat.index != 0}"
+                                  th:each="y : ${product.productImage}">
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab"
+                                                    th:href="'#tabs-'+${yStat.index + 1}" role="tab">
+                                <div class="product__thumb__pic set-bg"
+                                     th:data-setbg="${y.url_Image}"></div>
+                            </a></li>
+                        </th:block>
+                    </ul>
+                </div>
+                <div class="col-lg-6 col-md-9">
+                    <div class="tab-content">
+                        <th:block th:each="y : ${product.productImage}">
+                            <div th:if="${yStat.index == 0}" class="tab-pane active"
+                                 th:id="'tabs-'+${yStat.index + 1}" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img th:src="${y.url_Image}" alt="">
+                                </div>
+                            </div>
+                            <div th:if="${yStat.index != 0}" class="tab-pane"
+                                 th:id="'tabs-'+${yStat.index + 1}" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img th:src="${y.url_Image}" alt="">
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product__details__content">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <div class="product__details__text">
+                        <h4 th:text="${product.product_Name}"></h4>
+                        <div class="rating">
+                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+                                class="fa fa-star-o"></i> <span> - 5 Reviews</span>
+                        </div>
+                        <h3 th:text="${product.price}+' VNĐ'" style="color: red"></h3>
+                        <!--							<p th:text="${product.description}"></p>-->
+                        <form action="/addToCart" method="post">
+                            <div class="product__details__cart__option">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input name="count" type="text" value="1">
+                                    </div>
+                                    <input name="product_id" style="display: none;" type="text"
+                                           th:value="${product.id}">
+                                </div>
+                                <button class="primary-btn">Thêm Vào Giỏ Hàng</button>
+                            </div>
+                        </form>
+
+                        <!--							<div class="product__details__btns__option">-->
+                        <!--								<a href="#"><i class="fa fa-heart"></i> add to wishlist</a> <a-->
+                        <!--									href="#"><i class="fa fa-exchange"></i> Add To Compare</a>-->
+                        <!--							</div>-->
+                        <!--							<div class="product__details__last__option">-->
+                        <!--								<h5>-->
+                        <!--									<span>Guaranteed Safe Checkout</span>-->
+                        <!--								</h5>-->
+                        <!--								<img src="/img/shop-details/details-payment.png" alt="">-->
+                        <!--								<ul>-->
+                        <!--									<li><span>SKU:</span> 3812912</li>-->
+                        <!--									<li><span>Categories:</span> Clothes</li>-->
+                        <!--									<li><span>Tag:</span> Clothes, Skin, Body</li>-->
+                        <!--								</ul>-->
+                        <!--							</div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item"><a class="nav-link active"
+                                                    data-toggle="tab" href="#tabs-5" role="tab">Mô Tả</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab"
+                                                    href="#tabs-6" role="tab">Thông Tin</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab"
+                                                    href="#tabs-7" role="tab">Nhận xét</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-5" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <!--										<p th:utext="${#strings.replace(product.description, '\n', '<br>')}" ></p>-->
+                                    <div class="product__details__tab__content">
+                                        <p id="description"></p>
+                                    </div>
+
+                                    <script th:inline="javascript">
+                                        var description = '[[${product.description}]]';
+                                        var formattedDescription = description.replace(/\n/g, '<br>');
+                                        document.getElementById('description').innerHTML = formattedDescription;
+                                    </script>
+                                </div>
+
+                            </div>
+                            <div class="tab-pane" id="tabs-6" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <div class="product__details__tab__content__item">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th>Tác Giả</th>
+                                                <td th:text="${product.author.nameAuthor}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Loại Bìa:</th>
+                                                <td th:text="${product.bookCover.coverType}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Kích Thước:</th>
+                                                <td th:text="${product.bookSize}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Nhà Xuất Bản:</th>
+                                                <td th:text="${product.producer.nameProducer}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ngôn Ngữ:</th>
+                                                <td th:text="${product.language}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Thể Loại:</th>
+                                                <td th:text="${product.category.category_Name}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Năm Xuất Bản:</th>
+                                                <td th:text="${product.yearPublication}"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Số Trang:</th>
+                                                <td th:text="${product.pageNumber}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-7" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <ul>
+                                        <th:block th:each="statistic, stat : ${statistics}" th:with="index=${stat.index}">
+                                            <li>
+                                                <i class="list-box-icon sl sl-icon-doc"></i>
+                                                <img th:src="${statistic.user.avatar}" width="65" height="65" alt="avatar"/>
+                                                <strong th:text="${statistic.user.id}"></strong>
+                                                <!-- Star Rating -->
+                                                <div class="star-rating-container">
+                                                    <input class="star star-5" th:id="'star-5-' + ${index}" type="radio"
+                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 5}" value="5" disabled/>
+                                                    <label th:for="'star-5-' + ${index}" class="star star-5"></label>
+
+                                                    <input class="star star-4" th:id="'star-4-' + ${index}" type="radio"
+                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 4}" value="4" disabled/>
+                                                    <label th:for="'star-4-' + ${index}" class="star star-4"></label>
+
+                                                    <input class="star star-3" th:id="'star-3-' + ${index}" type="radio"
+                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 3}" value="3" disabled/>
+                                                    <label th:for="'star-3-' + ${index}" class="star star-3"></label>
+
+                                                    <input class="star star-2" th:id="'star-2-' + ${index}" type="radio"
+                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 2}" value="2" disabled/>
+                                                    <label th:for="'star-2-' + ${index}" class="star star-2"></label>
+
+                                                    <input class="star star-1" th:id="'star-1-' + ${index}" type="radio"
+                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 1}" value="1" disabled/>
+                                                    <label th:for="'star-1-' + ${index}" class="star star-1"></label>
+                                                </div>
+
+                                            <li th:text="${statistic.description}"></li>
+                                            <!-- Date -->
+                                            <li th:text="'Date: ' + ${#dates.format(statistic.createAt, 'dd-MM-yyyy')}"></li>
+                                            <hr>
+                                            <!-- Description -->
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Details Section End -->
+
+<!-- Related Section Begin -->
+<section class="related spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="related-title">Sản phẩm liên quan</h3>
+            </div>
+        </div>
+        <div class="row">
+            <th:block th:each="y : ${relatedProduct}">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg"
+                             th:data-setbg="${y.productImage[0].url_Image}">
+                            <span class="label">New</span>
+                            <ul class="product__hover">
+                                <li><a th:href="@{/productDetail/{id}(id=${y.id})}"><img
+                                        src="/img/icon/search.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6 th:text="${y.product_Name}"></h6>
+                            <a th:href="@{/addToCart/{id}(id=${y.id})}" class="add-cart">+
+                                Add To Cart</a>
+                            <div class="rating">
+                                <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+                                    class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i
+                                    class="fa fa-star-o"></i>
+                            </div>
+                            <h5
+                                    th:text=" ${#numbers.formatDecimal(y.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h5>
+                            <div class="product__color__select">
+                                <label for="pc-1"> <input type="radio" id="pc-1">
+                                </label> <label class="active black" for="pc-2"> <input
+                                    type="radio" id="pc-2">
+                            </label> <label class="grey" for="pc-3"> <input type="radio"
+                                                                            id="pc-3">
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</section>
+<!-- Related Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                    </div>
+                    <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua Sắm</h6>
+                    <ul>
+                        <li><a href="#">Cửa hàng Sách</a></li>
+                        <li><a href="#">Sách Xu Hướng</a></li>
+                        <li><a href="#">Doanh thu</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua Sắm</h6>
+                    <ul>
+                        <li><a href="#">Liên hệ chúng tôi</a></li>
+                        <li><a href="#">Phương thức thanh toán</a></li>
+                        <li><a href="#">Vận chuyển</a></li>
+                        <li><a href="#">Trả lại & Trao đổi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Tin tứcThư</h6>
+                    <div class="footer__newslatter">
+                        <p>Hãy là người đầu tiên biết về hàng mới về, lookbook, sale
+                            & khuyến mãi!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit">
+                                <span class="icon_mail_alt"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>
+                        Copyright ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        2020 All rights reserved | This template is made with <i
+                            class="fa fa-heart-o" aria-hidden="true"></i> by <a
+                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form th:action="@{/search}" method="POST" class="search-model-form">
+            <input name="search-input" type="text" id="search-input"
+                   placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+
+</html>

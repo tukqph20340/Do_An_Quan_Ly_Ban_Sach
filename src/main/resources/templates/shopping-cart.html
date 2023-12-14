@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion</title>
+    <link rel="icon" href="/img/logo-3.png">
+    <!-- Google Font -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+            rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+<script th:if="${session.CartIsEmpty != null}">
+    swal("Bạn chưa chọn sản phẩm để thanh toán hoặc giỏ hàng trống !", "", "error");
+</script>
+
+<script th:if="${session.loiSL != null}">
+    swal("Lỗi", "Số Lượng Không Đủ!", "error");
+</script>
+<p th:if="${session.CartIsEmpty != null}"
+   th:text="${#session.setAttribute('CartIsEmpty', null)}"
+   style="display: none;"></p>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+        <div class="offcanvas__links">
+            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                th:if="${session.acc != null}" th:text="${session.acc.user_Name}"
+                style="color: white;"></a> <a th:if="${session.acc != null}"
+                                              th:href="@{/signout}">Đăng Xuất</a><a href="#">Câu hỏi thường gặp</a>
+        </div>
+        <div class="offcanvas__top__hover">
+            <span>USD <i class="arrow_carrot-down"></i></span>
+            <ul>
+                <li>USD</li>
+                <li>EUR</li>
+                <li>USD</li>
+            </ul>
+        </div>
+    </div>
+    <div class="offcanvas__nav__option">
+        <a href="#" class="search-switch"><img src="img/icon/search.png"
+                                               alt=""></a> <a href="#"><img src="img/icon/heart.png" alt=""></a>
+        <a th:href="@{/cart}"><img src="img/icon/cart.png" alt="">
+            <span th:text="${session.countCart}"></span></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__text">
+
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right">
+                        <div class="header__top__links">
+                            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                                th:if="${session.acc != null}"
+                                th:text="${session.acc.user_Name}" style="color: white;"></a> <a
+                                th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
+                        </div>
+                        <!--                        <div class="header__top__hover">-->
+                        <!--                            <div class="offcanvas__top__hover">-->
+                        <!--                                <span  th:if="${session.acc != null}"><a href="/thong-tin" style="list-style: none;color: white">Số Dư: [[${vi.price}+0]] VNĐ</a></span>-->
+
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{/home}"><img src="/images/logo3.png" alt="" style="
+    margin-top: -30px;"></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li ><a th:href="@{/home}">Trang Chủ</a></li>
+                        <li><a th:href="@{/shop}">Cửa Hàng</a></li>
+                        <li class="active"><a href="#">Thông Tin</a>
+                            <ul class="dropdown">
+                                <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+                                <li><a th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
+                                <li><a th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
+                                <li><a th:href="@{/about}">Về Chúng Tôi</a></li>
+                            </ul>
+                        </li>
+                        <li><a th:href="@{/blog}">Tin Tức</a></li>
+                        <li><a th:href="@{/contact}">Liên Lạc</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img
+                            src="img/icon/search.png" alt=""></a>
+                    <a href="/thong-tin" class=""><img
+                            src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
+                    </a> <a th:href="@{/cart}"><img
+                        src="img/icon/cart.png" alt=""> <span
+                        th:text="${session.countCart}"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Shopping Cart</h4>
+                    <div class="breadcrumb__links">
+                        <a th:href="@{/home}">Trang Chủ</a> <a th:href="@{/shop}">Cửa Hàng</a> <span>Giỏ Hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Shopping Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllCheckbox"
+                                           onchange="updateCartItemSelectionAll(this)"></th>
+                                <th>Sản Phẩm</th>
+                                <th>Số Lượng</th>
+                                <th>Giá</th>
+                                <th>Xóa</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="y : ${listCart}">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="cartCheckbox" th:checked="${y.isSelected}"
+                                               th:attr="data-cart-id=${y.id}"
+                                               onchange="updateCartItemSelection(this)">
+                                        <!--                                        <input type="hidden" id="totalCheckboxes" th:value="${listCart.size()}">-->
+                                    </td>
+
+                                    <script>
+                                        function updateCartItemSelectionAll(checkbox) {
+                                            var cartCheckboxes = document.getElementsByClassName("cartCheckbox");
+                                            for (var i = 0; i < cartCheckboxes.length; i++) {
+                                                cartCheckboxes[i].checked = checkbox.checked;
+                                            }
+                                        }
+
+                                        function updateCartItemSelection(checkbox) {
+                                            var selectAllCheckbox = document.getElementById("selectAllCheckbox");
+                                            var cartCheckboxes = document.getElementsByClassName("cartCheckbox");
+                                            var allChecked = true;
+                                            var cartId = checkbox.getAttribute("data-cart-id");
+                                            var isSelected = checkbox.checked;
+
+                                            // Perform AJAX request
+                                            $.ajax({
+                                                type: "PUT",
+                                                url: "/updateCartItem",
+                                                data: {
+                                                    cartItemId: cartId,
+                                                    isSelected: isSelected
+                                                },
+                                                success: function (response) {
+                                                    for (var i = 0; i < cartCheckboxes.length; i++) {
+                                                        if (!cartCheckboxes[i].checked) {
+                                                            allChecked = false;
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    selectAllCheckbox.checked = allChecked;
+                                                    console.log("Updated selection status successfully");
+                                                },
+                                                error: function (error) {
+                                                    console.error("Error updating selection status");
+                                                }
+                                            });
+
+                                        }
+
+
+                                        function updateSelectAllCheckbox() {
+                                            var selectAllCheckbox = document.getElementById("selectAllCheckbox");
+                                            var cartCheckboxes = document.getElementsByClassName("cartCheckbox");
+                                            var allChecked = true;
+
+                                            for (var i = 0; i < cartCheckboxes.length; i++) {
+                                                if (!cartCheckboxes[i].checked) {
+                                                    allChecked = false;
+                                                    break;
+                                                }
+                                            }
+
+                                            selectAllCheckbox.checked = allChecked;
+                                        }
+                                    </script>
+
+                                    <td class="product__cart__item">
+                                        <div style="max-width: 90px; max-height: 90px;"
+                                             class="product__cart__item__pic">
+                                            <img th:src="${y.product.productImage[0].url_Image}" alt="">
+                                        </div>
+
+                                        <div class="product__cart__item__text">
+                                            <h5 th:text="${y.product.product_Name}"></h5>
+                                            <h5 th:text="${#numbers.formatDecimal(y.product.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h5>
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity" onclick="decrementQuantity(this);"
+                                             th:onclick="updateQuantitya(this,[[${y.product.price}]]);"
+                                             th:attr="data-cart-id=${y.id}">
+                                            <div class="pro-qty-2">
+                                                <input id="quantityy" th:name="'count' + (${yStat.index} ?: 1)"
+                                                       type="number"
+                                                       th:value="${y.count}" th:attr="data-cart-id=${y.id}"
+                                                       th:onchange="updateQuantity(this,[[${y.product.price}]]);">
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                    <script th:inline="javascript">
+                                        /*<![CDATA[*/
+                                        function updateQuantity(input, y) {
+                                            var cartCheckboxes = document.getElementsByClassName("cartCheckbox");
+                                            var cartTotalElement = document.getElementById("cartTotal");
+                                            var cartId = input.getAttribute("data-cart-id");
+                                            console.log(cartId);
+                                            console.log(y);
+                                            var newQuantity = input.value;
+                                            var quantityValue = parseInt(input.value);
+
+                                            // Kiểm tra nếu giá trị nhỏ hơn 1 hoặc không phải là một số
+                                            if (quantityValue < 1 || isNaN(quantityValue)) {
+                                                // Đặt giá trị về 1
+                                                input.value = 1;
+                                                newQuantity = 1; // Update newQuantity to 1
+                                            }
+                                            console.log(input);
+                                            // Perform AJAX request
+                                            $.ajax({
+                                                type: "PUT",
+                                                url: "/updateCartItemQuantity",
+                                                data: {
+                                                    cartItemId: cartId,
+                                                    quantity: newQuantity,
+                                                },
+                                                success: function (response) {
+                                                    console.log("Check Input");
+                                                    var totalPrice = newQuantity * y;
+                                                    var formattedPrice = new Intl.NumberFormat('vi-VN', {
+                                                        style: 'currency',
+                                                        currency: 'VND'
+                                                    }).format(totalPrice);
+                                                    document.getElementById(cartId).innerText = formattedPrice;
+
+                                                    var total = 0;
+
+                                                    for (var i = 0; i < cartCheckboxes.length; i++) {
+                                                        if (cartCheckboxes[i].checked) {
+                                                            var rowTotalText = cartCheckboxes[i].closest("tr").querySelector(".cart__price").textContent;
+                                                            var rowTotal = parseFloat(rowTotalText.replace(/\D/g, ''));
+
+                                                            total += rowTotal;
+                                                        }
+                                                    }
+
+                                                    cartTotalElement.textContent = total.toLocaleString() + ' VNĐ';
+                                                },
+                                                error: function (error) {
+                                                    console.error("Error updating quantity");
+                                                }
+                                            });
+                                        }
+
+                                        /*]]>*/
+
+
+                                    </script>
+
+                                    <td class="cart__price" th:id="${y.id}" th:data-unit-price="${y.product.price}"
+                                        th:text="${#numbers.formatInteger(y.product.price * y.count, 3, 'POINT')} + ' VNĐ'">
+                                    </td>
+
+
+                                    <script>
+                                        function updateQuantitya(div, y) {
+                                            // Find the input element within the div
+                                            // var cartTotal = document.getElementById("cartTotal");
+                                            var cartCheckboxes = document.getElementsByClassName("cartCheckbox");
+                                            var cartTotalElement = document.getElementById("cartTotal");
+                                            var input = div.querySelector('input');
+                                            var cartId = input.getAttribute("data-cart-id");
+                                            var newQuantity = input.value;
+                                            var quantityValue = parseInt(input.value);
+
+
+                                            // Kiểm tra nếu giá trị nhỏ hơn 1 hoặc không phải là một số
+                                            if (quantityValue < 1 || isNaN(quantityValue)) {
+                                                // Đặt giá trị về 1
+                                                input.value = 1;
+                                                newQuantity = 1;
+                                            }
+// Perform AJAX request
+                                            $.ajax({
+                                                type: "PUT",
+                                                url: "/updateCartItemQuantity",
+                                                data: {
+                                                    cartItemId: cartId,
+                                                    quantity: newQuantity,
+// cartTotal: cartTotal
+                                                },
+                                                success: function (response) {
+                                                    console.log("Check Class");
+                                                    // You can update the UI here if needed
+                                                    var totalPrice = newQuantity * y;
+                                                    var formattedPrice = new Intl.NumberFormat('vi-VN', {
+                                                        style: 'currency',
+                                                        currency: 'VND'
+                                                    }).format(totalPrice);
+
+                                                    document.getElementById(cartId).innerText = formattedPrice;
+                                                    var total = 0;
+
+                                                    for (var i = 0; i < cartCheckboxes.length; i++) {
+                                                        if (cartCheckboxes[i].checked) {
+                                                            var rowTotalText = cartCheckboxes[i].closest("tr").querySelector(".cart__price").textContent;
+                                                            var rowTotal = parseFloat(rowTotalText.replace(/\D/g, ''));
+
+                                                            total += rowTotal;
+                                                        }
+                                                    }
+
+                                                    cartTotalElement.textContent = total.toLocaleString() + ' VNĐ';
+                                                },
+                                                error: function (error) {
+                                                    console.error("Error updating quantity");
+                                                }
+                                            });
+                                        }
+                                    </script>
+
+                                    <script>
+                                        function decrementQuantity(div) {
+                                            // Lấy ô input trong div
+                                            var input = div.querySelector('input');
+
+                                            // Chuyển đổi giá trị thành số nguyên
+                                            var quantityValue = parseInt(input.value);
+                                            if (quantityValue < 1 || isNaN(quantityValue)) {
+                                                // Đặt giá trị về 1
+                                                input.value = 1;
+                                            }
+                                        }
+                                    </script>
+
+                                    <td class="cart__close"><a
+                                            th:href="@{/deleteCart/{id}(id=${y.id})}"><i
+                                            class="fa fa-close"></i></a></td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var selectAllCheckbox = document.getElementById("selectAllCheckbox");
+                            var cartCheckboxes = document.getElementsByClassName("cartCheckbox");
+
+                            selectAllCheckbox.addEventListener("click", function () {
+                                for (var i = 0; i < cartCheckboxes.length; i++) {
+                                    cartCheckboxes[i].checked = selectAllCheckbox.checked;
+                                }
+                            });
+                        });
+                    </script>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var cartCheckboxes = document.getElementsByClassName("cartCheckbox");
+                            var selectAllCheckbox = document.getElementById("selectAllCheckbox");
+                            var cartTotalElement = document.getElementById("cartTotal");
+
+                            // function updateCartItemTotal(cartId, newQuantity, unitPrice) {
+                            //     var totalPrice = newQuantity * unitPrice;
+                            //     var formattedPrice = new Intl.NumberFormat('vi-VN', {
+                            //         style: 'currency',
+//         currency: 'VND'
+                            //     }).format(totalPrice);
+                            //
+                            //     document.getElementById(cartId).innerText = formattedPrice;
+                            //     updateCartTotal();
+                            // }
+                            function updateQuantity(input, y) {
+                                var cartId = input.getAttribute("data-cart-id");
+                                console.log(cartId);
+                                console.log(y);
+                                var newQuantity = input.value;
+                                var quantityValue = parseInt(input.value);
+
+                                // Kiểm tra nếu giá trị nhỏ hơn 1 hoặc không phải là một số
+                                if (quantityValue < 1 || isNaN(quantityValue)) {
+                                    // Đặt giá trị về 1
+                                    input.value = 1;
+                                    newQuantity = 1; // Update newQuantity to 1
+                                }
+                                console.log(input);
+                                // Perform AJAX request
+                                $.ajax({
+                                    type: "PUT",
+                                    url: "/updateCartItemQuantity",
+                                    data: {
+                                        cartItemId: cartId,
+                                        quantity: newQuantity,
+                                    },
+                                    success: function (response) {
+                                        console.log("Quantity updated successfully");
+                                        // Assuming y.product.price and y.count are your numeric values
+                                        var totalPrice = newQuantity * y;
+                                        var formattedPrice = new Intl.NumberFormat('vi-VN', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        }).format(totalPrice);
+
+                                        document.getElementById(cartId).innerText = formattedPrice;
+                                        updateCartTotal();
+                                    },
+                                    error: function (error) {
+                                        console.error("Error updating quantity");
+                                    }
+                                });
+                            }
+
+                            function updateCartTotal() {
+                                var total = 0;
+
+                                for (var i = 0; i < cartCheckboxes.length; i++) {
+                                    if (cartCheckboxes[i].checked) {
+                                        var rowTotalText = cartCheckboxes[i].closest("tr").querySelector(".cart__price").textContent;
+                                        var rowTotal = parseFloat(rowTotalText.replace(/\D/g, ''));
+
+                                        total += rowTotal;
+                                    }
+
+                                }
+
+                                cartTotalElement.textContent = total.toLocaleString() + ' VNĐ';
+                            }
+
+                            selectAllCheckbox.addEventListener("click", function () {
+                                for (var i = 0; i < cartCheckboxes.length; i++) {
+                                    cartCheckboxes[i].checked = selectAllCheckbox.checked;
+                                }
+
+                                updateCartTotal();
+                            });
+// Sự kiện click cho mỗi checkbox
+                            for (var i = 0; i < cartCheckboxes.length; i++) {
+                                cartCheckboxes[i].addEventListener("click", function () {
+                                    updateCartTotal();
+                                });
+                            }
+
+                            // Sự kiện change cho mỗi input số lượng
+                            var quantityInputs = document.querySelectorAll(".pro-qty-2 input");
+                            for (var i = 0; i < quantityInputs.length; i++) {
+                                quantityInputs[i].addEventListener("change", function () {
+                                    updateCartTotal();
+                                });
+                            }
+                        });
+                    </script>
+
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn">
+                                <a th:href="@{/shop}">Tiếp Tục Mua Hàng</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart__total">
+                        <h6>Thông Tin</h6>
+                        <ul>
+                            <li>Khách Hàng <span th:text="${session.acc.user_Name}"></span></li>
+                            <li>Tổng Giá
+                                <!-- Trong div có class="cart__total" -->
+                                <span id="cartTotal" th:if="${soLuong!=null}"
+                                      th:text="${#numbers.formatDecimal(Total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+
+                                <span id="cartTotal" th:if="${soLuong==null}"
+                                >0 VNĐ</span>
+                            </li>
+
+                        </ul>
+                        <a th:href="@{/checkout}" class="primary-btn">Thanh Toán</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<!-- Shopping Cart Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                        </div>
+                        <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế</p>
+                        <a href="#"><img src="img/payment.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Mua Sắm</h6>
+                        <ul>
+                            <li><a href="#">Cửa hàng Sách</a></li>
+                            <li><a href="#">Sách Xu Hướng</a></li>
+                            <li><a href="#">Doanh thu</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Mua Sắm</h6>
+                        <ul>
+                            <li><a href="#">Liên hệ chúng tôi</a></li>
+                            <li><a href="#">Phương thức thanh toán</a></li>
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Trả lại & Trao đổi</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Tin tứcThư</h6>
+                        <div class="footer__newslatter">
+                            <p>Hãy là người đầu tiên biết về hàng mới về, lookbook, sale
+                                & khuyến mãi!</p>
+                            <form action="#">
+                                <input type="text" placeholder="Your email">
+                                <button type="submit">
+                                    <span class="icon_mail_alt"></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="footer__copyright__text">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        <p>
+                            Copyright ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            Mọi quyền được bảo lưu | Mẫu này được thực hiện với <i
+                                class="fa fa-heart-o" aria-hidden="true"></i> qua <a
+                                href="https://colorlib.com" target="_blank">SD-81</a>
+                        </p>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form th:action="@{/search}" method="POST" class="search-model-form">
+                <input name="search-input" type="text" id="search-input"
+                       placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
