@@ -106,7 +106,12 @@ public class OrderCancelController {
                             product.setQuantity(product.getQuantity() + order_item.getCount());
                             productService.saveProduct(product);
                         }
+
+
                         orderset.setDeliveryFailedDate(createAt);
+
+
+
                         orderService.saveOrder(orderset);
                         orderCancellationService.saveOrderCancel(order);
 
@@ -145,7 +150,7 @@ public class OrderCancelController {
                         if ("1".equals(orderset.getActiveOrder().getId())) {
                             orderset.setActiveOrder(ActiveOrder.builder().id("7").build());
                         }
-
+                        orderset.setDeliveryFailedDate(createAt);
                         orderService.saveOrder(orderset);
                         orderCancellationService.saveOrderCancel(order);
                         for (Order_Item order_item : listOder) {
@@ -180,6 +185,8 @@ public class OrderCancelController {
             order.setOrder(Order.builder().id(Integer.valueOf(order_id)).build());
             Order orderset = orderService.findById(order_id);
             List<Order_Item> listOder = order_itemService.getAllByOrder_Id(orderset.getId());
+
+
             if ("1".equals(orderset.getActiveOrder().getId())) {
                 orderset.setActiveOrder(ActiveOrder.builder().id("7").build());
             }
@@ -326,7 +333,3 @@ public class OrderCancelController {
         return null;
     }
 }
-
-
-
-
