@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion</title>
+    <link rel="icon" href="/img/logo-3.png">
+    <!-- Google Font -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+            rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+        <div class="offcanvas__links">
+            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                th:if="${session.acc != null}" th:text="${session.acc.user_Name}"
+                style="color: white;"></a> <a th:if="${session.acc != null}"
+                                              th:href="@{/signout}">Đăng Xuất</a><a href="#">Câu hỏi thường gặp</a>
+        </div>
+        <div class="offcanvas__top__hover">
+            <span>USD <i class="arrow_carrot-down"></i></span>
+            <ul>
+                <li>USD</li>
+                <li>EUR</li>
+                <li>USD</li>
+            </ul>
+        </div>
+    </div>
+    <div class="offcanvas__nav__option">
+        <a href="#" class="search-switch"><img src="img/icon/search.png"
+                                               alt=""></a> <a href="#"><img src="img/icon/heart.png" alt=""></a>
+        <a th:href="@{/cart}"><img src="img/icon/cart.png" alt="">
+            <span th:text="${session.countCart}"></span></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right">
+                        <div class="header__top__links">
+                            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                                th:if="${session.acc != null}"
+                                th:text="${session.acc.user_Name}" style="color: white;"></a> <a
+                                th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{/home}"><img src="/images/logo3.png" alt="" style="
+    margin-top: -30px;"></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li ><a th:href="@{/home}">Trang Chủ</a></li>
+                        <li><a th:href="@{/shop}">Cửa Hàng</a></li>
+                        <li><a href="#">Thông Tin</a>
+                            <ul class="dropdown">
+                                <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+                                <li><a th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
+                                <li><a th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
+                                <li><a th:href="@{/about}">Về Chúng Tôi</a></li>
+                            </ul>
+                        </li>
+                        <li class="active"><a th:href="@{/blog}">Tin Tức</a></li>
+                        <li><a th:href="@{/contact}">Liên Lạc</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img
+                            src="img/icon/search.png" alt=""></a>
+                    <a href="/thong-tin" class=""><img
+                            src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
+                    </a> <a th:href="@{/cart}"><img
+                        src="img/icon/cart.png" alt=""> <span
+                        th:text="${session.countCart}"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header Section End -->
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Về Chúng Tôi</h4>
+                    <div class="breadcrumb__links">
+                        <a th:href="@{/home}">Trang Chủ</a> <span>Về Chúng Tôi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- About Section Begin -->
+<section class="about spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="about__pic">
+                    <img src="https://rivucota.com/upload/img/111.jpg" height="400px" width="200px" alt="">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="about__item">
+                    <h4>Chúng ta là ai ?</h4>
+                    <p>Là Nhà sách là một trung tâm bán sách. Nguồn hàng của nhà sách có thể do các nhà
+                        cung cấp, các nhà xuất bản, các công ty trong và ngoài nước cung cấp. đối tượng
+                        bán hàng của nhà sách là khách hàng đến mua lẻ hoặc mua sỉ. với khách hàng mua
+                        lẻ họ đến nhà sách lựa chọn những cuốn sách cần dùng, sau đó họ ra quầy thu ngân
+                        để thanh toán. với khách hàng mua sỉ với số lượng lớn và là những khách hàng
+                        thường xuyên việc thanh toán có thể theo tháng hoặc quý vì vậy quầy thu ngân lập
+                        hợp đồng, hoá đớn và ký kết với khách hàng sau đó khách hàng vào kho và làm
+                        việc với nhân viên kho sách để nhận sách cần mua</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="about__item">
+                    <h4>Chúng tôi làm gì?</h4>
+                    <p>Chúng tôi chuyên cung cấp sách dành cho những ai đam mê sách hoặc có mong muốn khám phá mạnh
+                        mẽ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Section End -->
+
+<!-- Testimonial Section Begin -->
+<section class="testimonial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__text">
+                    <span class="icon_quotations"></span>
+                    <p>Một cuốn sách thực sự hay nên đọc trong tuổi trẻ, rồi đọc lại khi đã trưởng thành, và một nửa lúc
+                        tuổi già, giống như một tòa nhà đẹp nên được chiêm ngưỡng trong ánh bình minh, nắng trưa và ánh
+                        trăng.</p>
+                    <div class="testimonial__author">
+                        <div class="testimonial__author__pic">
+                            <img src="data:image/jpeg;base64,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"
+                                 alt="">
+                        </div>
+                        <div class="testimonial__author__text">
+                            <h5> Robertson Davies</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="testimonial__pic set-bg"
+                     data-setbg="https://jola.vn/cdn/720/Product/XEDlzwttz/0336-ket-sat-hinh-quyen-sach-11.5x8x4.5cm.jpg"></div>
+            </div>
+        </div>
+    </div>
+</section>
+>
+<!-- Counter Section End -->
+
+<!-- Team Section Begin -->
+<section class="team spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>4 Tác Giả Sách</h2>
+                    <span>Nổi Tiếng Việt Nam</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team__item">
+                    <img  height="300px"src="https://images.toplist.vn/images/800px/nguyen-nhat-anh-1134199.jpg" alt="">
+                    <h4 style="text-align: center">Nguyễn Nhật Ánh</h4>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team__item">
+                    <img   height="300px"src="https://images.toplist.vn/images/800px/trang-ha-557105.jpg" alt="">
+                    <h4  style="text-align: center">Trang Hạ</h4>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team__item">
+                    <img   height="300px"src="https://images.toplist.vn/images/800px/nha-van-noi-tieng-nhat-viet-nam-16391.jpg" alt="">
+                    <h4  style="text-align: center">Nguyễn Phong Việt</h4>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team__item">
+                    <img src="https://images.toplist.vn/images/800px/anh-khang-299076.jpg" height="300px" alt="">
+                    <h4  style="text-align: center">Anh Khang</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Team Section End -->
+
+<!-- Client Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                    </div>
+                    <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế</p>
+                    <a href="#"><img src="img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua Sắm</h6>
+                    <ul>
+                        <li><a href="#">Cửa hàng Sách</a></li>
+                        <li><a href="#">Sách Xu Hướng</a></li>
+                        <li><a href="#">Doanh thu</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua Sắm</h6>
+                    <ul>
+                        <li><a href="#">Liên hệ chúng tôi</a></li>
+                        <li><a href="#">Phương thức thanh toán</a></li>
+                        <li><a href="#">Vận chuyển</a></li>
+                        <li><a href="#">Trả lại & Trao đổi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Tin tứcThư</h6>
+                    <div class="footer__newslatter">
+                        <p>Hãy là người đầu tiên biết về hàng mới về, lookbook, sale
+                            & khuyến mãi!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit">
+                                <span class="icon_mail_alt"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>
+                        Copyright ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        Mọi quyền được bảo lưu | Mẫu này được thực hiện với <i
+                            class="fa fa-heart-o" aria-hidden="true"></i> qua <a
+                            href="https://colorlib.com" target="_blank">SD-81</a>
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form th:action="@{/search}" method="POST" class="search-model-form">
+            <input name="search-input" type="text" id="search-input"
+                   placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
+
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+
+</html>

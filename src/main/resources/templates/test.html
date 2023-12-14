@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>API Example</title>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<!-- Combobox for Provinces -->
+<select id="provinceSelect" onchange="getDistricts()">
+    <option value="">Select Province</option>
+</select>
+
+<!-- Combobox for Districts -->
+<select id="districtSelect" onchange="getWards()">
+    <option value="">Select District</option>
+</select>
+
+<!-- Combobox for Wards -->
+<select id="wardSelect">
+    <option value="">Select Ward</option>
+</select>
+
+<script>
+    // Function to get all provinces
+    function getAllProvinces() {
+        $.get("/public/provinces", function (data) {
+            updateComboBox("provinceSelect", data);
+        });
+    }
+
+    // Function to get districts by province
+    function getDistricts() {
+        var provinceId = $("#provinceSelect").val();
+        if (provinceId) {
+            $.get("/public/districts?province_id=" + provinceId, function (data) {
+                updateComboBox("districtSelect", data);
+            });
+        }
+    }
+
+    // Function to get wards by district
+    function getWards() {
+        var districtId = $("#districtSelect").val();
+        if (districtId) {
+            $.get("/public/wards?district_id=" + districtId, function (data) {
+                updateComboBox("wardSelect", data);
+            });
+        }
+    }
+
+    // Function to update combobox options
+    function updateComboBox(selectId, data) {
+        var select = $("#" + selectId);
+        select.empty();
+        select.append('<option value="">Select ' + selectId.charAt(0).toUpperCase() + selectId.slice(1, -6) + '</option>');
+
+        if (data) {
+            var options = JSON.parse(data);
+            options.forEach(function (option) {
+                select.append('<option value="' + option.id + '">' + option.name + '</option>');
+            });
+        }
+    }
+
+    // Initialize the UI
+    getAllProvinces();
+</script>
+
+</body>
+</html>
+

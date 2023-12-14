@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion</title>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.js"></script>
+    <!-- Google Font -->
+    <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+            rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <link rel="stylesheet" href="/listeo/css/style.css">
+    <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="icon" href="/img/logo-3.png">
+</head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+    <div class="offcanvas__option">
+        <div class="offcanvas__links">
+            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                th:if="${session.acc != null}" th:text="${session.acc.user_Name}"
+                style="color: white;"></a> <a th:if="${session.acc != null}"
+                                              th:href="@{/signout}">Đăng Xuất</a><a href="#">Câu hỏi thường gặp</a>
+        </div>
+        <div class="offcanvas__top__hover">
+            <span th:if="${session.acc != null}">[[${vi.price}]] </span>
+
+        </div>
+    </div>
+    <div class="offcanvas__nav__option">
+        <a href="#" class="search-switch"><img src="/img/icon/search.png"
+                                               alt=""></a> <a href="#"><img src="img/icon/heart.png" alt=""></a>
+        <a th:href="@{/cart}"><img src="/img/icon/cart.png" alt="">
+            <span th:text="${session.countCart}"></span></a>
+    </div>
+    <div id="mobile-menu-wrap"></div>
+    <div class="offcanvas__text">
+        <p>Free shipping, 30-day return or refund guarantee.</p>
+    </div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+    <div class="header__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7">
+                    <div class="header__top__left">
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="header__top__right">
+                        <div class="header__top__links">
+                            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+                                th:if="${session.acc != null}"
+                                th:text="${session.acc.user_Name}" style="color: white;"></a> <a
+                                th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a th:href="@{/home}"><img src="/img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li class="active"><a style="font-size: 15px" th:href="@{/home}">Trang Chủ</a></li>
+                        <li><a  style="font-size: 15px" th:href="@{/shop}">Cửa Hàng</a></li>
+                        <li><a style="font-size: 15px" href="#">Thông Tin</a>
+                            <ul class="dropdown">
+                                <li><a style="font-size: 15px" th:href="@{/cart}">Giỏ Hàng</a></li>
+                                <li><a  style="font-size: 15px"th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
+                                <li><a  style="font-size: 15px"th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
+                                <li><a  style="font-size: 15px"th:href="@{/about}">Về Chúng Tôi</a></li>
+                            </ul>
+                        </li>
+                        <li><a style="font-size: 15px" th:href="@{/blog}">Tin Tức</a></li>
+                        <li><a  style="font-size: 15px"th:href="@{/contact}">Liên Lạc</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img
+                            src="/img/icon/search.png" alt=""></a></a> <a th:href="@{/cart}"><img
+                        src="/img/icon/cart.png" alt=""> <span
+                        th:text="${session.countCart}"></span></a>
+                </div>
+            </div>
+        </div>
+        <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<div id="dashboard" style="padding-top: 0px;">
+
+
+    <!-- Content
+================================================== -->
+    <div class="dashboard-content" style="width: 80%; margin-left: 0px; margin: 0 100px;">
+
+        <!-- Titlebar -->
+        <div id="titlebar">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Trả Hàng</h2>
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a th:href="@{/home}">Trang Chủ</a></li>
+                            <li>Trả Hàng</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div id="add-listing">
+
+                    <!-- Section -->
+                    <div class="add-listing-section">
+
+                        <!-- Section / End -->
+                        <!-- Section -->
+                        <div class="product__details__tab__content">
+                            <div class="product__details__tab__content">
+                                <ul style="list-style: none">
+                                    <h3>Sản Phẩm Bạn Đã Mua: </h3>
+                                    <th:block th:each="y: ${listOrder_Item}">
+                                        <li>
+                                            <h4><i></i> <strong
+                                                    th:text="${y.product.product_Name}"></strong></h4>
+                                            <ul>
+                                                <li style="list-style: none" th:text="'Số Lượng:' + ${y.count}"></li>
+                                                <li style="list-style: none"
+                                                    th:text="'Giá: ' + ${#numbers.formatDecimal(y.product.price * y.count, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></li>
+                                            </ul>
+                                        </li>
+                                    </th:block>
+                                </ul>
+                            </div>
+                            <form th:action="@{/xac-nhan-tra-hang/{id}(id=${id})}" method="post"   enctype="multipart/form-data">
+                                <div class="add-listing-section margin-top-45">
+
+                                    <!-- Headline -->
+                                    <div class="add-listing-headline">
+                                        <h3>
+                                            <i class="sl sl-icon-picture"></i> Ảnh Hàng
+                                        </h3>
+                                    </div>
+
+                                    <!-- Dropzone -->
+                                    <div class="submit-section">
+
+                                        <div class="upload__box">
+                                            <div class="upload__btn-box">
+                                                <label class="upload__btn">
+                                                    <p style="margin-bottom: 0px;">Chọn Ảnh</p> <input
+                                                        name="listImage" accept="image/*" type="file"
+                                                        data-max_length="20" class="upload__inputfile" multiple>
+                                                </label>
+                                            </div>
+                                            <div class="upload__img-wrap"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p style="color:red;">[[${loi}]]</p>
+
+                                <div class="add-listing-section margin-top-45">
+
+                                    <!-- Headline -->
+                                    <div class="add-listing-headline">
+                                        <h3>
+                                            <i class="sl sl-icon-docs"></i> Lý Do
+                                        </h3>
+                                    </div>
+
+                                    <!-- Description -->
+                                    <div class="form">
+                                        <h5>Lý Do Trả</h5>
+                                        <textarea name="lyDo" class="WYSIWYG" cols="40"
+                                                  rows="3" id="summary" spellcheck="true"
+                                                  placeholder="Lý Do Trả"></textarea>
+                                    </div>
+                                </div>
+                                <!-- Section / End -->
+                                <p style="color:red;">[[${loi1}]]</p>
+
+                                <button class="button preview" type="submit">
+                                    Trả Hàng <i class="fa fa-arrow-circle-right"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Copyrights -->
+                    <div class="col-md-12">
+                        <div class="copyrights"></div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Content / End -->
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__logo">
+                        <a href="#"><img src="/img/footer-logo.png" alt=""></a>
+                    </div>
+                    <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế</p>
+                    <a href="#"><img src="/img/payment.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua Sắm</h6>
+                    <ul>
+                        <li><a href="#">Cửa hàng Sách</a></li>
+                        <li><a href="#">Sách Xu Hướng</a></li>
+                        <li><a href="#">Doanh thu</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Mua Sắm</h6>
+                    <ul>
+                        <li><a href="#">Liên hệ chúng tôi</a></li>
+                        <li><a href="#">Phương thức thanh toán</a></li>
+                        <li><a href="#">Vận chuyển</a></li>
+                        <li><a href="#">Trả lại & Trao đổi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+                <div class="footer__widget">
+                    <h6>Tin tứcThư</h6>
+                    <div class="footer__newslatter">
+                        <p>Hãy là người đầu tiên biết về hàng mới về, lookbook, sale
+                            & khuyến mãi!</p>
+                        <form action="#">
+                            <input type="text" placeholder="Your email">
+                            <button type="submit">
+                                <span class="icon_mail_alt"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="footer__copyright__text">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    <p>
+                        Copyright ©
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script>
+                        Mọi quyền được bảo lưu | Mẫu này được thực hiện với <i
+                            class="fa fa-heart-o" aria-hidden="true"></i> qua <a
+                            href="https://colorlib.com" target="_blank">SD-81</a>
+                    </p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Search Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch">+</div>
+        <form th:action="@{/search}" method="POST" class="search-model-form">
+            <input name="search-input" type="text" id="search-input"
+                   placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search End -->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+<script type="text/javascript" src="/scripts/dropzone.js"></script>
+
+
+<script>
+    jQuery(document).ready(function () {
+        ImgUpload();
+    });
+
+    function ImgUpload() {
+        var imgWrap = "";
+        var imgArray = [];
+
+        $('.upload__inputfile')
+            .each(
+                function () {
+                    $(this)
+                        .on(
+                            'change',
+                            function (e) {
+                                imgWrap = $(this)
+                                    .closest(
+                                        '.upload__box')
+                                    .find(
+                                        '.upload__img-wrap');
+                                var maxLength = $(this)
+                                    .attr(
+                                        'data-max_length');
+
+                                var files = e.target.files;
+                                var filesArr = Array.prototype.slice
+                                    .call(files);
+                                var iterator = 0;
+                                filesArr
+                                    .forEach(function (
+                                        f, index) {
+
+                                        if (!f.type
+                                            .match('image.*')) {
+                                            return;
+                                        }
+
+                                        if (imgArray.length > maxLength) {
+                                            return false
+                                        } else {
+                                            var len = 0;
+                                            for (var i = 0; i < imgArray.length; i++) {
+                                                if (imgArray[i] !== undefined) {
+                                                    len++;
+                                                }
+                                            }
+                                            if (len > maxLength) {
+                                                return false;
+                                            } else {
+                                                imgArray
+                                                    .push(f);
+
+                                                var reader = new FileReader();
+                                                reader.onload = function (
+                                                    e) {
+                                                    var html = "<div class='upload__img-box'><div style='background-image: url("
+                                                        + e.target.result
+                                                        + ")' data-number='"
+                                                        + $(".upload__img-close").length
+                                                        + "' data-file='"
+                                                        + f.name
+                                                        + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                                                    imgWrap
+                                                        .append(html);
+                                                    iterator++;
+                                                }
+                                                reader
+                                                    .readAsDataURL(f);
+                                            }
+                                        }
+                                    });
+                            });
+                });
+
+        $('body').on('click', ".upload__img-close", function (e) {
+            var file = $(this).parent().data("file");
+            for (var i = 0; i < imgArray.length; i++) {
+                if (imgArray[i].name === file) {
+                    imgArray.splice(i, 1);
+                    break;
+                }
+            }
+            $(this).parent().parent().remove();
+        });
+    }
+</script>
+</html>

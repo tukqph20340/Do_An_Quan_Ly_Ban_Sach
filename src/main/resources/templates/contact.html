@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Male_Fashion Template">
+	<meta name="keywords" content="Male_Fashion, unica, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Male-Fashion</title>
+	<link rel="icon" href="/img/logo-3.png">
+	<!-- Google Font -->
+	<link
+			href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+			rel="stylesheet">
+	<!-- Css Styles -->
+	<link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+	<link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+	<link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+	<link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+	<link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+	<link rel="stylesheet" href="/css/style.css" type="text/css">
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+<!-- Page Preloder -->
+<div id="preloder">
+	<div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="offcanvas-menu-wrapper">
+	<div class="offcanvas__option">
+		<div class="offcanvas__links">
+			<a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+				th:if="${session.acc != null}" th:text="${session.acc.user_Name}"
+				style="color: white;"></a> <a th:if="${session.acc != null}"
+											  th:href="@{/signout}">Đăng Xuất</a><a href="#">Câu hỏi thường gặp</a>
+		</div>
+		<div class="offcanvas__top__hover">
+			<span>USD <i class="arrow_carrot-down"></i></span>
+			<ul>
+				<li>USD</li>
+				<li>EUR</li>
+				<li>USD</li>
+			</ul>
+		</div>
+	</div>
+	<div class="offcanvas__nav__option">
+		<a href="#" class="search-switch"><img src="img/icon/search.png"
+											   alt=""></a> <a href="#"><img src="img/icon/heart.png" alt=""></a>
+		<a th:href="@{/cart}"><img src="img/icon/cart.png" alt="">
+			<span th:text="${session.countCart}"></span></a>
+	</div>
+	<div id="mobile-menu-wrap"></div>
+	<div class="offcanvas__text">
+		<p>Miễn phí vận chuyển, Đảm bảo hoàn trả hoặc hoàn tiền trong 30 ngày</p>
+	</div>
+</div>
+<!-- Offcanvas Menu End -->
+
+<!-- Header Section Begin -->
+<header class="header">
+	<div class="header__top">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-7">
+					<div class="header__top__left">
+
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-5">
+					<div class="header__top__right">
+						<div class="header__top__links">
+							<a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
+								th:if="${session.acc != null}"
+								th:text="${session.acc.user_Name}" style="color: white;"></a> <a
+								th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3">
+				<div class="header__logo">
+					<a th:href="@{/home}"><img src="/images/logo3.png" alt="" style="
+    margin-top: -30px;"></a>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6">
+				<nav class="header__menu mobile-menu">
+					<ul>
+						<li class="active"><a th:href="@{/home}">Trang Chủ</a></li>
+						<li><a th:href="@{/shop}">Cửa Hàng</a></li>
+						<li><a href="#">Thông Tin</a>
+							<ul class="dropdown">
+								<li><a th:href="@{/cart}">Giỏ Hàng</a></li>
+								<li><a th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
+								<li><a th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
+								<li><a th:href="@{/about}">Về Chúng Tôi</a></li>
+							</ul>
+						</li>
+						<li><a th:href="@{/blog}">Tin Tức</a></li>
+						<li><a th:href="@{/contact}">Liên Lạc</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="col-lg-3 col-md-3">
+				<div class="header__nav__option">
+					<a href="#" class="search-switch"><img
+							src="img/icon/search.png" alt=""></a>
+					<a href="/thong-tin" class=""><img
+							src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
+					</a> <a th:href="@{/cart}"><img
+						src="img/icon/cart.png" alt=""> <span
+						th:text="${session.countCart}"></span></a>
+				</div>
+			</div>
+		</div>
+		<div class="canvas__open">
+			<i class="fa fa-bars"></i>
+		</div>
+	</div>
+</header>
+	<!-- Header Section End -->
+
+	<!-- Map Begin -->
+	<!-- <div class="map">
+		<iframe
+			src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111551.9926412813!2d-90.27317134641879!3d38.606612219170856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sbd!4v1597926938024!5m2!1sen!2sbd"
+			height="500" style="border: 0;" allowfullscreen=""
+			aria-hidden="false" tabindex="0"></iframe>
+	</div> -->
+	<!-- Map End -->
+
+	<!-- Contact Section Begin -->
+	<section class="contact spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-6">
+					<div class="contact__text">
+						<div class="section-title">
+							<span>Thông Tin</span>
+							<h2>Liên hệ chúng tôi</h2>
+							<p>Như bạn có thể mong đợi về một công ty khởi đầu là một công ty cao cấp
+								sách, chúng tôi hết sức chú ý</p>
+						</div>
+						<ul>
+							<li>
+								<h4>Việt Nam</h4>
+								<p>
+									Đường Trịnh Văn Bố ,Nam Từ Liêm ,Hà Nội <br />0964925872
+								</p>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6">
+					<div class="contact__form">
+						<form action="#">
+							<div class="row">
+								<div class="col-lg-6">
+									<input type="text" placeholder="Name">
+								</div>
+								<div class="col-lg-6">
+									<input type="text" placeholder="Email">
+								</div>
+								<div class="col-lg-12">
+									<textarea placeholder="Message"></textarea>
+									<button type="submit" class="site-btn">Gửi Thư</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Contact Section End -->
+<!-- Footer Section Begin -->
+<footer class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="footer__about">
+					<div class="footer__logo">
+						<a href="#"><img src="img/footer-logo.png" alt=""></a>
+					</div>
+					<p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế</p>
+					<a href="#"><img src="img/payment.png" alt=""></a>
+				</div>
+			</div>
+			<div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+				<div class="footer__widget">
+					<h6>Mua Sắm</h6>
+					<ul>
+						<li><a href="#">Cửa hàng Sách</a></li>
+						<li><a href="#">Sách Xu Hướng</a></li>
+						<li><a href="#">Doanh thu</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-3 col-sm-6">
+				<div class="footer__widget">
+					<h6>Mua Sắm</h6>
+					<ul>
+						<li><a href="#">Liên hệ chúng tôi</a></li>
+						<li><a href="#">Phương thức thanh toán</a></li>
+						<li><a href="#">Vận chuyển</a></li>
+						<li><a href="#">Trả lại & Trao đổi</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
+				<div class="footer__widget">
+					<h6>Tin tứcThư</h6>
+					<div class="footer__newslatter">
+						<p>Hãy là người đầu tiên biết về hàng mới về, lookbook, sale
+							& khuyến mãi!</p>
+						<form action="#">
+							<input type="text" placeholder="Your email">
+							<button type="submit">
+								<span class="icon_mail_alt"></span>
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<div class="footer__copyright__text">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					<p>
+						Copyright ©
+						<script>
+							document.write(new Date().getFullYear());
+						</script>
+						Mọi quyền được bảo lưu | Mẫu này được thực hiện với <i
+							class="fa fa-heart-o" aria-hidden="true"></i> qua <a
+							href="https://colorlib.com" target="_blank">SD-81</a>
+					</p>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="search-model">
+	<div class="h-100 d-flex align-items-center justify-content-center">
+		<div class="search-close-switch">+</div>
+		<form th:action="@{/search}" method="POST" class="search-model-form">
+			<input name="search-input" type="text" id="search-input"
+				   placeholder="Search here.....">
+		</form>
+	</div>
+</div>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+
+</html>
