@@ -815,7 +815,7 @@ public class AdminController {
                 }
             }
             session.setAttribute("ChangePassSuccess", "ChangePassSuccess");
-            return "redirect:" + referer;
+            return "redirect:/signin-admin";
         }
     }
 
