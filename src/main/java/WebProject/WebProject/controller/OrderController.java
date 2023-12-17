@@ -111,7 +111,6 @@ public class OrderController {
             long Total = 0;
 
             if (!Cart.isEmpty() && !listCart1.isEmpty()) {
-
                 for (Cart cart : Cart) {
                     Product listP = productService.getProductById(cart.getProduct().getId());
                     if (cart.getCount() <= listP.getQuantity()) {
@@ -124,11 +123,24 @@ public class OrderController {
                         }
 
                     } else {
-                        session.setAttribute("loiSL", "Số Lượng Không Đủ ,Số Lượng Còn Lại Là ");
-                        return "redirect:/cart";
+                        session.setAttribute("loiSL", "Số Lượng Không Đủ ");
+                        List<Cart> listCart = cartService.GetAllCartByUser_id(user.getId());
+                        for (Cart y : listCart) {
+                            if (y.isSelected()) {
+                                y.setCount(Long.valueOf(1));
+                                cartService.saveCart(cart);
+                                Total = Total + y.getCount() * y.getProduct().getPrice();
+                            }
+                            if (listCart != null) {
+                                model.addAttribute("Total", Total);
+                                model.addAttribute("listCart", listCart);
+
+                            }
+                            model.addAttribute("soLuong", listCart.size());
+                        }
+                        return "shopping-cart";
                     }
-
-
+                    
                 }
                 model.addAttribute("Total", Total);
                 session.setAttribute("Total", Total);
@@ -176,6 +188,7 @@ public class OrderController {
                 return "redirect:/cart";
             }
         }
+
     }
 
 

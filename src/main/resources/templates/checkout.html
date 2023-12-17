@@ -86,7 +86,9 @@
                                 th:text="${session.acc.user_Name}" style="color: white;"></a> <a
                                 th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
 
-                            <span  th:if="${session.acc != null}"><a href="/thong-tin" style="list-style: none;color: white">Số Dư: [[${vi.price}+0]] VNĐ</a></span>
+                            <span th:if="${session.acc != null}"><a href="/thong-tin"
+                                                                    style="list-style: none;color: white">Số Dư: [[${vi.price}+0]] VNĐ</a></span>
+                            <input type="hidden" id="giaVi" th:value="${vi.price}">
 
                         </div>
                     </div>
@@ -94,6 +96,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-3">
@@ -122,10 +126,12 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
-                    <a href="#" class="search-switch"><img
-                            src="img/icon/search.png" alt=""></a> <a href="#"><img
-                        src="img/icon/heart.png" alt=""></a> <a th:href="@{/cart}"><img
-                        src="img/icon/cart.png" alt=""></a>
+
+                    <a href="/thong-tin" class=""><img
+                            src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
+                    </a> <a th:href="@{/cart}"><img
+                        src="img/icon/cart.png" alt=""> <span
+                        th:text="${session.countCart}"></span></a>
                 </div>
             </div>
         </div>
@@ -167,11 +173,11 @@
                         Mã Bạn Muốn</a>
                     </h6>
                 </div>
-                <dialog id="data-modal"  class="tab-pane "  role="tabpanel">
+                <dialog id="data-modal" class="tab-pane " role="tabpanel">
                     <div class="product__details__tab__content">
                         <h4>Sao Chép Mã Khuyến Mãi Bạn Muốn</h4>
                         <ul style="list-style: none">
-                            <th:block th:each="y : ${listKhuyenMai}" >
+                            <th:block th:each="y : ${listKhuyenMai}">
                                 <li style="list-style: none">
                                     <br>
                                     <i class="list-box-icon sl sl-icon-doc"></i> <strong
@@ -179,8 +185,12 @@
                                     <ul>
                                         <!-- Điều này là phần bạn muốn hiển thị khi mục được click -->
 
-                                        <li  style="list-style: none" th:text="'Phần Trăm Giảm: ' + ${y.discountValue}+'%'"></li>
-                                        <li style="list-style: none" th:text="'Ngày Hết Hạn: ' + ${#dates.format(y.expiredAt, 'dd-MM-yyyy')}"></li>
+                                        <li style="list-style: none"
+                                            th:text="'Phần Trăm Giảm: ' + ${y.discountValue}+'%'"></li>
+                                        <li style="list-style: none"
+                                            th:text="'Giá Giảm Tối Đa: ' + ${y.maximumDiscountValue}+' VNĐ'"></li>
+                                        <li style="list-style: none"
+                                            th:text="'Ngày Hết Hạn: ' + ${#dates.format(y.expiredAt, 'dd-MM-yyyy')}"></li>
                                     </ul>
 
                                 </li>
@@ -235,7 +245,7 @@
                         <h5 class="section-title position-relative text-uppercase mb-3">
                             <span class="">Địa chỉ nhận hàng</span>
                         </h5>
-                        <input type="checkbox" name="diaChiChon" value="diaChiCu" id="checkbox1" >
+                        <input type="checkbox" name="diaChiChon" value="diaChiCu" id="checkbox1">
                         <label for="checkbox1" class="label_check_box">Địa chỉ ban đầu</label>
                         <br>
                         <div id="view_dia_chi_cu" style="display:block">
@@ -424,11 +434,13 @@
                                         class="checkmark"></span>
                                 </label>
                             </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="payVi"> Thanh Toán Bằng Ví <input
-                                        name="payVi" type="checkbox" id="payVi"> <span
-                                        class="checkmark"></span>
-                                </label>
+                            <div class="checkout__input__checkbox ">
+                                <div id="payVi1">
+                                    <label for="payVi"> Thanh Toán Bằng Ví <input
+                                            name="payVi" type="checkbox" id="payVi"> <span
+                                            class="checkmark"></span>
+                                    </label>
+                                </div>
                             </div>
                             <script>
 
@@ -538,6 +550,7 @@
     </div>
 </footer>
 <script>
+    var giaViValue = document.getElementById("giaVi").value;
     // Get the total element by its ID
     var totalElement = document.getElementById('total');
 
@@ -591,13 +604,14 @@
         document.getElementById("condition-popup").style.display = "none";
     }
 </script>
-<script>
+<script th:inline="javascript">
     var checkbox1 = document.getElementById("checkbox1");
     var checkbox2 = document.getElementById("checkbox2");
     var view_dia_chi_cu = document.getElementById("view_dia_chi_cu");
     var view_dia_chi_moi = document.getElementById("view_dia_chi_moi");
 
     var bothUnchecked = true;
+    var checkboxPayVi = document.getElementById("payVi1");
 
     // Thêm sự kiện cho checkbox1 để kiểm tra trạng thái của checkbox2
     checkbox1.addEventListener("change", async function () {
@@ -637,56 +651,73 @@
     });
 
     function checkBothUnchecked() {
+
+        var giaViValue = document.getElementById("giaVi").value;
+        console.log(giaViValue);
         if (!checkbox1.checked && !checkbox2.checked) {
-            const shippingCost = 0;
+                const shippingCost = 0;
 
-            var totalElement = document.getElementById('total');
+                var totalElement = document.getElementById('total');
 
-            var totalText = totalElement.textContent || totalElement.innerText;
+                var totalText = totalElement.textContent || totalElement.innerText;
 
-            var totalValue = parseFloat(totalText.replace(/[^\d.]/g, ''));
+                var totalValue = parseFloat(totalText.replace(/[^\d.]/g, ''));
 
+                var giamGiaC = document.getElementById('giaGiamc');
+                console.log(giamGiaC);
+                if (giamGiaC == null) {
+                    var tongSoTien = totalValue + shippingCost;
+                    if (parseFloat(giaViValue) < tongSoTien) {
+                        console.log(giaViValue);
+                        checkboxPayVi.style.display = 'none';  // Set opacity for a "muted" appearance
+                    } else {
+                        checkboxPayVi.style.display = 'block';  // Reset opacity
+                    }
+                } else {
 
-            var giamGiaC = document.getElementById('giaGiamc');
-            console.log(giamGiaC);
+                    var giamGia1 = giamGiaC.textContent || giamGiaC.innerText;
 
-            if (giamGiaC == null) {
-                var tongSoTien = totalValue + shippingCost;
-            } else {
+                    var giamGia1Value = parseFloat(giamGia1.replace(/[^\d.]/g, ''));
 
-                var giamGia1 = giamGiaC.textContent || giamGiaC.innerText;
+                    document.getElementById("discal").value = giamGia1Value;
+                    var tongSoTien = totalValue + shippingCost - giamGia1Value;
 
-                var giamGia1Value = parseFloat(giamGia1.replace(/[^\d.]/g, ''));
+                    if (parseFloat(giaViValue) < tongSoTien) {
+                        console.log(giaViValue);
+                        checkboxPayVi.style.display = 'none';  // Set opacity for a "muted" appearance
+                    } else {
+                        checkboxPayVi.style.display = 'block';  // Reset opacity
+                    }
+                }
+                var gia1Formatted3 = shippingCost.toLocaleString('vi-VN', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 3
+                });
 
-                document.getElementById("discal").value = giamGia1Value;
-                var tongSoTien = totalValue + shippingCost - giamGia1Value;
-            }
-            var gia1Formatted3 = shippingCost.toLocaleString('vi-VN', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 3
-            });
+                var gia1WithCurrency3 = gia1Formatted3 + " VNĐ";
 
-            var gia1WithCurrency3 = gia1Formatted3 + " VNĐ";
+                document.getElementById("ship").value = gia1WithCurrency3;
+                document.getElementById("shipcode").innerText = gia1WithCurrency3;
+                console.log(gia1WithCurrency3)
 
-            document.getElementById("ship").value = gia1WithCurrency3;
-            document.getElementById("shipcode").innerText = gia1WithCurrency3;
-            console.log(gia1WithCurrency3)
+                var gia1Formatted2 = tongSoTien.toLocaleString('vi-VN', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 3
+                });
+                //
+                var gia1WithCurrency2 = gia1Formatted2 + " VNĐ";
+                //
+                // priceInput.value = gia1WithCurrency2;
+                document.getElementById("toTalFinal").value = tongSoTien;
+                document.getElementById("tongTienString").innerText = gia1WithCurrency2;
+                bothUnchecked = true;
+                document.getElementById("province").selectedIndex = 0;
+                document.getElementById("district").selectedIndex = 0;
+                document.getElementById("ward").selectedIndex = 0;
 
-            var gia1Formatted2 = tongSoTien.toLocaleString('vi-VN', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 3
-            });
-            //
-            var gia1WithCurrency2 = gia1Formatted2 + " VNĐ";
-            //
-            // priceInput.value = gia1WithCurrency2;
-            document.getElementById("toTalFinal").value = tongSoTien;
-            document.getElementById("tongTienString").innerText = gia1WithCurrency2;
-            bothUnchecked = true;
-            document.getElementById("province").selectedIndex = 0;
-            document.getElementById("district").selectedIndex = 0;
-            document.getElementById("ward").selectedIndex = 0;
         }
+
+
         if (!checkbox1.checked && checkbox2.checked) {
             const shippingCost = 0;
 
@@ -700,6 +731,12 @@
             var giamGiaC = document.getElementById('giaGiamc');
             if (giamGiaC == null) {
                 var tongSoTien = totalValue + shippingCost;
+                if (parseFloat(giaViValue) < tongSoTien) {
+                    console.log(giaViValue);
+                    checkboxPayVi.style.display = 'none';  // Set opacity for a "muted" appearance
+                } else {
+                    checkboxPayVi.style.display = 'block';  // Reset opacity
+                }
             } else {
 
                 var giamGia1 = giamGiaC.textContent || giamGiaC.innerText;
@@ -708,6 +745,14 @@
                 document.getElementById("discal").value = giamGia1Value;
 
                 var tongSoTien = totalValue + shippingCost - giamGia1Value;
+
+                if (parseFloat(giaViValue) < tongSoTien) {
+                    console.log(giaViValue);
+                    checkboxPayVi.style.display = 'none';  // Set opacity for a "muted" appearance
+                } else {
+                    checkboxPayVi.style.display = 'block';  // Reset opacity
+                }
+
             }
 
             document.getElementById("toTalFinal").value = tongSoTien;
@@ -735,6 +780,7 @@
             document.getElementById("tongTienString").innerText = gia1WithCurrency2;
             bothUnchecked = true;
         }
+
     }
 
     // Thêm sự kiện onchange cho các combobox
@@ -797,6 +843,7 @@
     }
 
     async function findCalculateShipping() {
+        var giaViValue = document.getElementById("giaVi").value;
         var tinh = document.getElementById("tinh").value;
         var provinceName = tinh;
         var provinceId = await findProvinceIdByName(provinceName);
@@ -844,6 +891,12 @@
                 var giamGiaC = document.getElementById('giaGiamc');
                 if (giamGiaC == null) {
                     var tongSoTien = totalValue + shippingCost;
+                    if (parseFloat(giaViValue) < tongSoTien) {
+                        console.log(giaViValue);
+                        checkboxPayVi.style.display = 'none';  // Set opacity for a "muted" appearance
+                    } else {
+                        checkboxPayVi.style.display = 'block';  // Reset opacity
+                    }
                 } else {
 
                     var giamGia1 = giamGiaC.textContent || giamGiaC.innerText;
@@ -852,6 +905,12 @@
                     document.getElementById("discal").value = giamGia1Value;
 
                     var tongSoTien = totalValue + shippingCost - giamGia1Value;
+                    if (parseFloat(giaViValue) < tongSoTien) {
+                        console.log(giaViValue);
+                        checkboxPayVi.style.display = 'none';  // Set opacity for a "muted" appearance
+                    } else {
+                        checkboxPayVi.style.display = 'block';  // Reset opacity
+                    }
                 }
 
 

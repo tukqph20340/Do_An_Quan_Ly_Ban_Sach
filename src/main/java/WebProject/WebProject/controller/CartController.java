@@ -40,6 +40,7 @@ public class CartController {
 
     @GetMapping("/cart")
     public String CartView(Model model) throws Exception {
+        session.setAttribute("loiSL", null);
         Cookie user_name = cookie.read("user_name");
         Wallet vi = walletRepository.findByUserId(user_name.getValue());
         model.addAttribute("vi", vi);

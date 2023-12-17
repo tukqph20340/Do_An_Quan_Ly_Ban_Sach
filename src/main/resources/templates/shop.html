@@ -122,8 +122,6 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
-                    <a href="#" class="search-switch"><img
-                            src="img/icon/search.png" alt=""></a>
                     <a href="/thong-tin" class=""><img
                             src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
                     </a> <a th:href="@{/cart}"><img
@@ -255,11 +253,11 @@
                                                 >Từ 0 Đến 50000 VNĐ</a></li>
                                                 <li><a href="/50den100"
                                                 >Từ 50000 Đến 100000 VNĐ</a></li>
-                                                <li><a href="100den200"
+                                                <li><a href="/100den200"
                                                 >Từ 100000 Đến 200000 VNĐ</a></li>
-                                                <li><a href="200den500"
+                                                <li><a href="/200den500"
                                                 >Từ 200000 Đến 500000 VNĐ</a></li>
-                                                <li><a href="500den1000"
+                                                <li><a href="/500den1000"
                                                 >Từ 500000 Đến 1000000 VNĐ</a>
 
                                                 </li>
@@ -285,21 +283,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="text-align: center">
                     <th:block th:each="y : ${listProduct.content}">
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg"
                                      th:data-setbg="${y.productImage[0].url_Image}">
                                     <ul class="product__hover">
-                                        <li><a th:href="@{/productDetail/{id}(id=${y.id})}"><img
+                                        <li><a style="margin-left: 50px" th:href="@{/productDetail/{id}(id=${y.id})}"><img
                                                 src="/img/icon/search.png" alt=""></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
                                     <h6 th:text="${y.product_Name}"></h6>
                                     <a th:href="@{/addToCart/{id}(id=${y.id})}" class="add-cart">+
-                                        Add To Cart</a>
+                                        Thêm Vào Giỏ Hàng</a>
                                     <h5
                                             th:text=" ${#numbers.formatDecimal(y.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h5>
                                 </div>

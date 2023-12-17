@@ -38,6 +38,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -116,12 +117,11 @@ public class TraHangController {
     public String DashboardAddProductHandel(@PathVariable String id, Model model, @RequestParam("lyDo") String lyDo,
                                             @RequestParam("listImage") MultipartFile[] listImage
             , HttpServletRequest request) throws Exception {
-        Cookie a = cookie.read("idHoaDon");
-        long millis = System.currentTimeMillis();
-        Date create_at = new java.sql.Date(millis);
         try {
+            long millis = System.currentTimeMillis();
+            Date create_at = new java.sql.Date(millis);
             if (lyDo.isEmpty()) {
-                model.addAttribute("loi1", "Ảnh không được để trống");
+                model.addAttribute("loi1", "Lý do không được để trống không được để trống");
                 Cookie user_name = cookie.read("user_name");
                 Wallet vi = walletRepository.findByUserId(user_name.getValue());
                 model.addAttribute("vi", vi);
@@ -134,8 +134,8 @@ public class TraHangController {
                 model.addAttribute("listOrder_Item", listOrder_Item);
                 model.addAttribute("order", order1);
                 return "trahang.html";
-            } else {
-                Order order = orderService.findById(Integer.valueOf(a.getValue()));
+            }else {
+                Order order = orderService.findById(Integer.valueOf(id));
                 Returns returns = new Returns();
                 returns.setReason(lyDo);
                 returns.setOrder(order);
@@ -156,24 +156,12 @@ public class TraHangController {
                 return "redirect:/myhistory";
             }
         } catch (Exception e) {
-            model.addAttribute("loi", "Ảnh không được để trống");
-            Cookie user_name = cookie.read("user_name");
-            Wallet vi = walletRepository.findByUserId(user_name.getValue());
-            model.addAttribute("vi", vi);
-            String referer = request.getHeader("Referer");
-            model.addAttribute("referer", referer);
-            Order order = orderService.findById(Integer.valueOf(id));
-            session.setAttribute("order", order);
-            Order order1 = (Order) session.getAttribute("order");
-            List<Order_Item> listOrder_Item = order_itemService.getAllByOrder_Id(order.getId());
-            model.addAttribute("listOrder_Item", listOrder_Item);
-            model.addAttribute("order", order1);
-            return "trahang.html";
+            return "redirect:/myhistory";
         }
 
     }
 
-    @GetMapping("dashboard-invoice-tra-hang")
+    @GetMapping("/dashboard-invoice-tra-hang")
     public String Invoice1(Model model) {
         Cookie user_name = cookie.read("user_name");
         Wallet vi = walletRepository.findByUserId(user_name.getValue());
@@ -189,7 +177,7 @@ public class TraHangController {
         model.addAttribute("invoiceView", invoiceView);
         model.addAttribute("listOrder_Item", listOrder_Item);
         model.addAttribute("order", order);
-        return "redirect:/dashboard-invoice-tra-hang";
+        return "invoice-tra-hang";
     }
 
     @GetMapping("/dashboard-invoice-tra-hang/{id}")
@@ -257,6 +245,20 @@ public class TraHangController {
             return "dashboard-orders11";
         }
     }
+
+    @GetMapping("/gui-thu")
+    public String SendMessage(Model model,@RequestParam("gmail") String gmail) throws Exception {
+
+
+        Mail mail = new Mail();
+        mail.setMailFrom("thanhlol2k3@gmail.com");
+        mail.setMailTo("nguyentrunganhnta43@gmail.com");
+        mail.setMailSubject("Nhà sách Opacarophile");
+        mail.setMailContent("test");
+        mailService.sendEmail(mail);
+        return "redirect:/home";
+    }
+
 
 
 }
