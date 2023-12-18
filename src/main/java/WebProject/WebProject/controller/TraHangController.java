@@ -177,7 +177,7 @@ public class TraHangController {
         model.addAttribute("invoiceView", invoiceView);
         model.addAttribute("listOrder_Item", listOrder_Item);
         model.addAttribute("order", order);
-        return "invoice-tra-hang";
+        return "/invoice-tra-hang.html";
     }
 
     @GetMapping("/dashboard-invoice-tra-hang/{id}")

@@ -196,9 +196,9 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li ><a th:href="@{/home}" style="font-size: 15px">Trang Chủ</a></li>
+                        <li><a th:href="@{/home}" style="font-size: 15px">Trang Chủ</a></li>
                         <li><a th:href="@{/shop}" style="font-size: 15px">Cửa Hàng</a></li>
-                        <li class="active"> <a href="# " style="font-size: 15px">Thông Tin</a>
+                        <li class="active"><a href="# " style="font-size: 15px">Thông Tin</a>
                             <ul class="dropdown">
                                 <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
                                 <li><a th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
@@ -255,23 +255,33 @@
                 <div class="product__details__tab">
                     <ul class="nav nav-tabs custom-nav-tabs" role="tablist">
                         <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;"
-                                                                              class="nav-link active"
-                                                                              data-toggle="tab" href="#tabs-5"
-                                                                              role="tab">Chờ xác nhận</a></li>
-                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link" data-toggle="tab"
-                                                href="#tabs-6" role="tab">Chờ lấy hàng</a></li>
-                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link" data-toggle="tab"
-                                                href="#tabs-7" role="tab">Đã Lấy Hàng</a></li>
-                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link" data-toggle="tab"
-                                                href="#tabs-8" role="tab">Đang Giao</a></li>
-                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link" data-toggle="tab"
-                                                href="#tabs-10" role="tab">Thành Công</a></li>
-                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link" data-toggle="tab"
-                                                href="#tabs-12" role="tab">Hủy</a></li>
-                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link" data-toggle="tab"
-                                                href="#tabs-13" role="tab">Trả Hàng</a></li>
-                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link" data-toggle="tab"
-                                                href="#tabs-9" role="tab">Thất Bại</a></li>
+                                                                           class="nav-link active"
+                                                                           data-toggle="tab" href="#tabs-5"
+                                                                           role="tab">Chờ xác nhận</a></li>
+                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link"
+                                                                           data-toggle="tab"
+                                                                           href="#tabs-6" role="tab">Chờ lấy hàng</a>
+                        </li>
+                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link"
+                                                                           data-toggle="tab"
+                                                                           href="#tabs-7" role="tab">Đã Lấy Hàng</a>
+                        </li>
+                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link"
+                                                                           data-toggle="tab"
+                                                                           href="#tabs-8" role="tab">Đang Giao</a></li>
+                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link"
+                                                                           data-toggle="tab"
+                                                                           href="#tabs-10" role="tab">Thành Công</a>
+                        </li>
+                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link"
+                                                                           data-toggle="tab"
+                                                                           href="#tabs-12" role="tab">Hủy</a></li>
+                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link"
+                                                                           data-toggle="tab"
+                                                                           href="#tabs-13" role="tab">Trả Hàng</a></li>
+                        <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;" class="nav-link"
+                                                                           data-toggle="tab"
+                                                                           href="#tabs-9" role="tab">Thất Bại</a></li>
                     </ul>
                     <div class="tab-content dashboard-list-box invoices with-icons">
                         <div class="tab-pane active" id="tabs-5" role="tabpanel">
@@ -291,7 +301,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: yellow;"
                                                     th:if="${y.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${y.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo
@@ -318,22 +328,57 @@
                                                             <br>
                                                             <table style="text-align: center">
                                                                 <tr>
-                                                                    <td><input type="radio" name="reason"
+                                                                    <td style="text-align: left"> <input type="radio" name="reason"
                                                                                value="doi-dia-chi"></td>
-                                                                    <td><label>Đổi Địa Chỉ</label></td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td style="text-align: left"><label >Đổi Địa Chỉ</label ></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><input type="radio" name="reason"
+                                                                    <td style="text-align: left"><input type="radio" name="reason"
                                                                                value="doi-thong-tin"></td>
-                                                                    <td><label>Thay Đổi Thông
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td style="text-align: left"><label>Thay Đổi Thông
                                                                         Tin</label></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><input type="radio" name="reason"
+                                                                    <td style="text-align: left"><input type="radio" name="reason"
+                                                                               value="thêm khuyến mãi"></td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td style="text-align: left"><label>Thêm Khuyến Mãi</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="text-align: left"><input type="radio" name="reason"
+                                                                               value="xac-nhan-lau"></td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td style="text-align: left"><label>Lâu Xác Nhận Đơn Hàng</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="text-align: left"><input type="radio" name="reason"
+                                                                               value="Thấy Chỗ Rẻ Hơn"></td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td style="text-align: left"><label>Thấy Chỗ Rẻ Hơn</label></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="text-align: left"><input type="radio" name="reason"
                                                                                value="ly-do-khac"></td>
-                                                                    <td><label>Lý
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td> </td>
+                                                                    <td style="text-align: left"><label>Lý
                                                                         do khác</label></td>
                                                                 </tr>
+
+
                                                             </table>
                                                         </div>
                                                         <br>
@@ -366,7 +411,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: #5392fa;"
                                                     th:if="${y.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${y.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo
@@ -401,7 +446,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: #5392fa;"
                                                     th:if="${y.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${y.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo
@@ -435,7 +480,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: #5392fa;"
                                                     th:if="${y.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${y.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo
@@ -468,7 +513,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: #5392fa;"
                                                     th:if="${y.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${y.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo
@@ -506,7 +551,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: #5392fa;"
                                                     th:if="${y.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${y.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo
@@ -571,7 +616,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: #5392fa;"
                                                     th:if="${y.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${y.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo
@@ -609,7 +654,7 @@
                                                 </li>
                                                 <li class="unpaid" style="color: #5392fa;"
                                                     th:if="${order.payment_Method=='Ví'}"
-                                                >Thanh Toán Bằng Ví
+                                                >Thanh Toán Bằng Ví Dự Chữ
                                                 </li>
                                                 <li class="paid" th:if="${order.payment_Method=='Payment with momo'}"
                                                 >Thanh Toán Ví MoMo

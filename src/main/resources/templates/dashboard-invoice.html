@@ -31,7 +31,7 @@
 
 				<p id="details">
 					<strong>Mã Hóa Đơn: </strong><i th:text="'#' + ${order.id}"></i><br>
-					<strong>Ngày: </strong><i  th:text="${#dates.format(order.booking_Date, 'dd-MM-yyyy')}"></i><br>
+					<strong>Ngày: </strong><i  th:text="${order.booking_Date}"></i><br>
 				</p>
 			</div>
 		</div>

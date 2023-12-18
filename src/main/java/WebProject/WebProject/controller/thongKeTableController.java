@@ -169,7 +169,7 @@ public class thongKeTableController {
             return "redirect:/thong-ke-admin-don-hang";
         } else {
 
-            List<Map<String, Object>> resultList = thongKeRepository.getCountByStatusAndDate12(Date.valueOf(ngay1), Date.valueOf(ngay2));
+            List<Map<String, Object>> resultList = thongKeRepository.getCountByStatusAndDate12(ngay1, ngay2);
             model.addAttribute("resultList", resultList);
 
             return "thongKeDH.html";

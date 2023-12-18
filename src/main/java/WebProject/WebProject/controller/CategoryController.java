@@ -403,7 +403,7 @@ public class CategoryController {
         if (session.getAttribute("acc") == null)
             session.setAttribute("countCart", "0");
         Pageable pageable = PageRequest.of(0, 12);
-        Page<Product> page = productRepository.findAllByPriceBetween(pageable,500000,1000000);
+        Page<Product> page = productRepository.findByPrice(pageable);
         List<Category> listCategory = categoryService.findAll();
         List<Product> listProduct = null;
         if (page != null) {
@@ -436,7 +436,7 @@ public class CategoryController {
         if (session.getAttribute("acc") == null)
             session.setAttribute("countCart", "0");
         Pageable pageable = PageRequest.of(p, 12);
-        Page<Product> page = productRepository.findAllByPriceBetween(pageable,500000,1000000);
+        Page<Product> page = productRepository.findByPrice(pageable);
         List<Category> listCategory = categoryService.findAll();
         List<Product> listProduct = null;
         if (page != null) {

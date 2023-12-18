@@ -9,8 +9,10 @@ import WebProject.WebProject.entity.Product;
 import WebProject.WebProject.entity.Statistic;
 import WebProject.WebProject.entity.User;
 import WebProject.WebProject.entity.Wallet;
+import WebProject.WebProject.model.Mail;
 import WebProject.WebProject.repository.WalletRepository;
 import WebProject.WebProject.service.CookieService;
+import WebProject.WebProject.service.MailService;
 import WebProject.WebProject.service.OrderCancellationService;
 import WebProject.WebProject.service.OrderService;
 import WebProject.WebProject.service.Order_ItemService;
@@ -51,6 +53,9 @@ public class OrderCancelController {
     Order_ItemService order_itemService;
 
     @Autowired
+    MailService mailService;
+
+    @Autowired
     WalletRepository walletRepository;
     @Autowired
     CookieService cookie;
@@ -81,6 +86,13 @@ public class OrderCancelController {
         if (user == null) {
             return "redirect:" + referer;
         } else {
+            User user1 = userService.detail(user_name.getValue());
+            Mail mail = new Mail();
+            mail.setMailFrom("nguyentrunganhnta43@gmail.com");
+            mail.setMailTo(user.getEmail());
+            mail.setMailSubject("Nhà sách Opacarophile");
+            mail.setMailContent("Quý Khách Đã Hủy Đơn Hàng Này Cảm Ơn Khác Hàng Đã Mua");
+            mailService.sendEmail(mail);
             OrderCancellation order = new OrderCancellation();
             Wallet wallet = new Wallet();
             int cart = 0;
@@ -198,6 +210,10 @@ public class OrderCancelController {
             }
             orderService.saveOrder(orderset);
             orderCancellationService.saveOrderCancel(order);
+
+
+
+
             return "redirect:/myhistory";
 
 
