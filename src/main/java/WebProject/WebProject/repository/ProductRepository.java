@@ -35,6 +35,10 @@ public interface ProductRepository extends JpaRepository<Product,Long>{
 	Page<Product> findAllByProducerId(int id, Pageable pageable);
 
 	Page<Product> findAllByPriceBetween(Pageable pageable,long giaThapNhat ,long giaCaoNhat);
+
+
+	@Query(value="select * from product where  product.price >= 500000",nativeQuery = true)
+	Page<Product> findByPrice(Pageable pageable);
 	
 	Product findById(int id);
 	

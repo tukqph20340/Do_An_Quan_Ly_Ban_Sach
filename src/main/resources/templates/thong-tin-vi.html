@@ -189,10 +189,10 @@
                                 <td th:text="${stat.index + 1}"></td>
                                 <td th:text="${result.tinh_trang}"></td>
                                 <td th:text="${result.ngay}"></td>
-                                <th:block th:if="${result.tinh_trang=='Nạp tiền'}">
+                                <th:block th:if="${result.tinh_trang=='Hoàn Tiền Thanh Toán MoMo'}">
                                     <td style="color: #2bb33e" th:text=" '+' +${result.tien} +'VNĐ'"></td>
                                 </th:block>
-                                <th:block th:if="${result.tinh_trang=='Trừ tiền'}">
+                                <th:block th:if="${result.tinh_trang=='Thanh Toán Bằng Ví Dự Chữ'}">
                                     <td style="color: red" th:text=" '-' +${result.tien} +'VNĐ'"></td>
                                 </th:block>
                             </tr>

@@ -72,7 +72,8 @@
 				<strong class="margin-bottom-5">Địa Chỉ: </strong>
 				<i th:text="${order.note}+'-'"></i><i th:text="${order.wards}+'-'"></i><i th:text="${order.address}+'-'"></i> <i th:text="${order.country}"></i><br>
 				<strong class="margin-bottom-5">Hình Thức Thanh Toán: </strong>
-				<i>[[${order.payment_Method=="Payment on delivery"?"Thanh Toán Khi Nhận Hàng":"Thanh Toán Ví MoMo"}]]</i>
+				<i th:text="${order.payment_Method == 'Payment on delivery' ? 'Thanh Toán Khi Nhận Hàng' : (order.payment_Method == 'Payment with momo' ? 'Thanh Toán Bằng Ví MoMo' : 'Thanh Toán Bằng Ví Dự Chữ')}"></i>
+
 			</p>
 
 

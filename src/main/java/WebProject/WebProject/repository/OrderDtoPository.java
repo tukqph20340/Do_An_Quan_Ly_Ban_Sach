@@ -14,8 +14,8 @@ import java.util.Map;
 public interface OrderDtoPository extends JpaRepository<Order,Integer> {
     @Query(value = "SELECT\n" +
             "    CASE\n" +
-            "        WHEN ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo') THEN 'Nạp tiền'\n" +
-            "        WHEN otm.payment_Method = 'ví' THEN 'Trừ tiền'\n" +
+            "        WHEN ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo') THEN 'Hoàn Tiền Thanh Toán MoMo'\n" +
+            "        WHEN otm.payment_Method = 'ví' THEN 'Thanh Toán Bằng Ví Dự Chữ'\n" +
             "    END AS tinh_trang,\n" +
             "    CASE\n" +
             "        WHEN ao.id = 7 AND (otm.payment_Method = 'ví' OR otm.payment_Method = 'Payment with momo') THEN otm.delivery_failed_date\n" +

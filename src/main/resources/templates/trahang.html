@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
-
+    <link rel="stylesheet" href="/css/invoice.css">
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -103,17 +103,17 @@
                 <nav class="header__menu mobile-menu">
                     <ul>
                         <li class="active"><a style="font-size: 15px" th:href="@{/home}">Trang Chủ</a></li>
-                        <li><a  style="font-size: 15px" th:href="@{/shop}">Cửa Hàng</a></li>
+                        <li><a style="font-size: 15px" th:href="@{/shop}">Cửa Hàng</a></li>
                         <li><a style="font-size: 15px" href="#">Thông Tin</a>
                             <ul class="dropdown">
                                 <li><a style="font-size: 15px" th:href="@{/cart}">Giỏ Hàng</a></li>
-                                <li><a  style="font-size: 15px"th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
-                                <li><a  style="font-size: 15px"th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
-                                <li><a  style="font-size: 15px"th:href="@{/about}">Về Chúng Tôi</a></li>
+                                <li><a style="font-size: 15px" th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
+                                <li><a style="font-size: 15px" th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
+                                <li><a style="font-size: 15px" th:href="@{/about}">Về Chúng Tôi</a></li>
                             </ul>
                         </li>
                         <li><a style="font-size: 15px" th:href="@{/blog}">Tin Tức</a></li>
-                        <li><a  style="font-size: 15px"th:href="@{/contact}">Liên Lạc</a></li>
+                        <li><a style="font-size: 15px" th:href="@{/contact}">Liên Lạc</a></li>
                     </ul>
                 </nav>
             </div>
@@ -153,34 +153,43 @@
                 </div>
             </div>
         </div>
+        <div id="invoice" style="max-width: 1225px;">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="margin-top-20">
+                        <tr>
+                            <th>Sản Phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Giá</th>
+                        </tr>
+                        <th:block th:each="y: ${listOrder_Item}">
+                            <tr>
+                                <td th:text="${y.product.product_Name}"></td>
+                                <td th:text="${y.count}"></td>
+                                <td th:text="${#numbers.formatDecimal(y.product.price * y.count, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                            </tr>
+                        </th:block>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
 
-                <div id="add-listing">
 
+                <div id="add-listing">
                     <!-- Section -->
                     <div class="add-listing-section">
+
 
                         <!-- Section / End -->
                         <!-- Section -->
                         <div class="product__details__tab__content">
-                            <div class="product__details__tab__content">
-                                <ul style="list-style: none">
-                                    <h3>Sản Phẩm Bạn Đã Mua: </h3>
-                                    <th:block th:each="y: ${listOrder_Item}">
-                                        <li>
-                                            <h4><i></i> <strong
-                                                    th:text="${y.product.product_Name}"></strong></h4>
-                                            <ul>
-                                                <li style="list-style: none" th:text="'Số Lượng:' + ${y.count}"></li>
-                                                <li style="list-style: none"
-                                                    th:text="'Giá: ' + ${#numbers.formatDecimal(y.product.price * y.count, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></li>
-                                            </ul>
-                                        </li>
-                                    </th:block>
-                                </ul>
-                            </div>
-                            <form th:action="@{/xac-nhan-tra-hang/{id}(id=${id})}" method="post"   enctype="multipart/form-data">
+                            <!-- Invoice -->
+                            <form th:action="@{/xac-nhan-tra-hang/{id}(id=${id})}" method="post"
+                                  enctype="multipart/form-data">
                                 <div class="add-listing-section margin-top-45">
 
                                     <!-- Headline -->
@@ -198,7 +207,8 @@
                                                 <label class="upload__btn">
                                                     <p style="margin-bottom: 0px;">Chọn Ảnh</p> <input
                                                         name="listImage" accept="image/*" type="file"
-                                                        data-max_length="20" class="upload__inputfile" multiple>
+                                                        data-max_length="20" class="upload__inputfile"
+                                                        multiple>
                                                 </label>
                                             </div>
                                             <div class="upload__img-wrap"></div>
@@ -257,7 +267,8 @@
                     <div class="footer__logo">
                         <a href="#"><img src="/img/footer-logo.png" alt=""></a>
                     </div>
-                    <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế</p>
+                    <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả
+                        thiết kế</p>
                     <a href="#"><img src="/img/payment.png" alt=""></a>
                 </div>
             </div>

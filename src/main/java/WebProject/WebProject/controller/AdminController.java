@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -182,21 +185,18 @@ public class AdminController {
     }
 
     @GetMapping("/thong-ke-admin-doanh-thu/tim-kiem")
-    public String DashboardWalletView1(Model model, @RequestParam("ngay1") String ngay1
-            , @RequestParam("ngay2") String ngay2) {
+    public String DashboardWalletView1(Model model,
+                                       @RequestParam("ngay1") String ngay1,
+                                       @RequestParam("ngay2") String ngay2) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
-
-
-            if (ngay1.isEmpty() || ngay2.isEmpty()) {
+            if (ngay1 == null || ngay2 == null) {
                 return "redirect:/thong-ke-admin-doanh-thu";
             } else {
-
-                List<Map<String, Object>> resultList = thongKeRepository.getTotalRevenueByDate1(Date.valueOf(ngay1), Date.valueOf(ngay2));
+                List<Map<String, Object>> resultList = thongKeRepository.getTotalRevenueByDate1(ngay1, ngay2);
                 model.addAttribute("resultList", resultList);
-
 
                 List<Order> listOrder = orderService.findAll();
                 List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Payment with momo");
@@ -205,6 +205,7 @@ public class AdminController {
                 long TotalMomo = 0;
                 long vi = 0;
                 long TotalDelivery = 0;
+
                 for (Order y : listPaymentWithMomo) {
                     TotalMomo = TotalMomo + y.getTotal();
                 }
@@ -214,10 +215,10 @@ public class AdminController {
                 for (Order y : listVi) {
                     vi = vi + y.getTotal();
                 }
+
                 List<Order> listRecentMomo = orderService.findTop5OrderByPaymentMethod("Payment with momo");
                 List<Order> vi1 = orderService.findTop5OrderByPaymentMethod("Ví");
                 List<Order> listRecentDelivery = orderService.findTop5OrderByPaymentMethod("Payment on delivery");
-
 
                 model.addAttribute("vi", vi);
                 model.addAttribute("vi1", vi1);
@@ -226,6 +227,7 @@ public class AdminController {
                 model.addAttribute("TotalOrder", listOrder.size());
                 model.addAttribute("listRecentDelivery", listRecentDelivery);
                 model.addAttribute("listRecentMomo", listRecentMomo);
+
                 return "thongKeDT.html";
             }
         }
@@ -1100,12 +1102,31 @@ public class AdminController {
             String referer = request.getHeader("Referer");
             Order order = orderService.findById(id);
             if ("1".equals(order.getActiveOrder().getId())) {
+                Mail mail1 = new Mail();
+                mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
+                mail1.setMailTo(order.getEmail());
+                mail1.setMailSubject("Nhà sách Opacarophile");
+                mail1.setMailContent("Đơn hàng của bạn đã được xác nhận và đang chờ lấy hàng");
+
+                mailService.sendEmail(mail1);
                 order.setActiveOrder(ActiveOrder.builder().id("2").build());
                 order.setConfirmDate(createAt);
             } else if ("2".equals(order.getActiveOrder().getId())) {
+                Mail mail1 = new Mail();
+                mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
+                mail1.setMailTo(order.getEmail());
+                mail1.setMailSubject("Nhà sách Opacarophile");
+                mail1.setMailContent("Lấy hàng thành công, đơn hàng của bạn đang được giao cho bên vận chuyển");
+                mailService.sendEmail(mail1);
                 order.setActiveOrder(ActiveOrder.builder().id("3").build());
                 order.setPickupDate(createAt);
             } else if ("3".equals(order.getActiveOrder().getId())) {
+                Mail mail1 = new Mail();
+                mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
+                mail1.setMailTo(order.getEmail());
+                mail1.setMailSubject("Nhà sách Opacarophile");
+                mail1.setMailContent("Bên vẫn chuyển đã nhận đơn hàng, đang trên đường giao ");
+                mailService.sendEmail(mail1);
                 order.setActiveOrder(ActiveOrder.builder().id("4").build());
                 order.setDeliveryDate(createAt);
             }
@@ -1160,6 +1181,12 @@ public class AdminController {
             String referer = request.getHeader("Referer");
             Order order = orderService.findById(id);
             if ("4".equals(order.getActiveOrder().getId())) {
+                Mail mail = new Mail();
+                mail.setMailFrom("nguyentrunganhnta43@gmail.com");
+                mail.setMailTo(order.getEmail());
+                mail.setMailSubject("Nhà sách Opacarophile");
+                mail.setMailContent("Đơn hàng với mã đơn: HD" + order.getId() + " đơn hàng đã giao thành công. Nếu bạn còn quan tâm tới nhà Sách Oparophile vui lòng truy cập website của cửa hàng. Xin chân trọng cảm ơn!");
+                mailService.sendEmail(mail);
                 order.setActiveOrder(ActiveOrder.builder().id("6").build());
             }
             order.setDeliverySuccesfulDate(createAt);
