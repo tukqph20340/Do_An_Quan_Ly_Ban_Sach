@@ -409,7 +409,7 @@
                                 <th:block th:if="${discount > 0}">
                                     <li>Giảm Giá <span id="giaGiamc"
                                                        name="giaGiamc"
-                                                       th:text="'-'+${#numbers.formatDecimal(discount, 0, 'COMMA', 0, 'POINT')} +'VNĐ'"></span>
+                                                       th:text="${#numbers.formatDecimal(discount, 0, 'COMMA', 0, 'POINT')} +'VNĐ'"></span>
                                         <input type="hidden" name="discal" id="discal">
 
                                     </li>

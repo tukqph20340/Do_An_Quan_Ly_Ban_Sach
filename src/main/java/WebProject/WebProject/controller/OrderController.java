@@ -202,11 +202,6 @@ public class OrderController {
                            @RequestParam(value = "payVi", defaultValue = "false") boolean payVi, Model model,
                            HttpServletResponse resp, HttpServletRequest request1) throws Exception {
         try {
-            if (note.isEmpty()) {
-                session.setAttribute("AddToCartErr", "Vui Lòng Nhập Địa Chỉ Cụ Thể!");
-                return "redirect:/checkout";
-            } else {
-
                 String vi = request1.getParameter("discal");
                 System.out.println(vi);
                 String giaShip = request1.getParameter("ship");
@@ -305,7 +300,7 @@ public class OrderController {
                         jsonRequest.setRedirectUrl(Constant.redirectUrl);
                         jsonRequest.setIpnUrl(Constant.ipnUrl);
                         jsonRequest.setAmount(String.valueOf(toTalAll));
-                        jsonRequest.setOrderInfo("Thanh toán Male Fashion.");
+                        jsonRequest.setOrderInfo("Thanh toán Opacarophlie");
                         jsonRequest.setRequestId(orderId);
                         jsonRequest.setOrderType(Constant.orderType);
                         jsonRequest.setRequestType(Constant.requestType);
@@ -400,7 +395,7 @@ public class OrderController {
 
                 }
 
-            }
+
         } catch (Exception e) {
             session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
             return "redirect:/checkout";
