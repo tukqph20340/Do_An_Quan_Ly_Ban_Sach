@@ -12815,10 +12815,10 @@ a.dashboard-responsive-nav-trigger { display: none; }
 	padding: 0 30px;
 	margin-bottom: 5px;
 	display: block;
-	color: #999;
+	color: orangered;
 	text-transform: uppercase;
 	font-weight: 300;
-	font-size: 12px;
+	font-size: 13px;
 	letter-spacing: 1px;
 }
 
@@ -12833,7 +12833,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 }
 
 .dashboard-nav ul li a {
-	color: #eee;
+	color:#0b0b0b;
 	display: block;
 	padding: 11px 27px;
 	transition: 0.3s;
@@ -12845,7 +12845,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 	width: 20px;
 }
 
-.dashboard-nav ul li a:hover { color: #fff; }
+.dashboard-nav ul li a:hover { color: blue; }
 
 
 /* Nav Tag */
@@ -12920,7 +12920,7 @@ a.dashboard-responsive-nav-trigger { display: none; }
 	font-size: 16px;
 	position: absolute;
 	transition: 0.2s;
-	color: rgba(255,255,255,0.5);
+	color: black;
 }
 
 
