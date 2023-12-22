@@ -77,7 +77,7 @@ public class PromotionController {
     @PostMapping("/add-khuyen-mai")
     public String add(Model model,
                       @RequestParam("maCode") String maCode,
-                      @RequestParam("giamGiaLoai") String giamGiaLoai,
+//                      @RequestParam("giamGiaLoai") String giamGiaLoai,
                       @RequestParam("giaTriGiam") String giaTriGiam,
                       @RequestParam("ngayHetHan") String ngayHetHan,
                       @RequestParam("giaTriGiamToiDa") String giaTriGiamToiDa,
@@ -95,18 +95,22 @@ public class PromotionController {
         if (maCode.isEmpty()) {
             model.addAttribute("loi", "Mã không đc để trống");
             return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else if (giamGiaLoai.isEmpty()) {
-            model.addAttribute("loi1", "giảm giá loại không được để trống");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else if (Integer.valueOf(giamGiaLoai) < 1) {
-            model.addAttribute("loi5", "giảm giá loại không được nhỏ hơn 1");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
+//        } else if (giamGiaLoai.isEmpty()) {
+//            model.addAttribute("loi1", "giảm giá loại không được để trống");
+//            return "/admin/khuyenmai/add-khuyen-mai.html";
+//        } else if (Integer.valueOf(giamGiaLoai) < 1) {
+//            model.addAttribute("loi5", "giảm giá loại không được nhỏ hơn 1");
+//            return "/admin/khuyenmai/add-khuyen-mai.html";
         } else if (giaTriGiam.isEmpty()) {
             model.addAttribute("loi2", "giá trị giảm không được để trống");
             return "/admin/khuyenmai/add-khuyen-mai.html";
 
         } else if (Integer.valueOf(giaTriGiam) < 1) {
             model.addAttribute("loi6", "giá trị giảm không được nhỏ hơn 1");
+            return "/admin/khuyenmai/add-khuyen-mai.html";
+        }
+        else if (Integer.valueOf(giaTriGiam) > 100) {
+            model.addAttribute("loi10", "giá trị giảm không được lớn hơn 100");
             return "/admin/khuyenmai/add-khuyen-mai.html";
         } else if (ngayHetHan.isEmpty()) {
             model.addAttribute("loi3", "ngày hết hạn không được để trống");
@@ -128,7 +132,7 @@ public class PromotionController {
             Promotion promotion = new Promotion();
             promotion.setCouponCode(maCode);
             promotion.setCreatedAt(Date.valueOf(hienTai));
-            promotion.setDiscountType(Integer.valueOf(giamGiaLoai));
+            promotion.setDiscountType(1);
             promotion.setDiscountValue(Long.valueOf(giaTriGiam));
             promotion.setExpiredAt(Date.valueOf(ngayHetHan));
             promotion.setMaximumDiscountValue(Long.valueOf(giaTriGiamToiDa));
@@ -150,7 +154,7 @@ public class PromotionController {
     public String update(Model model
             , @PathVariable() String id,
                          @RequestParam("maCode") String maCode,
-                         @RequestParam("giamGiaLoai") String giamGiaLoai,
+//                         @RequestParam("giamGiaLoai") String giamGiaLoai,
                          @RequestParam("giaTriGiam") String giaTriGiam,
                          @RequestParam("ngayHetHan") String ngayHetHan,
                          @RequestParam("giaTriGiamToiDa") String giaTriGiamToiDa,
@@ -163,16 +167,16 @@ public class PromotionController {
             Promotion promotion = service.detail(Integer.valueOf(id));
             model.addAttribute("detail", promotion);
             return "/admin/khuyenmai/update-khuyen-mai.html";
-        } else if (giamGiaLoai.isEmpty()) {
-            model.addAttribute("loi1", "giảm giá loại không được để trống");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
-        } else if (Integer.valueOf(giamGiaLoai) < 1) {
-            model.addAttribute("loi5", "giảm giá loại không được nhỏ hơn 1");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
+//        } else if (giamGiaLoai.isEmpty()) {
+//            model.addAttribute("loi1", "giảm giá loại không được để trống");
+//            Promotion promotion = service.detail(Integer.valueOf(id));
+//            model.addAttribute("detail", promotion);
+//            return "/admin/khuyenmai/update-khuyen-mai.html";
+//        } else if (Integer.valueOf(giamGiaLoai) < 1) {
+//            model.addAttribute("loi5", "giảm giá loại không được nhỏ hơn 1");
+//            Promotion promotion = service.detail(Integer.valueOf(id));
+//            model.addAttribute("detail", promotion);
+//            return "/admin/khuyenmai/update-khuyen-mai.html";
         } else if (giaTriGiam.isEmpty()) {
             model.addAttribute("loi2", "giá trị giảm không được để trống");
             Promotion promotion = service.detail(Integer.valueOf(id));
@@ -208,7 +212,7 @@ public class PromotionController {
             Promotion promotion = service.detail(Integer.valueOf(id));
             promotion.setCouponCode(maCode);
             promotion.setCreatedAt(Date.valueOf(hienTai));
-            promotion.setDiscountType(Integer.valueOf(giamGiaLoai));
+            promotion.setDiscountType(Integer.valueOf(1));
             promotion.setDiscountValue(Long.valueOf(giaTriGiam));
             promotion.setExpiredAt(Date.valueOf(ngayHetHan));
             promotion.setMaximumDiscountValue(Long.valueOf(giaTriGiamToiDa));
