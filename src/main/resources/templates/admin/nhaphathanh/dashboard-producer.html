@@ -163,7 +163,7 @@
                         <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
                                 style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
                     </ul>
-                    <ul data-submenu-title="Home">
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
                         <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
                                 style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
                         <li><a href="/home"><i class="im im-icon-Home"></i> <span
@@ -178,31 +178,96 @@
         <!-- Content
 ================================================== -->
         <div class="dashboard-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card-body" style="background: white">
-                        <table style="border: 1px">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="card-body" style="background: white">
+                        <form>
+                            <label>Tên Nhà Xuất Bản:</label>
+                            <input type="text" name="ten">
+                            <button>Tìm Kiếm</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card-body" style="margin-top:15px ;background: white">
+                        <div class="col-lg-12">
+                            <h4 style="font-weight: bold">Danh Sách Nhà Xuất Bản</h4>
+                            <button style="margin-left: 1047px" class="btn btn-primary"><a
+                                    style="font-size: 15px;color: white" th:href="@{/add-nha-san-xuat}">+ Thêm</a>
+                            </button>
+                            <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
+                                    style="font-size: 15px;color: white" th:href="@{/xuat-nha-san-xuat}"> Xuất Excel</a>
+                            </button>
+                        </div>
+                        <table class="table table-bordered table-striped table-bordered" style="text-align: center">
                             <tr>
-                                <th>ID</th>
-                                <th>Tên</th>
-                                <th>Số Điện Thoại</th>
-                                <th>Email</th>
-                                <th>Địa Chỉ</th>
-                                <th>Quốc Gia</th>
-                                <th>Mô Tả</th>
-                                <th>Hành Động</th>
+                                <th style="text-align: center">ID</th>
+                                <th style="text-align: center">Tên</th>
+                                <th style="text-align: center">Số Điện Thoại</th>
+                                <th style="text-align: center">Email</th>
+                                <th style="text-align: center"> Địa Chỉ</th>
+                                <th style="text-align: center">Quốc Gia</th>
+                                <th style="text-align: center">Mô Tả</th>
+                                <th style="text-align: center">Hành Động</th>
                             </tr>
-                            <tr>
-                                <td>Row 2, Column 1</td>
-                                <td>Row 2, Column 2</td>
-                                <td>Row 2, Column 3</td>
+                            <tr th:each="list:${pageProduct}">
+                                <td>[[${list.id}]]</td>
+                                <td>[[${list.nameProducer}]]</td>
+                                <td>[[${list.phone}]]</td>
+                                <td>[[${list.email}]]</td>
+                                <td>[[${list.address}]]</td>
+                                <td>[[${list.nation}]]</td>
+                                <td>[[${list.description}]]</td>
                             </tr>
                         </table>
+                        <div>
+                            <!--phân trang cho sản phẩm-->
+                            <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                <ul class="pagination">
+                                    <!--trang đầu-->
+                                    <li class="page-item">
+                                        <a class="page-link" th:href="@{/nha-san-xuat-admin(pageNo=0)}">Trang
+                                            Đầu</a>
+                                    </li>
+                                    <!--Previous-->
+                                    <li class="page-item" th:if="${pageNumber>0}">
+                                        <a class="page-link"
+                                           th:href="@{/nha-san-xuat-admin(pageNo=${pageNumber} -1)}">Trước</a>
+                                    </li>
+                                    <li class="page-item" th:if="${pageNumber == 0}">
+                                        <a class="page-link" th:disabled="true">Trước</a>
+                                    </li>
+                                    <!--số thứ tự trang-->
+                                    <!--dùng for i trong thymleaf-->
+                                    <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{/nha-san-xuat-admin(pageNo=${index})}"
+                                               th:text="${index+1}"></a>
+                                        </li>
+                                    </div>
+                                    <!--Next-->
+                                    <li class="page-item" th:if="${pageNumber < (pageProductPage -1)}">
+                                        <a class="page-link"
+                                           th:href="@{/nha-san-xuat-admin(pageNo=${pageProductPage} +1)}">Tiếp</a>
+                                    </li>
+                                    <li class="page-item" th:if="${pageNumber == (pageProductPage -1)}">
+                                        <a class="page-link" th:disabled="true">Tiếp</a>
+                                    </li>
+                                    <!--trang cuối-->
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           th:href="@{/nha-san-xuat-admin(pageNo=${pageProductPage -1})}">Trang
+                                            Cuối</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                     <!-- Content / End -->
                 </div>
-            </div>
             </div>
         </div>
 
