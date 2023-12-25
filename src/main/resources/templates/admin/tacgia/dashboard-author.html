@@ -8,7 +8,14 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
@@ -59,17 +66,12 @@
                         <!-- User Menu -->
                         <div class="user-menu">
                             <div class="user-name">
-                                Tài Khoản
+
                             </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
+
                         </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -143,68 +145,58 @@
         <!-- Content
 ================================================== -->
         <div class="dashboard-content">
-
-            <div class="col-lg-12">
-                <div class="col-lg-4" style="text-align: left">
-                    <a th:href="@{/add-tac-gia}"
-                       class="button border with-icon">Thêm Tác Giả<i
-                    ></i></a>
-                </div>
-            </div>
-
             <div class="row">
-                <!-- Listings -->
-                <div class="col-lg-12 col-md-12">
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 style="margin-top: 20px">Tác Giả</h4>
-                        <ul>
-                            <th:block th:each="y : ${pageProduct.content}">
-                                <li>
-                                    <div class="list-box-listing">
-                                        <div class="list-box-listing-img">
-                                            <a href="#"><img th:src="${y.authorImage[0].url_Image}"
-                                                             alt=""></a>
-                                        </div>
-                                        <div class="list-box-listing-content">
-                                            <div class="inner">
-                                                <h3>
-                                                    <a href="#" th:text="${y.nameAuthor}"></a>
-                                                </h3>
-                                                <span th:text="'Địa Chỉ: ' + ${y.address}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="buttons-to-right">
-                                        <a th:href="@{/tac-gia/sua/{id}(id=${y.id})}" class="button gray"><i
-                                                class="sl sl-icon-note"></i> Sửa</a>
-                                    </div>
-                                </li>
-                            </th:block>
-                        </ul>
+
+                <div class="col-lg-12">
+                    <div class="card-body" style="background: white">
+                        <h4 style="font-weight: bold">Tìm Kiếm</h4>
+                        <form>
+                            <div class="input-group">
+                                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>search</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
 
-            <!-- Pagination -->
-            <div class="clearfix"></div>
-            <div th:if="${search_dashboard==null}" class="row">
-                <div class="col-md-12">
-                    <div class="pagination-container margin-top-20 margin-bottom-40">
-                        <nav class="pagination">
-                            <ul>
-                                <li><a class="paging-item" th:if="${pageProduct.number} > 0"
-                                       th:href="@{/dashboard-author/{page}(page=${pageProduct.number - 1})}"><i
-                                        class="sl sl-icon-arrow-left"></i></a></li>
-                                <li><a class="paging-item"
-                                       th:href="@{/dashboard-author/{page}(page=${pageProduct.number})}"
-                                       th:text="${pageProduct.number+1}"></a></li>
-                                <li><a class="paging-item"
-                                       th:if="${pageProduct.number} < ${pageProduct.totalPages - 1}"
-                                       th:href="@{/dashboard-author/{page}(page=${pageProduct.number + 1})}"><i
-                                        class="sl sl-icon-arrow-right"></i></a></li>
-                            </ul>
-                        </nav>
+                <div class="col-lg-12">
+                    <div class="card-body" style="margin-top:15px ;background: white">
+                        <div class="col-lg-12">
+                            <h4 style="font-weight: bold">Danh Sách Tác Giả </h4>
+                            <button style="margin-left: 1047px" class="btn btn-primary"><a
+                                    style="font-size: 15px;color: white" th:href="@{/add-nha-san-xuat}">+ Thêm</a>
+                            </button>
+                            <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
+                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-nha-san-xuat}"> Xuất Excel</a>
+                            </button>
+                        </div>
+                        <table class="table table-bordered table-striped table-bordered" style="text-align: center;vertical-align: middle;">
+                            <tr>
+                                <th style="text-align: center;vertical-align: middle;">ID</th>
+                                <th style="text-align: center;vertical-align: middle;">Tên</th>
+                                <th style="text-align: center;vertical-align: middle;">Số Điện Thoại</th>
+                                <th style="text-align: center;vertical-align: middle;">Email</th>
+                                <th style="text-align: center;vertical-align: middle;"> Địa Chỉ</th>
+                                <th style="text-align: center;vertical-align: middle;">Quốc Gia</th>
+                                <th style="text-align: center;vertical-align: middle;">Mô Tả</th>
+                                <th style="text-align: center;vertical-align: middle;" colspan="2">Hành Động</th>
+                            </tr>
+                            <tr th:each="list:${pageProduct}">
+
+                                <td>
+                                    <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a class="sl sl-icon-eye" th:href="@{/view-all/{id}(id=${list.id})}"><ion-icon name="eye-outline"></ion-icon></a></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary"style=" height: 32px; width: 32px;" ><a class="sl sl-icon-note" th:href="@{/view-sua/{id}(id=${list.id})}"></a></button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <!--phân trang cho sản phẩm-->
+
+                        </div>
                     </div>
+                    <!-- Content / End -->
                 </div>
             </div>
         </div>
