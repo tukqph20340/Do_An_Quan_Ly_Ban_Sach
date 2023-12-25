@@ -182,42 +182,46 @@
                 <div class="card-body" style="background: white">
                     <form th:action="@{/add-nha-san-xuat}" method="post">
                         <div class="col-lg-12">
-                            <h4  style="font-weight: bold">Nhập Thông Tin Nhà Xuất Bản</h4>
+                            <h1 style="font-weight: bold; margin-bottom: 50px;">Nhập Thông Tin Nhà Xuất Bản</h1>
                         </div>
                         <div class="col-lg-12">
                             <div class="col-lg-6">
-                                <label  style="font-weight: bold">Tên Nhà Xuất bản</label>
-                                <input type="text" name="tenNhaXuatBan">
+                                <label style="font-weight: bold">Tên Nhà Xuất bản</label>
+                                <input type="text" name="tenNhaXuatBan" placeholder="Mời Nhập Tên Nhà Xuất Bản">
+                                <p style="color: red">[[${loi}]]</p>
                             </div>
                             <div class="col-lg-6">
-                                <label  style="font-weight: bold">Số Điện Thoại</label>
-                                <input type="number" name="soDienThoai">
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="col-lg-6">
-                                <label  style="font-weight: bold">Email</label>
-                                <input type="email" name="email">
-                            </div>
-                            <div class="col-lg-6">
-                                <label  style="font-weight: bold">Địa Chỉ</label>
-                                <input type="text" name="diaChi">
+                                <label style="font-weight: bold">Số Điện Thoại</label>
+                                <input type="number" name="soDienThoai" placeholder="Mời Nhập Số Điện Thoại">
+                                <p style="color: red">[[${loi1}]] [[${loi5}]]</p>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="col-lg-6">
-                                <label  style="font-weight: bold">Quốc Gia</label>
-                                <input type="text" name="quocGia">
+                                <label style="font-weight: bold">Email</label>
+                                <input type="email" name="email" placeholder="Mời Nhập Email">
+                                <p style="color: red">[[${loi2}]]</p>
                             </div>
                             <div class="col-lg-6">
-                                <label  style="font-weight: bold">Mô Tả</label>
-                                <input type="text" name="moTa">
+                                <label style="font-weight: bold">Địa Chỉ</label>
+                                <input type="text" name="diaChi" placeholder="Mời Nhập Địa Chỉ">
+                                <p style="color: red">[[${loi3}]]</p>
                             </div>
                         </div>
-                        <br>
-                        <br>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-success" style="text-align: center">Thêm Nhà Xuất
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Quốc Gia</label>
+                                <input type="text" name="quocGia" placeholder="Mời Nhập Quốc Gia">
+                                <p style="color: red">[[${loi4}]]</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Mô Tả</label>
+                                <input type="text" name="moTa" placeholder="Mời Nhập Mô Tả">
+                                <p style="color: red">[[${loi6}]]</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Thêm Nhà Xuất
                                 Bản
                             </button>
                         </div>

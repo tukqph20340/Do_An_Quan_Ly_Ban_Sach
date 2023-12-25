@@ -2,6 +2,7 @@ package WebProject.WebProject.controller;
 
 
 
+import WebProject.WebProject.service.ExcelNhaXuatBan;
 import WebProject.WebProject.service.ExcelSanPham;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ExcelController{
     @Autowired
     private ExcelSanPham reportService;
+    @Autowired
+    private ExcelNhaXuatBan excelNhaXuatBan;
 
     @GetMapping("/excel")
     public void generateExcelReport(HttpServletResponse response) throws Exception{
@@ -27,6 +30,19 @@ public class ExcelController{
         response.setHeader(headerKey, headerValue);
 
         reportService.generateExcel(response);
+
+        response.flushBuffer();
+    }
+
+    @GetMapping("/xuat-file-excel-nha-san-xuat")
+    public void generateExcelReport1(HttpServletResponse response) throws Exception{
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=Nha Xuat Ban.xls";
+
+        response.setHeader(headerKey, headerValue);
+
+        excelNhaXuatBan.generateExcel(response);
 
         response.flushBuffer();
     }
