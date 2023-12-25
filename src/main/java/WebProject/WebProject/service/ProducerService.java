@@ -12,7 +12,7 @@ public interface ProducerService {
 
     Producer saveProducer(Producer producer);
 
-    Page<Producer> findAll(Pageable pageable);
+    Page<Producer> findAll(Integer pageNo, Integer size);
 
     Producer getAllProducerById(int id);
 
