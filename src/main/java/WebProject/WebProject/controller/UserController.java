@@ -207,25 +207,51 @@ public class UserController {
 								@ModelAttribute("fullname") String fullname, @ModelAttribute("phone") String phone,
 								@ModelAttribute("province") String province, @ModelAttribute("districts") String districts,
 								@ModelAttribute("wards") String wards,
-								@ModelAttribute("email") String email) throws IOException {
-		User user = (User) session.getAttribute("acc");
-		if (user != null) {
-			if (!avatar.isEmpty()) {
-				String url = cloudinaryService.uploadFile(avatar);
-				user.setAvatar(url);
+								@ModelAttribute("email") String email,HttpServletRequest request) throws IOException {
+		if (phone.length()!=10){
+
+			model.addAttribute("loi", "Số điện thoại nhập đúng 10 số!");
+			Cookie user_name = cookie.read("user_name");
+			Wallet vi = walletRepository.findByUserId(user_name.getValue());
+			model.addAttribute("vi", vi);
+			User user = (User) session.getAttribute("acc");
+			String referer = request.getHeader("Referer");
+			String messageChangeProfile = (String) session.getAttribute("messageChangeProfile");
+			model.addAttribute("messageChangeProfile", messageChangeProfile);
+			session.setAttribute("messageChangeProfile", null);
+			if (user == null) {
+				return "redirect:" + referer;
+			} else {
+				String error_change_pass = (String) session.getAttribute("error_change_pass");
+				String ChangePassSuccess = (String) session.getAttribute("ChangePassSuccess");
+				model.addAttribute("error_change_pass", error_change_pass);
+				model.addAttribute("ChangePassSuccess", ChangePassSuccess);
+				session.setAttribute("error_change_pass", null);
+				session.setAttribute("ChangePassSuccess", null);
+				model.addAttribute("user", user);
+				return "myprofile";
 			}
-			user.setUser_Name(fullname);
-			user.setEmail(email);
-			user.setPhone_Number(phone);
-			user.setDistricts(districts);
-			user.setProvince(province);
-			user.setWards(wards);
-			userService.saveUser(user);
-			session.setAttribute("acc", user);
-			session.setAttribute("messageChangeProfile", "Change Success.");
-			return "redirect:/myprofile";
-		} else {
-			return "rediect:/home";
+
+		}else {
+			User user = (User) session.getAttribute("acc");
+			if (user != null) {
+				if (!avatar.isEmpty()) {
+					String url = cloudinaryService.uploadFile(avatar);
+					user.setAvatar(url);
+				}
+				user.setUser_Name(fullname);
+				user.setEmail(email);
+				user.setPhone_Number(phone);
+				user.setDistricts(districts);
+				user.setProvince(province);
+				user.setWards(wards);
+				userService.saveUser(user);
+				session.setAttribute("acc", user);
+				session.setAttribute("messageChangeProfile", "Change Success.");
+				return "redirect:/myprofile";
+			} else {
+				return "rediect:/home";
+			}
 		}
 	}
 

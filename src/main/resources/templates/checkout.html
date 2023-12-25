@@ -239,7 +239,7 @@
                     </form>
                 </div>
             </div>
-            <form action="checkout" method="post">
+            <form onsubmit="return validatePhoneNumber()" action="checkout" method="post">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <h5 class="section-title position-relative text-uppercase mb-3">
@@ -260,7 +260,7 @@
                                     </div>
                                     <div class="col-md-6 form-group" style="margin-top: 30px">
                                         <label>Email :</label>
-                                        <input class="form-control" type="text" name="email" id="email"
+                                        <input class="form-control" type="email" name="email" id="email"
                                                th:value="${session.acc.email}" readonly>
                                         <input type="hidden" name="email" th:value="${session.acc.email}">
 
@@ -323,16 +323,29 @@
                                         <div class="col-md-6 form-group" style="margin-top: 20px;">
                                             <label>Email</label>
                                             <span style="color: red">*</span>
-                                            <input class="form-control" name="email1" id="email1" type="text"
+                                            <input class="form-control" name="email1" id="email1" type="email"
+
                                                    placeholder="Email">
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label>Số điện thoại</label>
                                             <span style="color: red">*</span>
                                             <input class="form-control" name="phone1" id="sdt1" type="text"
-                                                   placeholder="Số điện thoại">
+                                                   placeholder="Số điện thoại"  onblur="validatePhoneNumber()">
                                         </div>
+                                        <script>
+                                            function validatePhoneNumber() {
+                                                var phoneNumberInput = document.getElementById('sdt1');
+                                                var phoneNumber = phoneNumberInput.value;
 
+                                                // Kiểm tra xem chuỗi chỉ chứa chữ số và có đúng 10 ký tự hay không
+                                                if (/^\d{10}$/.test(phoneNumber)) {
+                                                    console.log("Số điện thoại hợp lệ: " + phoneNumber);
+                                                } else {
+                                                    alert("Số điện thoại không hợp lệ. Vui lòng nhập 10 chữ số.");
+                                                }
+                                            }
+                                        </script>
                                         <div class="col-md-6 form-group">
                                             <label for="province">Tỉnh:</label>
                                             <span style="color: red">*</span>
@@ -375,7 +388,7 @@
                     <div class="col-lg-4 col-md-6">
 
                         <div class="checkout__order">
-                            <h4 class="order__title">ĐƠN HÀNG CỦA BẠNr</h4>
+                            <h4 class="order__title">ĐƠN HÀNG CỦA BẠN</h4>
                             <div class="checkout__order__products">
                                 Sản Phẩm <span>Giá</span>
                             </div>
@@ -409,7 +422,7 @@
                                 <th:block th:if="${discount > 0}">
                                     <li>Giảm Giá <span id="giaGiamc"
                                                        name="giaGiamc"
-                                                       th:text="'-'+${#numbers.formatDecimal(discount, 0, 'COMMA', 0, 'POINT')} +'VNĐ'"></span>
+                                                       th:text="${#numbers.formatDecimal(discount, 0, 'COMMA', 0, 'POINT')} +'VNĐ'"></span>
                                         <input type="hidden" name="discal" id="discal">
 
                                     </li>

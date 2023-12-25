@@ -8,16 +8,63 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+</style>
 <body>
-
 <div id="wrapper">
 
     <!-- Header Container
@@ -25,17 +72,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -58,19 +105,8 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-                                Tài Khoản
-                            </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
-                        </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -91,67 +127,47 @@
 ================================================== -->
 
         <!-- Responsive Navigation Trigger -->
-        <a href="#" class="dashboard-responsive-nav-trigger"><i
-                class="fa fa-reorder"></i> Dashboard Navigation</a>
 
-        <div class="dashboard-nav">
+
+        <div class="dashboard-nav" style="background: white">
             <div class="dashboard-nav-inner">
                 <ul data-submenu-title="Trang Chủ">
-                    <li class="active"><a href="/home-admin"><i
-                            class="sl sl-icon-settings"></i> Trang Chủ</a></li>
-                    <li><a href="#"><i
-                            class="sl sl-icon-wallet"></i> Thông Kê</a>
-                        <ul id="sub">
-
-                            <li><a href="/thong-ke-admin-san-pham">Thông Kê Loại Sản Phẩm</a></li>
-                            <li><a href="/thong-ke-admin-don-hang">Thông Kê Đơn Hàng</a></li>
-                            <li><a href="/thong-ke-admin-doanh-thu">Thông Kê Doanh Thu</a></li>
-
-                        </ul>
-                    </li>
-                    <li><a href="#"><i
-                            class="fa fa-calendar-check-o"></i> Quản Lý Giao Dịch</a>
-                        <ul id="sub">
-
-                            <li><a href="/dashboard-orders1">Chờ Xác Nhận</a></li>
-                            <li><a href="/dashboard-orders2">Chờ lấy hàng</a></li>
-                            <li><a href="/dashboard-orders3">Đã Lấy Hàng</a></li>
-                            <li><a href="/dashboard-orders4">Đang Giao</a></li>
-                            <li><a href="/dashboard-orders6">Đơn Đã Giao Thành Công</a></li>
-                            <li><a href="/dashboard-orders7">Hủy</a></li>
-                            <li><a href="/dashboard-orders8">Trả Hàng Theo Hóa Đơn</a></li>
-                            <li><a href="/dashboard-orders9">Thất Bại</a></li>
-                        </ul>
-
-                    </li>
+                    <li class="active"><a href="/home-admin"><i class="sl sl-icon-settings"></i> <span
+                            style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
+                    <li><a href="/thong-ke"><i class="sl sl-icon-wallet"></i> <span
+                            style="font-weight: bold; color: black;">Thông Kê</span></a></li>
+                    <li><a href="/quan-ly-don-hang"><i class="fa fa-calendar-check-o"></i> <span
+                            style="font-weight: bold; color: black;">Quản Lý Hóa Đơn</span></a></li>
                     <ul data-submenu-title="Sản Phẩm">
-                        <li><a href="#"> <i
-                                class="sl sl-icon-layers"></i>Quản Lý Sản Phẩm</a>
+                        <li><a href="#"><i class="sl sl-icon-layers"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Sản Phẩm</span></a>
                             <ul id="sub">
-
-                                <li><a href="/san-pham-admin">Sản Phẩm</a></li>
-
-                                <li><a href="/tac-gia-admin">Tác Giả</a></li>
-
-                                <li><a href="/nha-san-xuat-admin">Nhà Xuất Bản</a></li>
-
-                                <li><a href="/bia-admin">Bìa Sách</a></li>
-
-                                <li><a href="/the-loai-admin">Thể Loại Sách</a></li>
-
-                                <li><a href="/khuyen-mai/admin">Khuyến mãi</a></li>
+                                <li><a href="/san-pham-admin"><span
+                                        style="font-weight: bold; color: black;">Sản Phẩm</span></a></li>
+                                <li><a href="/tac-gia-admin"><span
+                                        style="font-weight: bold; color: black;">Tác Giả</span></a></li>
+                                <li><a href="/nha-san-xuat-admin"><span style="font-weight: bold; color: black;">Nhà Xuất Bản</span></a>
+                                </li>
+                                <li><a href="/bia-admin"><span style="font-weight: bold; color: black;">Bìa Sách</span></a>
+                                </li>
+                                <li><a href="/the-loai-admin"><span style="font-weight: bold; color: black;">Thể Loại Sách</span></a>
+                                </li>
+                                <li><a href="/khuyen-mai/admin"><span style="font-weight: bold; color: black;">Khuyến mãi</span></a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
                     <ul data-submenu-title="Người Dùng">
-                        <li><a href="/nguoi-dung-admin"><i
-                                class="sl sl-icon-user"></i>Quản Lý Tài Khoản</a></li>
-                        <li><a href="/dang-xuat"><i
-                                class="sl sl-icon-power"></i> Đăng Xuất</a></li>
+                        <li><a href="/nguoi-dung-admin"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Tài Khoản</span></a></li>
+                        <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
+                                style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
                     </ul>
-                    <ul data-submenu-title="Home">
-                        <li><a href="/home"><i class="im im-icon-Home"></i>
-                            Trang Chủ</a></li>
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
+                        <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
+                        <li><a href="/home"><i class="im im-icon-Home"></i> <span
+                                style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
                     </ul>
                 </ul>
             </div>
@@ -159,145 +175,86 @@
         <!-- Navigation / End -->
 
 
-
         <!-- Content
 ================================================== -->
         <div class="dashboard-content">
-            <!-- Titlebar -->
-            <div id="titlebar">
-                <div class="row">
-                    <!--                    <div class="col-md-12">-->
-                    <!--                        <h2 th:text="${session.admin.user_Name + '!'}"></h2>-->
-                    <!--                        &lt;!&ndash; Breadcrumbs &ndash;&gt;-->
-                    <!--                        <nav id="breadcrumbs">-->
-                    <!--                            <ul>-->
-                    <!--                                <li><a href="#">Home</a></li>-->
-                    <!--                                <li>Dashboard</li>-->
-                    <!--                            </ul>-->
-                    <!--                        </nav>-->
-                    <!--                    </div>-->
-                </div>
-            </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <form action="/add-nha-san-xuat" method="post" enctype="multipart/form-data">
-                        <div id="add-listing">
-
-                            <!-- Section -->
-                            <div class="add-listing-section">
-
-                                <!-- Headline -->
-                                <div class="add-listing-headline">
-                                    <h3>
-                                        <i class="sl sl-icon-doc"></i> Thông Tin Cần Thêm
-                                    </h3>
-                                </div>
-
-
-                                <!-- Title -->
-                                <div class="row with-forms">
-                                    <div class="col-md-12">
-                                        <h5>Tên Nhà Sản Xuất</h5>
-                                        <input name="name_producer" class="search-field" type="text"
-                                               value="" placeholder="Tên Nhà Sản Xuất"/>
-                                        <p style="color: red">[[${loi}]]</p>
-                                    </div>
-                                </div>
-
-                                <!-- Row -->
-                                <div class="row with-forms">
-                                    <!-- Price -->
-                                    <div class="col-md-4">
-                                        <h5>Số Điện Thoại</h5>
-                                        <input name="phone" type="number" placeholder="Số Điện Thoại">
-                                        <p style="color: red">[[${loi1}]] [[${loi5}]]</p>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <h5>Email</h5>
-                                        <input name="email" type="email" placeholder="Email">
-                                        <p style="color: red">[[${loi2}]]</p>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <h5>Địa Chỉ</h5>
-                                        <input name="address" type="text" placeholder="Địa Chỉ">
-                                        <p style="color: red">[[${loi3}]]</p>
-                                    </div>
-
-
-                                </div>
-                                <!-- Row / End -->
-
-                            </div>
-                            <!-- Section / End -->
-
-                            <!-- Section -->
-                            <div class="add-listing-section margin-top-45">
-
-                                <!-- Headline -->
-                                <div class="add-listing-headline">
-                                    <h3>
-                                        <i class="sl sl-icon-docs"></i> Mô Tả
-                                    </h3>
-                                </div>
-
-                                <!-- Description -->
-                                <div class="form">
-                                    <h5>Mô Tả Chi Tiết</h5>
-                                    <textarea name="description" class="WYSIWYG" cols="40"
-                                              rows="3" id="summary" spellcheck="true"
-                                              placeholder="Mô Tả Chi Tiết"></textarea>
-                                    <p style="color: red">[[${loi4}]]</p>
-                                </div>
-                            </div>
-                            <!-- Section / End -->
-
-                            <!-- Section -->
-                            <button class="button preview" type="submit">
-                                Thêm Nhà Sản Xuất <i class="fa fa-arrow-circle-right"></i>
-                            </button>
-
+                <div class="card-body" style="background: white">
+                    <form th:action="@{/add-nha-san-xuat}" method="post">
+                        <div class="col-lg-12">
+                            <h1 style="font-weight: bold; margin-bottom: 50px;">Nhập Thông Tin Nhà Xuất Bản</h1>
                         </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Tên Nhà Xuất bản</label>
+                                <input type="text" name="tenNhaXuatBan" placeholder="Mời Nhập Tên Nhà Xuất Bản">
+                                <p style="color: red">[[${loi}]]</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Số Điện Thoại</label>
+                                <input type="number" name="soDienThoai" placeholder="Mời Nhập Số Điện Thoại">
+                                <p style="color: red">[[${loi1}]] [[${loi5}]]</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Email</label>
+                                <input type="email" name="email" placeholder="Mời Nhập Email">
+                                <p style="color: red">[[${loi2}]]</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Địa Chỉ</label>
+                                <input type="text" name="diaChi" placeholder="Mời Nhập Địa Chỉ">
+                                <p style="color: red">[[${loi3}]]</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Quốc Gia</label>
+                                <input type="text" name="quocGia" placeholder="Mời Nhập Quốc Gia">
+                                <p style="color: red">[[${loi4}]]</p>
+                            </div>
+                            <div class="col-lg-6">
+                                <label style="font-weight: bold">Mô Tả</label>
+                                <input type="text" name="moTa" placeholder="Mời Nhập Mô Tả">
+                                <p style="color: red">[[${loi6}]]</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Thêm Nhà Xuất
+                                Bản
+                            </button>
+                        </div>
+                    </form>
                 </div>
-
-                <!-- Copyrights -->
-                <div class="col-md-12">
-                    <div class="copyrights"></div>
-                </div>
-
             </div>
-            </form>
         </div>
-        <!-- Content / End -->
-
-
+        <!-- Dashboard / End -->
     </div>
-    <!-- Dashboard / End -->
-
-
 </div>
 <!-- Wrapper / End -->
 
 
 <!-- Scripts
 ================================================== -->
-<script type="text/javascript" src="scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"
-        src="scripts/jquery-migrate-3.3.2.min.js"></script>
-<script type="text/javascript" src="scripts/mmenu.min.js"></script>
-<script type="text/javascript" src="scripts/chosen.min.js"></script>
-<script type="text/javascript" src="scripts/slick.min.js"></script>
-<script type="text/javascript" src="scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="scripts/counterup.min.js"></script>
-<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
+        src="/scripts/jquery-migrate-3.3.2.min.js"></script>
+<script type="text/javascript" src="/scripts/mmenu.min.js"></script>
+<script type="text/javascript" src="/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/scripts/custom.js"></script>
 
+<!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
+<script src="/scripts/moment.min.js"></script>
+<script src="/scripts/daterangepicker.js"></script>
 
-<script type="text/javascript" src="scripts/dropzone.js"></script>
 
 </body>
 </html>

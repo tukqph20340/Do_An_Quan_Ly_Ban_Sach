@@ -8,14 +8,62 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+</style>
 <body>
 <div id="wrapper">
 
@@ -24,17 +72,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -57,19 +105,8 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-                                Tài Khoản
-                            </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
-                        </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -90,67 +127,47 @@
 ================================================== -->
 
         <!-- Responsive Navigation Trigger -->
-        <a href="#" class="dashboard-responsive-nav-trigger"><i
-                class="fa fa-reorder"></i> Dashboard Navigation</a>
 
-        <div class="dashboard-nav">
+
+        <div class="dashboard-nav" style="background: white">
             <div class="dashboard-nav-inner">
                 <ul data-submenu-title="Trang Chủ">
-                    <li class="active"><a href="/home-admin"><i
-                            class="sl sl-icon-settings"></i> Trang Chủ</a></li>
-                    <li><a href="#"><i
-                            class="sl sl-icon-wallet"></i> Thông Kê</a>
-                        <ul id="sub">
-
-                            <li><a href="/thong-ke-admin-san-pham">Thông Kê Loại Sản Phẩm</a></li>
-                            <li><a href="/thong-ke-admin-don-hang">Thông Kê Đơn Hàng</a></li>
-                            <li><a href="/thong-ke-admin-doanh-thu">Thông Kê Doanh Thu</a></li>
-
-                        </ul>
-                    </li>
-                    <li><a href="#"><i
-                            class="fa fa-calendar-check-o"></i> Quản Lý Giao Dịch</a>
-                        <ul id="sub">
-
-                            <li><a href="/dashboard-orders1">Chờ Xác Nhận</a></li>
-                            <li><a href="/dashboard-orders2">Chờ lấy hàng</a></li>
-                            <li><a href="/dashboard-orders3">Đã Lấy Hàng</a></li>
-                            <li><a href="/dashboard-orders4">Đang Giao</a></li>
-                            <li><a href="/dashboard-orders6">Đơn Đã Giao Thành Công</a></li>
-                            <li><a href="/dashboard-orders7">Hủy</a></li>
-                            <li><a href="/dashboard-orders8">Trả Hàng Theo Hóa Đơn</a></li>
-                            <li><a href="/dashboard-orders9">Thất Bại</a></li>
-                        </ul>
-
-                    </li>
+                    <li class="active"><a href="/home-admin"><i class="sl sl-icon-settings"></i> <span
+                            style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
+                    <li><a href="/thong-ke"><i class="sl sl-icon-wallet"></i> <span
+                            style="font-weight: bold; color: black;">Thông Kê</span></a></li>
+                    <li><a href="/quan-ly-don-hang"><i class="fa fa-calendar-check-o"></i> <span
+                            style="font-weight: bold; color: black;">Quản Lý Hóa Đơn</span></a></li>
                     <ul data-submenu-title="Sản Phẩm">
-                        <li><a href="#"> <i
-                                class="sl sl-icon-layers"></i>Quản Lý Sản Phẩm</a>
+                        <li><a href="#"><i class="sl sl-icon-layers"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Sản Phẩm</span></a>
                             <ul id="sub">
-
-                                <li><a href="/san-pham-admin">Sản Phẩm</a></li>
-
-                                <li><a href="/tac-gia-admin">Tác Giả</a></li>
-
-                                <li><a href="/nha-san-xuat-admin">Nhà Xuất Bản</a></li>
-
-                                <li><a href="/bia-admin">Bìa Sách</a></li>
-
-                                <li><a href="/the-loai-admin">Thể Loại Sách</a></li>
-
-                                <li><a href="/khuyen-mai/admin">Khuyến mãi</a></li>
+                                <li><a href="/san-pham-admin"><span
+                                        style="font-weight: bold; color: black;">Sản Phẩm</span></a></li>
+                                <li><a href="/tac-gia-admin"><span
+                                        style="font-weight: bold; color: black;">Tác Giả</span></a></li>
+                                <li><a href="/nha-san-xuat-admin"><span style="font-weight: bold; color: black;">Nhà Xuất Bản</span></a>
+                                </li>
+                                <li><a href="/bia-admin"><span style="font-weight: bold; color: black;">Bìa Sách</span></a>
+                                </li>
+                                <li><a href="/the-loai-admin"><span style="font-weight: bold; color: black;">Thể Loại Sách</span></a>
+                                </li>
+                                <li><a href="/khuyen-mai/admin"><span style="font-weight: bold; color: black;">Khuyến mãi</span></a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
                     <ul data-submenu-title="Người Dùng">
-                        <li><a href="/nguoi-dung-admin"><i
-                                class="sl sl-icon-user"></i>Quản Lý Tài Khoản</a></li>
-                        <li><a href="/dang-xuat"><i
-                                class="sl sl-icon-power"></i> Đăng Xuất</a></li>
+                        <li><a href="/nguoi-dung-admin"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Tài Khoản</span></a></li>
+                        <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
+                                style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
                     </ul>
-                    <ul data-submenu-title="Home">
-                        <li><a href="/home"><i class="im im-icon-Home"></i>
-                            Trang Chủ</a></li>
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
+                        <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
+                        <li><a href="/home"><i class="im im-icon-Home"></i> <span
+                                style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
                     </ul>
                 </ul>
             </div>
@@ -158,94 +175,107 @@
         <!-- Navigation / End -->
 
 
-
         <!-- Content
 ================================================== -->
         <div class="dashboard-content">
-
-            <!-- Titlebar -->
-
-            <div class="col-lg-12">
-                <div class="col-lg-4" style="text-align: left">
-                    <a th:href="@{/add-nha-san-xuat}"
-                       class="button border with-icon">Thêm Nhà Sản Xuất<i
-                    ></i></a>
-                </div>
-            </div>
-
-
             <div class="row">
-                <!-- Listings -->
-                <div class="col-lg-12 col-md-12">
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 style="margin-top: 20px">Nhà Sản Xuất</h4>
-                        <ul>
-                            <th:block>
-                                <li>
-                                    <div class="list-box-listing">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Phone Number</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Address</th>
-                                                <th scope="col">Descripton</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="producer: ${pageProduct.content}">
-                                                <td th:text="${producer.id}"></td>
-                                                <td th:text="${producer.nameProducer}"></td>
-                                                <td th:text="${producer.phone}"></td>
-                                                <td th:text="${producer.email}"></td>
-                                                <td th:text="${producer.address}"></td>
-                                                <td th:text="${producer.description}"></td>
-                                                <td>
-<!--                                                    <div class="buttons-to-right">-->
-                                                        <a th:href="@{/nha-san-xuat/sua/{id}(id=${producer.id})}"  class="button gray"><i
-                                                                class="sl sl-icon-note"></i> Sửa</a>
 
-<!--                                                    </div>-->
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                            </th:block>
-                        </ul>
+                <div class="col-lg-12">
+                    <div class="card-body" style="background: white">
+                        <form>
+                            <label>Tên Nhà Xuất Bản:</label>
+                            <input type="text" name="ten">
+                            <button>Tìm Kiếm</button>
+                        </form>
                     </div>
                 </div>
-            </div>
 
-            <!-- Pagination -->
-            <div class="clearfix"></div>
-            <div th:if="${search_dashboard==null}" class="row">
-                <div class="col-md-12">
-                    <div class="pagination-container margin-top-20 margin-bottom-40">
-                        <nav class="pagination">
-                            <ul>
-                                <li><a class="paging-item" th:if="${pageProduct.number} > 0"
-                                       th:href="@{/phan-trang/{page}(page=${pageProduct.number - 1})}"><i
-                                        class="sl sl-icon-arrow-left"></i></a></li>
-                                <li><a class="paging-item"
-                                       th:href="@{/phan-trang/{page}(page=${pageProduct.number})}"
-                                       th:text="${pageProduct.number+1}"></a></li>
-                                <li><a class="paging-item"
-                                       th:if="${pageProduct.number} < ${pageProduct.totalPages - 1}"
-                                       th:href="@{/phan-trang/{page}(page=${pageProduct.number + 1})}"><i
-                                        class="sl sl-icon-arrow-right"></i></a></li>
-                            </ul>
-                        </nav>
+                <div class="col-lg-12">
+                    <div class="card-body" style="margin-top:15px ;background: white">
+                        <div class="col-lg-12">
+                            <h4 style="font-weight: bold">Danh Sách Nhà Xuất Bản</h4>
+                            <button style="margin-left: 1047px" class="btn btn-primary"><a
+                                    style="font-size: 15px;color: white" th:href="@{/add-nha-san-xuat}">+ Thêm</a>
+                            </button>
+                            <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
+                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-nha-san-xuat}"> Xuất Excel</a>
+                            </button>
+                        </div>
+                        <table class="table table-bordered table-striped table-bordered" style="text-align: center;vertical-align: middle;">
+                            <tr>
+                                <th style="text-align: center;vertical-align: middle;">ID</th>
+                                <th style="text-align: center;vertical-align: middle;">Tên</th>
+                                <th style="text-align: center;vertical-align: middle;">Số Điện Thoại</th>
+                                <th style="text-align: center;vertical-align: middle;">Email</th>
+                                <th style="text-align: center;vertical-align: middle;"> Địa Chỉ</th>
+                                <th style="text-align: center;vertical-align: middle;">Quốc Gia</th>
+                                <th style="text-align: center;vertical-align: middle;">Mô Tả</th>
+                                <th style="text-align: center;vertical-align: middle;" colspan="2">Hành Động</th>
+                            </tr>
+                            <tr th:each="list:${pageProduct}">
+                                <td>[[${list.id}]]</td>
+                                <td>[[${list.nameProducer}]]</td>
+                                <td>[[${list.phone}]]</td>
+                                <td>[[${list.email}]]</td>
+                                <td>[[${list.address}]]</td>
+                                <td>[[${list.nation}]]</td>
+                                <td>[[${list.description}]]</td>
+                                <td>
+                                    <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a class="sl sl-icon-eye" th:href="@{/view-all/{id}(id=${list.id})}"><ion-icon name="eye-outline"></ion-icon></a></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary"style=" height: 32px; width: 32px;" ><a class="sl sl-icon-note" th:href="@{/view-sua/{id}(id=${list.id})}"></a></button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <!--phân trang cho sản phẩm-->
+                            <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                <ul class="pagination">
+                                    <!--trang đầu-->
+                                    <li class="page-item">
+                                        <a class="page-link" th:href="@{/nha-san-xuat-admin(pageNo=0)}">Trang
+                                            Đầu</a>
+                                    </li>
+                                    <!--Previous-->
+                                    <li class="page-item" th:if="${pageNumber>0}">
+                                        <a class="page-link"
+                                           th:href="@{/nha-san-xuat-admin(pageNo=${pageNumber} -1)}">Trước</a>
+                                    </li>
+                                    <li class="page-item" th:if="${pageNumber == 0}">
+                                        <a class="page-link" th:disabled="true">Trước</a>
+                                    </li>
+                                    <!--số thứ tự trang-->
+                                    <!--dùng for i trong thymleaf-->
+                                    <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{/nha-san-xuat-admin(pageNo=${index})}"
+                                               th:text="${index+1}"></a>
+                                        </li>
+                                    </div>
+                                    <!--Next-->
+                                    <li class="page-item" th:if="${pageNumber < (pageProductPage -1)}">
+                                        <a class="page-link"
+                                           th:href="@{/nha-san-xuat-admin(pageNo=${pageProductPage} +1)}">Tiếp</a>
+                                    </li>
+                                    <li class="page-item" th:if="${pageNumber == (pageProductPage -1)}">
+                                        <a class="page-link" th:disabled="true">Tiếp</a>
+                                    </li>
+                                    <!--trang cuối-->
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           th:href="@{/nha-san-xuat-admin(pageNo=${pageProductPage -1})}">Trang
+                                            Cuối</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
+                    <!-- Content / End -->
                 </div>
             </div>
         </div>
-        <!-- Content / End -->
-
 
     </div>
     <!-- Dashboard / End -->

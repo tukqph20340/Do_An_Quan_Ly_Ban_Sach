@@ -154,7 +154,7 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li ><a th:href="@{/home}">Trang Chủ</a></li>
+                        <li><a th:href="@{/home}">Trang Chủ</a></li>
                         <li class="active"><a th:href="@{/shop}">Cửa Hàng</a></li>
                         <li><a href="#">Thông Tin</a>
                             <ul class="dropdown">
@@ -247,19 +247,30 @@
                 <div class="col-lg-8">
                     <div class="product__details__text">
                         <h4 th:text="${product.product_Name}"></h4>
-                        <div class="rating">
-                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                class="fa fa-star-o"></i> <span> - 5 Reviews</span>
-                        </div>
                         <h3 th:text="${product.price}+' VNĐ'" style="color: red"></h3>
                         <!--							<p th:text="${product.description}"></p>-->
                         <form action="/addToCart" method="post">
-                            <div class="product__details__cart__option">
+                            <div>
                                 <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input name="count" type="text" value="1">
+                                    <div>
+                                        <input id="soLuong" name="count" type="number" value="1"
+                                               onchange="decrementQuantity();">
                                     </div>
+                                    <br>
+                                    <script>
+                                        function decrementQuantity() {
+                                            // Lấy ô input bằng id
+                                            var input = document.getElementById('soLuong');
+
+                                            // Chuyển đổi giá trị thành số nguyên
+                                            var quantityValue = parseInt(input.value);
+
+                                            if (quantityValue < 1 || isNaN(quantityValue)) {
+                                                // Đặt giá trị về 1
+                                                input.value = 1;
+                                            }
+                                        }
+                                    </script>
                                     <input name="product_id" style="display: none;" type="text"
                                            th:value="${product.id}">
                                 </div>
@@ -355,31 +366,43 @@
                             <div class="tab-pane" id="tabs-7" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="statistic, stat : ${statistics}" th:with="index=${stat.index}">
+                                        <th:block th:each="statistic, stat : ${statistics}"
+                                                  th:with="index=${stat.index}">
                                             <li>
                                                 <i class="list-box-icon sl sl-icon-doc"></i>
-                                                <img th:src="${statistic.user.avatar}" width="65" height="65" alt="avatar"/>
+                                                <img th:src="${statistic.user.avatar}" width="65" height="65"
+                                                     alt="avatar"/>
                                                 <strong th:text="${statistic.user.id}"></strong>
                                                 <!-- Star Rating -->
                                                 <div class="star-rating-container">
                                                     <input class="star star-5" th:id="'star-5-' + ${index}" type="radio"
-                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 5}" value="5" disabled/>
+                                                           th:name="'starRating-' + ${index}"
+                                                           th:checked="${statistic.starRating == 5}" value="5"
+                                                           disabled/>
                                                     <label th:for="'star-5-' + ${index}" class="star star-5"></label>
 
                                                     <input class="star star-4" th:id="'star-4-' + ${index}" type="radio"
-                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 4}" value="4" disabled/>
+                                                           th:name="'starRating-' + ${index}"
+                                                           th:checked="${statistic.starRating == 4}" value="4"
+                                                           disabled/>
                                                     <label th:for="'star-4-' + ${index}" class="star star-4"></label>
 
                                                     <input class="star star-3" th:id="'star-3-' + ${index}" type="radio"
-                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 3}" value="3" disabled/>
+                                                           th:name="'starRating-' + ${index}"
+                                                           th:checked="${statistic.starRating == 3}" value="3"
+                                                           disabled/>
                                                     <label th:for="'star-3-' + ${index}" class="star star-3"></label>
 
                                                     <input class="star star-2" th:id="'star-2-' + ${index}" type="radio"
-                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 2}" value="2" disabled/>
+                                                           th:name="'starRating-' + ${index}"
+                                                           th:checked="${statistic.starRating == 2}" value="2"
+                                                           disabled/>
                                                     <label th:for="'star-2-' + ${index}" class="star star-2"></label>
 
                                                     <input class="star star-1" th:id="'star-1-' + ${index}" type="radio"
-                                                           th:name="'starRating-' + ${index}" th:checked="${statistic.starRating == 1}" value="1" disabled/>
+                                                           th:name="'starRating-' + ${index}"
+                                                           th:checked="${statistic.starRating == 1}" value="1"
+                                                           disabled/>
                                                     <label th:for="'star-1-' + ${index}" class="star star-1"></label>
                                                 </div>
 
@@ -420,7 +443,7 @@
                              th:data-setbg="${y.productImage[0].url_Image}">
                             <span class="label">New</span>
                             <ul class="product__hover">
-                                <li><a  th:href="@{/productDetail/{id}(id=${y.id})}"><img
+                                <li><a th:href="@{/productDetail/{id}(id=${y.id})}"><img
                                         src="/img/icon/search.png" alt=""></a></li>
                             </ul>
                         </div>

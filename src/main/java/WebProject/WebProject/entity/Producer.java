@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "producer")
+@Table(name = "publisher")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -34,7 +34,8 @@ public class Producer {
     @Column(name = "description", columnDefinition = "nvarchar(11111)")
     private String description;
 
-    @OneToMany(mappedBy = "producer", cascade = CascadeType.ALL)
-    private List<Product> products;
+    @Column(name = "nation", columnDefinition = "nvarchar(11111)")
+    private String nation;
+
 
 }
