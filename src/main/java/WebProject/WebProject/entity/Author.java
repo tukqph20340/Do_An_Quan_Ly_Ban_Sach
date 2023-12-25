@@ -3,6 +3,7 @@ package WebProject.WebProject.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -26,12 +27,13 @@ public class Author {
     @Column(name = "address", columnDefinition = "varchar(1111)")
     private String address;
 
+    @Column(name = "date_of_birth", columnDefinition = "varchar(1111)")
+    private Date date_of_birth;
+
+    @Column(name = "nation", columnDefinition = "varchar(1111)")
+    private String nation;
+
     @Column(name = "description ", columnDefinition = "nvarchar(11111)")
     private String description;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<AuthorImage> authorImage;
-
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Product> products;
 }
