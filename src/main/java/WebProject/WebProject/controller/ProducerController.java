@@ -29,14 +29,11 @@ public class ProducerController {
     @GetMapping("/nha-san-xuat-admin")
     public String DashboardMyProducerView(Model model) {
         User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
             Pageable pageable = PageRequest.of(0, 5);
             Page<Producer> pageProducer = producerService.findAll(pageable);
             model.addAttribute("pageProduct", pageProducer);
             return "/admin/nhaphathanh/dashboard-producer";
-        }
+
     }
 
     @GetMapping("/phan-trang/{page}")
