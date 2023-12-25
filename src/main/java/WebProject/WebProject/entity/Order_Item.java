@@ -21,6 +21,9 @@ public class Order_Item {
 	@Column(name = "count")
 	private int count;
 
+	@Column(name = "unit_price")
+	private Long unit_price;
+
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 //	@EqualsAndHashCode.Exclude
