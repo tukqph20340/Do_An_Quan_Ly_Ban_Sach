@@ -20,31 +20,28 @@ public class Promotion {
     @Column(name = "id") // Mapping với cột "id"
     private Integer id;
 
-    @Column(name = "coupon_code") // Mapping với cột "coupon_code"
+    @Column(name = "coupon_code", columnDefinition = "nvarchar(255)") // Mapping với cột "coupon_code"
     private String couponCode;
 
-    @Column(name = "created_at") // Mapping với cột "created_at"
+    @Column(name = "created_at", columnDefinition = "datetime(6)") // Mapping với cột "created_at"
     private Date createdAt;
 
-    @Column(name = "discount_type") // Mapping với cột "discount_type"
-    private Integer discountType;
-
-    @Column(name = "discount_value") // Mapping với cột "discount_value"
+    @Column(name = "discount_value", columnDefinition = "bigint") // Mapping với cột "discount_value"
     private Long discountValue;
 
-    @Column(name = "expired_at") // Mapping với cột "expired_at"
+    @Column(name = "expired_at", columnDefinition = "datetime(6)") // Mapping với cột "expired_at"
     private Date expiredAt;
 
-    @Column(name = "is_active") // Mapping với cột "is_active"
+    @Column(name = "is_active", columnDefinition = "tinyint(1)") // Mapping với cột "is_active"
     private Boolean isActive;
 
-    @Column(name = "is_public") // Mapping với cột "is_public"
+    @Column(name = "is_public", columnDefinition = "tinyint(1)") // Mapping với cột "is_public"
     private Boolean isPublic;
 
-    @Column(name = "maximum_discount_value") // Mapping với cột "maximum_discount_value"
+    @Column(name = "maximum_discount_value", columnDefinition = "bigint") // Mapping với cột "maximum_discount_value"
     private Long maximumDiscountValue;
 
-    @Column(name = "name") // Mapping với cột "name"
+    @Column(name = "name", columnDefinition = "nvarchar(300)") // Mapping với cột "name"
     private String name;
 
     @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL)

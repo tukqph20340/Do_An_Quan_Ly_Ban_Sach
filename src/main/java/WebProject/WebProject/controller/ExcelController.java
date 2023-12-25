@@ -46,4 +46,17 @@ public class ExcelController{
 
         response.flushBuffer();
     }
+
+//    @GetMapping("/xuat-file-excel-khuyen-mai")
+//    public void generateExcelReport2(HttpServletResponse response) throws Exception{
+//
+//        String headerKey = "Content-Disposition";
+//        String headerValue = "attachment;filename=Nha Xuat Ban.xls";
+//
+//        response.setHeader(headerKey, headerValue);
+//
+//        excelNhaXuatBan.generateExcel(response);
+//
+//        response.flushBuffer();
+//    }
 }

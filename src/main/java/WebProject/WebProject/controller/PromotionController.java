@@ -5,6 +5,7 @@ import WebProject.WebProject.entity.Producer;
 import WebProject.WebProject.entity.Promotion;
 import WebProject.WebProject.entity.User;
 import WebProject.WebProject.service.PromotionService;
+import WebProject.WebProject.service.impl.PromotionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,201 +27,143 @@ import java.util.List;
 @Controller
 @RequestMapping("")
 public class PromotionController {
+
     @Autowired
-    PromotionService service;
+    PromotionService service = new PromotionServiceImpl();
 
     @Autowired
     HttpSession session;
 
-    java.util.Date date = new java.util.Date();
-    SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
-    String hienTai = fm.format(date);
 
     @GetMapping("/khuyen-mai/admin")
-    public String khuyenMai(Model model) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            Pageable pageable = PageRequest.of(0, 5);
-            Page<Promotion> pageProducer = service.findAll(pageable);
-            model.addAttribute("list", pageProducer);
-            return "/admin/khuyenmai/khuyen-mai.html";
-        }
+    public String load(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        Page<Promotion> pagePromotion = service.findAll(pageNo, 5);
+        model.addAttribute("pagePromotion", pagePromotion.getContent());
+        model.addAttribute("pagePromotionPage", pagePromotion.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Cate", new Promotion());
+        return "/admin/khuyenmai/khuyen-mai";
+
     }
 
-    @GetMapping("/phan-trang-khuyen-mai/{page}")
-    public String phanTrang(Model model, @PathVariable() int page) {
+//    @GetMapping("/phan-trang-khuyen-mai/{page}")
+//    public String phanTrang(Model model, @PathVariable() int page) {
+//        User admin = (User) session.getAttribute("admin");
+//        if (admin == null) {
+//            return "redirect:/signin-admin";
+//        } else {
+//            Pageable pageable = PageRequest.of(page, 5);
+//            Page<Promotion> pageKhuyenMai = service.findAll(pageable);
+//            model.addAttribute("list", pageKhuyenMai);
+//            return "/admin/khuyenmai/khuyen-mai.html";
+//        }
+//    }
+
+    @GetMapping("/view-add-khuyen-mai")
+    public String DashboardAddProducerView(Model model) {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
-            Pageable pageable = PageRequest.of(page, 5);
-            Page<Promotion> pageKhuyenMai = service.findAll(pageable);
-            model.addAttribute("list", pageKhuyenMai);
-            return "/admin/khuyenmai/khuyen-mai.html";
-        }
-    }
-
-    @GetMapping("/add-khuyen-mai")
-    public String viewAdd() {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-
-            return "/admin/khuyenmai/add-khuyen-mai.html";
+            String addPromotion = (String) session.getAttribute("addPromotion");
+            model.addAttribute("addPromotion", addPromotion);
+            session.setAttribute("addPromotion", null);
+            return "/admin/khuyenmai/add-khuyen-mai";
         }
     }
 
 
     @PostMapping("/add-khuyen-mai")
-    public String add(Model model,
-                      @RequestParam("maCode") String maCode,
-//                      @RequestParam("giamGiaLoai") String giamGiaLoai,
-                      @RequestParam("giaTriGiam") String giaTriGiam,
-                      @RequestParam("ngayHetHan") String ngayHetHan,
-                      @RequestParam("giaTriGiamToiDa") String giaTriGiamToiDa,
-                      @RequestParam("moTa") String moTa
-    ) {
+    public String DashboardAddProducerHandel(Model model,
+                                             @RequestParam("couponCode") String couponCode,
+                                             @RequestParam("createdAt") Date createdAt,
+                                             @RequestParam("discountValue") Long discountValue,
+                                             @RequestParam("expiredAt") Date expiredAt,
+                                             @RequestParam("isActive") Boolean isActive,
+                                             @RequestParam("isPublic") Boolean isPublic,
+                                             @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
+                                             @RequestParam("name") String name
+    ) throws Exception {
 
-        List<Promotion> list = service.getAll();
-        for (Promotion promotion : list) {
-            if (promotion.getCouponCode().equals(maCode)) {
-                model.addAttribute("loiMa", "Mã đã tồn tại");
-                return "/admin/khuyenmai/add-khuyen-mai.html";
+        User admin = (User) session.getAttribute("admin");
+        if (admin == null) {
+            return "redirect:/signin-admin";
+        } else {
+            if (couponCode.trim().isEmpty()) {
+                model.addAttribute("loi", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            } else if (name.trim().isEmpty()) {
+                model.addAttribute("loi2", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            } else {
+                Promotion promotion = new Promotion();
+                promotion.setCouponCode(couponCode);
+                promotion.setCreatedAt(createdAt);
+                promotion.setDiscountValue(discountValue);
+                promotion.setExpiredAt(expiredAt);
+                promotion.setIsActive(isActive);
+                promotion.setIsPublic(isPublic);
+                promotion.setMaximumDiscountValue(maximumDiscountValue);
+                promotion.setName(name);
+                service.savePromotion(promotion);
+                return "redirect:/khuyen-mai-admin";
             }
         }
-
-        if (maCode.isEmpty()) {
-            model.addAttribute("loi", "Mã không đc để trống");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-//        } else if (giamGiaLoai.isEmpty()) {
-//            model.addAttribute("loi1", "giảm giá loại không được để trống");
-//            return "/admin/khuyenmai/add-khuyen-mai.html";
-//        } else if (Integer.valueOf(giamGiaLoai) < 1) {
-//            model.addAttribute("loi5", "giảm giá loại không được nhỏ hơn 1");
-//            return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else if (giaTriGiam.isEmpty()) {
-            model.addAttribute("loi2", "giá trị giảm không được để trống");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-
-        } else if (Integer.valueOf(giaTriGiam) < 1) {
-            model.addAttribute("loi6", "giá trị giảm không được nhỏ hơn 1");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-        }
-        else if (Integer.valueOf(giaTriGiam) > 100) {
-            model.addAttribute("loi10", "giá trị giảm không được lớn hơn 100");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else if (ngayHetHan.isEmpty()) {
-            model.addAttribute("loi3", "ngày hết hạn không được để trống");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else if (Date.valueOf(ngayHetHan).before(Date.valueOf(hienTai))) {
-            model.addAttribute("loi4", "ngày hết hạn không được nhỏ hơn ngày hiện tại");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else if (giaTriGiamToiDa.isEmpty()) {
-            model.addAttribute("loi8", "giá trị giảm tối được không đc để trống");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-
-        } else if (Integer.valueOf(giaTriGiamToiDa) < 1) {
-            model.addAttribute("loi7", "giá trị giảm tối được không được nhỏ hơn 1");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else if (moTa.isEmpty()) {
-            model.addAttribute("loi8", "mô tả được không đc để trống");
-            return "/admin/khuyenmai/add-khuyen-mai.html";
-        } else {
-            Promotion promotion = new Promotion();
-            promotion.setCouponCode(maCode);
-            promotion.setCreatedAt(Date.valueOf(hienTai));
-            promotion.setDiscountType(1);
-            promotion.setDiscountValue(Long.valueOf(giaTriGiam));
-            promotion.setExpiredAt(Date.valueOf(ngayHetHan));
-            promotion.setMaximumDiscountValue(Long.valueOf(giaTriGiamToiDa));
-            promotion.setName(moTa);
-            promotion.setIsActive(true);
-            service.addAndUpdate(promotion);
-            return "redirect:/khuyen-mai/admin";
-        }
     }
 
-    @GetMapping("/khuyen-mai/sua/{id}")
-    public String viewUpdate(Model model, @PathVariable() String id) {
-        Promotion promotion = service.detail(Integer.valueOf(id));
+    @GetMapping("/view-sua-khuyen-mai/{id}")
+    public String DashboardMyProducerEditView(@PathVariable int id, Model model) {
+        Promotion promotion = service.getAllPromotionById(id);
         model.addAttribute("detail", promotion);
-        return "/admin/khuyenmai/update-khuyen-mai.html";
+        return "/admin/khuyenmai/update-khuyen-mai";
+
     }
 
-    @PostMapping("/khuyen-mai/sua/{id}")
-    public String update(Model model
-            , @PathVariable() String id,
-                         @RequestParam("maCode") String maCode,
-//                         @RequestParam("giamGiaLoai") String giamGiaLoai,
-                         @RequestParam("giaTriGiam") String giaTriGiam,
-                         @RequestParam("ngayHetHan") String ngayHetHan,
-                         @RequestParam("giaTriGiamToiDa") String giaTriGiamToiDa,
-                         @ModelAttribute() Promotion moTa11
-    ) {
+    @GetMapping("/view-all-khuyen-mai/{id}")
+    public String DashboardMyProducerDetailView(@PathVariable int id, Model model) {
+        Promotion promotion = service.getAllPromotionById(id);
+        model.addAttribute("detail", promotion);
+        return "/admin/khuyenmai/detail-khuyen-mai";
 
+    }
 
-        if (maCode.isEmpty()) {
-            model.addAttribute("loi", "Mã không đc để trống");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
-//        } else if (giamGiaLoai.isEmpty()) {
-//            model.addAttribute("loi1", "giảm giá loại không được để trống");
-//            Promotion promotion = service.detail(Integer.valueOf(id));
-//            model.addAttribute("detail", promotion);
-//            return "/admin/khuyenmai/update-khuyen-mai.html";
-//        } else if (Integer.valueOf(giamGiaLoai) < 1) {
-//            model.addAttribute("loi5", "giảm giá loại không được nhỏ hơn 1");
-//            Promotion promotion = service.detail(Integer.valueOf(id));
-//            model.addAttribute("detail", promotion);
-//            return "/admin/khuyenmai/update-khuyen-mai.html";
-        } else if (giaTriGiam.isEmpty()) {
-            model.addAttribute("loi2", "giá trị giảm không được để trống");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
-        } else if (Integer.valueOf(giaTriGiam) < 1) {
-            model.addAttribute("loi6", "giá trị giảm không được nhỏ hơn 1");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
-        } else if (ngayHetHan.isEmpty()) {
-            model.addAttribute("loi3", "ngày hết hạn không được để trống");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
-        } else if (Date.valueOf(ngayHetHan).before(Date.valueOf(hienTai))) {
-            model.addAttribute("loi4", "ngày hết hạn không được nhỏ hơn ngày hiện tại");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
-        } else if (giaTriGiamToiDa.isEmpty()) {
-            model.addAttribute("loi8", "giá trị giảm tối được không đc để trống");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
+    @PostMapping("/sua-khuyen-mai/{id}")
+    public String DashboardAddProducerHandel(Model model, @PathVariable("id") int id,
+                                             @RequestParam("couponCode") String couponCode,
+                                             @RequestParam("createdAt") Date createdAt,
+                                             @RequestParam("discountValue") Long discountValue,
+                                             @RequestParam("expiredAt") Date expiredAt,
+                                             @RequestParam("isActive") Boolean isActive,
+                                             @RequestParam("isPublic") Boolean isPublic,
+                                             @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
+                                             @RequestParam("name") String name
+    ) throws Exception {
 
-        } else if (Integer.valueOf(giaTriGiamToiDa) < 1) {
-            model.addAttribute("loi7", "giá trị giảm tối được không được nhỏ hơn 1");
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            model.addAttribute("detail", promotion);
-            return "/admin/khuyenmai/update-khuyen-mai.html";
+        User admin = (User) session.getAttribute("admin");
+        if (admin == null) {
+            return "redirect:/signin-admin";
         } else {
-            Promotion promotion = service.detail(Integer.valueOf(id));
-            promotion.setCouponCode(maCode);
-            promotion.setCreatedAt(Date.valueOf(hienTai));
-            promotion.setDiscountType(Integer.valueOf(1));
-            promotion.setDiscountValue(Long.valueOf(giaTriGiam));
-            promotion.setExpiredAt(Date.valueOf(ngayHetHan));
-            promotion.setMaximumDiscountValue(Long.valueOf(giaTriGiamToiDa));
-            promotion.setName(moTa11.getName());
-            promotion.setIsActive(true);
-            service.addAndUpdate(promotion);
-            return "redirect:/khuyen-mai/admin";
-        }
-    }
+            if (couponCode.trim().isEmpty()) {
+                model.addAttribute("loi", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            } else if (name.trim().isEmpty()) {
+                model.addAttribute("loi2", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            } else {
+                Promotion promotion = service.getAllPromotionById(id);
+                promotion.setCouponCode(couponCode);
+                promotion.setCreatedAt(createdAt);
+                promotion.setDiscountValue(discountValue);
+                promotion.setExpiredAt(expiredAt);
+                promotion.setIsActive(isActive);
+                promotion.setIsPublic(isPublic);
+                promotion.setMaximumDiscountValue(maximumDiscountValue);
+                promotion.setName(name);
+                service.savePromotion(promotion);
+                return "redirect:/khuyen-mai-admin";
+            }
 
-}
+        }
+
+    }
+    }
