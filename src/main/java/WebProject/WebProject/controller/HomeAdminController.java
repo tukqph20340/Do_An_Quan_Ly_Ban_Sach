@@ -70,7 +70,7 @@ public class HomeAdminController {
                 List<Order> listOrder = orderService.findAll();
                 List<Product> listProduct = productService.getAllProduct();
                 List<User> listUser = userService.findAll();
-                List<Category> listCategory = categoryService.findAll();
+                List<Category> listCategory = categoryService.getAllCategories();
 
                 List<Order> recentOrders = orderService.findTop5RecentOrder();
                 List<String> recentUser = orderService.findTop5RecentCustomer();

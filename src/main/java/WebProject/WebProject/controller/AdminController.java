@@ -239,7 +239,7 @@ public class AdminController {
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
-            List<Category> listCategories = categoryService.findAll();
+            List<Category> listCategories = categoryService.getAllCategories();
             Pageable pageable = PageRequest.of(0, 3);
             Page<Product> pageProduct = productService.findAll(pageable);
             model.addAttribute("pageProduct", pageProduct);
@@ -254,7 +254,7 @@ public class AdminController {
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
-            List<Category> listCategories = categoryService.findAll();
+            List<Category> listCategories = categoryService.getAllCategories();
             List<Author> authorList = authorService.getAllAuthor();
             List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
             List<Producer> producerList = producerService.getAllProducer();
@@ -286,7 +286,7 @@ public class AdminController {
             return "redirect:/signin-admin";
         } else {
             if (listImage != null) {
-                Category cate = categoryService.getCategoryById(category);
+                Category cate = categoryService.getAllCategoryById(category);
                 Product product = productService.getProductById(product_id);
                 Author ath = authorService.getAllAuthorById(author);
                 BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
@@ -339,7 +339,7 @@ public class AdminController {
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
-            List<Category> listCategories = categoryService.findAll();
+            List<Category> listCategories = categoryService.getAllCategories();
             Pageable pageable = PageRequest.of(page, 3);
             Page<Product> pageProduct = productService.findAll(pageable);
             model.addAttribute("pageProduct", pageProduct);
@@ -373,7 +373,7 @@ public class AdminController {
             } else {
                 pageProduct = productService.findByProduct_NameContaining(search_input, pageable);
             }
-            List<Category> listCategories = categoryService.findAll();
+            List<Category> listCategories = categoryService.getAllCategories();
             String nameCategory = null;
             if (category_selected == 0) {
                 nameCategory = null;
@@ -413,7 +413,7 @@ public class AdminController {
             } else {
                 pageProduct = productService.findByProduct_NameContaining(search_input, pageable);
             }
-            List<Category> listCategories = categoryService.findAll();
+            List<Category> listCategories = categoryService.getAllCategories();
             model.addAttribute("pageProduct", pageProduct);
             model.addAttribute("listCategories", listCategories);
             model.addAttribute("search_dashboard", "search_dashboard");
@@ -433,7 +433,7 @@ public class AdminController {
             String addProduct = (String) session.getAttribute("addProduct");
             model.addAttribute("addProduct", addProduct);
             session.setAttribute("addProduct", null);
-            List<Category> listCategories = categoryService.findAll();
+            List<Category> listCategories = categoryService.getAllCategories();
             List<Author> authorList = authorService.getAllAuthor();
             List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
             List<Producer> producerList = producerService.getAllProducer();
@@ -465,7 +465,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -483,7 +483,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -501,7 +501,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -519,7 +519,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -537,7 +537,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -555,7 +555,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -573,7 +573,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -591,7 +591,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -609,7 +609,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -627,7 +627,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -645,7 +645,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -657,7 +657,7 @@ public class AdminController {
                 }
             } else {
                 try {
-                    Category cate = categoryService.getCategoryById(category);
+                    Category cate = categoryService.getAllCategoryById(category);
                     Author ath = authorService.getAllAuthorById(author);
                     BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
                     Producer pr = producerService.getAllProducerById(producer);
@@ -702,7 +702,7 @@ public class AdminController {
                     String addProduct = (String) session.getAttribute("addProduct");
                     model.addAttribute("addProduct", addProduct);
                     session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.findAll();
+                    List<Category> listCategories = categoryService.getAllCategories();
                     List<Author> authorList = authorService.getAllAuthor();
                     List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
                     List<Producer> producerList = producerService.getAllProducer();
@@ -854,7 +854,7 @@ public class AdminController {
                 productImageService.deleteImg(productImage1);
             }
 
-            List<Category> listCategories = categoryService.findAll();
+            List<Category> listCategories = categoryService.getAllCategories();
             List<Author> authorList = authorService.getAllAuthor();
             List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
             List<Producer> producerList = producerService.getAllProducer();

@@ -140,7 +140,7 @@ public class ProductControler {
 		model.addAttribute("TotalPro",TotalPro);
 		Pageable pageable = PageRequest.of(0, 12);
 		Page<Product> page = productRepository.findAll(pageable);
-		List<Category> listCategory = categoryService.findAll();
+		List<Category> listCategory = categoryService.getAllCategories();
 		String search_input = (String) session.getAttribute("search_input");
 		model.addAttribute("listProduct", page);
 		model.addAttribute("listCategory", listCategory);
@@ -167,7 +167,7 @@ public class ProductControler {
 		List<Author> author = authorController.getAllAuthor();
 		model.addAttribute("listProducer", productProducers);
 		model.addAttribute("author", author);
-		List<Category> listCategory = categoryService.findAll();
+		List<Category> listCategory = categoryService.getAllCategories();
 		String search_input = (String) session.getAttribute("search_input");
 		User user = (User) session.getAttribute("acc");
 		if (user != null) {
@@ -230,7 +230,7 @@ public class ProductControler {
 		Cookie user_name = cookie.read("user_name");
 		Wallet vi = walletRepository.findByUserId(user_name.getValue());
 		model.addAttribute("vi", vi);
-		List<Category> listCategory = categoryService.findAll();
+		List<Category> listCategory = categoryService.getAllCategories();
 		String search_input = (String) session.getAttribute("search_input");
 		if (search_input != null) {
 			Pageable pageable = PageRequest.of(id, 12);

@@ -66,7 +66,7 @@ public class ExcelSanPham {
 
             HSSFRow dataRow = sheet.createRow(dataRowIndex);
 
-            Category category = categoryService.getCategoryById(course.getCategory().getId());
+            Category category = categoryService.getAllCategoryById(course.getCategory().getId());
             Author author = authorService.getAllAuthorById(course.getAuthor().getId());
             BookCover bookCover1 = bookCover.getAllBookCoverById(course.getBookCover().getId());
 
