@@ -268,4 +268,33 @@ public class AuthorController {
         return "redirect:/tac-gia/sua/"+ cookie.getValue();
     }
 
+
+    @GetMapping("/tac-gia-all/{id}")
+    public String DashboardMyAuthorEditView1(@PathVariable int id, Model model) {
+
+        Author author = authorService.getAllAuthorById(id);
+        model.addAttribute("detail", author);
+        if (author.getAuthorList().isEmpty()) {
+            model.addAttribute("a", null);
+        }
+
+        return "/admin/tacgia/detail-author";
+
+    }
+
+
+    @GetMapping("/tim-kiem-tac-gia")
+    public String DashboardMyAuthorView11(Model model,@RequestParam("tenTacGia") String tacGia,
+                                          @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Page<Author> pageAu = authorService.timKiemTen(pageNo, 5,'%'+tacGia+'%');
+        model.addAttribute("timKiem", "a");
+        model.addAttribute("pageAuthor", pageAu.getContent());
+        model.addAttribute("pageAu", pageAu.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Cate", new Author());
+        return "/admin/tacgia/dashboard-author.html";
+
+    }
+
 }

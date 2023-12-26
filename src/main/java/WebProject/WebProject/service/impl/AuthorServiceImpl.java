@@ -34,7 +34,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Page<Author> timKiemTen(Integer pageNo, Integer size, String ten) {
-        return null;
+        Pageable pageable = PageRequest.of(pageNo,size);
+        return authorRepository.findAllByNameAuthor(pageable,ten);
     }
 
     @Override

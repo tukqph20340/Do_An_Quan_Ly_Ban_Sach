@@ -14,6 +14,8 @@ public interface ProducerService {
 
     Page<Producer> findAll(Integer pageNo, Integer size);
 
+    Page<Producer> teh(Integer pageNo, Integer size,String ten);
+
     Producer getAllProducerById(int id);
 
 }
