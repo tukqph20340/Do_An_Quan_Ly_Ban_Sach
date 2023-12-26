@@ -161,7 +161,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="/bia-sach/sua" method="post"
+                    <form th:action="@{/sua-bia-sach/{id}(id=${detail.id})}" method="post"
                           enctype="multipart/form-data">
                         <div id="add-listing">
 
@@ -180,9 +180,8 @@
                                 <div class="row with-forms">
                                     <div class="col-md-12">
                                         <h5>Tên</h5>
-                                        <input style="display: none;" name="bookCover_id" th:value="${bookCover.id}">
                                         <input name="cover_type" class="search-field" type="text"
-                                               th:value="${bookCover.coverType}"
+                                               th:value="${detail.cover_type}"
                                                placeholder="Tên"/>
                                     </div>
                                 </div>
@@ -203,7 +202,7 @@
                                 <!-- Description -->
                                 <div class="form">
                                     <h5>Mô Tả Chi Tiết</h5>
-                                    <textarea th:field="${bookCover.description}" name="description"
+                                    <textarea th:field="${detail.desciption}" name="desciption"
                                               class="WYSIWYG" cols="40" rows="3" id="summary"
                                               spellcheck="true" placeholder="Mô Tả Chi Tiết"></textarea>
                                 </div>

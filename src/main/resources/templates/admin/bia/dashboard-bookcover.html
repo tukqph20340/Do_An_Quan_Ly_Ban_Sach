@@ -16,16 +16,55 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
-
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+</style>
 <body>
-
 <div id="wrapper">
 
     <!-- Header Container
@@ -33,17 +72,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -66,12 +105,6 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-
-                            </div>
-
-                        </div>
 
 
                     </div>
@@ -94,8 +127,7 @@
 ================================================== -->
 
         <!-- Responsive Navigation Trigger -->
-        <a href="#" class="dashboard-responsive-nav-trigger"><i
-                class="fa fa-reorder"></i> Dashboard Navigation</a>
+
 
         <div class="dashboard-nav" style="background: white">
             <div class="dashboard-nav-inner">
@@ -131,7 +163,7 @@
                         <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
                                 style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
                     </ul>
-                    <ul data-submenu-title="Home">
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
                         <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
                                 style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
                         <li><a href="/home"><i class="im im-icon-Home"></i> <span
@@ -141,8 +173,6 @@
             </div>
         </div>
         <!-- Navigation / End -->
-
-
 
 
         <!-- Content
@@ -155,8 +185,8 @@
                         <h4 style="font-weight: bold">Tìm Kiếm</h4>
                         <form>
                             <div class="input-group">
-                                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="button" class="btn btn-outline-primary" data-mdb-ripple-init>search</button>
+                                <input type="search" name="name" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>search</button>
                             </div>
                         </form>
                     </div>
@@ -170,27 +200,62 @@
                                     style="font-size: 15px;color: white" th:href="@{/add-bia-sach}">+ Thêm</a>
                             </button>
                             <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
-                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-nha-san-xuat}"> Xuất Excel</a>
+                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-bia-sach}"> Xuất Excel</a>
                             </button>
                         </div>
                         <table class="table table-bordered table-striped table-bordered" style="text-align: center;vertical-align: middle;">
                             <tr>
                                 <th style="text-align: center;vertical-align: middle;">ID</th>
-                                <th style="text-align: center;vertical-align: middle;">Tên</th>
+                                <th style="text-align: center;vertical-align: middle;">Loại Sách</th>
                                 <th style="text-align: center;vertical-align: middle;">Mô tả</th>
                                 <th style="text-align: center;vertical-align: middle;" colspan="2">Hành Động</th>
                             </tr>
                             <tr th:each="list:${pageProduct}">
-
+                                <td>[[${list.id}]]</td>
+                                <td>[[${list.cover_type}]]</td>
+                                <td>[[${list.desciption}]]</td>
+                                <td>
+                                    <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a class="sl sl-icon-eye" th:href="@{/bia-sach/{id}(id=${list.id})}"><ion-icon name="eye-outline"></ion-icon></a></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary"style=" height: 32px; width: 32px;" ><a class="sl sl-icon-note" th:href="@{/edit-bia-sach/{id}(id=${list.id})}"></a></button>
+                                </td>
                             </tr>
                         </table>
+                        <div>
+                            <!--phân trang cho sản phẩm-->
+                            <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                <ul class="pagination">
+                                    <!--trang đầu-->
+                                    <li class="page-item">
+                                        <a class="page-link" th:href="@{/bia-admin(pageNo=0)}">Trang
+                                            Đầu</a>
+                                    </li>
+                                    <!--Previous-->
+                                    <!--số thứ tự trang-->
+                                    <!--dùng for i trong thymleaf-->
+                                    <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{/bia-admin(pageNo=${index})}"
+                                               th:text="${index+1}"></a>
+                                        </li>
+                                    </div>
+                                    <!--Next-->
+                                    <!--trang cuối-->
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           th:href="@{/bia-admin(pageNo=${pageProductPage -1})}">Trang
+                                            Cuối</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                     <!-- Content / End -->
                 </div>
             </div>
         </div>
-        <!-- Content / End -->
-
 
     </div>
     <!-- Dashboard / End -->

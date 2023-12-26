@@ -21,12 +21,10 @@ public class BookCover {
     private int id;
 
     @Column(name = "cover_type", columnDefinition = "nvarchar(1111)")
-    private String coverType;
+    private String cover_type;
 
     @Column(name = "desciption", columnDefinition = "nvarchar(11111)")
-    private String description;
+    private String desciption;
 
-    @OneToMany(mappedBy = "bookCover", cascade = CascadeType.ALL)
-    private List<Product> products;
 
 }

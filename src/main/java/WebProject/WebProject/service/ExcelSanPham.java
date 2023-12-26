@@ -83,7 +83,7 @@ public class ExcelSanPham {
             dataRow.createCell(5).setCellValue(course.getQuantity());
             dataRow.createCell(6).setCellValue(course.getBookSize());
             dataRow.createCell(7).setCellValue(category.getCategory_Name());
-            dataRow.createCell(8).setCellValue(bookCover1.getCoverType());
+            dataRow.createCell(8).setCellValue(bookCover1.getCover_type());
             dataRow.createCell(9).setCellValue(author.getNameAuthor());
             dataRow.createCell(10).setCellValue(course.getLanguage());
             dataRow.createCell(11).setCellValue(course.getYearPublication());
