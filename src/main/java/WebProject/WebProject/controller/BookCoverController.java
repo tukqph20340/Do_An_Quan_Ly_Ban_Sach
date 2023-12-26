@@ -34,12 +34,6 @@ public class BookCoverController {
     @GetMapping("/bia-admin")
     public String DashboardBookCoverView(Model model, @Param("name") String name, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo, BookCover cover) {
         Page<BookCover> bookCoverPage = bookCoverService.findAll(pageNo, 5);
-        List<BookCover> list = this.bookCoverService.getAllBookCover();
-        if(name != null){
-            list = this.bookCoverService.seach(name);
-        }
-        model.addAttribute("name", list);
-        System.out.println(list);
         model.addAttribute("pageProduct", bookCoverPage.getContent());
         model.addAttribute("pageProductPage", bookCoverPage.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
@@ -50,6 +44,18 @@ public class BookCoverController {
     }
 
 
+    @GetMapping("/tim-kiem-bia")
+    public String DashboardMyProducerView111(Model model,
+                                             @RequestParam("name") String name, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        Page<BookCover> book = bookCoverService.fillByName(pageNo, 5,'%'+name+'%');
+        model.addAttribute("pageProduct", book.getContent());
+        model.addAttribute("pageProductPage", book.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("cover", new BookCover());
+        model.addAttribute("a","a");
+        return "/admin/bia/dashboard-bookcover";
+
+    }
     @GetMapping("/add-bia-sach")
     public String DashboardAddBookCoverView(Model model) {
         User admin = (User) session.getAttribute("admin");

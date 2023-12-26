@@ -44,8 +44,9 @@ public class BookCoverServiceImpl implements BookCoverService {
     }
 
     @Override
-    public List<BookCover> seach(String name) {
-        return this.bookCoverRepository.seach(name);
+    public Page<BookCover> fillByName(Integer pageNo, Integer size, String ten) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        return bookCoverRepository.findAllByCover_type(pageable,ten);
     }
 
 
