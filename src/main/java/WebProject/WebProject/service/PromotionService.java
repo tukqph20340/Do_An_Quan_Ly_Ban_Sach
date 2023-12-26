@@ -16,4 +16,7 @@ public interface PromotionService {
     Page<Promotion> findAll(Integer pageNo, Integer size);
 
     Promotion getAllPromotionById(Integer id);
+
+    Promotion checkPromotion(String code);
+
 }

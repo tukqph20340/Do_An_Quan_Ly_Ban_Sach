@@ -39,4 +39,9 @@ public class PromotionServiceImpl implements PromotionService {
         return promotionRepositoty.findById(id).get();
     }
 
+    @Override
+    public Promotion checkPromotion(String code) {
+        return promotionRepositoty.checkPromotion(code);
+    }
+
 }
