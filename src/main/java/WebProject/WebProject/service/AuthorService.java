@@ -13,6 +13,7 @@ public interface AuthorService {
     Author saveAuthor(Author author);
 
     Author ten(String author);
+
     Page<Author> timKiemTen(Integer pageNo, Integer size, String ten);
 
     Page<Author> findAll(Integer pageNo, Integer size);

@@ -1,6 +1,7 @@
 package WebProject.WebProject.controller;
 
 
+import WebProject.WebProject.entity.Author;
 import WebProject.WebProject.entity.Producer;
 import WebProject.WebProject.entity.Promotion;
 import WebProject.WebProject.entity.User;
@@ -167,5 +168,18 @@ public class PromotionController {
 
         }
 
+    }
+
+
+    @GetMapping("/tim-kiem-khuyen-mai")
+    public String DashboardMyAuthorView11(Model model,@RequestParam("couponCode") String couponCode,
+                                          @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        Page<Promotion> pagePromotion = service.timKiemCouponCode(pageNo, 5,'%'+couponCode+'%');
+        model.addAttribute("timKiem", "a");
+        model.addAttribute("pagePromotion", pagePromotion.getContent());
+        model.addAttribute("pagePromotionPage", pagePromotion.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Cate", new Promotion());
+        return "/admin/khuyenmai/khuyen-mai.html";
     }
 }

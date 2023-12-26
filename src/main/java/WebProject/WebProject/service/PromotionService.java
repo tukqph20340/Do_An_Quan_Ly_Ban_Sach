@@ -1,5 +1,6 @@
 package WebProject.WebProject.service;
 
+import WebProject.WebProject.entity.Author;
 import WebProject.WebProject.entity.Producer;
 import WebProject.WebProject.entity.Promotion;
 import org.springframework.data.domain.Page;
@@ -20,5 +21,7 @@ public interface PromotionService {
     Promotion getAllPromotionById(Integer id);
 
     Promotion checkPromotion(String code);
+
+    Page<Promotion> timKiemCouponCode(Integer pageNo, Integer size, String couponCode);
 
 }
