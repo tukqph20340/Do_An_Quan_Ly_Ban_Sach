@@ -5,6 +5,7 @@ import WebProject.WebProject.repository.AuthorRepository;
 import WebProject.WebProject.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,22 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Page<Author> findAll(Pageable pageable) {
+    public Author ten(String author) {
+        return authorRepository.findByNameAuthor(author);
+    }
+
+    @Override
+    public Page<Author> timKiemTen(Integer pageNo, Integer size, String ten) {
+        return null;
+    }
+
+    @Override
+    public Page<Author> findAll(Integer pageNo, Integer size) {
+        Pageable pageable = PageRequest.of(pageNo,size);
         return authorRepository.findAll(pageable);
     }
+
+
 
     @Override
     public Author getAllAuthorById(int id) {

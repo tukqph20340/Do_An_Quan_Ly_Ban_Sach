@@ -8,16 +8,63 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+</style>
 <body>
-
 <div id="wrapper">
 
     <!-- Header Container
@@ -25,17 +72,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -58,19 +105,8 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-                                Tài Khoản
-                            </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
-                        </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -91,8 +127,7 @@
 ================================================== -->
 
         <!-- Responsive Navigation Trigger -->
-        <a href="#" class="dashboard-responsive-nav-trigger"><i
-                class="fa fa-reorder"></i> Dashboard Navigation</a>
+
 
         <div class="dashboard-nav" style="background: white">
             <div class="dashboard-nav-inner">
@@ -128,7 +163,7 @@
                         <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
                                 style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
                     </ul>
-                    <ul data-submenu-title="Home">
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
                         <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
                                 style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
                         <li><a href="/home"><i class="im im-icon-Home"></i> <span
@@ -137,13 +172,11 @@
                 </ul>
             </div>
         </div>
-        <!-- Navigation / End -->
-
 
         <!-- Content
 ================================================== -->
         <div class="dashboard-content">
-            <form action="/tac-gia/sua" method="post"
+            <form th:action="@{/tac-gia/sua/{id}(id=${detail.id})}" method="post"
                   enctype="multipart/form-data">
                 <!-- Titlebar -->
 
@@ -154,34 +187,46 @@
 
                             <!-- Section -->
                             <div class="add-listing-section">
-
-                                <!-- Headline -->
                                 <div class="add-listing-headline">
                                     <h3>
-                                        <i class="sl sl-icon-doc"></i> Thông Tin
+                                        <i class="sl sl-icon-doc"></i> Thông Tin Cần Thêm
                                     </h3>
                                 </div>
-
                                 <!-- Title -->
                                 <div class="row with-forms">
-                                    <div class="col-md-12">
-                                        <h5>Tên</h5>
-                                        <input style="display: none;" name="author_id" th:value="${author.id}">
-                                        <input name="name_author" class="search-field" type="text"
-                                               th:value="${author.nameAuthor}"
-                                               placeholder="Tên" />
-                                        <p style="color: red">[[${loi}]]</p>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <h5>Tên Tác Giả</h5>
+                                            <input name="name_author" class="search-field" type="text"
+                                                   th:value="${detail.nameAuthor}" placeholder="Nhập Tên Tác Giả"/>
+                                            <p style="color: red">[[${loi}]]</p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>Ngày Sinh</h5>
+                                            <input name="date" class="search-field" type="date"
+                                                   th:value="${detail.date_of_birth}"
+                                            />
+                                            <p style="color: red">[[${loi1}]] [[${loi6}]]</p>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <!-- Row -->
                                 <div class="row with-forms">
-                                    <div class="col-md-4">
-                                        <h5>Địa Chỉ</h5>
-                                        <input th:value="${author.address}" name="address" type="text" placeholder="Địa Chỉ">
-                                        <p style="color: red">[[${loi1}]]</p>
-                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-6">
+                                            <h5>Địa Chỉ</h5>
+                                            <input name="diaChi" class="search-field" type="text"
+                                                   th:value="${detail.address}" placeholder="Nhập Địa Chỉ Tác Giả"/>
+                                            <p style="color: red">[[${loi3}]]</p>
+                                        </div>
 
+                                        <div class="col-md-6">
+                                            <h5>Quốc Gia</h5>
+                                            <input name="quocGia" class="search-field" type="text"
+                                                   th:value="${detail.nation}"
+                                                   placeholder="Nhập Quốc Gia Tác Giả"/>
+                                            <p style="color: red">[[${loi4}]]</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- Row / End -->
 
@@ -200,17 +245,52 @@
 
                                 <!-- Description -->
                                 <div class="form">
-                                    <h5>Mô Tả Chi Tiết</h5>
-                                    <textarea th:field="${author.description}" name="description"
-                                              class="WYSIWYG" cols="40" rows="3" id="summary"
-                                              spellcheck="true" placeholder="Mô Tả Chi Tiết"></textarea>
-                                    <p style="color: red">[[${loi2}]]</p>
+                                    <h5>Chi Tiết</h5>
+                                    <textarea name="description" class="WYSIWYG" cols="40"
+                                              rows="3" id="summary" spellcheck="true"
+                                              th:field="*{detail.description}"
+                                              placeholder="Chi Tiết"></textarea>
+                                    <p style="color: red">[[${loi5}]]</p>
                                 </div>
                             </div>
                             <!-- Section / End -->
 
                             <!-- Section -->
-                            <div class="add-listing-section margin-top-45">
+                            <div class="add-listing-section margin-top-45" th:if="${a==true}">
+
+                                <!-- Headline -->
+                                <div class="add-listing-headline">
+                                    <h3>
+                                        <i class="sl sl-icon-picture"></i> Ảnh
+                                    </h3>
+                                </div>
+
+
+                                <div class="slideshow-container" style="width: 30%;">
+                                    <div class="mySlides">
+                                        <img th:src="${detail.authorList[0].url_Image}" style="width: 100%">
+                                    </div>
+                                </div>
+                                <!-- Nút điều khiển mũi tên-->
+
+
+                                <!-- Nút tròn điều khiển slideshow-->
+                                <!-- Dropzone -->
+                                <div class="submit-section">
+
+                                    <div class="upload__box" style="padding-top: 40px;">
+                                        <div class="upload__btn-box">
+                                            <label class="upload__btn" style="border-radius: 50px;">
+                                                <p style="margin-bottom: 0px;">Thêm Ảnh</p> <input
+                                                    name="listImage" accept="image/*" type="file"
+                                                    data-max_length="20" class="upload__inputfile" multiple>
+                                            </label>
+                                        </div>
+                                        <div class="upload__img-wrap"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-listing-section margin-top-45" th:if="${a==false}">
 
                                 <!-- Headline -->
                                 <div class="add-listing-headline">
@@ -221,13 +301,15 @@
                                 <!-- Thẻ Chứa Slideshow -->
                                 <div class="slideshow-container" style="width: 30%;">
                                     <!-- Kết hợp hình ảnh và nội dung cho mội phần tử trong slideshow-->
-                                    <th:block th:each="y: ${author.authorImage}">
-                                        <div class="mySlides fade">
-                                            <a th:href="@{/dashboard-author/delete-image/{id}(id=${y.id})}" class="delete_img"> <i
+                                    <th:block th:each="y: ${detail.authorList}">
+                                        <div class="mySlides">
+                                            <a th:href="@{/xoa-anh/tac-gia/{id}(id=${y.id})}"
+                                               class="delete_img"> <i
                                                     style="color: #fff; line-height: 30px;"
                                                     class="sl sl-icon-close"></i>
 
-                                            </a> <img th:src="${y.url_Image}" style="width: 100%">
+                                            </a>
+                                            <img th:src="${y.url_Image}" style="width: 100%">
                                         </div>
                                     </th:block>
                                     <!-- Nút điều khiển mũi tên-->
@@ -237,7 +319,7 @@
                                 <br>
                                 <!-- Nút tròn điều khiển slideshow-->
                                 <div style="text-align: center">
-                                    <th:block th:each="y: ${author.authorImage}">
+                                    <th:block th:each="y: ${detail.authorList}">
                                         <span class="dotw" th:onclick="'currentSlide('+ ${yStat.index+1} +')'"></span>
                                     </th:block>
 
@@ -257,14 +339,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="add-listing-section margin-top-45" th:if="${a==null}">
+
+                                <!-- Headline -->
+                                <div class="add-listing-headline">
+                                    <h3>
+                                        <i class="sl sl-icon-picture"></i> Ảnh
+                                    </h3>
+                                </div>
+
+                                <!-- Dropzone -->
+                                <div class="submit-section">
+
+                                    <div class="upload__box">
+                                        <div class="upload__btn-box">
+                                            <label class="upload__btn">
+                                                <p style="margin-bottom: 0px;">Chọn Ảnh</p> <input
+                                                    name="listImage" accept="image/*" type="file"
+                                                    data-max_length="20" class="upload__inputfile" multiple>
+                                            </label>
+                                        </div>
+                                        <div class="upload__img-wrap"></div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Section / End -->
-
-
-
-
+                            <p style="color: red">[[${loi7}]]</p>
 
                             <button class="button preview">
-                               Sửa <i class="fa fa-arrow-circle-right"></i>
+                                Sửa Tác Giả <i class="fa fa-arrow-circle-right"></i>
                             </button>
 
                         </div>
@@ -307,12 +410,15 @@
 <script>
     var slideIndex = 1;
     showSlides(slideIndex);
+
     function plusSlides(n) {
         showSlides(slideIndex += n);
     }
+
     function currentSlide(n) {
         showSlides(slideIndex = n);
     }
+
     function showSlides(n) {
         var i;
         var slides = document.getElementsByClassName("mySlides");
@@ -334,7 +440,7 @@
     }
 </script>
 <script>
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         ImgUpload();
     });
 
@@ -344,11 +450,11 @@
 
         $('.upload__inputfile')
             .each(
-                function() {
+                function () {
                     $(this)
                         .on(
                             'change',
-                            function(e) {
+                            function (e) {
                                 imgWrap = $(this)
                                     .closest(
                                         '.upload__box')
@@ -363,7 +469,7 @@
                                     .call(files);
                                 var iterator = 0;
                                 filesArr
-                                    .forEach(function(
+                                    .forEach(function (
                                         f, index) {
 
                                         if (!f.type
@@ -387,7 +493,7 @@
                                                     .push(f);
 
                                                 var reader = new FileReader();
-                                                reader.onload = function(
+                                                reader.onload = function (
                                                     e) {
                                                     var html = "<div class='upload__img-box'><div style='background-image: url("
                                                         + e.target.result
@@ -408,7 +514,7 @@
                             });
                 });
 
-        $('body').on('click', ".upload__img-close", function(e) {
+        $('body').on('click', ".upload__img-close", function (e) {
             var file = $(this).parent().data("file");
             for (var i = 0; i < imgArray.length; i++) {
                 if (imgArray[i].name === file) {
