@@ -14,7 +14,70 @@
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
+
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+    .container{
+        margin-top:200px;
+    }
+
+    .btn:hover{
+        color:#fff;
+    }
+
+    .input-text:focus{
+
+
+        box-shadow: 0px 0px 0px;
+        border-color:#f8c146;
+        outline: 0px;
+        border-radius: 20px;
+    }
+
+    .form-control {
+        border: 1px solid #f8c146;
+    }
+</style>
 
 <body>
 
@@ -25,17 +88,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -58,19 +121,8 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-                                Tài Khoản
-                            </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
-                        </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -154,21 +206,30 @@
                         <h4 style="margin-top: 20px">Thông Tin Người Dùng</h4>
                         <ul>
                             <th:block>
+                                <form th:action="@{/tim-kiem-bia}" method="get">
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="name" class="form-control input-text" placeholder="Search...." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-warning btn-lg" type="submit"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
                                 <li>
                                     <div class="list-box-listing">
-                                        <table class="table">
+                                        <table class="table table-bordered table-striped table-bordered"
+                                               style="text-align: center;vertical-align: middle;">
                                             <thead>
                                             <tr>
+                                                <th scope="col">Tên Người Dùng</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Số Điện Thoại</th>
-                                                <th scope="col">Tên Người Dùng</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="list: ${list.content}">
+                                                <td th:text="${list.user_Name}"></td>
                                                 <td th:text="${list.email}"></td>
                                                 <td th:text="${list.phone_Number}"></td>
-                                                <td th:text="${list.user_Name}"></td>
                                             </tr>
                                             </tbody>
                                         </table>
