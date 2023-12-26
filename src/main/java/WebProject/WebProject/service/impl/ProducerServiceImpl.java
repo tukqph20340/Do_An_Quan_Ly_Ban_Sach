@@ -33,6 +33,11 @@ public class ProducerServiceImpl implements ProducerService {
         return producerRepository.findAll(pageable);
     }
 
+    @Override
+    public Page<Producer> teh(Integer pageNo, Integer size, String ten) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        return producerRepository.findAllByNameProducer(pageable,ten);
+    }
 
 
     @Override

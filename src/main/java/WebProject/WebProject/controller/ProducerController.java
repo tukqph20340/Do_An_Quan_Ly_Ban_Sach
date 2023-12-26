@@ -29,29 +29,28 @@ public class ProducerController {
 
     @GetMapping("/nha-san-xuat-admin")
     public String DashboardMyProducerView(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
         Page<Producer> pageProducer = producerService.findAll(pageNo, 5);
         model.addAttribute("pageProduct", pageProducer.getContent());
         model.addAttribute("pageProductPage", pageProducer.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Cate", new Producer());
+        model.addAttribute("a",null);
         return "/admin/nhaphathanh/dashboard-producer";
 
     }
+    @GetMapping("/tim-kiem-nha-xuat-ban")
+    public String DashboardMyProducerView111(Model model,
+            @RequestParam("tenNhaXuatBan") String tenNhaXuatBan, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        Page<Producer> pageProducer = producerService.teh(pageNo, 5,'%'+tenNhaXuatBan+'%');
+        model.addAttribute("pageProduct", pageProducer.getContent());
+        model.addAttribute("pageProductPage", pageProducer.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Cate", new Producer());
+        model.addAttribute("a","a");
+        return "/admin/nhaphathanh/dashboard-producer";
 
-//    @GetMapping("/phan-trang/{page}")
-//    public String DashboardMyProducerPageView(@PathVariable int page, Model model) {
-//        User admin = (User) session.getAttribute("admin");
-//        if (admin == null) {
-//            return "redirect:/signin-admin";
-//        } else {
-////            List<Category> listCategories = categoryService.findAll();
-//            Pageable pageable = PageRequest.of(page, 5);
-//            Page<Producer> pageProduct = producerService.findAll(pageable);
-//            model.addAttribute("pageProduct", pageProduct);
-////            model.addAttribute("listCategories", listCategories);
-//            return "/admin/nhaphathanh/dashboard-producer";
-//        }
-//    }
+    }
 
     @GetMapping("/add-nha-san-xuat")
     public String DashboardAddProducerView(Model model) {
