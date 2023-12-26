@@ -5,6 +5,7 @@ package WebProject.WebProject.controller;
 import WebProject.WebProject.service.ExcelBiaSach;
 import WebProject.WebProject.service.ExcelKhuyenMai;
 import WebProject.WebProject.service.ExcelNhaXuatBan;
+import WebProject.WebProject.service.ExcelTacGia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,9 @@ public class ExcelController{
 
     @Autowired
     private ExcelBiaSach excelBiaSach;
+
+    @Autowired
+    private ExcelTacGia excelTacGia;
 
     @Autowired
     private ExcelKhuyenMai excelKhuyenMai;
@@ -61,6 +65,19 @@ public class ExcelController{
         response.setHeader(headerKey, headerValue);
 
         excelKhuyenMai.generateExcel(response);
+
+        response.flushBuffer();
+    }
+
+    @GetMapping("/xuat-file-excel-tac-gia")
+    public void generateExcelReport3(HttpServletResponse response) throws Exception {
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=Tac Gia.xls";
+
+        response.setHeader(headerKey, headerValue);
+
+        excelTacGia.generateExcel(response);
 
         response.flushBuffer();
     }
