@@ -17,5 +17,5 @@ public interface BookCoverService {
 
     BookCover getAllBookCoverById(int id);
 
-    List<BookCover> seach(String name);
+    Page<BookCover> fillByName(Integer pageNo, Integer size,String ten);
 }
