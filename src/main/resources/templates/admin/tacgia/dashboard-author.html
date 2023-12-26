@@ -98,8 +98,7 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <<<<<<< HEAD
-                        =======
+
                         <div class="user-menu">
                             <div class="user-name">
                                 Tài Khoản
@@ -109,7 +108,7 @@
                                         class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
                             </ul>
                         </div>
-                        >>>>>>> 18fb493a0f0c7335fe247e8f95b0d56f17637587
+
 
                         <a th:href="@{/add-san-pham}"
                            class="button border with-icon">Thêm Sản Phẩm<i
@@ -186,17 +185,17 @@
 ================================================== -->
         <div class="dashboard-content">
 
-            <<<<<<< HEAD
             <div class="col-lg-12">
                 <div class="card-body" style="background: white">
                     <h4 style="font-weight: bold">Tìm Kiếm</h4>
                     <form th:action="@{/tim-kiem-nha-xuat-ban}" method="get">
                         <div class="input-group">
-                            <input type="search"  name="tenNhaXuatBan" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                            <input type="search" name="tenNhaXuatBan" class="form-control rounded" placeholder="Search"
+                                   aria-label="Search" aria-describedby="search-addon"/>
                             <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>search</button>
                         </div>
                     </form>
-                    =======
+
                     <div class="col-lg-12">
                         <div class="col-lg-4" style="text-align: left">
                             <a th:href="@{/add-tac-gia}"
@@ -234,12 +233,11 @@
                                         </li>
                                     </th:block>
                                 </ul>
-                                >>>>>>> 18fb493a0f0c7335fe247e8f95b0d56f17637587
+
                             </div>
                         </div>
                     </div>
 
-                    <<<<<<< HEAD
                     <div class="col-lg-12">
                         <div class="card-body" style="margin-top:15px ;background: white">
                             <div class="col-lg-12">
@@ -248,10 +246,12 @@
                                         style="font-size: 15px;color: white" th:href="@{/add-tac-gia}">+ Thêm</a>
                                 </button>
                                 <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
-                                        style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-tac-gia}"> Xuất Excel</a>
+                                        style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-tac-gia}"> Xuất
+                                    Excel</a>
                                 </button>
                             </div>
-                            <table class="table table-bordered table-striped table-bordered" style="text-align: center;vertical-align: middle;">
+                            <table class="table table-bordered table-striped table-bordered"
+                                   style="text-align: center;vertical-align: middle;">
                                 <tr>
                                     <th style="text-align: center;vertical-align: middle;">Id</th>
                                     <th style="text-align: center;vertical-align: middle;">Tên Tác Giả</th>
@@ -265,16 +265,23 @@
                                 <tr th:each="list: ${pageAuthor}">
                                     <td>[[${list.id}]]</td>
                                     <td>[[${list.nameAuthor}]]</td>
-                                    <td><img th:src="@{${list.authorList[0].url_Image}}" height="100px" width="500px"></td>
+                                    <td><img th:src="@{${list.authorList[0].url_Image}}" height="100px" width="500px">
+                                    </td>
                                     <td>[[${list.date_of_birth}]]</td>
                                     <td>[[${list.address}]]</td>
                                     <td>[[${list.nation}]]</td>
                                     <td>[[${list.description}]]</td>
                                     <td>
-                                        <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a class="sl sl-icon-eye" th:href="@{/tac-gia/view-all/{id}(id=${list.id})}"><ion-icon name="eye-outline"></ion-icon></a></button>
+                                        <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a
+                                                class="sl sl-icon-eye"
+                                                th:href="@{/tac-gia/view-all/{id}(id=${list.id})}">
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                        </a></button>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary"style=" height: 32px; width: 32px;" ><a class="sl sl-icon-note" th:href="@{/tac-gia/sua/{id}(id=${list.id})}"></a></button>
+                                        <button class="btn btn-primary" style=" height: 32px; width: 32px;"><a
+                                                class="sl sl-icon-note"
+                                                th:href="@{/tac-gia/sua/{id}(id=${list.id})}"></a></button>
                                     </td>
                                 </tr>
                             </table>
@@ -364,7 +371,6 @@
                                     </ul>
                                 </nav>
                             </div>
-                            =======
                             <!-- Pagination -->
                             <div class="clearfix"></div>
                             <div th:if="${search_dashboard==null}" class="row">
@@ -384,7 +390,7 @@
                                                         class="sl sl-icon-arrow-right"></i></a></li>
                                             </ul>
                                         </nav>
-                                        >>>>>>> 18fb493a0f0c7335fe247e8f95b0d56f17637587
+
                                     </div>
                                 </div>
                             </div>
