@@ -160,7 +160,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form th:action="@{/khuyen-mai/sua/{id}(id=${detail.id})}" method="post"
+                    <form th:action="@{/sua-khuyen-mai/{id}(id=${detail.id})}" method="post"
                           enctype="multipart/form-data">
                         <div id="add-listing">
 
@@ -178,37 +178,37 @@
                                 <div class="row with-forms">
                                     <div class="col-md-12">
                                         <h5>Mã Code</h5>
-                                        <input name="maCode" class="search-field" type="text"
+                                        <input name="couponCode" class="search-field" type="text"
                                                th:value="${detail.couponCode}" placeholder="Mã Code"/>
-                                        <p style="color: red">[[${loi}]] [[${loiMa}]]</p>
+                                        <p style="color: red">[[${loi}]]</p>
                                     </div>
                                 </div>
                                 <div class="row with-forms">
-<!--                                    <div class="col-md-6">-->
-<!--                                        <h5>Giảm Giá Loại</h5>-->
-<!--                                        <input name="giamGiaLoai" class="search-field" type="number"-->
-<!--                                               th:value="${detail.discountType}" placeholder="Giảm Giá Loại"/>-->
-<!--                                        <p style="color: red">[[${loi1}]]</p>-->
-<!--                                    </div>-->
+                                    <div class="col-md-6">
+                                        <h5>Ngày Tạo</h5>
+                                        <input name="createdAt" class="search-field" type="date"
+                                               th:value="${detail.createdAt}" placeholder="Giá Trị Giảm"/>
+                                        <!--                                        <p style="color: red">[[${loi3}]]</p>-->
+                                    </div>
                                     <div class="col-md-6">
                                         <h5>Giá Trị Giảm</h5>
-                                        <input name="giaTriGiam" class="search-field" type="number"
+                                        <input name="discountValue" class="search-field" type="number"
                                                th:value="${detail.discountValue}" placeholder="Giá Trị Giảm"/>
-                                        <p style="color: red">[[${loi2}]]</p>
+                                        <!--                                        <p style="color: red">[[${loi2}]]</p>-->
                                     </div>
                                 </div>
                                 <div class="row with-forms">
                                     <div class="col-md-6">
                                         <h5>Ngày Hết Hạn</h5>
-                                        <input name="ngayHetHan" class="search-field" type="date"
+                                        <input name="expiredAt" class="search-field" type="date"
                                                th:value="${detail.expiredAt}" placeholder="Ngày Hết Hạn"/>
-                                        <p style="color: red">[[${loi3}]]</p>
+                                        <!--                                        <p style="color: red">[[${loi3}]]</p>-->
                                     </div>
                                     <div class="col-md-6">
                                         <h5>Giá Trị Giảm Tối Đa</h5>
-                                        <input name="giaTriGiamToiDa" class="search-field" type="number"
+                                        <input name="maximumDiscountValue" class="search-field" type="number"
                                                th:value="${detail.maximumDiscountValue}" placeholder="Giá Trị Giảm Tối Đa"/>
-                                        <p style="color: red">[[${loi4}]]</p>
+                                        <!--                                        <p style="color: red">[[${loi4}]]</p>-->
                                     </div>
                                 </div>
                                 <!-- Row / End -->
@@ -229,10 +229,10 @@
                                 <!-- Description -->
                                 <div class="form">
                                     <h5>Mô Tả Chi Tiết</h5>
-                                    <textarea name="moTa" class="WYSIWYG" cols="40"
+                                    <textarea name="name" class="WYSIWYG" cols="40"
                                               rows="3" id="summary" spellcheck="true"
                                               placeholder="Mô Tả Chi Tiết" th:field="${detail.name}" ></textarea>
-                                    <p style="color: red">[[${loi7}]]</p>
+                                    <p style="color: red">[[${loi2}]]</p>
                                 </div>
                             </div>
                             <!-- Section / End -->

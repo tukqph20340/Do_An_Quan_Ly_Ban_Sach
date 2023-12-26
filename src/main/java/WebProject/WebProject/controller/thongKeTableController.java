@@ -61,7 +61,7 @@ public class thongKeTableController {
 
     @GetMapping("/thong-ke-admin-san-pham")
     public String getAll(Model model) {
-        List<Category> listCate = categoryService.findAll();
+        List<Category> listCate = categoryService.getAll();
         List<Map<String, Object>> resultList = thongKeRepository.thongKeProduct();
         model.addAttribute("resultList", resultList);
         model.addAttribute("listCate", listCate);
@@ -73,7 +73,7 @@ public class thongKeTableController {
 
     @GetMapping("/thong-ke-admin-san-pham/tim-kiem")
     public String getAll1(Model model, @RequestParam("loai") String ten) {
-        List<Category> listCate = categoryService.findAll();
+        List<Category> listCate = categoryService.getAll();
         List<Map<String, Object>> resultList = thongKeRepository.thongKeProduct();
         model.addAttribute("resultList", resultList);
         model.addAttribute("listCate", listCate);

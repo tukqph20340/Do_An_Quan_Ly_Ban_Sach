@@ -185,14 +185,12 @@
                         <h4 style="font-weight: bold">Tìm Kiếm</h4>
                         <form th:action="@{/tim-kiem-nha-xuat-ban}" method="get">
                             <div class="input-group">
-                                <input type="search"  name="tenNhaXuatBan" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>search</button>
+                                <input type="search" name="tenNhaXuatBan" class="form-control rounded"
+                                       placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
+                                <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>search
+                                </button>
                             </div>
-
-                                <label>Tên Nhà Xuất Bản:</label>
-                                <input type="text" name="ten">
-                                <button>Tìm Kiếm</button>
-                            </form>
+                        </form>
                     </div>
                 </div>
 
@@ -204,10 +202,12 @@
                                     style="font-size: 15px;color: white" th:href="@{/add-nha-san-xuat}">+ Thêm</a>
                             </button>
                             <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
-                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-nha-san-xuat}"> Xuất Excel</a>
+                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-nha-san-xuat}">
+                                Xuất Excel</a>
                             </button>
                         </div>
-                        <table class="table table-bordered table-striped table-bordered" style="text-align: center;vertical-align: middle;">
+                        <table class="table table-bordered table-striped table-bordered"
+                               style="text-align: center;vertical-align: middle;">
                             <tr>
                                 <th style="text-align: center;vertical-align: middle;">ID</th>
                                 <th style="text-align: center;vertical-align: middle;">Tên</th>
@@ -227,10 +227,15 @@
                                 <td>[[${list.nation}]]</td>
                                 <td>[[${list.description}]]</td>
                                 <td>
-                                    <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a class="sl sl-icon-eye" th:href="@{/view-all/{id}(id=${list.id})}"><ion-icon name="eye-outline"></ion-icon></a></button>
+                                    <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a
+                                            class="sl sl-icon-eye" th:href="@{/view-all/{id}(id=${list.id})}">
+                                        <ion-icon name="eye-outline"></ion-icon>
+                                    </a></button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary"style=" height: 32px; width: 32px;" ><a class="sl sl-icon-note" th:href="@{/view-sua/{id}(id=${list.id})}"></a></button>
+                                    <button class="btn btn-primary" style=" height: 32px; width: 32px;"><a
+                                            class="sl sl-icon-note" th:href="@{/view-sua/{id}(id=${list.id})}"></a>
+                                    </button>
                                 </td>
                             </tr>
                         </table>
