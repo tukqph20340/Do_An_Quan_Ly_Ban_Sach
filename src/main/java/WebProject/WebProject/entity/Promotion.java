@@ -32,11 +32,11 @@ public class Promotion {
     @Column(name = "expired_at", columnDefinition = "datetime(6)") // Mapping với cột "expired_at"
     private Date expiredAt;
 
-    @Column(name = "is_active", columnDefinition = "tinyint(1)") // Mapping với cột "is_active"
-    private Boolean isActive;
-
-    @Column(name = "is_public", columnDefinition = "tinyint(1)") // Mapping với cột "is_public"
-    private Boolean isPublic;
+//    @Column(name = "is_active", columnDefinition = "tinyint(1)") // Mapping với cột "is_active"
+//    private Boolean isActive;
+//
+//    @Column(name = "is_public", columnDefinition = "tinyint(1)") // Mapping với cột "is_public"
+//    private Boolean isPublic;
 
     @Column(name = "maximum_discount_value", columnDefinition = "bigint") // Mapping với cột "maximum_discount_value"
     private Long maximumDiscountValue;

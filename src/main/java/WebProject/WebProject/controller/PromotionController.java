@@ -79,8 +79,8 @@ public class PromotionController {
                                              @RequestParam("createdAt") Date createdAt,
                                              @RequestParam("discountValue") Long discountValue,
                                              @RequestParam("expiredAt") Date expiredAt,
-                                             @RequestParam("isActive") Boolean isActive,
-                                             @RequestParam("isPublic") Boolean isPublic,
+//                                             @RequestParam("isActive") Boolean isActive,
+//                                             @RequestParam("isPublic") Boolean isPublic,
                                              @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
                                              @RequestParam("name") String name
     ) throws Exception {
@@ -101,12 +101,12 @@ public class PromotionController {
                 promotion.setCreatedAt(createdAt);
                 promotion.setDiscountValue(discountValue);
                 promotion.setExpiredAt(expiredAt);
-                promotion.setIsActive(isActive);
-                promotion.setIsPublic(isPublic);
+//                promotion.setIsActive(isActive);
+//                promotion.setIsPublic(isPublic);
                 promotion.setMaximumDiscountValue(maximumDiscountValue);
                 promotion.setName(name);
                 service.savePromotion(promotion);
-                return "redirect:/khuyen-mai-admin";
+                return "redirect:/khuyen-mai/admin";
             }
         }
     }
@@ -133,8 +133,8 @@ public class PromotionController {
                                              @RequestParam("createdAt") Date createdAt,
                                              @RequestParam("discountValue") Long discountValue,
                                              @RequestParam("expiredAt") Date expiredAt,
-                                             @RequestParam("isActive") Boolean isActive,
-                                             @RequestParam("isPublic") Boolean isPublic,
+//                                             @RequestParam("isActive") Boolean isActive,
+//                                             @RequestParam("isPublic") Boolean isPublic,
                                              @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
                                              @RequestParam("name") String name
     ) throws Exception {
@@ -155,12 +155,13 @@ public class PromotionController {
                 promotion.setCreatedAt(createdAt);
                 promotion.setDiscountValue(discountValue);
                 promotion.setExpiredAt(expiredAt);
-                promotion.setIsActive(isActive);
-                promotion.setIsPublic(isPublic);
+//                promotion.setIsActive(isActive);
+//                promotion.setIsPublic(isPublic);
                 promotion.setMaximumDiscountValue(maximumDiscountValue);
                 promotion.setName(name);
                 service.savePromotion(promotion);
-                return "redirect:/khuyen-mai-admin";
+                return "redirect:/khuyen-mai/admin";
+
             }
 
         }

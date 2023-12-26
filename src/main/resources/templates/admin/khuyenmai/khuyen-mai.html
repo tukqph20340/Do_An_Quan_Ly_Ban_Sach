@@ -195,7 +195,7 @@
                         <div class="col-lg-12">
                             <h4 style="font-weight: bold">Danh Sách Khuyến Mãi</h4>
                             <button style="margin-left: 1047px" class="btn btn-primary"><a
-                                    style="font-size: 15px;color: white" th:href="@{/view-add-khuyen-mai}">+ Thêm</a>
+                                    style="font-size: 15px;color: white" th:href="@{/view-add-khuyen-mai}">+Thêm</a>
                             </button>
                             <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
                                     style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-nha-san-xuat}">
@@ -212,6 +212,7 @@
                                 <th style="text-align: center;vertical-align: middle;">Ngày hết hạn</th>
                                 <th style="text-align: center;vertical-align: middle;">Giá trị giảm tối đa</th>
                                 <th style="text-align: center;vertical-align: middle;">Tên</th>
+                                <th style="text-align: center;vertical-align: middle;">Chức năng</th>
                             </tr>
                             <tr th:each="list:${pagePromotion}">
                                 <td>[[${list.id}]]</td>
@@ -226,8 +227,7 @@
                                             class="sl sl-icon-note" th:href="@{/view-all-khuyen-mai/{id}(id=${list.id})}"></a>
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </a></button>
-                                </td>
-                                <td>
+                              
                                     <button class="btn btn-primary" style=" height: 32px; width: 32px;"><a
                                             class="sl sl-icon-note" th:href="@{/view-sua-khuyen-mai/{id}(id=${list.id})}"></a>
                                     </button>
