@@ -36,4 +36,7 @@ public class Author {
     @Column(name = "description ", columnDefinition = "nvarchar(11111)")
     private String description;
 
+    @OneToMany(mappedBy = "author")
+    private List<AuthorImage> authorList ;
+
 }

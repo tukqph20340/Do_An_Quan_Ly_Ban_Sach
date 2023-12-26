@@ -1,6 +1,7 @@
 package WebProject.WebProject.service;
 
 import WebProject.WebProject.entity.Author;
+import WebProject.WebProject.entity.Producer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -11,7 +12,10 @@ public interface AuthorService {
 
     Author saveAuthor(Author author);
 
-    Page<Author> findAll(Pageable pageable);
+    Author ten(String author);
+    Page<Author> timKiemTen(Integer pageNo, Integer size, String ten);
+
+    Page<Author> findAll(Integer pageNo, Integer size);
 
     Author getAllAuthorById(int id);
 }
