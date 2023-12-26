@@ -34,24 +34,23 @@ public class CategoryController {
         model.addAttribute("pageCategorypage", pageCategory.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Cate", new Category());
+        model.addAttribute("a", null);
         return "/admin/theloai/dashboard-category";
 
     }
 
-//    @GetMapping("/phan-trang/{page}")
-//    public String DashboardMyProducerPageView(@PathVariable int page, Model model) {
-//        User admin = (User) session.getAttribute("admin");
-//        if (admin == null) {
-//            return "redirect:/signin-admin";
-//        } else {
-////            List<Category> listCategories = categoryService.findAll();
-//            Pageable pageable = PageRequest.of(page, 5);
-//            Page<Producer> pageProduct = producerService.findAll(pageable);
-//            model.addAttribute("pageProduct", pageProduct);
-////            model.addAttribute("listCategories", listCategories);
-//            return "/admin/nhaphathanh/dashboard-producer";
-//        }
-//    }
+    @GetMapping("/tim-kiem-the-loai")
+    public String DashboardMyCategoryView111(Model model,
+                                             @RequestParam("tenTheLoai") String category_Name, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        Page<Category> pageCategory = categoryService.teh(pageNo, 5,'%'+category_Name+'%');
+        model.addAttribute("pageCategory", pageCategory.getContent());
+        model.addAttribute("pageCategorypage", pageCategory.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Cate", new Category());
+        model.addAttribute("a","a");
+        return "/admin/theloai/dashboard-category";
+
+    }
 
     @GetMapping("/add-the-loai")
     public String DashboardAddCategoryView(Model model) {
@@ -118,7 +117,6 @@ public class CategoryController {
         }
 
     }
-
 }
 
 
