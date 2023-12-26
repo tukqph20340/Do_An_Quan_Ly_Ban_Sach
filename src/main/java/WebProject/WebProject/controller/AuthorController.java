@@ -56,7 +56,7 @@ public class AuthorController {
         model.addAttribute("pageAu", pageAu.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Cate", new Author());
-        return "/admin/tacgia/dashboard-author";
+        return "/admin/tacgia/dashboard-author.html";
 
     }
 

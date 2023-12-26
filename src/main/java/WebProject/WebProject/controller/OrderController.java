@@ -202,8 +202,7 @@ public class OrderController {
                            @RequestParam(value = "payVi", defaultValue = "false") boolean payVi, Model model,
                            HttpServletResponse resp, HttpServletRequest request1) throws Exception {
         try {
-<<<<<<< HEAD
-=======
+
             String vi = request1.getParameter("discal");
             System.out.println(vi);
             String giaShip = request1.getParameter("ship");
@@ -224,7 +223,7 @@ public class OrderController {
             String diaChiChon = request1.getParameter("diaChiChon");
             if ("diaChiCu".equals(diaChiChon) || "diaChiMoi".equals(diaChiChon)) {
                 TimeZone vietnamTimeZone = TimeZone.getTimeZone("Asia/Jakarta");
->>>>>>> e101a4fb793afeb21e64d1a15dd77d70226c1359
+
 
                 // Tạo đối tượng SimpleDateFormat với múi giờ của Việt Nam
                 SimpleDateFormat vietnamDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -396,13 +395,10 @@ public class OrderController {
                     return "redirect:/invoice";
                 }
 
-<<<<<<< HEAD
-            
-=======
+
             }
 
 
->>>>>>> e101a4fb793afeb21e64d1a15dd77d70226c1359
         } catch (Exception e) {
             session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
             return "redirect:/checkout";
