@@ -198,7 +198,7 @@
                                     style="font-size: 15px;color: white" th:href="@{/view-add-khuyen-mai}">+Thêm</a>
                             </button>
                             <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
-                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-nha-san-xuat}">
+                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-khuyen-mai}">
                                 Xuất Excel</a>
                             </button>
                         </div>
@@ -227,7 +227,7 @@
                                             class="sl sl-icon-note" th:href="@{/view-all-khuyen-mai/{id}(id=${list.id})}"></a>
                                         <ion-icon name="eye-outline"></ion-icon>
                                     </a></button>
-                              
+
                                     <button class="btn btn-primary" style=" height: 32px; width: 32px;"><a
                                             class="sl sl-icon-note" th:href="@{/view-sua-khuyen-mai/{id}(id=${list.id})}"></a>
                                     </button>
@@ -240,13 +240,13 @@
                                 <ul class="pagination">
                                     <!--trang đầu-->
                                     <li class="page-item">
-                                        <a class="page-link" th:href="@{/khuyen-mai-admin(pageNo=0)}">Trang
+                                        <a class="page-link" th:href="@{/khuyen-mai/admin(pageNo=0)}">Trang
                                             Đầu</a>
                                     </li>
                                     <!--Previous-->
                                     <li class="page-item" th:if="${pageNumber>0}">
                                         <a class="page-link"
-                                           th:href="@{/khuyen-mai-admin(pageNo=${pageNumber} -1)}">Trước</a>
+                                           th:href="@{/khuyen-mai/admin(pageNo=${pageNumber} -1)}">Trước</a>
                                     </li>
                                     <li class="page-item" th:if="${pageNumber == 0}">
                                         <a class="page-link" th:disabled="true">Trước</a>
@@ -256,14 +256,14 @@
                                     <div th:each="index : ${#numbers.sequence(0, pagePromotionPage-1)}">
                                         <li class="page-item">
                                             <a class="page-link"
-                                               th:href="@{/khuyen-mai-admin(pageNo=${index})}"
+                                               th:href="@{/khuyen-mai/admin(pageNo=${index})}"
                                                th:text="${index+1}"></a>
                                         </li>
                                     </div>
                                     <!--Next-->
                                     <li class="page-item" th:if="${pageNumber < (pagePromotionPage -1)}">
                                         <a class="page-link"
-                                           th:href="@{/khuyen-mai-admin(pageNo=${pagePromotionPage} +1)}">Tiếp</a>
+                                           th:href="@{/khuyen-mai/admin(pageNo=${pagePromotionPage} +1)}">Tiếp</a>
                                     </li>
                                     <li class="page-item" th:if="${pageNumber == (pagePromotionPage -1)}">
                                         <a class="page-link" th:disabled="true">Tiếp</a>
@@ -271,7 +271,7 @@
                                     <!--trang cuối-->
                                     <li class="page-item">
                                         <a class="page-link"
-                                           th:href="@{/khuyen-mai-admin(pageNo=${pagePromotionPage -1})}">Trang
+                                           th:href="@{/khuyen-mai/admin(pageNo=${pagePromotionPage -1})}">Trang
                                             Cuối</a>
                                     </li>
                                 </ul>

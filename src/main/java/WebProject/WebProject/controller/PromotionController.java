@@ -41,7 +41,7 @@ public class PromotionController {
         model.addAttribute("pagePromotion", pagePromotion.getContent());
         model.addAttribute("pagePromotionPage", pagePromotion.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
-        model.addAttribute("Cate", new Promotion());
+        model.addAttribute("Promotion", new Promotion());
         return "/admin/khuyenmai/khuyen-mai";
 
     }
@@ -105,7 +105,8 @@ public class PromotionController {
 //                promotion.setIsPublic(isPublic);
                 promotion.setMaximumDiscountValue(maximumDiscountValue);
                 promotion.setName(name);
-                service.savePromotion(promotion);
+                 service.savePromotion(promotion);
+                System.out.println(promotion);
                 return "redirect:/khuyen-mai/admin";
             }
         }
