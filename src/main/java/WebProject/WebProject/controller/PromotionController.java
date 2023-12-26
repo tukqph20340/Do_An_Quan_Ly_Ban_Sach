@@ -77,12 +77,12 @@ public class PromotionController {
     @PostMapping("/add-khuyen-mai")
     public String DashboardAddProducerHandel(Model model,
                                              @RequestParam("couponCode") String couponCode,
-                                             @RequestParam("createdAt") Date createdAt,
-                                             @RequestParam("discountValue") Long discountValue,
-                                             @RequestParam("expiredAt") Date expiredAt,
+//                                             @RequestParam("createdAt") Date createdAt,
+                                             @RequestParam("discountValue") String discountValue,
+                                             @RequestParam("expiredAt") String expiredAt,
 //                                             @RequestParam("isActive") Boolean isActive,
 //                                             @RequestParam("isPublic") Boolean isPublic,
-                                             @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
+                                             @RequestParam("maximumDiscountValue") String maximumDiscountValue,
                                              @RequestParam("name") String name
     ) throws Exception {
 
@@ -90,21 +90,37 @@ public class PromotionController {
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
+
+            long millis = System.currentTimeMillis();
+            Date ab = new java.sql.Date(millis);
+
             if (couponCode.trim().isEmpty()) {
-                model.addAttribute("loi", "Không được để trống");
+                model.addAttribute("loi1", "Không được để trống");
                 return "/admin/khuyenmai/add-khuyen-mai";
             } else if (name.trim().isEmpty()) {
                 model.addAttribute("loi2", "Không được để trống");
                 return "/admin/khuyenmai/add-khuyen-mai";
+            } else if (maximumDiscountValue.trim().isEmpty()) {
+                model.addAttribute("loi3", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            }else if (discountValue.trim().isEmpty()) {
+                model.addAttribute("loi4", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            } else if (Date.valueOf(expiredAt).before(ab)) {
+                model.addAttribute("loi5", "Ngày hết hạn phải lớn hơn ngày hiện tại");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            }else if (expiredAt.trim().isEmpty()) {
+                model.addAttribute("loi6", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
             } else {
                 Promotion promotion = new Promotion();
                 promotion.setCouponCode(couponCode);
-                promotion.setCreatedAt(createdAt);
-                promotion.setDiscountValue(discountValue);
-                promotion.setExpiredAt(expiredAt);
+//                promotion.setCreatedAt(createdAt);
+                promotion.setDiscountValue(Long.valueOf(discountValue));
+                promotion.setExpiredAt(Date.valueOf(expiredAt));
 //                promotion.setIsActive(isActive);
 //                promotion.setIsPublic(isPublic);
-                promotion.setMaximumDiscountValue(maximumDiscountValue);
+                promotion.setMaximumDiscountValue(Long.valueOf(maximumDiscountValue));
                 promotion.setName(name);
                 service.savePromotion(promotion);
                 System.out.println(promotion);
@@ -132,12 +148,12 @@ public class PromotionController {
     @PostMapping("/sua-khuyen-mai/{id}")
     public String DashboardAddProducerHandel(Model model, @PathVariable("id") int id,
                                              @RequestParam("couponCode") String couponCode,
-                                             @RequestParam("createdAt") Date createdAt,
-                                             @RequestParam("discountValue") Long discountValue,
-                                             @RequestParam("expiredAt") Date expiredAt,
+//                                             @RequestParam("createdAt") Date createdAt,
+                                             @RequestParam("discountValue") String discountValue,
+                                             @RequestParam("expiredAt") String expiredAt,
 //                                             @RequestParam("isActive") Boolean isActive,
 //                                             @RequestParam("isPublic") Boolean isPublic,
-                                             @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
+                                             @RequestParam("maximumDiscountValue") String maximumDiscountValue,
                                              @RequestParam("name") String name
     ) throws Exception {
 
@@ -145,21 +161,36 @@ public class PromotionController {
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
+            long millis = System.currentTimeMillis();
+            Date ab = new java.sql.Date(millis);
+
             if (couponCode.trim().isEmpty()) {
-                model.addAttribute("loi", "Không được để trống");
+                model.addAttribute("loi1", "Không được để trống");
                 return "/admin/khuyenmai/add-khuyen-mai";
             } else if (name.trim().isEmpty()) {
                 model.addAttribute("loi2", "Không được để trống");
                 return "/admin/khuyenmai/add-khuyen-mai";
-            } else {
+            } else if (maximumDiscountValue.trim().isEmpty()) {
+                model.addAttribute("loi3", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            }else if (discountValue.trim().isEmpty()) {
+                model.addAttribute("loi4", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            } else if (Date.valueOf(expiredAt).before(ab)) {
+                model.addAttribute("loi5", "Ngày hết hạn phải lớn hơn ngày hiện tại");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            }else if (expiredAt.trim().isEmpty()) {
+                model.addAttribute("loi6", "Không được để trống");
+                return "/admin/khuyenmai/add-khuyen-mai";
+            }  else {
                 Promotion promotion = service.getAllPromotionById(id);
                 promotion.setCouponCode(couponCode);
-                promotion.setCreatedAt(createdAt);
-                promotion.setDiscountValue(discountValue);
-                promotion.setExpiredAt(expiredAt);
+//                promotion.setCreatedAt(createdAt);
+                promotion.setDiscountValue(Long.valueOf(discountValue));
+                promotion.setExpiredAt(Date.valueOf(expiredAt));
 //                promotion.setIsActive(isActive);
 //                promotion.setIsPublic(isPublic);
-                promotion.setMaximumDiscountValue(maximumDiscountValue);
+                promotion.setMaximumDiscountValue(Long.valueOf(maximumDiscountValue));
                 promotion.setName(name);
                 service.savePromotion(promotion);
                 return "redirect:/khuyen-mai/admin";
@@ -172,9 +203,9 @@ public class PromotionController {
 
 
     @GetMapping("/tim-kiem-khuyen-mai")
-    public String DashboardMyAuthorView11(Model model,@RequestParam("couponCode") String couponCode,
+    public String DashboardMyAuthorView11(Model model, @RequestParam("couponCode") String couponCode,
                                           @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
-        Page<Promotion> pagePromotion = service.timKiemCouponCode(pageNo, 5,'%'+couponCode+'%');
+        Page<Promotion> pagePromotion = service.timKiemCouponCode(pageNo, 5, '%' + couponCode + '%');
         model.addAttribute("timKiem", "a");
         model.addAttribute("pagePromotion", pagePromotion.getContent());
         model.addAttribute("pagePromotionPage", pagePromotion.getTotalPages());
