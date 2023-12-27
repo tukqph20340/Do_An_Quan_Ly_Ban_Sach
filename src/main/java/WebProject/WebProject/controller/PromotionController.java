@@ -1,6 +1,7 @@
 package WebProject.WebProject.controller;
 
 
+import WebProject.WebProject.entity.Category;
 import WebProject.WebProject.entity.Producer;
 import WebProject.WebProject.entity.Promotion;
 import WebProject.WebProject.entity.User;
@@ -42,6 +43,18 @@ public class PromotionController {
         model.addAttribute("pagePromotionPage", pagePromotion.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Promotion", new Promotion());
+        return "/admin/khuyenmai/khuyen-mai";
+
+    }
+    @GetMapping("/tim-kiem-khuyen-mai")
+    public String DashboardMyProducerView111(Model model,
+                                             @RequestParam("name") String name, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        Page<Promotion> book = service.fillByName(pageNo, 5,'%'+name+'%');
+        model.addAttribute("pagePromotion", book.getContent());
+        model.addAttribute("pagePromotionPage", book.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Promotion", new Promotion());
+        model.addAttribute("a","a");
         return "/admin/khuyenmai/khuyen-mai";
 
     }

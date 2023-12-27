@@ -1,5 +1,6 @@
 package WebProject.WebProject.controller;
 
+import WebProject.WebProject.entity.BookCover;
 import WebProject.WebProject.entity.Category;
 import WebProject.WebProject.entity.User;
 import WebProject.WebProject.service.CategoryService;
@@ -34,6 +35,18 @@ public class CategoryController {
         model.addAttribute("pageCategorypage", pageCategory.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Cate", new Category());
+        return "/admin/theloai/dashboard-category";
+
+    }
+    @GetMapping("/tim-kiem-the-loai")
+    public String DashboardMyProducerView111(Model model,
+                                             @RequestParam("name") String name, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        Page<Category> book = categoryService.fillByName(pageNo, 5,'%'+name+'%');
+        model.addAttribute("pageCategory", book.getContent());
+        model.addAttribute("pageCategorypage", book.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Cate", new Category());
+        model.addAttribute("a","a");
         return "/admin/theloai/dashboard-category";
 
     }

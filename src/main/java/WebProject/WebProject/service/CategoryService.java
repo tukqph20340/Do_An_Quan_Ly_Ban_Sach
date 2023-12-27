@@ -1,5 +1,6 @@
 package WebProject.WebProject.service;
 
+import WebProject.WebProject.entity.BookCover;
 import WebProject.WebProject.entity.Category;
 import WebProject.WebProject.entity.Producer;
 import org.springframework.data.domain.Page;
@@ -17,4 +18,6 @@ public interface CategoryService {
 	Page<Category> findAll(Integer pageNo, Integer size);
 
 	Category getAllCategoryById(int id);
+
+	Page<Category> fillByName(Integer pageNo, Integer size, String ten);
 }

@@ -3,6 +3,7 @@ package WebProject.WebProject.controller;
 
 
 import WebProject.WebProject.service.ExcelBiaSach;
+import WebProject.WebProject.service.ExcelCategory;
 import WebProject.WebProject.service.ExcelKhuyenMai;
 import WebProject.WebProject.service.ExcelNhaXuatBan;
 import WebProject.WebProject.service.ExcelTacGia;
@@ -22,6 +23,9 @@ public class ExcelController{
 
     @Autowired
     private ExcelBiaSach excelBiaSach;
+
+    @Autowired
+    private ExcelCategory excelCategory;
 
     @Autowired
     private ExcelTacGia excelTacGia;
@@ -81,4 +85,17 @@ public class ExcelController{
 
         response.flushBuffer();
     }
+    @GetMapping("/xuat-file-excel-the-loai-sach")
+    public void generateExcelReport5(HttpServletResponse response) throws Exception {
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=The Loai.xls";
+
+        response.setHeader(headerKey, headerValue);
+
+        excelCategory.generateExcel(response);
+
+        response.flushBuffer();
+    }
+
 }

@@ -50,4 +50,10 @@ public class PromotionServiceImpl implements PromotionService {
         return promotionRepositoty.checkPromotion(code);
     }
 
+    @Override
+    public Page<Promotion> fillByName(Integer pageNo, Integer size, String ten) {
+        Pageable pageable = PageRequest.of(pageNo, size);
+        return promotionRepositoty.findAllByCouponCode(pageable,ten);
+    }
+
 }
