@@ -329,11 +329,18 @@
                                         <table class="table table-striped">
                                             <tr>
                                                 <th>Tác Giả</th>
-                                                <td th:text="${product.author.nameAuthor}"></td>
+                                                <td>
+                                                    <span th:each="author : ${product.author}">
+                                                        <span th:text="${author.nameAuthor}"></span>
+                                                        <!-- Đặt dấu phẩy nếu không phải là tác giả cuối cùng trong danh sách -->
+                                                        <span th:unless="${#last}">, </span>
+                                                    </span>
+                                                </td>
                                             </tr>
+
                                             <tr>
                                                 <th>Loại Bìa:</th>
-                                                <td th:text="${product.bookCover.coverType}"></td>
+                                                <td th:text="${product.bookCover.cover_type}"></td>
                                             </tr>
                                             <tr>
                                                 <th>Kích Thước:</th>
@@ -349,7 +356,13 @@
                                             </tr>
                                             <tr>
                                                 <th>Thể Loại:</th>
-                                                <td th:text="${product.category.category_Name}"></td>
+                                                <td>
+                                                <span th:each="category : ${product.category}">
+                                                        <span th:text="${category.category_Name}"></span>
+                                                    <!-- Đặt dấu phẩy nếu không phải là tác giả cuối cùng trong danh sách -->
+                                                        <span th:unless="${#last}">, </span>
+                                                    </span>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Năm Xuất Bản:</th>

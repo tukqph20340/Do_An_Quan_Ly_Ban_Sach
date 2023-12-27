@@ -59,20 +59,20 @@ public interface ThongKeRepository extends JpaRepository<Order, Integer> {
             "FROM Order o GROUP BY FUNCTION('DATE_FORMAT', o.booking_Date, '%Y')")
     List<Map<String, Object>> getTotalRevenueByDatePayMentNam();
 
-    @Query("SELECT c.category_Name as ten, COALESCE(SUM(p.quantity), 0) AS sLTon, COALESCE(SUM(oi.count), 0) AS slBan " +
-            "FROM Category c " +
-            "LEFT JOIN c.product p " +
-            "LEFT JOIN p.order_Item oi " +
-            "GROUP BY c.category_Name")
-    List<Map<String, Object>> thongKeProduct();
-
-
-    @Query("SELECT p.product_Name as ten, COALESCE(SUM(oi.count), 0) AS slBan, COALESCE(SUM(p.quantity), 0) AS sLTon " +
-            "FROM Product p " +
-            "LEFT JOIN p.order_Item oi " +
-            "WHERE p.category.category_Name = :categoryName " +
-            "GROUP BY p.product_Name")
-    List<Map<String, Object>> thongKeProductByCategory(@Param("categoryName") String categoryName);
+//    @Query("SELECT c.category_Name as ten, COALESCE(SUM(p.quantity), 0) AS sLTon, COALESCE(SUM(oi.count), 0) AS slBan " +
+//            "FROM Category c " +
+//            "LEFT JOIN c.product p " +
+//            "LEFT JOIN p.order_Item oi " +
+//            "GROUP BY c.category_Name")
+//    List<Map<String, Object>> thongKeProduct();
+//
+//
+//    @Query("SELECT p.product_Name as ten, COALESCE(SUM(oi.count), 0) AS slBan, COALESCE(SUM(p.quantity), 0) AS sLTon " +
+//            "FROM Product p " +
+//            "LEFT JOIN p.order_Item oi " +
+//            "WHERE p.category.category_Name = :categoryName " +
+//            "GROUP BY p.product_Name")
+//    List<Map<String, Object>> thongKeProductByCategory(@Param("categoryName") String categoryName);
 
 
     @Query("SELECT new map(" +

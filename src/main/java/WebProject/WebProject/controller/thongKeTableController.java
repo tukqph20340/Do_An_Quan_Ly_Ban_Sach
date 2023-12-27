@@ -59,29 +59,29 @@ public class thongKeTableController {
     @Autowired
     HttpSession session;
 
-    @GetMapping("/thong-ke-admin-san-pham")
-    public String getAll(Model model) {
-        List<Category> listCate = categoryService.getAll();
-        List<Map<String, Object>> resultList = thongKeRepository.thongKeProduct();
-        model.addAttribute("resultList", resultList);
-        model.addAttribute("listCate", listCate);
-
-        List<Map<String, Object>> resultList1 = thongKeRepository.thongKeProductByCategory("Văn Học");
-        model.addAttribute("resultList1", resultList1);
-        return "thongKeSP.html";
-    }
-
-    @GetMapping("/thong-ke-admin-san-pham/tim-kiem")
-    public String getAll1(Model model, @RequestParam("loai") String ten) {
-        List<Category> listCate = categoryService.getAll();
-        List<Map<String, Object>> resultList = thongKeRepository.thongKeProduct();
-        model.addAttribute("resultList", resultList);
-        model.addAttribute("listCate", listCate);
-
-        List<Map<String, Object>> resultList1 = thongKeRepository.thongKeProductByCategory(ten);
-        model.addAttribute("resultList1", resultList1);
-        return "thongKeSP.html";
-    }
+//    @GetMapping("/thong-ke-admin-san-pham")
+//    public String getAll(Model model) {
+//        List<Category> listCate = categoryService.getAll();
+//        List<Map<String, Object>> resultList = thongKeRepository.thongKeProduct();
+//        model.addAttribute("resultList", resultList);
+//        model.addAttribute("listCate", listCate);
+//
+//        List<Map<String, Object>> resultList1 = thongKeRepository.thongKeProductByCategory("Văn Học");
+//        model.addAttribute("resultList1", resultList1);
+//        return "thongKeSP.html";
+//    }
+//
+//    @GetMapping("/thong-ke-admin-san-pham/tim-kiem")
+//    public String getAll1(Model model, @RequestParam("loai") String ten) {
+//        List<Category> listCate = categoryService.getAll();
+//        List<Map<String, Object>> resultList = thongKeRepository.thongKeProduct();
+//        model.addAttribute("resultList", resultList);
+//        model.addAttribute("listCate", listCate);
+//
+//        List<Map<String, Object>> resultList1 = thongKeRepository.thongKeProductByCategory(ten);
+//        model.addAttribute("resultList1", resultList1);
+//        return "thongKeSP.html";
+//    }
 
     @GetMapping("/thong-ke-admin-don-hang")
     public String getAll4(Model model) {

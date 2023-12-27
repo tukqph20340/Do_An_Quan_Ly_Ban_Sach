@@ -8,16 +8,63 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+</style>
 <body>
-
 <div id="wrapper">
 
     <!-- Header Container
@@ -25,17 +72,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -58,19 +105,8 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-                                Tài Khoản
-                            </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
-                        </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -91,8 +127,7 @@
 ================================================== -->
 
         <!-- Responsive Navigation Trigger -->
-        <a href="#" class="dashboard-responsive-nav-trigger"><i
-                class="fa fa-reorder"></i> Dashboard Navigation</a>
+
 
         <div class="dashboard-nav" style="background: white">
             <div class="dashboard-nav-inner">
@@ -128,7 +163,7 @@
                         <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
                                 style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
                     </ul>
-                    <ul data-submenu-title="Home">
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
                         <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
                                 style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
                         <li><a href="/home"><i class="im im-icon-Home"></i> <span
@@ -138,7 +173,6 @@
             </div>
         </div>
         <!-- Navigation / End -->
-
 
 
         <!-- Content
@@ -176,38 +210,37 @@
 
                                 <!-- Title -->
                                 <div class="row with-forms">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <h5>Tên Sản Phẩm</h5>
                                         <input name="product_name" class="search-field" type="text"
                                                value="" placeholder="Tên Sản Phẩm"/>
                                         <p style="color: red">[[${loi}]]</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>Giá</h5>
+                                        <input name="price" type="number" placeholder="Giá">
+                                        <p style="color: red">[[${loi1}]] [[${loi2}]]</p>
                                     </div>
                                 </div>
 
                                 <!-- Row -->
                                 <div class="row with-forms">
                                     <!-- Price -->
-                                    <div class="col-md-4">
-                                        <h5>Giá</h5>
-                                        <input name="price" type="number" placeholder="Giá">
-                                        <p style="color: red">[[${loi1}]] [[${loi2}]]</p>
-                                    </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <h5>Số Lượng</h5>
                                         <input name="availability" type="text"
                                                placeholder="Số Lượng">
                                         <p style="color: red">[[${loi3}]]</p>
                                     </div>
                                     <!-- Status -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <h5>loại Sản Phẩm</h5>
-                                        <select name="category" class="chosen-select-no-single">
-                                            <option value="1" label="blank"
-                                                    th:text="${listCategories[0].category_Name}"></option>
-                                            <th:block th:each="y : ${listCategories}">
-                                                <option th:value="${y.id}" th:if="${yStat.index >0}"
-                                                        th:text="${y.category_Name}"></option>
+                                        <select name="category" class="chosen-select-no-single" multiple="multiple">
+                                            <th:block th:each="category : ${listCategories}"
+                                                      th:if="${not #lists.isEmpty(listCategories)}">
+                                                <option th:value="${category.id}"
+                                                        th:text="${category.category_Name}"></option>
                                             </th:block>
                                         </select>
                                     </div>
@@ -216,27 +249,29 @@
                                 <!-- Row / End -->
                                 <div class="row with-forms">
                                     <!-- Price -->
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <h5>Số Trang</h5>
                                         <input name="page_number" type="text" placeholder="Số Trang">
                                         <p style="color: red">[[${loi4}]] [[${loi5}]]</p>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <h5>Kích Thước</h5>
                                         <input name="book_size" type="text"
                                                placeholder="Kích Thước">
                                         <p style="color: red">[[${loi10}]]</p>
                                     </div>
+                                </div>
+                                <div class="row with-forms">
                                     <!-- Status -->
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <h5>Năm Sản Xuất</h5>
                                         <input name="year_publication" type="text"
                                                placeholder="Năm Xuất Bản">
                                         <p style="color: red">[[${loi6}]] [[${loi7}]]</p>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <h5>Ngôn Ngữ</h5>
                                         <input name="language" type="text" placeholder="Ngôn Ngữ">
                                         <p style="color: red">[[${loi9}]]</p>
@@ -247,14 +282,13 @@
                                 <div class="row with-forms">
                                     <div class="col-md-4">
                                         <h5>Tác Giả</h5>
-                                        <select name="author" class="chosen-select-no-single">
-                                            <option value="1" label="blank"
-                                                    th:text="${listAuthor[0].nameAuthor}"></option>
-                                            <th:block th:each="y : ${listAuthor}">
-                                                <option th:value="${y.id}" th:if="${yStat.index >0}"
-                                                        th:text="${y.nameAuthor}"></option>
+                                        <select name="author" class="chosen-select-no-single" multiple="multiple">
+                                            <th:block th:each="author : ${listAuthor}"
+                                                      th:if="${not #lists.isEmpty(listAuthor)}">
+                                                <option th:value="${author.id}" th:text="${author.nameAuthor}"></option>
                                             </th:block>
                                         </select>
+
                                     </div>
 
                                     <div class="col-md-4">
@@ -273,15 +307,14 @@
                                         <h5>Bìa Sách</h5>
                                         <select name="book_cover" class="chosen-select-no-single">
                                             <option value="1" label="blank"
-                                                    th:text="${listBookCover[0].coverType}"></option>
+                                                    th:text="${listBookCover[0].cover_type}"></option>
                                             <th:block th:each="y : ${listBookCover}">
                                                 <option th:value="${y.id}" th:if="${yStat.index >0}"
-                                                        th:text="${y.coverType}"></option>
+                                                        th:text="${y.cover_ype}"></option>
                                             </th:block>
                                         </select>
                                     </div>
                                 </div>
-
 
                             </div>
                             <!-- Section / End -->
@@ -339,7 +372,7 @@
                             <!-- Section / End -->
 
 
-                            <button  class="button preview" type="submit">
+                            <button class="button preview" type="submit">
                                 Thêm Sản Phẩm <i class="fa fa-arrow-circle-right"></i>
                             </button>
 

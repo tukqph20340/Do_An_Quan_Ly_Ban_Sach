@@ -54,17 +54,21 @@ public class Product {
 	@Column(name = "language")
 	private String language;
 
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private Category category;
+	@ManyToMany
+	@JoinTable(
+			name = "product_category",
+			joinColumns = @JoinColumn(name = "product_id"),
+			inverseJoinColumns = @JoinColumn(name = "category_id")
+	)
+	private List<Category> category;
 
-	@ManyToOne
-	@JoinColumn(name = "author_id")
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
-	private Author author;
+	@ManyToMany
+	@JoinTable(
+			name = "product_author",
+			joinColumns = @JoinColumn(name = "product_id"),
+			inverseJoinColumns = @JoinColumn(name = "author_id")
+	)
+	private List<Author> author;
 
 	@ManyToOne
 	@JoinColumn(name = "producer_id")
@@ -78,13 +82,15 @@ public class Product {
 	@ToString.Exclude
 	private BookCover bookCover;
 
-	
+
+
+
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<ProductImage> productImage;
-	
+
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<Order_Item> order_Item;
-	
+
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private List<Cart> cart;
 

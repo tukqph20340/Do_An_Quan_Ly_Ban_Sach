@@ -25,7 +25,7 @@ public interface ProductService {
 	
 	List<Product> findTop12ProductNewArrivals();
 
-	Page<Product> findAll(Pageable pageable);
+	Page<Product> findAll(Integer noPage, Integer size);
 
 	Page<Product> findByProduct_NameContaining(String name, Pageable pageable);
 

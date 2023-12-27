@@ -62,7 +62,7 @@
 					<tr>
 						<td th:text="${y.product.product_Name}"></td>
 						<td th:text="${y.count}"></td>
-						<td th:text="${#numbers.formatDecimal(y.product.price * y.count, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+						<td th:text="${y.unit_price} + ' VNĐ'"></td>
 					</tr>
 				</th:block>
 
@@ -83,7 +83,7 @@
 
 			<table id="totals">
 				<tr>
-				    <th>Phí Vận Chuyển</th>
+					<th>Phí Vận Chuyển</th>
 					<th><span th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
 				</tr>
 				<tr>
