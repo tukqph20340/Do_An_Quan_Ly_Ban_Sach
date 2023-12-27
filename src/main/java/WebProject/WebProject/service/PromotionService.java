@@ -1,5 +1,6 @@
 package WebProject.WebProject.service;
 
+import WebProject.WebProject.entity.BookCover;
 import WebProject.WebProject.entity.Producer;
 import WebProject.WebProject.entity.Promotion;
 import org.springframework.data.domain.Page;
@@ -21,4 +22,5 @@ public interface PromotionService {
 
     Promotion checkPromotion(String code);
 
+    Page<Promotion> fillByName(Integer pageNo, Integer size, String ten);
 }

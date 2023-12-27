@@ -42,4 +42,12 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category getAllCategoryById(int id) {
 		return categoryRepository.findById(id);
 	}
+
+	@Override
+	public Page<Category> fillByName(Integer pageNo, Integer size, String ten) {
+		Pageable pageable = PageRequest.of(pageNo, size);
+		return categoryRepository.findAllByCategory_Name(pageable,ten);
+	}
+
+
 }

@@ -1,6 +1,9 @@
 package WebProject.WebProject.repository;
 
+import WebProject.WebProject.entity.BookCover;
 import WebProject.WebProject.entity.Promotion;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +18,8 @@ public interface PromotionRepositoty extends JpaRepository<Promotion, Integer> {
 
     @Query(nativeQuery = true,value = "SELECT  * FROM promotion p WHERE p.expired_at > now()")
     List<Promotion> findAll();
+
+    @Query("SELECT c from Promotion c WHERE c.name LIKE %?1%")
+    Page<Promotion> findAllByCouponCode(Pageable p, String name);
 
 }
