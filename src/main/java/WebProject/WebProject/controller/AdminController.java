@@ -281,7 +281,7 @@ public class AdminController {
         // Lấy danh sách ProductCategory dựa trên sản phẩm
         List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
         for (ProductCategory category : listProductCategories) {
-            System.out.println(category);
+            System.out.println(category.getCategory().getCategory_Name());
         }
         List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
 
@@ -292,7 +292,6 @@ public class AdminController {
         model.addAttribute("listAuthor", authorList);
         model.addAttribute("listBookCover", bookCoverList);
         model.addAttribute("listProducer", producerList);
-
         String editProduct = (String) session.getAttribute("editProduct");
         model.addAttribute("editProduct", editProduct);
         session.setAttribute("editProduct", null);
