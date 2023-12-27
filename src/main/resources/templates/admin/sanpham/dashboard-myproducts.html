@@ -8,18 +8,63 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
 
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+</style>
 <body>
-
 <div id="wrapper">
 
     <!-- Header Container
@@ -27,17 +72,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -60,19 +105,8 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-                                Tài Khoản
-                            </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
-                        </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -93,8 +127,7 @@
 ================================================== -->
 
         <!-- Responsive Navigation Trigger -->
-        <a href="#" class="dashboard-responsive-nav-trigger"><i
-                class="fa fa-reorder"></i> Dashboard Navigation</a>
+
 
         <div class="dashboard-nav" style="background: white">
             <div class="dashboard-nav-inner">
@@ -130,7 +163,7 @@
                         <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
                                 style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
                     </ul>
-                    <ul data-submenu-title="Home">
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
                         <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
                                 style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
                         <li><a href="/home"><i class="im im-icon-Home"></i> <span
@@ -142,135 +175,133 @@
         <!-- Navigation / End -->
 
 
-
-
         <!-- Content
 ================================================== -->
         <div class="dashboard-content">
-            <div class="col-lg-12">
-                <div class="col-lg-4" style="text-align: left">
-                    <a th:href="@{/add-san-pham}"
-                       class="button border with-icon">Thêm Sản Phẩm<i
-                    ></i></a>
-                    <a th:href="@{/excel}"
-                       class="button border with-icon" onclick="excel();">Xuất file excel<i
-                    ></i></a>
-                </div>
-            </div>
-            <br>
-            <form action="/dashboard-myproduct/search" method="Post">
-                <div class="main-search-input"
-                     style="margin-bottom: 30px; justify-content: space-between;">
-
-                    <div class="main-search-input-item" style="flex: 1">
-                        <input name="search-input" type="text"
-                               placeholder="Nhập Thông Tin Cần Tìm" th:value="${search_input}">
-                    </div>
-                    <div style="display: flex;">
-                        <div class="main-search-input-item">
-
-                            <select
-                                    name="category-selected" data-placeholder="Tất Cả Loại Sách"
-                                    class="chosen-select">
-                                <option th:value="0">Tất Cả Loại Sách</option>
-                                <th:block th:each="y : ${listCategories}">
-                                    <option th:value="${y.id}" th:text="${y.category_Name}"></option>
-                                </th:block>
-                            </select>
-                        </div>
-                        <button class="button" type="submit">Tìm Kiếm</button>
-                    </div>
-
-
-                </div>
-            </form>
             <div class="row">
 
-                <!-- Listings -->
-                <div class="col-lg-12 col-md-12">
-                    <div class="dashboard-list-box margin-top-0">
-                        <h4 style="margin-top: 20px">Sản Phẩm</h4>
-                        <ul>
-                            <th:block th:each="y : ${pageProduct.content}">
-                                <li>
-                                    <div class="list-box-listing">
-                                        <div class="list-box-listing-img">
-                                            <a href="#"><img th:src="${y.productImage[0].url_Image}"
-                                                             alt=""></a>
-                                        </div>
-                                        <div class="list-box-listing-content">
-                                            <div class="inner">
-                                                <h3>
-                                                    <a href="#" th:text="${y.product_Name}"></a>
-                                                </h3>
-                                                <h3
-                                                        th:text="${#numbers.formatDecimal(y.price, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></h3>
-                                                <span th:text="'Loại Sản Phẩm: ' + ${y.category.category_Name}"></span><br>
-                                                <span th:text="'Số Lượng: ' + ${y.quantity}"></span>
-                                            </div>
-                                        </div>
+                <div class="col-lg-12">
+                    <div class="card-body" style="background: white">
+                        <h4 style="font-weight: bold">Tìm Kiếm</h4>
+                        <form th:action="@{/tim-kiem-tac-gia}" method="get">
+                            <div class="justify-content-center">
+                                <div class="input-group mb-3">
+                                    <input type="text" name="tenTacGia" class="form-control input-text" placeholder="Search...." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-warning btn-lg" type="submit"><i class="fa fa-search"></i></button>
                                     </div>
-                                    <div class="buttons-to-right">
-                                        <a th:href="@{/san-pham/sua/{id}(id=${y.id})}" class="button gray"><i
-                                                class="sl sl-icon-note"></i> Sửa</a>
-                                        <a th:href="@{/admin-detail/{id}(id=${y.id})}" class="button gray"><i
-                                                class="sl sl-icon-note"></i> Chi Tiết Sản Phẩm</a>
-                                    </div>
-                                </li>
-                            </th:block>
-                        </ul>
+                                </div>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
 
+                <div class="col-lg-12">
+                    <div class="card-body" style="margin-top:15px ;background: white">
+                        <div class="col-lg-12">
+                            <h4 style="font-weight: bold">Danh Sách Tác Giả</h4>
+                            <button style="margin-left: 1047px" class="btn btn-primary"><a
+                                    style="font-size: 15px;color: white" th:href="@{/add-san-pham}">+ Thêm</a>
+                            </button>
+                            <button style="margin-left: 936px;margin-top: -60px;" class="btn btn-danger"><a
+                                    style="font-size: 15px;color: white" th:href="@{/xuat-file-excel-san-pham}">
+                                Xuất Excel</a>
+                            </button>
+                        </div>
+                        <table class="table table-bordered table-striped table-bordered"
+                               style="text-align: center;vertical-align: middle;">
+                            <tr>
+                                <th style="text-align: center;vertical-align: middle;">ID</th>
+                                <th style="text-align: center;vertical-align: middle;">Tên Sản Phẩm</th>
+                                <th th:if="${img!=null}" style="text-align: center;vertical-align: middle;">Ảnh Sản Phẩm</th>
+                                <th style="text-align: center;vertical-align: middle;">Số Lượng</th>
+                                <th style="text-align: center;vertical-align: middle;">Giá</th>
+                                <th style="text-align: center;vertical-align: middle;" colspan="2">Hành Động</th>
+                            </tr>
+                            <tr th:each="list:${pageProduct}">
+                                <td>[[${list.id}]]</td>
+                                <td>[[${list.product_Name}]]</td>
+                                <td th:if="${img!=null}"><img th:src="${list.productImage[0].url_Image}" height="100px" width="100px"></td>
+                                <td>[[${list.quantity}]]</td>
+                                <td>[[${list.price}]]</td>
 
-                <!-- Pagination -->
-                <div class="clearfix"></div>
-                <div th:if="${search_dashboard==null}" class="row">
-                    <div class="col-md-12">
-                        <div class="pagination-container margin-top-20 margin-bottom-40">
-                            <nav class="pagination">
-                                <ul>
-                                    <li><a class="paging-item" th:if="${pageProduct.number} > 0"
-                                           th:href="@{/san-pham-admin/{page}(page=${pageProduct.number - 1})}"><i
-                                            class="sl sl-icon-arrow-left"></i></a></li>
-                                    <li><a class="paging-item"
-                                           th:href="@{/san-pham-admin/{page}(page=${pageProduct.number})}"
-                                           th:text="${pageProduct.number+1}"></a></li>
-                                    <li><a class="paging-item"
-                                           th:if="${pageProduct.number} < ${pageProduct.totalPages - 1}"
-                                           th:href="@{/san-pham-admin/{page}(page=${pageProduct.number + 1})}"><i
-                                            class="sl sl-icon-arrow-right"></i></a></li>
+                                <td>
+                                    <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a
+                                            class="sl sl-icon-eye" th:href="@{/san-pham-all/{id}(id=${list.id})}">
+                                        <ion-icon name="eye-outline"></ion-icon>
+                                    </a></button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" style=" height: 32px; width: 32px;"><a
+                                            class="sl sl-icon-note" th:href="@{/san-pham/sua/{id}(id=${list.id})}"></a>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div th:if="${timKiem==null}">
+                            <!--phân trang cho sản phẩm-->
+                            <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                <ul class="pagination">
+                                    <!--trang đầu-->
+                                    <li class="page-item">
+                                        <a class="page-link" th:href="@{/san-pham-admin(pageNo=0)}">Trang
+                                            Đầu</a>
+                                    </li>
+                                    <!--Previous-->
+                                    <!--số thứ tự trang-->
+                                    <!--dùng for i trong thymleaf-->
+                                    <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{/san-pham-admin(pageNo=${index})}"
+                                               th:text="${index+1}"></a>
+                                        </li>
+                                    </div>
+                                    <!--Next-->
+                                    <!--trang cuối-->
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           th:href="@{/san-pham-admin(pageNo=${pageProductPage -1})}">Trang
+                                            Cuối</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div th:if="${timKiem!=null}">
+                            <!--phân trang cho sản phẩm-->
+                            <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                <ul class="pagination">
+                                    <!--trang đầu-->
+                                    <li class="page-item">
+                                        <a class="page-link" th:href="@{/tim-kiem-tac-gia(pageNo=0)}">Trang
+                                            Đầu</a>
+                                    </li>
+                                    <!--Previous-->
+                                    <!--số thứ tự trang-->
+                                    <!--dùng for i trong thymleaf-->
+                                    <div th:each="index : ${#numbers.sequence(0, pageAu-1)}">
+                                        <li class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{/tim-kiem-tac-gia(pageNo=${index})}"
+                                               th:text="${index+1}"></a>
+                                        </li>
+                                    </div>
+                                    <!--Next-->
+                                    <!--trang cuối-->
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           th:href="@{/tim-kiem-tac-gia(pageNo=${pageAu -1})}">Trang
+                                            Cuối</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
                     </div>
+                    <!-- Content / End -->
                 </div>
-                <div th:if="${search_dashboard !=null}" class="row">
-                    <div class="col-md-12">
-                        <div class="pagination-container margin-top-20 margin-bottom-40">
-                            <nav class="pagination">
-                                <ul>
-                                    <li><a th:if="${pageProduct.number} > 0"
-                                           th:href="@{/dashboard-myproduct/search/{page}(page=${pageProduct.number - 1})}"><i
-                                            class="sl sl-icon-arrow-left"></i></a></li>
-                                    <li><a
-                                            th:href="@{/dashboard-myproduct/search/{page}(page=${pageProduct.number})}"
-                                            class="current-page" th:text="${pageProduct.number+1}"></a></li>
-                                    <li><a
-                                            th:if="${pageProduct.number} < ${pageProduct.totalPages - 1}"
-                                            th:href="@{/dashboard-myproduct/search/{page}(page=${pageProduct.number + 1})}"><i
-                                            class="sl sl-icon-arrow-right"></i></a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pagination / End -->
             </div>
-
         </div>
-        <!-- Content / End -->
-
 
     </div>
     <!-- Dashboard / End -->
@@ -295,23 +326,10 @@
 <script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/scripts/tooltips.min.js"></script>
 <script type="text/javascript" src="/scripts/custom.js"></script>
-<script type="text/javascript" src="/scripts/myjs.js"></script>
 
-
-<script>
-
-    function excel() {
-
-
-        Swal.fire({
-            title: 'Xuất File Excel Thành Công',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 5000
-        });
-    }
-
-</script>
+<!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
+<script src="/scripts/moment.min.js"></script>
+<script src="/scripts/daterangepicker.js"></script>
 
 
 </body>

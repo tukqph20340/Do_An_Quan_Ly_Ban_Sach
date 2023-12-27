@@ -362,6 +362,7 @@ public class OrderController {
                             newOrder_Item.setCount(Math.toIntExact(Long.valueOf(y.getCount())));
                             newOrder_Item.setOrder(newOrder);
                             newOrder_Item.setProduct(y.getProduct());
+                            newOrder_Item.setUnit_price(Math.toIntExact(Long.valueOf(y.getCount()))*y.getProduct().getPrice());
                             order_ItemService.saveOrder_Item(newOrder_Item);
                             cartService.deleteById(y.getId());
                         }
@@ -386,6 +387,7 @@ public class OrderController {
                         newOrder_Item.setCount(Math.toIntExact(Long.valueOf(y.getCount())));
                         newOrder_Item.setOrder(newOrder);
                         newOrder_Item.setProduct(y.getProduct());
+                        newOrder_Item.setUnit_price(Math.toIntExact(Long.valueOf(y.getCount()))*y.getProduct().getPrice());
                         order_ItemService.saveOrder_Item(newOrder_Item);
                         cartService.deleteById(y.getId());
                     }

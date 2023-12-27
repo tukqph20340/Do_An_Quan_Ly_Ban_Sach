@@ -160,8 +160,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="/san-pham/sua" method="post"
-                          enctype="multipart/form-data">
+                    <form action="/add-san-pham" method="post" enctype="multipart/form-data">
                         <div id="add-listing">
 
                             <!-- Section -->
@@ -170,47 +169,77 @@
                                 <!-- Headline -->
                                 <div class="add-listing-headline">
                                     <h3>
-                                        <i class="sl sl-icon-doc"></i> Thông Tin
+                                        <i class="sl sl-icon-doc"></i> Thông Tin Cần Thêm
                                     </h3>
                                 </div>
 
                                 <!-- Title -->
                                 <div class="row with-forms">
-                                    <div class="col-md-12">
-                                        <h5>Tên Sản Phẩm</h5>
-                                        <input style="display: none;" name="product_id" th:value="${product.id}">
-                                        <input name="product_name" class="search-field" type="text"
-                                               th:value="${product.product_Name}"
-                                               placeholder="Tên Sản Phẩm"/>
+                                    <div class="lg">
+                                        <div class="col-lg-6">
+                                            <h5>Tên Sản Phẩm</h5>
+                                            <input name="product_name" class="search-field" type="text"
+                                                   value="" placeholder="Tên Sản Phẩm"/>
+                                            <p style="color: red">[[${loi}]]</p>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <h5>Giá</h5>
+                                            <input name="price" type="number" placeholder="Giá">
+                                            <p style="color: red">[[${loi1}]] [[${loi2}]]</p>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Row -->
                                 <div class="row with-forms">
-                                    <!-- Price -->
-                                    <div class="col-md-4">
-                                        <h5>Giá</h5>
-                                        <input th:value="${product.price}" name="price" type="text"
-                                               placeholder="Giá">
-                                    </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <h5>Số Lượng</h5>
-                                        <input th:value="${product.quantity}" name="availability"
-                                               type="text" placeholder="Số Lượng">
+                                        <input name="availability" type="text"
+                                               placeholder="Số Lượng">
+                                        <p style="color: red">[[${loi3}]]</p>
                                     </div>
                                     <!-- Status -->
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <h5>Loại Sản Phẩm</h5>
-                                        <select name="category" class="chosen-select-no-single">
-                                            <option th:value="${product.category.id}" label="blank"
-                                                    th:text="${product.category.category_Name}"></option>
-                                            <th:block th:each="y : ${listCategories}">
-                                                <option th:value="${y.id}"
-                                                        th:if="${y.id != product.category.id}"
-                                                        th:text="${y.category_Name}"></option>
+                                        <select name="category" class="chosen-select-no-single" multiple="multiple">
+                                            <th:block th:each="category : ${listCategories}" th:if="${not #lists.isEmpty(listCategories)}">
+                                                <option th:value="${category.id}" th:text="${category.category_Name}"></option>
                                             </th:block>
                                         </select>
+
+                                    </div>
+
+                                </div>
+                                <!-- Row / End -->
+                                <div class="row with-forms">
+                                    <!-- Price -->
+                                    <div class="col-md-6">
+                                        <h5>Số Trang</h5>
+                                        <input name="page_number" type="text" placeholder="Số Trang">
+                                        <p style="color: red">[[${loi4}]] [[${loi5}]]</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h5>Kích Thước</h5>
+                                        <input name="book_size" type="text"
+                                               placeholder="Kích Thước">
+                                        <p style="color: red">[[${loi10}]]</p>
+                                    </div>
+                                </div>
+                                <div class="row with-forms">
+                                    <!-- Status -->
+                                    <div class="col-md-6">
+                                        <h5>Năm Sản Xuất</h5>
+                                        <input name="year_publication" type="text"
+                                               placeholder="Năm Xuất Bản">
+                                        <p style="color: red">[[${loi6}]] [[${loi7}]]</p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h5>Ngôn Ngữ</h5>
+                                        <input name="language" type="text" placeholder="Ngôn Ngữ">
+                                        <p style="color: red">[[${loi9}]]</p>
                                     </div>
 
                                 </div>
@@ -218,72 +247,34 @@
                                 <div class="row with-forms">
                                     <div class="col-md-4">
                                         <h5>Tác Giả</h5>
-                                        <select name="author" class="chosen-select-no-single">
-                                            <option th:value="${product.author.id}" label="blank"
-                                                    th:text="${product.author.nameAuthor}"></option>
-                                            <th:block th:each="y : ${listAuthor}">
-                                                <option th:value="${y.id}"
-                                                        th:if="${y.id != product.author.id}"
-                                                        th:text="${y.nameAuthor}"></option>
+                                        <select name="author" class="chosen-select-no-single" multiple="multiple">
+                                            <th:block th:each="author : ${listAuthor}"
+                                                      th:if="${not #lists.isEmpty(listAuthor)}">
+                                                <option th:value="${author.id}" th:text="${author.nameAuthor}"></option>
                                             </th:block>
                                         </select>
+
+
                                     </div>
 
                                     <div class="col-md-4">
                                         <h5>Nhà Xuất Bản</h5>
                                         <select name="producer" class="chosen-select-no-single">
-                                            <option th:value="${product.producer.id}" label="blank"
-                                                    th:text="${product.producer.nameProducer}"></option>
-                                            <th:block th:each="y : ${listProducer}">
-                                                <option th:value="${y.id}"
-                                                        th:if="${y.id != product.producer.id}"
-                                                        th:text="${y.nameProducer}"></option>
-                                            </th:block>
+                                            <option th:each="nv: ${listProducer}" th:value="${product.id}">
+                                                [[${nv.nameProducer}]]
+                                            </option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-4">
                                         <h5>Bìa Sách</h5>
                                         <select name="book_cover" class="chosen-select-no-single">
-                                            <option th:value="${product.bookCover.id}" label="blank"
-                                                    th:text="${listBookCover[0].coverType}"></option>
-                                            <th:block th:each="y : ${listBookCover}">
-                                                <option th:value="${y.id}"
-                                                        th:if="${y.id != product.bookCover.id}"
-                                                        th:text="${y.coverType}"></option>
-                                            </th:block>
+                                            <option th:each="nv: ${listBookCover}" th:value="${product.id}">
+                                                [[${nv.cover_type}]]
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="row with-forms">
-                                    <!-- Price -->
-                                    <div class="col-md-3">
-                                        <h5>Số Trang</h5>
-                                        <input th:value="${product.pageNumber}" name="page_number" type="text"
-                                               placeholder="Số Trang">
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <h5>Kích Thước</h5>
-                                        <input th:value="${product.bookSize}" name="book_size" type="text"
-                                               placeholder="Kích Thước">
-                                    </div>
-                                    <!-- Status -->
-                                    <div class="col-md-3">
-                                        <h5>Năm Sản Xuất</h5>
-                                        <input th:value="${product.yearPublication}" name="year_publication" type="text"
-                                               placeholder="Năm xuất bản">
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <h5>Ngôn Ngữ</h5>
-                                        <input th:value="${product.language}" name="language" type="text"
-                                               placeholder="Ngôn Ngữ">
-                                    </div>
-
-                                </div>
-                                <!-- Row / End -->
 
                             </div>
                             <!-- Section / End -->
@@ -294,16 +285,17 @@
                                 <!-- Headline -->
                                 <div class="add-listing-headline">
                                     <h3>
-                                        <i class="sl sl-icon-docs"></i> Mô Tả
+                                        <i class="sl sl-icon-docs"></i> Mô tả
                                     </h3>
                                 </div>
 
                                 <!-- Description -->
                                 <div class="form">
                                     <h5>Mô Tả Chi Tiết</h5>
-                                    <textarea th:field="${product.description}" name="description"
-                                              class="WYSIWYG" cols="40" rows="3" id="summary"
-                                              spellcheck="true" placeholder="Mô Tả Chi Tiết"></textarea>
+                                    <textarea name="description" class="WYSIWYG" cols="40"
+                                              rows="3" id="summary" spellcheck="true"
+                                              placeholder="Mô Tả Chi Tiết"></textarea>
+                                    <p style="color: red">[[${loi8}]]</p>
                                 </div>
                             </div>
                             <!-- Section / End -->
@@ -360,7 +352,7 @@
                             <!-- Section / End -->
 
 
-                            <button class="button preview">
+                            <button class="button preview" type="submit">
                                 Sửa Sản Phẩm <i class="fa fa-arrow-circle-right"></i>
                             </button>
 
@@ -402,6 +394,7 @@
 <script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/scripts/tooltips.min.js"></script>
 <script type="text/javascript" src="/scripts/custom.js"></script>
+
 <script>
     var slideIndex = 1;
     showSlides(slideIndex);
@@ -524,3 +517,4 @@
 
 </body>
 </html>
+

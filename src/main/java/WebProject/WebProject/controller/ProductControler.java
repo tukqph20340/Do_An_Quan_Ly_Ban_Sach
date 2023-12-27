@@ -40,6 +40,8 @@ import WebProject.WebProject.service.CategoryService;
 import WebProject.WebProject.service.CookieService;
 import WebProject.WebProject.service.ProductService;
 import WebProject.WebProject.service.UserService;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProductControler {
@@ -186,8 +188,8 @@ public class ProductControler {
 		Product product = productService.getProductById(id);
 		System.out.println(product);
 		if (product != null) {
-			List<Product> relatedProduct = productService.findTop4ProductByCategory_id(product.getCategory().getId());
-			model.addAttribute("relatedProduct", relatedProduct);
+//			List<Product> relatedProduct = (List<Product>) productService.getProductById(product.getId());
+//			model.addAttribute("relatedProduct", relatedProduct);
 			List<Statistic> statistics = statisticService.getAllByProductId(id);
 			System.out.println(statistics);
 			model.addAttribute("statistics", statistics);
@@ -206,7 +208,7 @@ public class ProductControler {
 		model.addAttribute("vi", vi);
 		Product product = productService.getProductById(id);
 		model.addAttribute(product);
-			return "admin/detail.html";
+		return "admin/detail.html";
 
 
 	}
@@ -214,7 +216,7 @@ public class ProductControler {
 //	@GetMapping("/productDetail")
 //	public String ProductDetail(Model model) {
 //		Product product = (Product) session.getAttribute("product");
-//		
+//
 //	}
 
 	@PostMapping("/search")
@@ -275,4 +277,10 @@ public class ProductControler {
 		model.addAttribute("vi", vi);
 		return "blog-details";
 	}
+//	@GetMapping("/filterProducts/{id}")
+//	@ResponseBody
+//	public List<Product> filterProductsByCategory(@PathVariable int id) {
+//		return productRepository.findProductByCategory_id(id);
+//	}
+
 }

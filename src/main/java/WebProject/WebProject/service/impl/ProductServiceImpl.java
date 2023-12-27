@@ -5,6 +5,7 @@ import WebProject.WebProject.repository.ProductRepository;
 import WebProject.WebProject.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -67,9 +68,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<Product> findAll(Pageable pageable) {
-		return productRepository.findAll(pageable);
+	public Page<Product> findAll(Integer noPage, Integer size) {
+		Pageable p = PageRequest.of(noPage,size);
+		return productRepository.findAll(p);
 	}
+
 
 	@Override
 	public Page<Product> findByProduct_NameAndCategory_idContaining(String name, int category_id, Pageable pageable) {

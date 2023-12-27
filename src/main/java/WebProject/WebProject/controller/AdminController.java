@@ -2,6 +2,8 @@ package WebProject.WebProject.controller;
 
 import WebProject.WebProject.entity.*;
 import WebProject.WebProject.model.Mail;
+import WebProject.WebProject.repository.ProductAuthorRepository;
+import WebProject.WebProject.repository.ProductCategoryRepository;
 import WebProject.WebProject.repository.ThongKeRepository;
 import WebProject.WebProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import java.util.TimeZone;
 
 @Controller
 public class AdminController {
+
     @Autowired
     OrderService orderService;
     @Autowired
@@ -65,6 +68,12 @@ public class AdminController {
 
     @Autowired
     BookCoverService bookCoverService;
+
+    @Autowired
+    ProductAuthorRepository productAuthorRepository;
+
+    @Autowired
+    ProductCategoryRepository productCategoryRepository;
 
     java.util.Date date = new java.util.Date();
     SimpleDateFormat fm = new SimpleDateFormat("yyyy");
@@ -141,135 +150,156 @@ public class AdminController {
     }
 
 
-    @GetMapping("/thong-ke-admin-doanh-thu")
-    public String DashboardWalletView(Model model) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-
-            List<Map<String, Object>> resultList = thongKeRepository.getTotalRevenueByDate();
-            model.addAttribute("resultList", resultList);
-
-
-            List<Order> listOrder = orderService.findAll();
-            List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Payment with momo");
-            List<Order> listVi = orderService.findAllByPayment_Method("Ví");
-            List<Order> listPaymentOnDelivery = orderService.findAllByPayment_Method("Payment on delivery");
-            long TotalMomo = 0;
-            long vi = 0;
-            long TotalDelivery = 0;
-            for (Order y : listPaymentWithMomo) {
-                TotalMomo = TotalMomo + y.getTotal();
-            }
-            for (Order y : listPaymentOnDelivery) {
-                TotalDelivery = TotalDelivery + y.getTotal();
-            }
-            for (Order y : listVi) {
-                vi = vi + y.getTotal();
-            }
-            List<Order> listRecentMomo = orderService.findTop5OrderByPaymentMethod("Payment with momo");
-            List<Order> vi1 = orderService.findTop5OrderByPaymentMethod("Ví");
-            List<Order> listRecentDelivery = orderService.findTop5OrderByPaymentMethod("Payment on delivery");
-
-
-            model.addAttribute("vi", vi);
-            model.addAttribute("vi1", vi1);
-            model.addAttribute("TotalMomo", TotalMomo);
-            model.addAttribute("TotalDelivery", TotalDelivery);
-            model.addAttribute("TotalOrder", listOrder.size());
-            model.addAttribute("listRecentDelivery", listRecentDelivery);
-            model.addAttribute("listRecentMomo", listRecentMomo);
-            return "thongKeDT.html";
-        }
-    }
-
-    @GetMapping("/thong-ke-admin-doanh-thu/tim-kiem")
-    public String DashboardWalletView1(Model model,
-                                       @RequestParam("ngay1") String ngay1,
-                                       @RequestParam("ngay2") String ngay2) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            if (ngay1 == null || ngay2 == null) {
-                return "redirect:/thong-ke-admin-doanh-thu";
-            } else {
-                List<Map<String, Object>> resultList = thongKeRepository.getTotalRevenueByDate1(ngay1, ngay2);
-                model.addAttribute("resultList", resultList);
-
-                List<Order> listOrder = orderService.findAll();
-                List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Payment with momo");
-                List<Order> listVi = orderService.findAllByPayment_Method("Ví");
-                List<Order> listPaymentOnDelivery = orderService.findAllByPayment_Method("Payment on delivery");
-                long TotalMomo = 0;
-                long vi = 0;
-                long TotalDelivery = 0;
-
-                for (Order y : listPaymentWithMomo) {
-                    TotalMomo = TotalMomo + y.getTotal();
-                }
-                for (Order y : listPaymentOnDelivery) {
-                    TotalDelivery = TotalDelivery + y.getTotal();
-                }
-                for (Order y : listVi) {
-                    vi = vi + y.getTotal();
-                }
-
-                List<Order> listRecentMomo = orderService.findTop5OrderByPaymentMethod("Payment with momo");
-                List<Order> vi1 = orderService.findTop5OrderByPaymentMethod("Ví");
-                List<Order> listRecentDelivery = orderService.findTop5OrderByPaymentMethod("Payment on delivery");
-
-                model.addAttribute("vi", vi);
-                model.addAttribute("vi1", vi1);
-                model.addAttribute("TotalMomo", TotalMomo);
-                model.addAttribute("TotalDelivery", TotalDelivery);
-                model.addAttribute("TotalOrder", listOrder.size());
-                model.addAttribute("listRecentDelivery", listRecentDelivery);
-                model.addAttribute("listRecentMomo", listRecentMomo);
-
-                return "thongKeDT.html";
-            }
-        }
-    }
+//    @GetMapping("/thong-ke-admin-doanh-thu")
+//    public String DashboardWalletView(Model model) {
+//        User admin = (User) session.getAttribute("admin");
+//        if (admin == null) {
+//            return "redirect:/signin-admin";
+//        } else {
+//
+//            List<Map<String, Object>> resultList = thongKeRepository.getTotalRevenueByDate();
+//            model.addAttribute("resultList", resultList);
+//
+//
+//            List<Order> listOrder = orderService.findAll();
+//            List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Payment with momo");
+//            List<Order> listVi = orderService.findAllByPayment_Method("Ví");
+//            List<Order> listPaymentOnDelivery = orderService.findAllByPayment_Method("Payment on delivery");
+//            long TotalMomo = 0;
+//            long vi = 0;
+//            long TotalDelivery = 0;
+//            for (Order y : listPaymentWithMomo) {
+//                TotalMomo = TotalMomo + y.getTotal();
+//            }
+//            for (Order y : listPaymentOnDelivery) {
+//                TotalDelivery = TotalDelivery + y.getTotal();
+//            }
+//            for (Order y : listVi) {
+//                vi = vi + y.getTotal();
+//            }
+//            List<Order> listRecentMomo = orderService.findTop5OrderByPaymentMethod("Payment with momo");
+//            List<Order> vi1 = orderService.findTop5OrderByPaymentMethod("Ví");
+//            List<Order> listRecentDelivery = orderService.findTop5OrderByPaymentMethod("Payment on delivery");
+//
+//
+//            model.addAttribute("vi", vi);
+//            model.addAttribute("vi1", vi1);
+//            model.addAttribute("TotalMomo", TotalMomo);
+//            model.addAttribute("TotalDelivery", TotalDelivery);
+//            model.addAttribute("TotalOrder", listOrder.size());
+//            model.addAttribute("listRecentDelivery", listRecentDelivery);
+//            model.addAttribute("listRecentMomo", listRecentMomo);
+//            return "thongKeDT.html";
+//        }
+//    }
+//
+//    @GetMapping("/thong-ke-admin-doanh-thu/tim-kiem")
+//    public String DashboardWalletView1(Model model,
+//                                       @RequestParam("ngay1") String ngay1,
+//                                       @RequestParam("ngay2") String ngay2) {
+//        User admin = (User) session.getAttribute("admin");
+//        if (admin == null) {
+//            return "redirect:/signin-admin";
+//        } else {
+//            if (ngay1 == null || ngay2 == null) {
+//                return "redirect:/thong-ke-admin-doanh-thu";
+//            } else {
+//                List<Map<String, Object>> resultList = thongKeRepository.getTotalRevenueByDate1(ngay1, ngay2);
+//                model.addAttribute("resultList", resultList);
+//
+//                List<Order> listOrder = orderService.findAll();
+//                List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Payment with momo");
+//                List<Order> listVi = orderService.findAllByPayment_Method("Ví");
+//                List<Order> listPaymentOnDelivery = orderService.findAllByPayment_Method("Payment on delivery");
+//                long TotalMomo = 0;
+//                long vi = 0;
+//                long TotalDelivery = 0;
+//
+//                for (Order y : listPaymentWithMomo) {
+//                    TotalMomo = TotalMomo + y.getTotal();
+//                }
+//                for (Order y : listPaymentOnDelivery) {
+//                    TotalDelivery = TotalDelivery + y.getTotal();
+//                }
+//                for (Order y : listVi) {
+//                    vi = vi + y.getTotal();
+//                }
+//
+//                List<Order> listRecentMomo = orderService.findTop5OrderByPaymentMethod("Payment with momo");
+//                List<Order> vi1 = orderService.findTop5OrderByPaymentMethod("Ví");
+//                List<Order> listRecentDelivery = orderService.findTop5OrderByPaymentMethod("Payment on delivery");
+//
+//                model.addAttribute("vi", vi);
+//                model.addAttribute("vi1", vi1);
+//                model.addAttribute("TotalMomo", TotalMomo);
+//                model.addAttribute("TotalDelivery", TotalDelivery);
+//                model.addAttribute("TotalOrder", listOrder.size());
+//                model.addAttribute("listRecentDelivery", listRecentDelivery);
+//                model.addAttribute("listRecentMomo", listRecentMomo);
+//
+//                return "thongKeDT.html";
+//            }
+//        }
+//    }
 
     @GetMapping("/san-pham-admin")
-    public String DashboardMyProductView(Model model) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            List<Category> listCategories = categoryService.getAll();
-            Pageable pageable = PageRequest.of(0, 3);
-            Page<Product> pageProduct = productService.findAll(pageable);
-            model.addAttribute("pageProduct", pageProduct);
-            model.addAttribute("listCategories", listCategories);
-            return "/admin/sanpham/dashboard-myproducts";
+    public String DashboardMyProductView(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Page<Product> pageProduct = productService.findAll(pageNo, 5);
+        for (Product product : pageProduct) {
+            if (product.getProductImage().isEmpty()) {
+                model.addAttribute("img", null);
+            } else {
+                model.addAttribute("img", "img");
+            }
         }
+        model.addAttribute("pageProduct", pageProduct.getContent());
+        model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("Cate", new Product());
+        model.addAttribute("a", null);
+        return "/admin/sanpham/dashboard-myproducts";
     }
 
     @GetMapping("/san-pham/sua/{id}")
     public String DashboardMyProductEditView(@PathVariable int id, Model model) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            List<Category> listCategories = categoryService.getAll();
-            List<Author> authorList = authorService.getAllAuthor();
-            List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-            List<Producer> producerList = producerService.getAllProducer();
-            Product product = productService.getProductById(id);
-            model.addAttribute("product", product);
-            model.addAttribute("listCategories", listCategories);
-            model.addAttribute("listAuthor", authorList);
-            model.addAttribute("listBookCover", bookCoverList);
-            model.addAttribute("listProducer", producerList);
-            String editProduct = (String) session.getAttribute("editProduct");
-            model.addAttribute("editProduct", editProduct);
-            session.setAttribute("editProduct", null);
-            return "/admin/sanpham/dashboard-my-products-edit";
+
+        List<Category> listCategories = categoryService.getAll();
+        List<Author> authorList = authorService.getAllAuthor();
+        List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
+        List<Producer> producerList = producerService.getAllProducer();
+
+        // Lấy thông tin sản phẩm
+        Product product = productService.getProductById(id);
+
+        // Kiểm tra xem sản phẩm có tồn tại không
+        if (product == null) {
+            // Xử lý khi sản phẩm không tồn tại, có thể chuyển hướng hoặc thông báo lỗi
+            return "redirect:/error-page";
         }
+
+        // Lấy danh sách ProductCategory dựa trên sản phẩm
+        List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
+        for (ProductCategory category : listProductCategories) {
+            System.out.println(category);
+        }
+        List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+
+        model.addAttribute("productAuthorList", productAuthorList);
+        model.addAttribute("listProductCategories", listProductCategories);
+        model.addAttribute("product", product);
+        model.addAttribute("listCategories", listCategories);
+        model.addAttribute("listAuthor", authorList);
+        model.addAttribute("listBookCover", bookCoverList);
+        model.addAttribute("listProducer", producerList);
+
+        String editProduct = (String) session.getAttribute("editProduct");
+        model.addAttribute("editProduct", editProduct);
+        session.setAttribute("editProduct", null);
+        return "/admin/sanpham/dashboard-my-products-edit";
+
     }
+
 
     @PostMapping("/san-pham/sua")
     public String DashboardMyProductEditHandel(Model model, @ModelAttribute("product_id") int product_id,
@@ -288,7 +318,7 @@ public class AdminController {
             if (listImage != null) {
                 Category cate = categoryService.getAllCategoryById(category);
                 Product product = productService.getProductById(product_id);
-                Author ath = authorService.getAllAuthorById(author);
+                List<Author> ath = (List<Author>) authorService.getAllAuthorById(author);
                 BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
                 Producer pr = producerService.getAllProducerById(producer);
 //				System.out.println(cate);
@@ -298,7 +328,7 @@ public class AdminController {
                 product.setProduct_Name(product_name);
                 product.setPrice(Long.valueOf(price));
                 product.setQuantity(Integer.parseInt(availability));
-                product.setCategory(cate);
+//                product.setCategory(cate);
                 product.setProducer(pr);
                 product.setAuthor(ath);
                 product.setBookCover(bc);
@@ -333,20 +363,6 @@ public class AdminController {
 //        return "redirect:" + referer;
 //    }
 
-    @GetMapping("/san-pham-admin/{page}")
-    public String DashboardMyProductPageView(@PathVariable int page, Model model) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            List<Category> listCategories = categoryService.getAll();
-            Pageable pageable = PageRequest.of(page, 3);
-            Page<Product> pageProduct = productService.findAll(pageable);
-            model.addAttribute("pageProduct", pageProduct);
-            model.addAttribute("listCategories", listCategories);
-            return "/admin/sanpham/dashboard-myproducts";
-        }
-    }
 
     @PostMapping("/dashboard-myproduct/search")
     public String DashboardMyproductSearch(@ModelAttribute("search-input") String search_input,
@@ -450,8 +466,8 @@ public class AdminController {
                                             @RequestParam("price") String price, @RequestParam("availability") String availability,
                                             @RequestParam("page_number") String pageNumber, @RequestParam("book_size") String bookSize,
                                             @RequestParam("year_publication") String yearPublication, @RequestParam("language") String language,
-                                            @RequestParam("category") int category, @RequestParam("description") String description,
-                                            @RequestParam("author") int author, @RequestParam("book_cover") int bookCover, @RequestParam("producer") int producer,
+                                            @RequestParam("category") List<Category> category, @RequestParam("description") String description,
+                                            @RequestParam("author") List<Author> author, @RequestParam("book_cover") int bookCover, @RequestParam("producer") int producer,
                                             @RequestParam("listImage") MultipartFile[] listImage) throws Exception {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
@@ -657,11 +673,11 @@ public class AdminController {
                 }
             } else {
                 try {
-                    Category cate = categoryService.getAllCategoryById(category);
-                    Author ath = authorService.getAllAuthorById(author);
+//                    Category cate = categoryService.getAllCategoryById(category);
+//                    List<Author> ath = (List<Author>) authorService.getAllAuthorById(author);
                     BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
                     Producer pr = producerService.getAllProducerById(producer);
-                    System.out.println(cate);
+//                    System.out.println(cate);
                     long millis = System.currentTimeMillis();
                     Date create_at = new java.sql.Date(millis);
                     Product newPro = new Product();
@@ -673,8 +689,8 @@ public class AdminController {
                     newPro.setProduct_Name(product_name);
                     newPro.setQuantity(Integer.parseInt(availability));
                     newPro.setSold(0);
-                    newPro.setCategory(cate);
-                    newPro.setAuthor(ath);
+//                    newPro.setCategory(cate);
+//                    newPro.setAuthor(ath);
                     newPro.setProducer(pr);
                     newPro.setBookCover(bc);
                     newPro.setBookSize(bookSize);
@@ -690,7 +706,21 @@ public class AdminController {
                         img.setProduct(newPro1);
                         img.setUrl_Image(urlImg);
                         productImageService.save(img);
+                    }
 
+                    // Lặp qua danh sách tác giả và thêm vào bảng product_author
+                    for (Author a : author) {
+                        ProductAuthor productAuthor = new ProductAuthor();
+                        productAuthor.setProduct(newPro1);
+                        productAuthor.setAuthor(a);
+                        productAuthorRepository.save(productAuthor);
+                    }
+
+                    for (Category c : category) {
+                        ProductCategory productCategory = new ProductCategory();
+                        productCategory.setProduct(newPro1);
+                        productCategory.setCategory(c);
+                        productCategoryRepository.save(productCategory);
                     }
 
 
