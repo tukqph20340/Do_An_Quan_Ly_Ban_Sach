@@ -231,7 +231,7 @@
                                         <h5>Số Lượng</h5>
                                         <input name="availability" type="text"
                                                placeholder="Số Lượng">
-                                        <p style="color: red">[[${loi3}]]</p>
+                                        <p style="color: red">[[${loi3}]] [[${loi4}]]</p>
                                     </div>
                                     <!-- Status -->
                                     <div class="col-md-6">
@@ -243,6 +243,7 @@
                                                         th:text="${category.category_Name}"></option>
                                             </th:block>
                                         </select>
+                                        <p style="color: red">[[${loi12}]]</p>
                                     </div>
 
                                 </div>
@@ -252,14 +253,14 @@
                                     <div class="col-md-6">
                                         <h5>Số Trang</h5>
                                         <input name="page_number" type="text" placeholder="Số Trang">
-                                        <p style="color: red">[[${loi4}]] [[${loi5}]]</p>
+                                        <p style="color: red">[[${loi5}]] [[${loi6}]]</p>
                                     </div>
 
                                     <div class="col-md-6">
                                         <h5>Kích Thước</h5>
                                         <input name="book_size" type="text"
                                                placeholder="Kích Thước">
-                                        <p style="color: red">[[${loi10}]]</p>
+                                        <p style="color: red">[[${loi7}]]</p>
                                     </div>
                                 </div>
                                 <div class="row with-forms">
@@ -268,13 +269,13 @@
                                         <h5>Năm Sản Xuất</h5>
                                         <input name="year_publication" type="text"
                                                placeholder="Năm Xuất Bản">
-                                        <p style="color: red">[[${loi6}]] [[${loi7}]]</p>
+                                        <p style="color: red">[[${loi8}]] [[${loi9}]]</p>
                                     </div>
 
                                     <div class="col-md-6">
                                         <h5>Ngôn Ngữ</h5>
                                         <input name="language" type="text" placeholder="Ngôn Ngữ">
-                                        <p style="color: red">[[${loi9}]]</p>
+                                        <p style="color: red">[[${loi10}]]</p>
                                     </div>
 
                                 </div>
@@ -288,7 +289,7 @@
                                                 <option th:value="${author.id}" th:text="${author.nameAuthor}"></option>
                                             </th:block>
                                         </select>
-
+                                        <p style="color: red">[[${loi13}]]</p>
                                     </div>
 
                                     <div class="col-md-4">
@@ -335,7 +336,7 @@
                                     <textarea name="description" class="WYSIWYG" cols="40"
                                               rows="3" id="summary" spellcheck="true"
                                               placeholder="Mô Tả Chi Tiết"></textarea>
-                                    <p style="color: red">[[${loi8}]]</p>
+                                    <p style="color: red">[[${loi11}]]</p>
                                 </div>
                             </div>
                             <!-- Section / End -->
@@ -363,7 +364,7 @@
                                         </div>
                                         <div class="upload__img-wrap" id="imageInput">
 
-                                            <p style="color: red" id="loi11">[[${loi11}]]</p>
+                                            <p style="color: red" id="loi11">[[${loiimg}]]</p>
                                         </div>
 
                                     </div>
