@@ -223,9 +223,7 @@ public class AuthorController {
             return "/admin/tacgia/dashboard-author-edit";
         } else {
             try {
-                for (MultipartFile y : listImage) {
-                    String urlImg = cloudinaryService.uploadFile(y);
-                    AuthorImage img = new AuthorImage();
+
 
 
                     Author author = authorService.getAllAuthorById(id);
@@ -236,6 +234,11 @@ public class AuthorController {
                     author.setDescription(description);
                     authorService.saveAuthor(author);
                     Author listAuthor = authorService.ten(name_author);
+
+
+                for (MultipartFile y : listImage) {
+                    String urlImg = cloudinaryService.uploadFile(y);
+                    AuthorImage img = new AuthorImage();
                     img.setAuthor(listAuthor);
                     img.setUrl_Image(urlImg);
                     authorImageService.save(img);
@@ -245,16 +248,7 @@ public class AuthorController {
                 return "redirect:/tac-gia-admin";
 
             } catch (Exception e) {
-                model.addAttribute("loi7", "Ảnh không được để trống");
-                Author author = authorService.getAllAuthorById(id);
-                model.addAttribute("detail", author);
-                if (author.getAuthorList().isEmpty()) {
-                    model.addAttribute("a", null);
-                } else {
-                    model.addAttribute("a", "a");
-                }
-
-                return "/admin/tacgia/dashboard-author-edit";
+                return "redirect:/tac-gia-admin";
 
             }
 

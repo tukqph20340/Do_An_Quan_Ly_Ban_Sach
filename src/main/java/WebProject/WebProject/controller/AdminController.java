@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -74,6 +75,9 @@ public class AdminController {
 
     @Autowired
     ProductCategoryRepository productCategoryRepository;
+
+    @Autowired
+    CookieService cookieService;
 
     java.util.Date date = new java.util.Date();
     SimpleDateFormat fm = new SimpleDateFormat("yyyy");
@@ -280,10 +284,11 @@ public class AdminController {
 
         // Lấy danh sách ProductCategory dựa trên sản phẩm
         List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
-        for (ProductCategory category : listProductCategories) {
-            System.out.println(category.getCategory().getCategory_Name());
-        }
+
         List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+        List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
+
+        model.addAttribute("productImages", productImages);
 
         model.addAttribute("productAuthorList", productAuthorList);
         model.addAttribute("listProductCategories", listProductCategories);
@@ -292,6 +297,7 @@ public class AdminController {
         model.addAttribute("listAuthor", authorList);
         model.addAttribute("listBookCover", bookCoverList);
         model.addAttribute("listProducer", producerList);
+
         String editProduct = (String) session.getAttribute("editProduct");
         model.addAttribute("editProduct", editProduct);
         session.setAttribute("editProduct", null);
@@ -300,67 +306,298 @@ public class AdminController {
     }
 
 
-    @PostMapping("/san-pham/sua")
-    public String DashboardMyProductEditHandel(Model model, @ModelAttribute("product_id") int product_id,
-                                               @ModelAttribute("product_name") String product_name,
-                                               @ModelAttribute("price") String price, @ModelAttribute("availability") String availability,
-                                               @ModelAttribute("page_number") String pageNumber, @ModelAttribute("book_size") String bookSize,
-                                               @ModelAttribute("year_publication") int yearPublication, @ModelAttribute("language") String language,
-                                               @ModelAttribute("category") int category, @ModelAttribute("description") String description,
-                                               @ModelAttribute("author") int author, @ModelAttribute("book_cover") int bookCover, @ModelAttribute("producer") int producer,
-                                               @ModelAttribute("listImage") MultipartFile[] listImage)
-            throws Exception {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            if (listImage != null) {
-                Category cate = categoryService.getAllCategoryById(category);
-                Product product = productService.getProductById(product_id);
-                List<Author> ath = (List<Author>) authorService.getAllAuthorById(author);
-                BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
-                Producer pr = producerService.getAllProducerById(producer);
-//				System.out.println(cate);
-//				long millis = System.currentTimeMillis();
-//				Date create_at = new java.sql.Date(millis);
-//				Product newPro = new Product();
-                product.setProduct_Name(product_name);
-                product.setPrice(Long.valueOf(price));
-                product.setQuantity(Integer.parseInt(availability));
-//                product.setCategory(cate);
-                product.setProducer(pr);
-                product.setAuthor(ath);
-                product.setBookCover(bc);
-                product.setDescription(description);
-                product.setBookSize(bookSize);
-                product.setLanguage(language);
-                product.setPageNumber(pageNumber);
-                product.setYearPublication(yearPublication);
-                productService.saveProduct(product);
-                for (MultipartFile y : listImage) {
-                    if (!y.isEmpty()) {
-                        String urlImg = cloudinaryService.uploadFile(y);
-                        ProductImage img = new ProductImage();
-                        img.setProduct(product);
-                        img.setUrl_Image(urlImg);
-                        productImageService.save(img);
+    @PostMapping("/san-pham/sua/{id}")
+    public String DashboardUpdateProductHandel(Model model, @PathVariable() int id,
+                                               @RequestParam("product_name") String product_name,
+                                               @RequestParam("price") String price, @RequestParam("availability") String availability,
+                                               @RequestParam("page_number") String pageNumber, @RequestParam("book_size") String bookSize,
+                                               @RequestParam("year_publication") String yearPublication, @RequestParam("language") String language,
+                                               @RequestParam("category") List<Category> category, @RequestParam("description") String description,
+                                               @RequestParam("author") List<Author> author,
+                                               @RequestParam("book_cover") int bookCover, @RequestParam("producer") int producer,
+                                               @RequestParam("listImage") MultipartFile[] listImage) throws Exception {
+        try {
+
+//                    Category cate = categoryService.getAllCategoryById(category);
+//                    List<Author> ath = (List<Author>) authorService.getAllAuthorById(author);
+            BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
+            Producer pr = producerService.getAllProducerById(producer);
+//                    System.out.println(cate);
+            long millis = System.currentTimeMillis();
+            Date create_at = new java.sql.Date(millis);
+            Product newPro = productService.getProductById(id);
+            newPro.setCreated_At(create_at);
+            newPro.setDescription(description);
+            newPro.setIs_Active(1);
+            newPro.setIs_Selling(1);
+            newPro.setPrice(Long.valueOf(price));
+            newPro.setProduct_Name(product_name);
+            newPro.setQuantity(Integer.parseInt(availability));
+            newPro.setSold(0);
+//                    newPro.setCategory(cate);
+//                    newPro.setAuthor(ath);
+            newPro.setProducer(pr);
+            newPro.setBookCover(bc);
+            newPro.setBookSize(bookSize);
+            newPro.setLanguage(language);
+            newPro.setPageNumber(pageNumber);
+            newPro.setYearPublication(Integer.valueOf(yearPublication));
+            productService.saveProduct(newPro);
+            List<Product> listProducts = productService.getAllProduct();
+            Product newPro1 = listProducts.get(listProducts.size() - 1);
+
+
+            try {
+                for (Author a : author) {
+                    List<ProductAuthor> list = productAuthorRepository.findByProductId(id);
+                    ProductAuthor productAuthor = new ProductAuthor();
+                    for (ProductAuthor lista : list) {
+                        if (a.getNameAuthor().isEmpty()) {
+                            model.addAttribute("loiTacGiatrong", "Không Được Để Trống Tên Tác Giả");
+                            List<Category> listCategories = categoryService.getAll();
+                            List<Author> authorList = authorService.getAllAuthor();
+                            List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
+                            List<Producer> producerList = producerService.getAllProducer();
+
+                            // Lấy thông tin sản phẩm
+                            Product product = productService.getProductById(id);
+
+                            // Kiểm tra xem sản phẩm có tồn tại không
+
+
+                            // Lấy danh sách ProductCategory dựa trên sản phẩm
+                            List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
+
+                            List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+                            List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
+
+                            model.addAttribute("productImages", productImages);
+
+                            model.addAttribute("productAuthorList", productAuthorList);
+                            model.addAttribute("listProductCategories", listProductCategories);
+                            model.addAttribute("product", product);
+                            model.addAttribute("listCategories", listCategories);
+                            model.addAttribute("listAuthor", authorList);
+                            model.addAttribute("listBookCover", bookCoverList);
+                            model.addAttribute("listProducer", producerList);
+
+                            Cookie cookie = cookieService.create("idSP", String.valueOf(id), 1);
+
+                            String editProduct = (String) session.getAttribute("editProduct");
+                            model.addAttribute("editProduct", editProduct);
+                            session.setAttribute("editProduct", null);
+                            return "/admin/sanpham/dashboard-my-products-edit";
+                        } else if (lista.getAuthor().getId().equals(a.getId())) {
+                            model.addAttribute("loiTacGia", a.getNameAuthor() + "  Đã Tồn Tại");
+                            List<Category> listCategories = categoryService.getAll();
+                            List<Author> authorList = authorService.getAllAuthor();
+                            List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
+                            List<Producer> producerList = producerService.getAllProducer();
+
+                            // Lấy thông tin sản phẩm
+                            Product product = productService.getProductById(id);
+
+                            // Kiểm tra xem sản phẩm có tồn tại không
+
+
+                            // Lấy danh sách ProductCategory dựa trên sản phẩm
+                            List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
+
+                            List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+                            List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
+
+                            model.addAttribute("productImages", productImages);
+
+                            model.addAttribute("productAuthorList", productAuthorList);
+                            model.addAttribute("listProductCategories", listProductCategories);
+                            model.addAttribute("product", product);
+                            model.addAttribute("listCategories", listCategories);
+                            model.addAttribute("listAuthor", authorList);
+                            model.addAttribute("listBookCover", bookCoverList);
+                            model.addAttribute("listProducer", producerList);
+
+                            Cookie cookie = cookieService.create("idSP", String.valueOf(id), 1);
+
+                            String editProduct = (String) session.getAttribute("editProduct");
+                            model.addAttribute("editProduct", editProduct);
+                            session.setAttribute("editProduct", null);
+                            return "/admin/sanpham/dashboard-my-products-edit";
+                        } else {
+                            productAuthor.setProduct(newPro1);
+                            productAuthor.setAuthor(a);
+                            productAuthorRepository.save(productAuthor);
+
+                        }
                     }
+
                 }
-                session.setAttribute("editProduct", "editProductSuccess");
-                return "redirect:/san-pham-admin";
-            } else {
-                return "redirect:/san-pham/sua/" + product_id;
+            }catch (Exception e){
+                model.addAttribute("loiTacGiatrong", "Tác Giả Trống");
+                List<Category> listCategories = categoryService.getAll();
+                List<Author> authorList = authorService.getAllAuthor();
+                List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
+                List<Producer> producerList = producerService.getAllProducer();
+
+                // Lấy thông tin sản phẩm
+                Product product = productService.getProductById(id);
+
+                // Kiểm tra xem sản phẩm có tồn tại không
+                if (product == null) {
+                    // Xử lý khi sản phẩm không tồn tại, có thể chuyển hướng hoặc thông báo lỗi
+                    return "redirect:/error-page";
+                }
+
+                // Lấy danh sách ProductCategory dựa trên sản phẩm
+                List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
+
+                List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+                List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
+
+                model.addAttribute("productImages", productImages);
+
+                model.addAttribute("productAuthorList", productAuthorList);
+                model.addAttribute("listProductCategories", listProductCategories);
+                model.addAttribute("product", product);
+                model.addAttribute("listCategories", listCategories);
+                model.addAttribute("listAuthor", authorList);
+                model.addAttribute("listBookCover", bookCoverList);
+                model.addAttribute("listProducer", producerList);
+
+                Cookie cookie = cookieService.create("idSP", String.valueOf(id), 1);
+
+                String editProduct = (String) session.getAttribute("editProduct");
+                model.addAttribute("editProduct", editProduct);
+                session.setAttribute("editProduct", null);
+                return "/admin/sanpham/dashboard-my-products-edit";
             }
 
+
+
+
+            for (Category c : category) {
+                List<ProductCategory> list = productCategoryRepository.findByProductId(id);
+                for (ProductCategory lista : list) {
+                    if (c.getCategory_Name().isEmpty()) {
+                        model.addAttribute("loiLoaiTrong", "Không Được Để Trống Tên Tác Giả");
+                        List<Category> listCategories = categoryService.getAll();
+                        List<Author> authorList = authorService.getAllAuthor();
+                        List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
+                        List<Producer> producerList = producerService.getAllProducer();
+
+                        // Lấy thông tin sản phẩm
+                        Product product = productService.getProductById(id);
+
+                        // Kiểm tra xem sản phẩm có tồn tại không
+
+                        // Lấy danh sách ProductCategory dựa trên sản phẩm
+                        List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
+
+                        List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+                        List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
+
+                        model.addAttribute("productImages", productImages);
+
+                        model.addAttribute("productAuthorList", productAuthorList);
+                        model.addAttribute("listProductCategories", listProductCategories);
+                        model.addAttribute("product", product);
+                        model.addAttribute("listCategories", listCategories);
+                        model.addAttribute("listAuthor", authorList);
+                        model.addAttribute("listBookCover", bookCoverList);
+                        model.addAttribute("listProducer", producerList);
+
+                        Cookie cookie = cookieService.create("idSP", String.valueOf(id), 1);
+
+                        String editProduct = (String) session.getAttribute("editProduct");
+                        model.addAttribute("editProduct", editProduct);
+                        session.setAttribute("editProduct", null);
+                        return "/admin/sanpham/dashboard-my-products-edit";
+                    } else if (lista.getCategory().getCategory_Name().equals(c.getCategory_Name())) {
+                        model.addAttribute("loiLoai", c.getCategory_Name() + "  Đã Tồn Tại");
+                        List<Category> listCategories = categoryService.getAll();
+                        List<Author> authorList = authorService.getAllAuthor();
+                        List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
+                        List<Producer> producerList = producerService.getAllProducer();
+
+                        // Lấy thông tin sản phẩm
+                        Product product = productService.getProductById(id);
+
+                        // Kiểm tra xem sản phẩm có tồn tại không
+                        if (product == null) {
+                            // Xử lý khi sản phẩm không tồn tại, có thể chuyển hướng hoặc thông báo lỗi
+                            return "redirect:/error-page";
+                        }
+
+                        // Lấy danh sách ProductCategory dựa trên sản phẩm
+                        List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
+
+                        List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+                        List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
+
+                        model.addAttribute("productImages", productImages);
+
+                        model.addAttribute("productAuthorList", productAuthorList);
+                        model.addAttribute("listProductCategories", listProductCategories);
+                        model.addAttribute("product", product);
+                        model.addAttribute("listCategories", listCategories);
+                        model.addAttribute("listAuthor", authorList);
+                        model.addAttribute("listBookCover", bookCoverList);
+                        model.addAttribute("listProducer", producerList);
+
+                        Cookie cookie = cookieService.create("idSP", String.valueOf(id), 1);
+
+                        String editProduct = (String) session.getAttribute("editProduct");
+                        model.addAttribute("editProduct", editProduct);
+                        session.setAttribute("editProduct", null);
+                        return "/admin/sanpham/dashboard-my-products-edit";
+                    } else {
+                        ProductCategory productCategory = new ProductCategory();
+                        productCategory.setProduct(newPro1);
+                        productCategory.setCategory(c);
+                        productCategoryRepository.save(productCategory);
+
+                    }
+                }
+
+            }
+
+            for (MultipartFile y : listImage) {
+                String urlImg = cloudinaryService.uploadFile(y);
+                ProductImage img = new ProductImage();
+                img.setProduct(newPro1);
+                img.setUrl_Image(urlImg);
+                productImageService.save(img);
+            }
+            return "redirect:/san-pham-admin";
+        } catch (Exception e) {
+            return "redirect:/san-pham-admin";
         }
+
     }
 
-//    @GetMapping("/dashboard-myproducts/delete-image/{id}")
-//    public String DeleteImage(@PathVariable int id, HttpServletRequest request) {
-//        String referer = request.getHeader("Referer");
-//        productImageService.deleteById(id);
-//        return "redirect:" + referer;
-//    }
+
+    @GetMapping("/dashboard-myproducts/delete-image/{id}")
+    public String DeleteImage(@PathVariable int id, HttpServletRequest request) {
+        Cookie cookie = cookieService.read("idSP");
+        productImageService.deleteImg(id);
+        return "redirect:/san-pham/sua/" + cookie.getValue();
+    }
+
+    @GetMapping("/tac-gia/delete/{id}")
+    public String Deleteaue(@PathVariable long id, HttpServletRequest request) {
+        Cookie cookie = cookieService.read("idSP");
+        ProductAuthor productAuthor = productAuthorRepository.findByProductIdAndAuthor_Id(Integer.valueOf(cookie.getValue()),Integer.valueOf((int) id));
+        productAuthorRepository.delete(productAuthor);
+        return "redirect:/san-pham/sua/" + cookie.getValue();
+    }
+
+    @GetMapping("/the-loai/delete/{id}")
+    public String Deletethe(@PathVariable long id, HttpServletRequest request) {
+        Cookie cookie = cookieService.read("idSP");
+        ProductCategory productCategory = productCategoryRepository.findByProductIdAndCategory_Id(Integer.valueOf(cookie.getValue()),Integer.valueOf((int) id));
+
+        productCategoryRepository.delete(productCategory);
+        return "redirect:/san-pham/sua/" + cookie.getValue();
+    }
 
 
     @PostMapping("/dashboard-myproduct/search")
@@ -441,10 +678,89 @@ public class AdminController {
 
     @GetMapping("/add-san-pham")
     public String DashboardAddProductView(Model model) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
+        String addProduct = (String) session.getAttribute("addProduct");
+        model.addAttribute("addProduct", addProduct);
+        session.setAttribute("addProduct", null);
+        List<Category> listCategories = categoryService.getAll();
+        List<Author> authorList = authorService.getAllAuthor();
+        List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
+        List<Producer> producerList = producerService.getAllProducer();
+        model.addAttribute("listCategories", listCategories);
+        model.addAttribute("listAuthor", authorList);
+        model.addAttribute("listBookCover", bookCoverList);
+        model.addAttribute("listProducer", producerList);
+        return "/admin/sanpham/dashboard-addproduct";
+
+    }
+
+    @PostMapping("/add-san-pham")
+    public String DashboardAddProductHandel(Model model, @RequestParam("product_name") String product_name,
+                                            @RequestParam("price") String price, @RequestParam("availability") String availability,
+                                            @RequestParam("page_number") String pageNumber, @RequestParam("book_size") String bookSize,
+                                            @RequestParam("year_publication") String yearPublication, @RequestParam("language") String language,
+                                            @RequestParam("category") List<Category> category, @RequestParam("description") String description,
+                                            @RequestParam("author") List<Author> author, @RequestParam("book_cover") int bookCover, @RequestParam("producer") int producer,
+                                            @RequestParam("listImage") MultipartFile[] listImage) throws Exception {
+
+        try {
+            for (MultipartFile y : listImage) {
+                String urlImg = cloudinaryService.uploadFile(y);
+                ProductImage img = new ProductImage();
+//                    Category cate = categoryService.getAllCategoryById(category);
+//                    List<Author> ath = (List<Author>) authorService.getAllAuthorById(author);
+                BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
+                Producer pr = producerService.getAllProducerById(producer);
+//                    System.out.println(cate);
+                long millis = System.currentTimeMillis();
+                Date create_at = new java.sql.Date(millis);
+                Product newPro = new Product();
+                newPro.setCreated_At(create_at);
+                newPro.setDescription(description);
+                newPro.setIs_Active(1);
+                newPro.setIs_Selling(1);
+                newPro.setPrice(Long.valueOf(price));
+                newPro.setProduct_Name(product_name);
+                newPro.setQuantity(Integer.parseInt(availability));
+                newPro.setSold(0);
+//                    newPro.setCategory(cate);
+//                    newPro.setAuthor(ath);
+                newPro.setProducer(pr);
+                newPro.setBookCover(bc);
+                newPro.setBookSize(bookSize);
+                newPro.setLanguage(language);
+                newPro.setPageNumber(pageNumber);
+                newPro.setYearPublication(Integer.valueOf(yearPublication));
+                productService.saveProduct(newPro);
+                List<Product> listProducts = productService.getAllProduct();
+                Product newPro1 = listProducts.get(listProducts.size() - 1);
+
+
+                img.setProduct(newPro1);
+                img.setUrl_Image(urlImg);
+                productImageService.save(img);
+
+
+                // Lặp qua danh sách tác giả và thêm vào bảng product_author
+                for (Author a : author) {
+                    ProductAuthor productAuthor = new ProductAuthor();
+                    productAuthor.setProduct(newPro1);
+                    productAuthor.setAuthor(a);
+                    productAuthorRepository.save(productAuthor);
+                }
+
+                for (Category c : category) {
+                    ProductCategory productCategory = new ProductCategory();
+                    productCategory.setProduct(newPro1);
+                    productCategory.setCategory(c);
+                    productCategoryRepository.save(productCategory);
+                }
+
+            }
+            session.setAttribute("addProduct", "addProductSuccess");
+            return "redirect:/san-pham-admin";
+
+        } catch (Exception e) {
+            model.addAttribute("loi11", "Ảnh không được để trống");
             String addProduct = (String) session.getAttribute("addProduct");
             model.addAttribute("addProduct", addProduct);
             session.setAttribute("addProduct", null);
@@ -459,345 +775,6 @@ public class AdminController {
             return "/admin/sanpham/dashboard-addproduct";
         }
     }
-
-    @PostMapping("/add-san-pham")
-    public String DashboardAddProductHandel(Model model, @RequestParam("product_name") String product_name,
-                                            @RequestParam("price") String price, @RequestParam("availability") String availability,
-                                            @RequestParam("page_number") String pageNumber, @RequestParam("book_size") String bookSize,
-                                            @RequestParam("year_publication") String yearPublication, @RequestParam("language") String language,
-                                            @RequestParam("category") List<Category> category, @RequestParam("description") String description,
-                                            @RequestParam("author") List<Author> author, @RequestParam("book_cover") int bookCover, @RequestParam("producer") int producer,
-                                            @RequestParam("listImage") MultipartFile[] listImage) throws Exception {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            if (product_name.isEmpty()) {
-                model.addAttribute("loi", "Tên không được để trống");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (price.isEmpty()) {
-                model.addAttribute("loi1", "Giá không được để trống");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (Integer.valueOf(price) < 1001) {
-                model.addAttribute("loi2", "Giá không được nhỏ hơn 1000 VNĐ");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (availability.isEmpty()) {
-                model.addAttribute("loi3", "Số Lượng không được để trống");
-                if (admin == null) {
-                    return "/admin/sanpham/redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (pageNumber.isEmpty()) {
-                model.addAttribute("loi4", "Số trang không được để trống");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (Integer.valueOf(pageNumber) < 1) {
-                model.addAttribute("loi5", "Giá không được nhỏ hơn 1 VNĐ");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (String.valueOf(yearPublication).isEmpty()) {
-                model.addAttribute("loi6", "Năm sản xuất không được để trống");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (Integer.valueOf(yearPublication) > Integer.valueOf(String.valueOf(hienTai))) {
-                model.addAttribute("loi7", "Năm sản xuất không được lớn hơn năm hiện tại");
-                if (admin == null) {
-                    return "/admin/sanpham/redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (description.isEmpty()) {
-                model.addAttribute("loi8", "Mô tả không được để trống");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (language.isEmpty()) {
-                model.addAttribute("loi9", "Ngôn ngữ không được để trống");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else if (bookSize.isEmpty()) {
-                model.addAttribute("loi10", "Kích thước không được để trống");
-                if (admin == null) {
-                    return "redirect:/signin-admin";
-                } else {
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            } else {
-                try {
-//                    Category cate = categoryService.getAllCategoryById(category);
-//                    List<Author> ath = (List<Author>) authorService.getAllAuthorById(author);
-                    BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
-                    Producer pr = producerService.getAllProducerById(producer);
-//                    System.out.println(cate);
-                    long millis = System.currentTimeMillis();
-                    Date create_at = new java.sql.Date(millis);
-                    Product newPro = new Product();
-                    newPro.setCreated_At(create_at);
-                    newPro.setDescription(description);
-                    newPro.setIs_Active(1);
-                    newPro.setIs_Selling(1);
-                    newPro.setPrice(Long.valueOf(price));
-                    newPro.setProduct_Name(product_name);
-                    newPro.setQuantity(Integer.parseInt(availability));
-                    newPro.setSold(0);
-//                    newPro.setCategory(cate);
-//                    newPro.setAuthor(ath);
-                    newPro.setProducer(pr);
-                    newPro.setBookCover(bc);
-                    newPro.setBookSize(bookSize);
-                    newPro.setLanguage(language);
-                    newPro.setPageNumber(pageNumber);
-                    newPro.setYearPublication(Integer.valueOf(yearPublication));
-                    productService.saveProduct(newPro);
-                    List<Product> listProducts = productService.getAllProduct();
-                    Product newPro1 = listProducts.get(listProducts.size() - 1);
-                    for (MultipartFile y : listImage) {
-                        String urlImg = cloudinaryService.uploadFile(y);
-                        ProductImage img = new ProductImage();
-                        img.setProduct(newPro1);
-                        img.setUrl_Image(urlImg);
-                        productImageService.save(img);
-                    }
-
-                    // Lặp qua danh sách tác giả và thêm vào bảng product_author
-                    for (Author a : author) {
-                        ProductAuthor productAuthor = new ProductAuthor();
-                        productAuthor.setProduct(newPro1);
-                        productAuthor.setAuthor(a);
-                        productAuthorRepository.save(productAuthor);
-                    }
-
-                    for (Category c : category) {
-                        ProductCategory productCategory = new ProductCategory();
-                        productCategory.setProduct(newPro1);
-                        productCategory.setCategory(c);
-                        productCategoryRepository.save(productCategory);
-                    }
-
-
-                    session.setAttribute("addProduct", "addProductSuccess");
-                    return "redirect:/san-pham-admin";
-
-                } catch (Exception e) {
-                    model.addAttribute("loi11", "Ảnh không được để trống");
-                    String addProduct = (String) session.getAttribute("addProduct");
-                    model.addAttribute("addProduct", addProduct);
-                    session.setAttribute("addProduct", null);
-                    List<Category> listCategories = categoryService.getAll();
-                    List<Author> authorList = authorService.getAllAuthor();
-                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                    List<Producer> producerList = producerService.getAllProducer();
-                    model.addAttribute("listCategories", listCategories);
-                    model.addAttribute("listAuthor", authorList);
-                    model.addAttribute("listBookCover", bookCoverList);
-                    model.addAttribute("listProducer", producerList);
-                    return "/admin/sanpham/dashboard-addproduct";
-                }
-            }
-
-        }
-
-    }
-//                if (listImage != null) {
-//                    Category cate = categoryService.getCategoryById(category);
-//                    Author ath = authorService.getAllAuthorById(author);
-//                    BookCover bc = bookCoverService.getAllBookCoverById(bookCover);
-//                    Producer pr = producerService.getAllProducerById(producer);
-//                    System.out.println(cate);
-//                    long millis = System.currentTimeMillis();
-//                    Date create_at = new java.sql.Date(millis);
-//                    Product newPro = new Product();
-//                    newPro.setCreated_At(create_at);
-//                    newPro.setDescription(description);
-//                    newPro.setIs_Active(1);
-//                    newPro.setIs_Selling(1);
-//                    newPro.setPrice(Integer.parseInt(price));
-//                    newPro.setProduct_Name(product_name);
-//                    newPro.setQuantity(Integer.parseInt(availability));
-//                    newPro.setSold(0);
-//                    newPro.setCategory(cate);
-//                    newPro.setAuthor(ath);
-//                    newPro.setProducer(pr);
-//                    newPro.setBookCover(bc);
-//                    newPro.setBookSize(bookSize);
-//                    newPro.setLanguage(language);
-//                    newPro.setPageNumber(pageNumber);
-//                    newPro.setYearPublication(Integer.valueOf(yearPublication));
-//                    productService.saveProduct(newPro);
-//                    List<Product> listProducts = productService.getAllProduct();
-//                    newPro = listProducts.get(listProducts.size() - 1);
-//                    for (MultipartFile y : listImage) {
-//                        String urlImg = cloudinaryService.uploadFile(y);
-//                        ProductImage img = new ProductImage();
-//                        img.setProduct(newPro);
-//                        img.setUrl_Image(urlImg);
-//                        productImageService.save(img);
-//                    }
-//                    session.setAttribute("addProduct", "addProductSuccess");
-//                    return "redirect:/dashboard-addproduct";
-//                } else {
-//                    model.addAttribute("loi11", "Ảnh không được để trống");
-//                    String addProduct = (String) session.getAttribute("addProduct");
-//                    model.addAttribute("addProduct", addProduct);
-//                    session.setAttribute("addProduct", null);
-//                    List<Category> listCategories = categoryService.findAll();
-//                    List<Author> authorList = authorService.getAllAuthor();
-//                    List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-//                    List<Producer> producerList = producerService.getAllProducer();
-//                    model.addAttribute("listCategories", listCategories);
-//                    model.addAttribute("listAuthor", authorList);
-//                    model.addAttribute("listBookCover", bookCoverList);
-//                    model.addAttribute("listProducer", producerList);
-//                    return "dashboard-addproduct";
-//                }
 
 
     @GetMapping("dashboard-myprofile")
@@ -872,34 +849,6 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/dashboard-myproducts/delete-image/{id}")
-    public String DashboardAuthor(Model model, @PathVariable() String id) {
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
-        } else {
-            List<ProductImage> productImages = productImageService.finalIdSP(Integer.valueOf(id));
-            for (ProductImage productImage1 : productImages) {
-                productImageService.deleteImg(productImage1);
-            }
-
-            List<Category> listCategories = categoryService.getAll();
-            List<Author> authorList = authorService.getAllAuthor();
-            List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-            List<Producer> producerList = producerService.getAllProducer();
-            Product product = productService.getProductById(Integer.valueOf(id));
-            model.addAttribute("product", product);
-            model.addAttribute("listCategories", listCategories);
-            model.addAttribute("listAuthor", authorList);
-            model.addAttribute("listBookCover", bookCoverList);
-            model.addAttribute("listProducer", producerList);
-            String editProduct = (String) session.getAttribute("editProduct");
-            model.addAttribute("editProduct", editProduct);
-            session.setAttribute("editProduct", null);
-            return "/admin/sanpham/dashboard-my-products-edit";
-        }
-
-    }
 
     @GetMapping("/dashboard-orders1")
     public String DashboardOrderView(Model model) {

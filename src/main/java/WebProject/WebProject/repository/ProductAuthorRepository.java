@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface ProductAuthorRepository extends JpaRepository<ProductAuthor, Long> {
     List<ProductAuthor> findByProductId(Integer id);
+    ProductAuthor findByProductIdAndAuthor_Id(Integer idsp,Integer id);
 
 }
