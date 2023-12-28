@@ -16,4 +16,6 @@ public interface ProductImageService {
 
 	void deleteImg(Integer id);
 
+
+
 }

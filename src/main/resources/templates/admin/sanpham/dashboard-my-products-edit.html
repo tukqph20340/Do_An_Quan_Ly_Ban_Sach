@@ -188,7 +188,7 @@
                                         <h5>Số Lượng</h5>
                                         <input name="availability" type="text" th:value="${product.quantity}"
                                                placeholder="Số Lượng">
-                                        <p style="color: red">[[${loi3}]]</p>
+                                        <p style="color: red">[[${loi3}]] [[${loi4}]]</p>
                                     </div>
                                     <!-- Status -->
                                     <div class="col-md-6">
@@ -200,14 +200,14 @@
                                                         th:text="${category.category_Name}"></option>
                                             </th:block>
                                         </select>
-                                        <p style="color: red">[[${loiLoai}]] [[${loiLoaiTrong}]]</p>
+                                        <p style="color: red">[[${loiTheLoai}]] [[${loi12}]]</p>
                                         <div class="chosen-container chosen-container-multi" style="width: 100%;"
                                              title="">
                                             <ul class="chosen-choices">
 
                                                 <th:block th:each="categoryl : ${listProductCategories}">
                                                     <li class="search-choice"><span>[[${categoryl.category.category_Name}]]</span><a
-                                                            class="search-choice-close" th:href="@{/the-loai/delete/{id}(id=${categoryl.category.id})}"></a>
+                                                            class="search-choice-close" th:if="${a!=null}" th:href="@{/the-loai/delete/{id}(id=${categoryl.category.id})}"></a>
                                                     </li>
                                                 </th:block>
                                                 <li class="search-field"><input type="text"
@@ -237,7 +237,7 @@
                                         <h5>Số Trang</h5>
                                         <input name="page_number" type="text" placeholder="Số Trang"
                                                th:value="${product.pageNumber}">
-                                        <p style="color: red">[[${loi4}]] [[${loi5}]]</p>
+                                        <p style="color: red">[[${loi4}]] [[${loi6}]]</p>
                                     </div>
 
                                     <div class="col-md-6">
@@ -253,7 +253,7 @@
                                         <h5>Năm Sản Xuất</h5>
                                         <input name="year_publication" type="text"
                                                placeholder="Năm Xuất Bản" th:value="${product.yearPublication}">
-                                        <p style="color: red">[[${loi6}]] [[${loi7}]]</p>
+                                        <p style="color: red">[[${loi7}]] [[${loi8}]]</p>
                                     </div>
 
                                     <div class="col-md-6">
@@ -276,7 +276,7 @@
                                                 </option>
                                             </th:block>
                                         </select>
-                                        <p style="color: red">[[${loiTacGia}]] [[${loiTacGiatrong}]]</p>
+                                        <p style="color: red">[[${loiTacGia}]] [[${loi13}]]</p>
                                         <div class="chosen-container chosen-container-multi" style="width: 100%;"
                                              title="">
                                             <ul class="chosen-choices">
@@ -284,7 +284,7 @@
                                                 <th:block th:each="authorl : ${productAuthorList}">
                                                     <li class="search-choice">
                                                         <span>[[${authorl.author.nameAuthor}]]</span><a
-                                                            class="search-choice-close" th:href="@{/tac-gia/delete/{id}(id=${authorl.author.id})}"></a>
+                                                            class="search-choice-close" th:if="${b!=null}" th:href="@{/tac-gia/delete/{id}(id=${authorl.author.id})}"></a>
                                                     </li>
                                                 </th:block>
                                                 <li class="search-field"><input type="text"
@@ -345,7 +345,7 @@
                                     <textarea name="description" class="WYSIWYG" cols="40"
                                               rows="3" id="summary" spellcheck="true" th:field="*{product.description}"
                                               placeholder="Mô Tả Chi Tiết"></textarea>
-                                    <p style="color: red">[[${loi8}]]</p>
+                                    <p style="color: red">[[${loi11}]]</p>
                                 </div>
                             </div>
                             <!-- Section / End -->
@@ -364,7 +364,7 @@
                                     <!-- Kết hợp hình ảnh và nội dung cho mội phần tử trong slideshow-->
                                     <th:block th:each="y: ${productImages}">
                                         <div class="mySlides fade">
-                                            <a th:href="@{/dashboard-myproducts/delete-image/{id}(id=${y.id})}"
+                                            <a th:if="${c!=null}" th:href="@{/dashboard-myproducts/delete-image/{id}(id=${y.id})}"
                                                class="delete_img"> <i
                                                     style="color: #fff; line-height: 30px;"
                                                     class="sl sl-icon-close"></i>
@@ -400,7 +400,6 @@
                                 </div>
                             </div>
                             <!-- Section / End -->
-                            <p style="color: red">[[${loi11}]]</p>
 
                             <button class="button preview" type="submit">
                                 Sửa Sản Phẩm <i class="fa fa-arrow-circle-right"></i>
