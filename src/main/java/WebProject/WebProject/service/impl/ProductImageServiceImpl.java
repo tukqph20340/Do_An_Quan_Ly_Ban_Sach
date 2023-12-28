@@ -35,8 +35,8 @@ public class ProductImageServiceImpl implements ProductImageService{
 	}
 
 	@Override
-	public void deleteImg(ProductImage productImage) {
-		productImageRepository.delete(productImage);
+	public void deleteImg(Integer id) {
+		productImageRepository.deleteById(id);
 	}
 
 

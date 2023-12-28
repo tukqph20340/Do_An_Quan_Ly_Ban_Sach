@@ -14,6 +14,6 @@ public interface ProductImageService {
 
 	List<ProductImage> findById(int id);
 
-	void deleteImg(ProductImage productImage);
+	void deleteImg(Integer id);
 
 }

@@ -1,9 +1,10 @@
 package WebProject.WebProject.repository;
 
 import WebProject.WebProject.entity.Product;
+
 import WebProject.WebProject.entity.ProductCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
 
     List<ProductCategory> findByProduct(Product product);
+    List<ProductCategory> findByProductId(Integer id);
+    ProductCategory findByProductIdAndCategory_Id(Integer idsp, Integer id);
 }
