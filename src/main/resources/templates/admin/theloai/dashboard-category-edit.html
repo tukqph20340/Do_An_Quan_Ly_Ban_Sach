@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
     table {
@@ -187,12 +189,13 @@
                         <div class="col-lg-12">
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Tên Nhà Thể Loại</label>
-                                <input type="text" name="tenTheLoai" placeholder="Mời Nhập Tên Thể Loại" th:value="${detail.category_Name}">
+                                <input type="text" name="tenTheLoai" id="tenTheLoai" placeholder="Mời Nhập Tên Thể Loại" th:value="${detail.category_Name}">
+                                <input type="hidden" name="id" id="textID" th:value="${detail.id}" />
                                 <p style="color: red">[[${loi}]]</p>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Sửa Thể Loại
+                            <button type="button" onclick="showEditSweetAlert()" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Sửa Thể Loại
                             </button>
                         </div>
                     </form>
@@ -204,7 +207,79 @@
 </div>
 <!-- Wrapper / End -->
 
+<script th:inline="javascript">
+    function showEditSweetAlert() {
+        // Hiển thị SweetAlert2 khi nút được nhấn
+        Swal.fire({
+            title: 'Xác nhận',
+            text: 'Bạn có muốn sửa không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Thực hiện cuộc gọi Ajax khi người dùng chọn "Có"
+                sendEditAjaxRequest();
+            }
+        });
+    }
 
+    function sendEditAjaxRequest() {
+        // Lấy giá trị id từ trường ẩn
+        var idElement = document.getElementById('textID').value;
+        var id = idElement ? idElement.value : null;
+        console.log('textID:', idElement);
+
+        // Lấy giá trị coverType từ trường input
+        var category_Name = document.getElementById('tenTheLoai').value;
+        var coverType = category_Name ? category_Name.value : null;
+
+
+        // Kiểm tra xem id, coverType và description có tồn tại không trước khi thực hiện cuộc gọi Ajax
+        if (id !== null && coverType !== null) {
+            fetch('/sua-the-loai/' + idElement, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body:
+                    'tenTheLoai=' + encodeURIComponent(category_Name)
+            })
+                .then(data => {
+                    // Xử lý kết quả từ API
+                    handleEditApiResponse(data);
+                })
+                .catch(error => {
+                    // Xử lý lỗi từ máy chủ
+                    handleEditApiError(error);
+                });
+        } else {
+            console.error('Không thể đọc giá trị id, coverType hoặc description.');
+        }
+    }
+
+
+    function handleEditApiResponse(response) {
+        // Xử lý kết quả từ máy chủ sau khi sửa thành công
+        console.log(response);
+
+        // Hiển thị SweetAlert2 với thông báo thành công
+        Swal.fire('Thành công!', 'Dữ liệu đã được sửa.', 'success')
+            .then(() => {
+                // Chuyển hướng về trang bảng (table)
+                window.location.href = '/the-loai-admin';
+            });
+    }
+
+    function handleEditApiError(error) {
+        // Xử lý lỗi từ máy chủ
+        console.error('Lỗi khi gọi API:', error);
+
+        // Hiển thị SweetAlert2 với thông báo lỗi
+        Swal.fire('Lỗi!', 'Đã xảy ra lỗi khi sửa dữ liệu.', 'error');
+    }
+</script>
 <!-- Scripts
 ================================================== -->
 <script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
