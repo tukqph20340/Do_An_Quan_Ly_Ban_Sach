@@ -298,8 +298,6 @@ public class AdminController {
         model.addAttribute("listBookCover", bookCoverList);
         model.addAttribute("listProducer", producerList);
 
-        Cookie cookie = cookieService.create("idSP", String.valueOf(id), 1);
-
         String editProduct = (String) session.getAttribute("editProduct");
         model.addAttribute("editProduct", editProduct);
         session.setAttribute("editProduct", null);
