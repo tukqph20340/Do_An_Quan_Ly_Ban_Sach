@@ -70,7 +70,7 @@ public class BookCoverController {
     }
 
     @PostMapping("/add-bia-sach")
-    public String DashboardAddProducerHandel(Model model, @RequestParam("cover_type") String coverType,
+    public String DashboardAddProducerHandel(Model model,  @RequestParam("cover_type") String coverType,
                                              @RequestParam("desciption") String desciption) throws Exception {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
@@ -110,7 +110,8 @@ public class BookCoverController {
 
     @PostMapping("/sua-bia-sach/{id}")
     public String DashboardMyCategoryEditHandel(Model model, @PathVariable("id") int id
-            , @RequestParam("cover_type") String coverType, @RequestParam("desciption") String desciption) throws Exception {
+            ,@RequestParam("cover_type") String coverType,
+                                                @RequestParam("desciption") String desciption) throws Exception {
 
         if (coverType.trim().isEmpty()) {
             model.addAttribute("loi", "Tên không được để trống");

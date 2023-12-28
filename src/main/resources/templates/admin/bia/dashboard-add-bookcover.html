@@ -14,8 +14,9 @@
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<!--    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -26,17 +27,17 @@
     <header id="header-container" class="fixed fullwidth dashboard">
 
         <!-- Header -->
-        <div id="header" class="not-sticky">
+        <div id="header" class="not-sticky" style="background: white">
             <div class="container">
 
                 <!-- Left Side Content -->
                 <div class="left-side">
 
                     <!-- Logo -->
-                    <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
-                        <a href="index.html" class="dashboard-logo"><img
-                                src="images/logo2.png" alt=""></a>
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
                     </div>
 
                     <!-- Mobile Navigation -->
@@ -59,19 +60,8 @@
                     <div class="header-widget">
 
                         <!-- User Menu -->
-                        <div class="user-menu">
-                            <div class="user-name">
-                                Tài Khoản
-                            </div>
-                            <ul>
-                                <li><a href="/dashboard-myprofile"><i
-                                        class="sl sl-icon-settings"></i> Đổi Mật Khẩu</a></li>
-                            </ul>
-                        </div>
 
-                        <a th:href="@{/add-san-pham}"
-                           class="button border with-icon">Thêm Sản Phẩm<i
-                        ></i></a>
+
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -180,7 +170,7 @@
                                 <div class="row with-forms">
                                     <div class="col-md-12">
                                         <h5>Tên</h5>
-                                        <input name="cover_type" class="search-field" type="text"
+                                        <input name="cover_type" class="search-field" type="text" id="coverType"
                                                value="" placeholder="Tên" />
                                         <p style="color: red">[[${loi}]]</p>
                                     </div>
@@ -203,8 +193,8 @@
                                 <!-- Description -->
                                 <div class="form">
                                     <h5>Mô Tả Chi Tiết</h5>
-                                    <textarea name="desciption" class="WYSIWYG" cols="40"
-                                              rows="3" id="summary" spellcheck="true"
+                                    <textarea name="desciption" class="WYSIWYG" cols="40" id="desciption"
+                                              rows="3" spellcheck="true"
                                               placeholder="Mô Tả Chi Tiết"></textarea>
                                     <p style="color: red">[[${loi1}]]</p>
                                 </div>
@@ -212,7 +202,7 @@
                             <!-- Section / End -->
 
                             <!-- Section -->
-                            <button class="button preview" type="submit" onclick="thongbao();">
+                            <button class="button preview" type="button" th:onclick="showSweetAlert()" >
                                 Thêm Bìa Sách <i class="fa fa-arrow-circle-right"></i>
                             </button>
 
@@ -238,9 +228,75 @@
 <!-- Wrapper / End -->
 
 
-<!-- Scripts
-================================================== -->
+
+<script th:inline="javascript">
+    function showSweetAlert() {
+        // Hiển thị SweetAlert2 khi nút được nhấn
+        Swal.fire({
+            title: "Bạn có muốn thêm hay không?",
+            text: "",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Có,xác nhận thêm"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Thực hiện cuộc gọi Ajax khi người dùng chọn "Có"
+                sendAjaxRequest();
+            }
+        });
+    }
+
+    function sendAjaxRequest() {
+        // Lấy dữ liệu từ các trường input hoặc các nguồn khác tùy thuộc vào trang của bạn
+        var coverType = document.getElementById('coverType').value;
+        var description = document.getElementById('desciption').value;
+
+        // Thực hiện cuộc gọi Ajax
+        fetch('/add-bia-sach', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'cover_type=' + encodeURIComponent(coverType) +
+                '&desciption=' + encodeURIComponent(description)
+        })
+            .then(data => {
+                // Xử lý kết quả từ API
+                handleApiResponse(data);
+            })
+            .catch(error => {
+                // Xử lý lỗi từ máy chủ
+                handleApiError(error);
+            });
+    }
+
+    function handleApiResponse(response) {
+        // Xử lý kết quả từ máy chủ sau khi thêm thành công
+        console.log(response);
+
+        // Hiển thị SweetAlert2 với thông báo thành công
+        Swal.fire('Thành công!', 'Dữ liệu đã được thêm.', 'success')
+            .then(() => {
+                // Chuyển hướng về trang bảng (table)
+                window.location.href = '/bia-admin';
+            });
+    }
+
+    function handleApiError(error) {
+        // Xử lý lỗi từ máy chủ
+        console.error('Lỗi khi gọi API:', error);
+
+        // Hiển thị SweetAlert2 với thông báo lỗi
+        Swal.fire('Lỗi!', 'Đã xảy ra lỗi khi thêm dữ liệu.', 'error');
+    }
+</script>
+
+
+
 <script type="text/javascript" src="scripts/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript"
         src="scripts/jquery-migrate-3.3.2.min.js"></script>
 <script type="text/javascript" src="scripts/mmenu.min.js"></script>
