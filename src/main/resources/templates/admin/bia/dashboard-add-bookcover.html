@@ -252,6 +252,11 @@
         // Lấy dữ liệu từ các trường input hoặc các nguồn khác tùy thuộc vào trang của bạn
         var coverType = document.getElementById('coverType').value;
         var description = document.getElementById('desciption').value;
+        if (!coverType.trim() || !description.trim()) {
+            // Hiển thị SweetAlert2 với thông báo lỗi nếu trường nào đó trống
+            Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
+            return;
+        }
 
         // Thực hiện cuộc gọi Ajax
         fetch('/add-bia-sach', {

@@ -260,7 +260,12 @@
             var descriptionElement = document.getElementById('desciption').value;
             var description = descriptionElement ? descriptionElement.value : null;
 
-            // Kiểm tra xem id, coverType và description có tồn tại không trước khi thực hiện cuộc gọi Ajax
+            // Kiểm tra xem id, coverType và description có tồn tại không trước khi thực hiện cuộc gọi
+            if (!coverTypeElement.trim() || !descriptionElement.trim()) {
+                // Hiển thị SweetAlert2 với thông báo lỗi nếu trường nào đó trống
+                Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
+                return;
+            }
             if (id !== null && coverType !== null && description !== null) {
                 fetch('/sua-bia-sach/' + idElement, {
                     method: 'POST',

@@ -189,41 +189,42 @@
                         <div class="col-lg-12">
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Tên Nhà Xuất bản</label>
-                                <input type="text" name="tenNhaXuatBan" placeholder="Mời Nhập Tên Nhà Xuất Bản" th:value="${detail.nameProducer}">
+                                <input type="text" name="tenNhaXuatBan" id="tenNhaXuatBan" placeholder="Mời Nhập Tên Nhà Xuất Bản" th:value="${detail.nameProducer}">
+                                <input type="hidden" name="id" id="textID" th:value="${detail.id}" />
                                 <p style="color: red">[[${loi}]]</p>
                             </div>
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Số Điện Thoại</label>
-                                <input type="number" name="soDienThoai" placeholder="Mời Nhập Số Điện Thoại" th:value="${detail.phone}">
+                                <input type="number" name="soDienThoai" id="soDienThoai" placeholder="Mời Nhập Số Điện Thoại" th:value="${detail.phone}">
                                 <p style="color: red">[[${loi1}]] [[${loi5}]]</p>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Email</label>
-                                <input type="email" name="email" placeholder="Mời Nhập Email" th:value="${detail.email}">
+                                <input type="email" name="email" id="email" placeholder="Mời Nhập Email" th:value="${detail.email}">
                                 <p style="color: red">[[${loi2}]]</p>
                             </div>
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Địa Chỉ</label>
-                                <input type="text" name="diaChi" placeholder="Mời Nhập Địa Chỉ" th:value="${detail.address}">
+                                <input type="text" name="diaChi" id="diaChi" placeholder="Mời Nhập Địa Chỉ" th:value="${detail.address}">
                                 <p style="color: red">[[${loi3}]]</p>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Quốc Gia</label>
-                                <input type="text" name="quocGia" placeholder="Mời Nhập Quốc Gia" th:value="${detail.nation}">
+                                <input type="text" name="quocGia" id="quocGia" placeholder="Mời Nhập Quốc Gia" th:value="${detail.nation}">
                                 <p style="color: red">[[${loi4}]]</p>
                             </div>
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Mô Tả</label>
-                                <input type="text" name="moTa" placeholder="Mời Nhập Mô Tả" th:value="${detail.description}">
+                                <input type="text" name="moTa" id="moTa" placeholder="Mời Nhập Mô Tả" th:value="${detail.description}">
                                 <p style="color: red">[[${loi6}]]</p>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Sửa Nhà Xuất
+                            <button type="button" onclick="showEditSweetAlert()" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Sửa Nhà Xuất
                                 Bản
                             </button>
                         </div>
@@ -236,6 +237,113 @@
 </div>
 <!-- Wrapper / End -->
 
+<script th:inline="javascript">
+    function showEditSweetAlert() {
+        // Hiển thị SweetAlert2 khi nút được nhấn
+        Swal.fire({
+            title: 'Xác nhận',
+            text: 'Bạn có muốn sửa không?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Có',
+            cancelButtonText: 'Không'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Thực hiện cuộc gọi Ajax khi người dùng chọn "Có"
+                sendEditAjaxRequest();
+            }
+        });
+    }
+
+    function sendEditAjaxRequest() {
+        // Lấy giá trị id từ trường ẩn
+        var idElement = document.getElementById('textID').value;
+        var id = idElement ? idElement.value : null;
+        console.log('textID:', idElement);
+
+        // Lấy giá trị coverType từ trường input
+        var nameProducer = document.getElementById('tenNhaXuatBan').value;
+        var coverType = nameProducer ? nameProducer.value : null;
+
+        // Lấy giá trị description từ trường input
+        var phone = document.getElementById('soDienThoai').value;
+        var description = phone ? phone.value : null;
+
+        var email = document.getElementById('email').value;
+        var description = email ? email.value : null;
+
+        var address = document.getElementById('diaChi').value;
+        var description = address ? address.value : null;
+
+        var quocGia = document.getElementById('quocGia').value;
+        var description = quocGia ? quocGia.value : null;
+
+        var moTa = document.getElementById('moTa').value;
+        var description = moTa ? moTa.value : null;
+
+        // Kiểm tra xem id, coverType và description có tồn tại không trước khi thực hiện cuộc gọi
+        if (
+            nameProducer.trim() === '' ||
+            phone.trim().length === '' ||
+            email.trim() === '' ||
+            address.trim() === '' ||
+            quocGia.trim() === '' ||
+            moTa.trim() === ''
+        ) {
+            Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
+            return;
+        }
+        if(phone.trim().length !==10){
+            Swal.fire('Lỗi!', 'Số điện thoại không đúng!', 'error');
+            return;
+        }
+        if (id !== null && coverType !== null && description !== null) {
+            fetch('/sua-nha-san-xuat/' + idElement, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'tenNhaXuatBan=' + encodeURIComponent(nameProducer) +
+                    '&soDienThoai=' + encodeURIComponent(phone) +
+                    '&email=' + encodeURIComponent(email) +
+                    '&diaChi=' + encodeURIComponent(address) +
+                    '&quocGia=' + encodeURIComponent(quocGia) +
+                    '&moTa=' + encodeURIComponent(moTa)
+            })
+                .then(data => {
+                    // Xử lý kết quả từ API
+                    handleEditApiResponse(data);
+                })
+                .catch(error => {
+                    // Xử lý lỗi từ máy chủ
+                    handleEditApiError(error);
+                });
+        } else {
+            console.error('Không thể đọc giá trị id, coverType hoặc description.');
+        }
+    }
+
+
+    function handleEditApiResponse(response) {
+        // Xử lý kết quả từ máy chủ sau khi sửa thành công
+        console.log(response);
+
+        // Hiển thị SweetAlert2 với thông báo thành công
+        Swal.fire('Thành công!', 'Dữ liệu đã được sửa.', 'success')
+            .then(() => {
+                // Chuyển hướng về trang bảng (table)
+                window.location.href = '/nha-san-xuat-admin';
+            });
+    }
+
+    function handleEditApiError(error) {
+        // Xử lý lỗi từ máy chủ
+        console.error('Lỗi khi gọi API:', error);
+
+        // Hiển thị SweetAlert2 với thông báo lỗi
+        Swal.fire('Lỗi!', 'Đã xảy ra lỗi khi sửa dữ liệu.', 'error');
+    }
+</script>
 
 <!-- Scripts
 ================================================== -->
