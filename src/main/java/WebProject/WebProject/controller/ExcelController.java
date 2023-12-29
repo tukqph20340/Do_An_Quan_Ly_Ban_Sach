@@ -6,6 +6,7 @@ import WebProject.WebProject.service.ExcelBiaSach;
 import WebProject.WebProject.service.ExcelCategory;
 import WebProject.WebProject.service.ExcelKhuyenMai;
 import WebProject.WebProject.service.ExcelNhaXuatBan;
+import WebProject.WebProject.service.ExcelSanPham;
 import WebProject.WebProject.service.ExcelTacGia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,9 @@ public class ExcelController{
     private ExcelNhaXuatBan excelNhaXuatBan;
 
     @Autowired
+    private ExcelSanPham excelSanPham;
+
+    @Autowired
     private ExcelBiaSach excelBiaSach;
 
     @Autowired
@@ -32,6 +36,21 @@ public class ExcelController{
 
     @Autowired
     private ExcelKhuyenMai excelKhuyenMai;
+
+
+
+    @GetMapping("/xuat-file-excel-san-pham")
+    public void generateExcelReport0(HttpServletResponse response) throws Exception{
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment;filename=San Pham.xls";
+
+        response.setHeader(headerKey, headerValue);
+
+        excelSanPham.generateExcel(response);
+
+        response.flushBuffer();
+    }
 
 
     @GetMapping("/xuat-file-excel-nha-san-xuat")

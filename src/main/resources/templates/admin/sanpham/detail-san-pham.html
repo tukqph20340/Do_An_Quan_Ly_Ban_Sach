@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Admin Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/listeo/css/style.css">
+    <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
+    <link rel="icon" href="/img/logo-3.png">
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        color: #333;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        text-align: left;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    table th {
+        background-color: #ff9800;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #f2f2f2;
+    }
+
+    table tr:hover td {
+        background-color: #ffedcc;
+    }
+
+    table td {
+        background-color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        font-weight: bold;
+    }
+</style>
+<body>
+<div id="wrapper">
+
+    <!-- Header Container
+================================================== -->
+    <header id="header-container" class="fixed fullwidth dashboard">
+
+        <!-- Header -->
+        <div id="header" class="not-sticky" style="background: white">
+            <div class="container">
+
+                <!-- Left Side Content -->
+                <div class="left-side">
+
+                    <!-- Logo -->
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                    </div>
+
+                    <!-- Mobile Navigation -->
+                    <div class="mmenu-trigger">
+                        <button class="hamburger hamburger--collapse" type="button">
+								<span class="hamburger-box"> <span
+                                        class="hamburger-inner"></span>
+								</span>
+                        </button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- Main Navigation / End -->
+
+                </div>
+                <!-- Left Side Content / End -->
+
+                <!-- Right Side Content / End -->
+                <div class="right-side">
+                    <!-- Header Widget -->
+                    <div class="header-widget">
+
+                        <!-- User Menu -->
+
+
+                    </div>
+                    <!-- Header Widget / End -->
+                </div>
+                <!-- Right Side Content / End -->
+            </div>
+        </div>
+        <!-- Header / End -->
+
+    </header>
+    <div class="clearfix"></div>
+    <!-- Header Container / End -->
+
+
+    <!-- Dashboard -->
+    <div id="dashboard">
+
+        <!-- Navigation
+================================================== -->
+
+        <!-- Responsive Navigation Trigger -->
+
+
+        <div class="dashboard-nav" style="background: white">
+            <div class="dashboard-nav-inner">
+                <ul data-submenu-title="Trang Chủ">
+                    <li class="active"><a href="/home-admin"><i class="sl sl-icon-settings"></i> <span
+                            style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
+                    <li><a href="/thong-ke"><i class="sl sl-icon-wallet"></i> <span
+                            style="font-weight: bold; color: black;">Thông Kê</span></a></li>
+                    <li><a href="/quan-ly-don-hang"><i class="fa fa-calendar-check-o"></i> <span
+                            style="font-weight: bold; color: black;">Quản Lý Hóa Đơn</span></a></li>
+                    <ul data-submenu-title="Sản Phẩm">
+                        <li><a href="#"><i class="sl sl-icon-layers"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Sản Phẩm</span></a>
+                            <ul id="sub">
+                                <li><a href="/san-pham-admin"><span
+                                        style="font-weight: bold; color: black;">Sản Phẩm</span></a></li>
+                                <li><a href="/tac-gia-admin"><span
+                                        style="font-weight: bold; color: black;">Tác Giả</span></a></li>
+                                <li><a href="/nha-san-xuat-admin"><span style="font-weight: bold; color: black;">Nhà Xuất Bản</span></a>
+                                </li>
+                                <li><a href="/bia-admin"><span style="font-weight: bold; color: black;">Bìa Sách</span></a>
+                                </li>
+                                <li><a href="/the-loai-admin"><span style="font-weight: bold; color: black;">Thể Loại Sách</span></a>
+                                </li>
+                                <li><a href="/khuyen-mai/admin"><span style="font-weight: bold; color: black;">Khuyến mãi</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul data-submenu-title="Người Dùng">
+                        <li><a href="/nguoi-dung-admin"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Tài Khoản</span></a></li>
+                        <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
+                                style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
+                    </ul>
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
+                        <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
+                        <li><a href="/home"><i class="im im-icon-Home"></i> <span
+                                style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+        <!-- Navigation / End -->
+
+
+        <!-- Content
+================================================== -->
+        <div class="dashboard-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-body" style="margin-top:15px ;background: white">
+                        <table class="table table-bordered table-striped table-bordered"
+                               style="text-align: center;vertical-align: middle;">
+                            <tr>
+                                <th>Tên:</th>
+                                <td th:text="${product.product_Name}"></td>
+                            </tr>
+                            <tr th:if="${c!=null}" style="text-align: center">
+                                <th>Ảnh:</th>
+                                <td >
+                                    <div   style="width: 30%;">
+                                        <!-- Kết hợp hình ảnh và nội dung cho mội phần tử trong slideshow-->
+                                        <th:block th:each="y: ${productImages}">
+                                            <div >
+                                                <img th:src="${y.url_Image}" style="width: 100%">
+                                            </div>
+                                        </th:block>
+                                        <!-- Nút điều khiển mũi tên-->
+                                        <a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next"
+                                                                                          onclick="plusSlides(1)">❯</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Giá:</th>
+                                <td th:text="${product.price}"></td>
+                            </tr>
+                            <tr>
+                                <th>Số Lượng:</th>
+                                <td th:text="${product.quantity}"></td>
+                            </tr>
+                            <tr th:if="${b!=null}">
+                                <th>Tác Giả</th>
+                                <td>
+                                                    <span th:each="author : ${product.author}">
+                                                        <span th:text="${author.nameAuthor}"></span>
+                                                        <!-- Đặt dấu phẩy nếu không phải là tác giả cuối cùng trong danh sách -->
+                                                        <span th:unless="${#last}">, </span>
+                                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Loại Bìa:</th>
+                                <td th:text="${product.bookCover.cover_type}"></td>
+                            </tr>
+                            <tr>
+                                <th>Kích Thước:</th>
+                                <td th:text="${product.bookSize}"></td>
+                            </tr>
+                            <tr>
+                                <th>Nhà Xuất Bản:</th>
+                                <td th:text="${product.producer.nameProducer}"></td>
+                            </tr>
+                            <tr>
+                                <th>Ngôn Ngữ:</th>
+                                <td th:text="${product.language}"></td>
+                            </tr>
+                            <tr th:if="${a!=null}">
+                                <th>Thể Loại:</th>
+                                <td>
+                                                <span th:each="category : ${product.category}">
+                                                        <span th:text="${category.category_Name}"></span>
+                                                    <!-- Đặt dấu phẩy nếu không phải là tác giả cuối cùng trong danh sách -->
+                                                        <span th:unless="${#last}">, </span>
+                                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Năm Xuất Bản:</th>
+                                <td th:text="${product.yearPublication}"></td>
+                            </tr>
+                            <tr>
+                                <th>Số Trang:</th>
+                                <td th:text="${product.pageNumber}"></td>
+                            </tr>
+                        </table>
+                        <button style="margin-left: 1045px;margin-top: 0px;" class="btn btn-primary"><a
+                                style="font-size: 20px;color: white" th:href="@{/san-pham-admin}">Quay Lại</a>
+                        </button>
+                    </div>
+
+                    <!-- Content / End -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Dashboard / End -->
+
+
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+        src="/scripts/jquery-migrate-3.3.2.min.js"></script>
+<script type="text/javascript" src="/scripts/mmenu.min.js"></script>
+<script type="text/javascript" src="/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/scripts/custom.js"></script>
+
+<!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
+<script src="/scripts/moment.min.js"></script>
+<script src="/scripts/daterangepicker.js"></script>
+
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        /* dots[slideIndex - 1].className += " active"; */
+    }
+</script>
+<script>
+    jQuery(document).ready(function () {
+        ImgUpload();
+    });
+
+    function ImgUpload() {
+        var imgWrap = "";
+        var imgArray = [];
+
+        $('.upload__inputfile')
+            .each(
+                function () {
+                    $(this)
+                        .on(
+                            'change',
+                            function (e) {
+                                imgWrap = $(this)
+                                    .closest(
+                                        '.upload__box')
+                                    .find(
+                                        '.upload__img-wrap');
+                                var maxLength = $(this)
+                                    .attr(
+                                        'data-max_length');
+
+                                var files = e.target.files;
+                                var filesArr = Array.prototype.slice
+                                    .call(files);
+                                var iterator = 0;
+                                filesArr
+                                    .forEach(function (
+                                        f, index) {
+
+                                        if (!f.type
+                                            .match('image.*')) {
+                                            return;
+                                        }
+
+                                        if (imgArray.length > maxLength) {
+                                            return false
+                                        } else {
+                                            var len = 0;
+                                            for (var i = 0; i < imgArray.length; i++) {
+                                                if (imgArray[i] !== undefined) {
+                                                    len++;
+                                                }
+                                            }
+                                            if (len > maxLength) {
+                                                return false;
+                                            } else {
+                                                imgArray
+                                                    .push(f);
+
+                                                var reader = new FileReader();
+                                                reader.onload = function (
+                                                    e) {
+                                                    var html = "<div class='upload__img-box'><div style='background-image: url("
+                                                        + e.target.result
+                                                        + ")' data-number='"
+                                                        + $(".upload__img-close").length
+                                                        + "' data-file='"
+                                                        + f.name
+                                                        + "' class='img-bg'><div class='upload__img-close'></div></div></div>";
+                                                    imgWrap
+                                                        .append(html);
+                                                    iterator++;
+                                                }
+                                                reader
+                                                    .readAsDataURL(f);
+                                            }
+                                        }
+                                    });
+                            });
+                });
+
+        $('body').on('click', ".upload__img-close", function (e) {
+            var file = $(this).parent().data("file");
+            for (var i = 0; i < imgArray.length; i++) {
+                if (imgArray[i].name === file) {
+                    imgArray.splice(i, 1);
+                    break;
+                }
+            }
+            $(this).parent().parent().remove();
+        });
+    }
+</script>
+
+</body>
+</html>
+

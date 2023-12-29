@@ -71,7 +71,7 @@ public class Product {
 	private List<Author> author;
 
 	@ManyToOne
-	@JoinColumn(name = "producer_id")
+	@JoinColumn(name = "publisher_id")
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
 	private Producer producer;
