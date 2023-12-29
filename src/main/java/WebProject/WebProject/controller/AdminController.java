@@ -276,8 +276,7 @@ public class AdminController {
 
     @GetMapping("/san-pham/sua/{id}")
     public String DashboardMyProductEditView(@PathVariable int id, Model model) {
-
-
+Cookie cookie =cookieService.create("idSP",String.valueOf(id),1);
 
         List<Category> listCategories = categoryService.getAll();
         List<Author> authorList = authorService.getAllAuthor();
@@ -288,10 +287,6 @@ public class AdminController {
         Product product = productService.getProductById(id);
 
         // Kiểm tra xem sản phẩm có tồn tại không
-        if (product == null) {
-            // Xử lý khi sản phẩm không tồn tại, có thể chuyển hướng hoặc thông báo lỗi
-            return "redirect:/error-page";
-        }
 
         // Lấy danh sách ProductCategory dựa trên sản phẩm
         List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
@@ -300,23 +295,22 @@ public class AdminController {
         List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
 
-
-        if (listProductCategories.size()==1){
-            model.addAttribute("a",null);
-        }else {
-            model.addAttribute("a","a");
+        if (listProductCategories.size() == 1) {
+            model.addAttribute("a", null);
+        } else {
+            model.addAttribute("a", "a");
 
         }
 
-        if (productImages.size()==1){
-            model.addAttribute("c",null);
-        }else {
+        if (productImages.size() == 1) {
+            model.addAttribute("c", null);
+        } else {
             model.addAttribute("c", "a");
         }
 
-        if (productAuthorList.size()==1){
-            model.addAttribute("b",null);
-        }else {
+        if (productAuthorList.size() == 1) {
+            model.addAttribute("b", null);
+        } else {
             model.addAttribute("b", "a");
         }
 
@@ -334,6 +328,59 @@ public class AdminController {
         model.addAttribute("editProduct", editProduct);
         session.setAttribute("editProduct", null);
         return "/admin/sanpham/dashboard-my-products-edit";
+
+    }
+
+    @GetMapping("/san-pham-all/{id}")
+    public String DashboardMyProductEditViewALL(@PathVariable int id, Model model) {
+
+
+        // Lấy thông tin sản phẩm
+        Product product = productService.getProductById(id);
+
+        // Kiểm tra xem sản phẩm có tồn tại không
+        if (product == null) {
+            // Xử lý khi sản phẩm không tồn tại, có thể chuyển hướng hoặc thông báo lỗi
+            return "redirect:/error-page";
+        }
+
+        // Lấy danh sách ProductCategory dựa trên sản phẩm
+        List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
+
+        List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
+        List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
+
+
+        if (listProductCategories.isEmpty()) {
+            model.addAttribute("a", null);
+        } else {
+            model.addAttribute("a", "a");
+
+        }
+
+        if (productImages.isEmpty()) {
+            model.addAttribute("c", null);
+        } else {
+            model.addAttribute("c", "a");
+        }
+
+        if (productAuthorList.isEmpty()) {
+            model.addAttribute("b", null);
+        } else {
+            model.addAttribute("b", "a");
+        }
+
+        model.addAttribute("productImages", productImages);
+
+        model.addAttribute("productAuthorList", productAuthorList);
+        model.addAttribute("listProductCategories", listProductCategories);
+        model.addAttribute("product", product);
+
+
+        String editProduct = (String) session.getAttribute("editProduct");
+        model.addAttribute("editProduct", editProduct);
+        session.setAttribute("editProduct", null);
+        return "/admin/sanpham/detail-san-pham.html";
 
     }
 
@@ -378,22 +425,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -430,22 +477,22 @@ public class AdminController {
 
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
                 model.addAttribute("productImages", productImages);
@@ -482,22 +529,22 @@ public class AdminController {
 
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
                 model.addAttribute("productImages", productImages);
@@ -534,22 +581,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -588,22 +635,22 @@ public class AdminController {
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -642,22 +689,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -696,22 +743,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -750,22 +797,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -804,22 +851,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -857,22 +904,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -912,22 +959,22 @@ public class AdminController {
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -968,22 +1015,22 @@ public class AdminController {
                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                if (listProductCategories.size()==1){
-                    model.addAttribute("a",null);
-                }else {
-                    model.addAttribute("a","a");
+                if (listProductCategories.size() == 1) {
+                    model.addAttribute("a", null);
+                } else {
+                    model.addAttribute("a", "a");
 
                 }
 
-                if (productImages.size()==1){
-                    model.addAttribute("c",null);
-                }else {
+                if (productImages.size() == 1) {
+                    model.addAttribute("c", null);
+                } else {
                     model.addAttribute("c", "a");
                 }
 
-                if (productAuthorList.size()==1){
-                    model.addAttribute("b",null);
-                }else {
+                if (productAuthorList.size() == 1) {
+                    model.addAttribute("b", null);
+                } else {
                     model.addAttribute("b", "a");
                 }
 
@@ -1030,78 +1077,34 @@ public class AdminController {
                 newPro.setLanguage(language);
                 newPro.setPageNumber(pageNumber);
                 newPro.setYearPublication(Integer.valueOf(yearPublication));
+
+                Producer producer1 = new Producer();
+                producer1.setId(producer);
+                newPro.setProducer(producer1);
+
+
+                BookCover bookCover1 = new BookCover();
+                bookCover1.setId(bookCover);
+
+                newPro.setBookCover(bookCover1);
+
+
                 productService.saveProduct(newPro);
-                List<Product> listProducts = productService.getAllProduct();
-                Product newPro1 = listProducts.get(listProducts.size() - 1);
 
+                Product newPro1 = productService.getProductById(Integer.valueOf(id));
 
-
+                String[] author = request.getParameterValues("author");
                 String[] categories = request.getParameterValues("category");
 
                 if (categories == null || categories.length == 0) {
-                    String[] author = request.getParameterValues("author");
                     if (author == null || author.length == 0) {
                         return "redirect:/san-pham-admin";
                     } else {
 //                 Lặp qua danh sách tác giả và thêm vào bảng product_author
+                        List<ProductAuthor> list = productAuthorRepository.findByProductId(id);
                         for (String a : author) {
-                            List<ProductAuthor> list = productAuthorRepository.findByProductId(id);
-                            if (list.isEmpty()){
-                                model.addAttribute("loi13", "Tác Giả Không Được Để Trống");
-
-                                List<Category> listCategories = categoryService.getAll();
-                                List<Author> authorList = authorService.getAllAuthor();
-                                List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                                List<Producer> producerList = producerService.getAllProducer();
-
-                                // Lấy thông tin sản phẩm
-                                Product product = productService.getProductById(id);
-
-                                // Kiểm tra xem sản phẩm có tồn tại không
-
-
-                                // Lấy danh sách ProductCategory dựa trên sản phẩm
-                                List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
-
-                                List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
-                                List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
-
-                                if (listProductCategories.size()==1){
-                                    model.addAttribute("a",null);
-                                }else {
-                                    model.addAttribute("a","a");
-
-                                }
-
-                                if (productImages.size()==1){
-                                    model.addAttribute("c",null);
-                                }else {
-                                    model.addAttribute("c", "a");
-                                }
-
-                                if (productAuthorList.size()==1){
-                                    model.addAttribute("b",null);
-                                }else {
-                                    model.addAttribute("b", "a");
-                                }
-
-                                model.addAttribute("productImages", productImages);
-
-                                model.addAttribute("productAuthorList", productAuthorList);
-                                model.addAttribute("listProductCategories", listProductCategories);
-                                model.addAttribute("product", product);
-                                model.addAttribute("listCategories", listCategories);
-                                model.addAttribute("listAuthor", authorList);
-                                model.addAttribute("listBookCover", bookCoverList);
-                                model.addAttribute("listProducer", producerList);
-
-                                String editProduct = (String) session.getAttribute("editProduct");
-                                model.addAttribute("editProduct", editProduct);
-                                session.setAttribute("editProduct", null);
-                                return "/admin/sanpham/dashboard-my-products-edit";
-                            }else {
                             for (ProductAuthor lista : list) {
-                                if (lista.getAuthor().getId()==Integer.valueOf(a)) {
+                                if (lista.getAuthor().getId() == Integer.valueOf(a)) {
                                     Author author1 = authorService.getAllAuthorById(Integer.valueOf(a));
                                     model.addAttribute("loiTacGia", author1.getNameAuthor() + "  Đã Tồn Tại");
                                     List<Category> listCategories = categoryService.getAll();
@@ -1121,22 +1124,22 @@ public class AdminController {
                                     List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                                     List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                                    if (listProductCategories.size()==1){
-                                        model.addAttribute("a",null);
-                                    }else {
-                                        model.addAttribute("a","a");
+                                    if (listProductCategories.size() == 1) {
+                                        model.addAttribute("a", null);
+                                    } else {
+                                        model.addAttribute("a", "a");
 
                                     }
 
-                                    if (productImages.size()==1){
-                                        model.addAttribute("c",null);
-                                    }else {
+                                    if (productImages.size() == 1) {
+                                        model.addAttribute("c", null);
+                                    } else {
                                         model.addAttribute("c", "a");
                                     }
 
-                                    if (productAuthorList.size()==1){
-                                        model.addAttribute("b",null);
-                                    }else {
+                                    if (productAuthorList.size() == 1) {
+                                        model.addAttribute("b", null);
+                                    } else {
                                         model.addAttribute("b", "a");
                                     }
 
@@ -1156,74 +1159,21 @@ public class AdminController {
                                     model.addAttribute("editProduct", editProduct);
                                     session.setAttribute("editProduct", null);
                                     return "/admin/sanpham/dashboard-my-products-edit";
-                                } else {
-                                    ProductAuthor productAuthor = new ProductAuthor();
-                                    productAuthor.setProduct(newPro1);
-                                    Author author1 = authorService.getAllAuthorById(Integer.valueOf(a));
-                                    productAuthor.setAuthor(author1);
-                                    productAuthorRepository.save(productAuthor);
                                 }
-                            }}
+
+                            }
+                            ProductAuthor productAuthor = new ProductAuthor();
+                            productAuthor.setProduct(newPro1);
+                            Author author1 = authorService.getAllAuthorById(Integer.valueOf(a));
+                            productAuthor.setAuthor(author1);
+                            productAuthorRepository.save(productAuthor);
+
                         }
                     }
-                } else {
+                }
+                else {
+                    List<ProductCategory> list = productCategoryRepository.findByProductId(id);
                     for (String category : categories) {
-                        List<ProductCategory> list = productCategoryRepository.findByProductId(id);
-                        if (list.isEmpty()){
-                            model.addAttribute("loi12", "Thể Loại Không Được Để Trống");
-
-                            List<Category> listCategories = categoryService.getAll();
-                            List<Author> authorList = authorService.getAllAuthor();
-                            List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                            List<Producer> producerList = producerService.getAllProducer();
-
-                            // Lấy thông tin sản phẩm
-                            Product product = productService.getProductById(id);
-
-                            // Kiểm tra xem sản phẩm có tồn tại không
-
-
-                            // Lấy danh sách ProductCategory dựa trên sản phẩm
-                            List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
-
-                            List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
-                            List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
-
-                            if (listProductCategories.size()==1){
-                                model.addAttribute("a",null);
-                            }else {
-                                model.addAttribute("a","a");
-
-                            }
-
-                            if (productImages.size()==1){
-                                model.addAttribute("c",null);
-                            }else {
-                                model.addAttribute("c", "a");
-                            }
-
-                            if (productAuthorList.size()==1){
-                                model.addAttribute("b",null);
-                            }else {
-                                model.addAttribute("b", "a");
-                            }
-
-                            model.addAttribute("productImages", productImages);
-
-                            model.addAttribute("productAuthorList", productAuthorList);
-                            model.addAttribute("listProductCategories", listProductCategories);
-                            model.addAttribute("product", product);
-                            model.addAttribute("listCategories", listCategories);
-                            model.addAttribute("listAuthor", authorList);
-                            model.addAttribute("listBookCover", bookCoverList);
-                            model.addAttribute("listProducer", producerList);
-
-                            String editProduct = (String) session.getAttribute("editProduct");
-                            model.addAttribute("editProduct", editProduct);
-                            session.setAttribute("editProduct", null);
-                            return "/admin/sanpham/dashboard-my-products-edit";
-
-                        }else {
                         for (ProductCategory lista : list) {
                             if (lista.getCategory().getId() == Integer.valueOf(category)) {
                                 Category author1 = categoryService.getAllCategoryById(Integer.valueOf(category));
@@ -1245,22 +1195,22 @@ public class AdminController {
                                 List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                                 List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                                if (listProductCategories.size()==1){
-                                    model.addAttribute("a",null);
-                                }else {
-                                    model.addAttribute("a","a");
+                                if (listProductCategories.size() == 1) {
+                                    model.addAttribute("a", null);
+                                } else {
+                                    model.addAttribute("a", "a");
 
                                 }
 
-                                if (productImages.size()==1){
-                                    model.addAttribute("c",null);
-                                }else {
+                                if (productImages.size() == 1) {
+                                    model.addAttribute("c", null);
+                                } else {
                                     model.addAttribute("c", "a");
                                 }
 
-                                if (productAuthorList.size()==1){
-                                    model.addAttribute("b",null);
-                                }else {
+                                if (productAuthorList.size() == 1) {
+                                    model.addAttribute("b", null);
+                                } else {
                                     model.addAttribute("b", "a");
                                 }
 
@@ -1280,79 +1230,24 @@ public class AdminController {
                                 model.addAttribute("editProduct", editProduct);
                                 session.setAttribute("editProduct", null);
                                 return "/admin/sanpham/dashboard-my-products-edit";
-                            } else {
+                            }
+                            else {
                                 ProductCategory productCategory = new ProductCategory();
                                 productCategory.setProduct(newPro1);
                                 Category category1 = categoryService.getAllCategoryById(Integer.valueOf(category));
                                 productCategory.setCategory(category1);
                                 productCategoryRepository.save(productCategory);
                             }
-                        }}
-                    }
+                        }
 
-                    String[] author = request.getParameterValues("author");
-                    if (author == null || author.length == 0) {
-                        return "redirect:/san-pham-admin";
-                    } else {
+                        if (author == null || author.length == 0) {
+                            return "redirect:/san-pham-admin";
+                        } else {
 //                 Lặp qua danh sách tác giả và thêm vào bảng product_author
-                        for (String a : author) {
-                            List<ProductAuthor> list = productAuthorRepository.findByProductId(id);
-                            if (list.isEmpty()){
-                                model.addAttribute("loi13", "Tác Giả Không Được Để Trống");
-
-                                List<Category> listCategories = categoryService.getAll();
-                                List<Author> authorList = authorService.getAllAuthor();
-                                List<BookCover> bookCoverList = bookCoverService.getAllBookCover();
-                                List<Producer> producerList = producerService.getAllProducer();
-
-                                // Lấy thông tin sản phẩm
-                                Product product = productService.getProductById(id);
-
-                                // Kiểm tra xem sản phẩm có tồn tại không
-
-
-                                // Lấy danh sách ProductCategory dựa trên sản phẩm
-                                List<ProductCategory> listProductCategories = productCategoryRepository.findByProduct(product);
-
-                                List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
-                                List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
-
-                                if (listProductCategories.size()==1){
-                                    model.addAttribute("a",null);
-                                }else {
-                                    model.addAttribute("a","a");
-
-                                }
-
-                                if (productImages.size()==1){
-                                    model.addAttribute("c",null);
-                                }else {
-                                    model.addAttribute("c", "a");
-                                }
-
-                                if (productAuthorList.size()==1){
-                                    model.addAttribute("b",null);
-                                }else {
-                                    model.addAttribute("b", "a");
-                                }
-
-                                model.addAttribute("productImages", productImages);
-
-                                model.addAttribute("productAuthorList", productAuthorList);
-                                model.addAttribute("listProductCategories", listProductCategories);
-                                model.addAttribute("product", product);
-                                model.addAttribute("listCategories", listCategories);
-                                model.addAttribute("listAuthor", authorList);
-                                model.addAttribute("listBookCover", bookCoverList);
-                                model.addAttribute("listProducer", producerList);
-
-                                String editProduct = (String) session.getAttribute("editProduct");
-                                model.addAttribute("editProduct", editProduct);
-                                session.setAttribute("editProduct", null);
-                                return "/admin/sanpham/dashboard-my-products-edit";
-                            }else {
-                                for (ProductAuthor lista : list) {
-                                    if (lista.getAuthor().getId()==Integer.valueOf(a)) {
+                            List<ProductAuthor> listTG = productAuthorRepository.findByProductId(id);
+                            for (String a : author) {
+                                for (ProductAuthor lista : listTG) {
+                                    if (lista.getAuthor().getId() == Integer.valueOf(a)) {
                                         Author author1 = authorService.getAllAuthorById(Integer.valueOf(a));
                                         model.addAttribute("loiTacGia", author1.getNameAuthor() + "  Đã Tồn Tại");
                                         List<Category> listCategories = categoryService.getAll();
@@ -1372,22 +1267,22 @@ public class AdminController {
                                         List<ProductAuthor> productAuthorList = productAuthorRepository.findByProductId(product.getId());
                                         List<ProductImage> productImages = productImageService.finalIdSP(product.getId());
 
-                                        if (listProductCategories.size()==1){
-                                            model.addAttribute("a",null);
-                                        }else {
-                                            model.addAttribute("a","a");
+                                        if (listProductCategories.size() == 1) {
+                                            model.addAttribute("a", null);
+                                        } else {
+                                            model.addAttribute("a", "a");
 
                                         }
 
-                                        if (productImages.size()==1){
-                                            model.addAttribute("c",null);
-                                        }else {
+                                        if (productImages.size() == 1) {
+                                            model.addAttribute("c", null);
+                                        } else {
                                             model.addAttribute("c", "a");
                                         }
 
-                                        if (productAuthorList.size()==1){
-                                            model.addAttribute("b",null);
-                                        }else {
+                                        if (productAuthorList.size() == 1) {
+                                            model.addAttribute("b", null);
+                                        } else {
                                             model.addAttribute("b", "a");
                                         }
 
@@ -1407,29 +1302,29 @@ public class AdminController {
                                         model.addAttribute("editProduct", editProduct);
                                         session.setAttribute("editProduct", null);
                                         return "/admin/sanpham/dashboard-my-products-edit";
-                                    } else {
-                                        ProductAuthor productAuthor = new ProductAuthor();
-                                        productAuthor.setProduct(newPro1);
-                                        Author author1 = authorService.getAllAuthorById(Integer.valueOf(a));
-                                        productAuthor.setAuthor(author1);
-                                        productAuthorRepository.save(productAuthor);
                                     }
-                                }}
+
+                                }
+                                ProductAuthor productAuthor = new ProductAuthor();
+                                productAuthor.setProduct(newPro1);
+                                Author author1 = authorService.getAllAuthorById(Integer.valueOf(a));
+                                productAuthor.setAuthor(author1);
+                                productAuthorRepository.save(productAuthor);
+
+                            }
                         }
                     }
 
                 }
+                    for (MultipartFile y : listImage) {
+                        String urlImg = cloudinaryService.uploadFile(y);
+                        ProductImage img = new ProductImage();
+                        img.setProduct(newPro1);
+                        img.setUrl_Image(urlImg);
+                        productImageService.save(img);
+                    }
+                    return "redirect:/san-pham-admin";
 
-
-
-                for (MultipartFile y : listImage) {
-                    String urlImg = cloudinaryService.uploadFile(y);
-                    ProductImage img = new ProductImage();
-                    img.setProduct(newPro1);
-                    img.setUrl_Image(urlImg);
-                    productImageService.save(img);
-                }
-                return "redirect:/san-pham-admin";
             }
         } catch (Exception e) {
             return "redirect:/san-pham-admin";
@@ -1444,21 +1339,18 @@ public class AdminController {
     }
 
     @GetMapping("/tac-gia/delete/{id}")
-    public String Deleteaue(@PathVariable long id,Model model, HttpServletRequest request) {
+    public String Deleteaue(@PathVariable long id, Model model, HttpServletRequest request) {
         Cookie cookie = cookieService.read("idSP");
-        ProductAuthor productAuthor = productAuthorRepository.findByProductIdAndAuthor_Id(Integer.valueOf(cookie.getValue()), Integer.valueOf((int) id));
 
-        productAuthorRepository.delete(productAuthor);
+        productAuthorRepository.deleteById(id);
         return "redirect:/san-pham/sua/" + cookie.getValue();
     }
 
     @GetMapping("/the-loai/delete/{id}")
-    public String Deletethe(@PathVariable long id,Model model, HttpServletRequest request) {
+    public String Deletethe(@PathVariable int id, Model model, HttpServletRequest request) {
         Cookie cookie = cookieService.read("idSP");
 
-        ProductCategory productCategory = productCategoryRepository.findByProductIdAndCategory_Id(Integer.valueOf(cookie.getValue()), Integer.valueOf((int) id));
-
-        productCategoryRepository.delete(productCategory);
+        productCategoryRepository.deleteById((long) id);
 
         return "redirect:/san-pham/sua/" + cookie.getValue();
     }
@@ -1787,6 +1679,16 @@ public class AdminController {
                     newPro.setLanguage(language);
                     newPro.setPageNumber(pageNumber);
                     newPro.setYearPublication(Integer.valueOf(yearPublication));
+
+
+                    Producer producer1 = producerService.getAllProducerById(producer);
+                    newPro.setProducer(producer1);
+
+
+                    BookCover bookCover1 = bookCoverService.getAllBookCoverById(bookCover);
+
+                    newPro.setBookCover(bookCover1);
+
                     productService.saveProduct(newPro);
                     List<Product> listProducts = productService.getAllProduct();
                     Product newPro1 = listProducts.get(listProducts.size() - 1);

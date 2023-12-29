@@ -207,7 +207,7 @@
 
                                                 <th:block th:each="categoryl : ${listProductCategories}">
                                                     <li class="search-choice"><span>[[${categoryl.category.category_Name}]]</span><a
-                                                            class="search-choice-close" th:if="${a!=null}" th:href="@{/the-loai/delete/{id}(id=${categoryl.category.id})}"></a>
+                                                            class="search-choice-close" th:if="${a!=null}" th:href="@{/the-loai/delete/{id}(id=${categoryl.id})}"></a>
                                                     </li>
                                                 </th:block>
                                                 <li class="search-field"><input type="text"
@@ -284,7 +284,7 @@
                                                 <th:block th:each="authorl : ${productAuthorList}">
                                                     <li class="search-choice">
                                                         <span>[[${authorl.author.nameAuthor}]]</span><a
-                                                            class="search-choice-close" th:if="${b!=null}" th:href="@{/tac-gia/delete/{id}(id=${authorl.author.id})}"></a>
+                                                            class="search-choice-close" th:if="${b!=null}" th:href="@{/tac-gia/delete/{id}(id=${authorl.id})}"></a>
                                                     </li>
                                                 </th:block>
                                                 <li class="search-field"><input type="text"
@@ -310,7 +310,7 @@
                                     <div class="col-md-4">
                                         <h5>Nhà Xuất Bản</h5>
                                         <select name="producer" class="chosen-select-no-single">
-                                            <option th:each="nv: ${listProducer}" th:value="${product.id}">
+                                            <option th:each="nv: ${listProducer}" th:value="${nv.id}" th:field="*{product.producer.id}" >
                                                 [[${nv.nameProducer}]]
                                             </option>
                                         </select>
@@ -319,7 +319,7 @@
                                     <div class="col-md-4">
                                         <h5>Bìa Sách</h5>
                                         <select name="book_cover" class="chosen-select-no-single">
-                                            <option th:each="nv: ${listBookCover}" th:value="${product.id}">
+                                            <option th:each="nv: ${listBookCover}" th:value="${nv.id}" th:field="*{product.bookCover.id}" >
                                                 [[${nv.cover_type}]]
                                             </option>
                                         </select>
