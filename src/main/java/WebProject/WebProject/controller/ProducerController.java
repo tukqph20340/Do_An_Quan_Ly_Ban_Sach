@@ -66,15 +66,17 @@ public class ProducerController {
     }
 
     @PostMapping("/add-nha-san-xuat")
-    public String DashboardAddProducerHandel(Model model, @RequestParam("tenNhaXuatBan") String name_producer,
-                                             @RequestParam("soDienThoai") String phone, @RequestParam("email") String email,
-                                             @RequestParam("diaChi") String address, @RequestParam("quocGia") String quocGia,
+    public String DashboardAddProducerHandel(Model model, @RequestParam("tenNhaXuatBan") String nameProducer,
+                                             @RequestParam("soDienThoai") String phone,
+                                             @RequestParam("email") String email,
+                                             @RequestParam("diaChi") String address,
+                                             @RequestParam("quocGia") String quocGia,
                                              @RequestParam("moTa") String moTa) throws Exception {
         User admin = (User) session.getAttribute("admin");
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
-            if (name_producer.trim().isEmpty()) {
+            if (nameProducer.trim().isEmpty()) {
                 model.addAttribute("loi", "Tên không được để trống");
                 return "/admin/nhaphathanh/dashboard-addproducer";
             } else if (phone.trim().isEmpty()) {
@@ -97,7 +99,7 @@ public class ProducerController {
                 return "/admin/nhaphathanh/dashboard-addproducer";
             } else {
                 Producer producer = new Producer();
-                producer.setNameProducer(name_producer);
+                producer.setNameProducer(nameProducer);
                 producer.setPhone(phone);
                 producer.setEmail(email);
                 producer.setAddress(address);

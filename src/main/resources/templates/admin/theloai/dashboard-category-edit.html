@@ -235,6 +235,11 @@
         var category_Name = document.getElementById('tenTheLoai').value;
         var coverType = category_Name ? category_Name.value : null;
 
+        if (!category_Name.trim()) {
+            // Hiển thị SweetAlert2 với thông báo lỗi nếu trường nào đó trống
+            Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
+            return;
+        }
 
         // Kiểm tra xem id, coverType và description có tồn tại không trước khi thực hiện cuộc gọi Ajax
         if (id !== null && coverType !== null) {

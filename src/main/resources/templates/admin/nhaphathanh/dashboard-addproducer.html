@@ -201,7 +201,7 @@
                         <div class="col-lg-12">
                             <div class="col-lg-6">
                                 <label style="font-weight: bold">Email</label>
-                                <input type="email" name="email id=email placeholder="Mời Nhập Email">
+                                <input type="email" name="email" id="email" placeholder="Mời Nhập Email">
                                 <p style="color: red">[[${loi2}]]</p>
                             </div>
                             <div class="col-lg-6">
@@ -223,7 +223,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Thêm Nhà Xuất
+                            <button type="button" onclick="showSweetAlert()" class="btn btn-success" style="    margin-top: 30px;margin-left: 939px;font-size: 20px;">Thêm Nhà Xuất
                                 Bản
                             </button>
                         </div>
@@ -257,17 +257,40 @@
 
     function sendAjaxRequest() {
         // Lấy dữ liệu từ các trường input hoặc các nguồn khác tùy thuộc vào trang của bạn
-        var coverType = document.getElementById('').value;
-        var description = document.getElementById('desciption').value;
+        var nameProducer = document.getElementById('tenNhaXuatBan').value;
+        var phone = document.getElementById('soDienThoai').value;
+        var email = document.getElementById('email').value;
+        var address = document.getElementById('diaChi').value;
+        var quocGia = document.getElementById('quocGia').value;
+        var moTa = document.getElementById('moTa').value;
+        if (
+            nameProducer.trim() === '' ||
+            phone.trim().length === '' ||
+            email.trim() === '' ||
+            address.trim() === '' ||
+            quocGia.trim() === '' ||
+            moTa.trim() === ''
+        ) {
+            Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
+            return;
+        }
+        if(phone.trim().length !==10){
+            Swal.fire('Lỗi!', 'Số điện thoại không đúng!', 'error');
+            return;
+        }
 
         // Thực hiện cuộc gọi Ajax
-        fetch('/add-bia-sach', {
+        fetch('/add-nha-san-xuat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: 'cover_type=' + encodeURIComponent(coverType) +
-                '&desciption=' + encodeURIComponent(description)
+            body: 'tenNhaXuatBan=' + encodeURIComponent(nameProducer) +
+                '&soDienThoai=' + encodeURIComponent(phone) +
+                '&email=' + encodeURIComponent(email) +
+                '&diaChi=' + encodeURIComponent(address) +
+                '&quocGia=' + encodeURIComponent(quocGia) +
+                '&moTa=' + encodeURIComponent(moTa)
         })
             .then(data => {
                 // Xử lý kết quả từ API
@@ -287,7 +310,7 @@
         Swal.fire('Thành công!', 'Dữ liệu đã được thêm.', 'success')
             .then(() => {
                 // Chuyển hướng về trang bảng (table)
-                window.location.href = '/bia-admin';
+                window.location.href = '/nha-san-xuat-admin';
             });
     }
 
