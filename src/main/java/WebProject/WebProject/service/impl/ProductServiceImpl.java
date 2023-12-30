@@ -88,5 +88,29 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findTop4ProductByCategory_id(int id) {
 		return productRepository.findTop4ProductByCategory_id(id);
 	}
-	
+
+	@Override
+	public Page<Product> timKiemTen(String name, Integer noPage, Integer size) {
+		Pageable pageable = PageRequest.of(noPage,size);
+		return productRepository.findByProduct_Name(pageable,name);
+	}
+
+	@Override
+	public Page<Product> timKiemTheoGia(Long a, Long b, Integer noPage, Integer size) {
+		Pageable pageable = PageRequest.of(noPage,size);
+		return productRepository.findAllByPriceBetween(pageable,a,b);
+	}
+
+	@Override
+	public Page<Product> timKiemlonHon(Long a, Integer noPage, Integer size) {
+		Pageable pageable = PageRequest.of(noPage,size);
+		return productRepository.findByPriceBefore(a,pageable);
+	}
+
+	@Override
+	public Page<Product> timKiemnhoHon(Long b, Integer noPage, Integer size) {
+		Pageable pageable = PageRequest.of(noPage,size);
+		return productRepository.findByPriceAfter(b,pageable);
+	}
+
 }

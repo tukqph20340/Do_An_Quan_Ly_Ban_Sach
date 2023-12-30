@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import WebProject.WebProject.entity.Product;
@@ -50,6 +51,22 @@ public interface ProductRepository extends JpaRepository<Product,Long>{
 	
 	@Query(value="select * from product p where p.category_id = ?1 ORDER BY p.sold DESC LIMIT 4;",nativeQuery = true)
 	List<Product> findTop4ProductByCategory_id(int id);
+
+
+	@Query("SELECT c from Product c WHERE c.product_Name LIKE %?1%")
+	Page<Product> findByProduct_Name(Pageable p, String name);
+
+
+	@Query("SELECT c FROM Product c WHERE c.price >=:price")
+	Page<Product> findByPriceBefore(@Param("price")long gia, Pageable pageable);
+
+
+
+	@Query("SELECT c FROM Product c WHERE c.price <=:price")
+	Page<Product> findByPriceAfter(@Param("price") long gia, Pageable pageable);
+
+
+
 
 
 

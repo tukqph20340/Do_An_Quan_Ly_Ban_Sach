@@ -32,4 +32,13 @@ public interface ProductService {
 	Page<Product> findByProduct_NameAndCategory_idContaining(String name, int category_id, Pageable pageable);
 
 	List<Product> findTop4ProductByCategory_id(int name);
+
+
+	Page<Product> timKiemTen(String name, Integer noPage, Integer size);
+
+	Page<Product> timKiemTheoGia(Long a ,Long b, Integer noPage, Integer size);
+
+	Page<Product> timKiemlonHon(Long a, Integer noPage, Integer size);
+
+	Page<Product> timKiemnhoHon(Long b, Integer noPage, Integer size);
 }
