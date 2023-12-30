@@ -12,4 +12,7 @@ public interface ProductAuthorRepository extends JpaRepository<ProductAuthor, Lo
     ProductAuthor findByProductIdAndAuthor_Id(Integer idsp,Integer id);
     List<ProductAuthor> findByAuthor_Id(Integer id);
 
+
+
+
 }

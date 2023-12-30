@@ -276,7 +276,7 @@ public class AdminController {
 
     @GetMapping("/san-pham/sua/{id}")
     public String DashboardMyProductEditView(@PathVariable int id, Model model) {
-Cookie cookie =cookieService.create("idSP",String.valueOf(id),1);
+        Cookie cookie = cookieService.create("idSP", String.valueOf(id), 1);
 
         List<Category> listCategories = categoryService.getAll();
         List<Author> authorList = authorService.getAllAuthor();
@@ -1170,8 +1170,7 @@ Cookie cookie =cookieService.create("idSP",String.valueOf(id),1);
 
                         }
                     }
-                }
-                else {
+                } else {
                     List<ProductCategory> list = productCategoryRepository.findByProductId(id);
                     for (String category : categories) {
                         for (ProductCategory lista : list) {
@@ -1230,8 +1229,7 @@ Cookie cookie =cookieService.create("idSP",String.valueOf(id),1);
                                 model.addAttribute("editProduct", editProduct);
                                 session.setAttribute("editProduct", null);
                                 return "/admin/sanpham/dashboard-my-products-edit";
-                            }
-                            else {
+                            } else {
                                 ProductCategory productCategory = new ProductCategory();
                                 productCategory.setProduct(newPro1);
                                 Category category1 = categoryService.getAllCategoryById(Integer.valueOf(category));
@@ -1316,14 +1314,14 @@ Cookie cookie =cookieService.create("idSP",String.valueOf(id),1);
                     }
 
                 }
-                    for (MultipartFile y : listImage) {
-                        String urlImg = cloudinaryService.uploadFile(y);
-                        ProductImage img = new ProductImage();
-                        img.setProduct(newPro1);
-                        img.setUrl_Image(urlImg);
-                        productImageService.save(img);
-                    }
-                    return "redirect:/san-pham-admin";
+                for (MultipartFile y : listImage) {
+                    String urlImg = cloudinaryService.uploadFile(y);
+                    ProductImage img = new ProductImage();
+                    img.setProduct(newPro1);
+                    img.setUrl_Image(urlImg);
+                    productImageService.save(img);
+                }
+                return "redirect:/san-pham-admin";
 
             }
         } catch (Exception e) {
@@ -2180,5 +2178,84 @@ Cookie cookie =cookieService.create("idSP",String.valueOf(id),1);
         }
     }
 
+
+    @GetMapping("/tim-kiem-san-pham")
+    public String timKiemSanPham(Model model, @RequestParam("tenSanPham") String tenSanPham,
+                                 @RequestParam("giaThap") String giaThap,
+                                 @RequestParam("giaCao") String giaCao,
+                                 @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        if (tenSanPham.trim().isEmpty() && giaCao.trim().isEmpty() && giaThap.trim().isEmpty() ){
+            return "redirect:/san-pham-admin";
+        }
+
+        if (tenSanPham.trim().isEmpty()) {
+            if (giaThap.trim().isEmpty()) {
+                Page<Product> pageProduct = productService.timKiemnhoHon(Long.valueOf(giaCao), pageNo, 5);
+                for (Product product : pageProduct) {
+                    if (product.getProductImage().isEmpty()) {
+                        model.addAttribute("img", null);
+                    } else {
+                        model.addAttribute("img", "img");
+                    }
+                }
+                model.addAttribute("pageProduct", pageProduct.getContent());
+                model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+                model.addAttribute("pageNumber", pageNo);
+                model.addAttribute("Cate", new Product());
+                model.addAttribute("a", "a");
+                return "/admin/sanpham/dashboard-myproducts";
+            } else  if (giaCao.trim().isEmpty()) {
+                Page<Product> pageProduct = productService.timKiemlonHon(Long.valueOf(giaThap), pageNo, 5);
+                for (Product product : pageProduct) {
+                    if (product.getProductImage().isEmpty()) {
+                        model.addAttribute("img", null);
+                    } else {
+                        model.addAttribute("img", "img");
+                    }
+                }
+                model.addAttribute("pageProduct", pageProduct.getContent());
+                model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+                model.addAttribute("pageNumber", pageNo);
+                model.addAttribute("Cate", new Product());
+                model.addAttribute("a", "a");
+                return "/admin/sanpham/dashboard-myproducts";
+            }
+            else {
+                Page<Product> pageProduct = productService.timKiemTheoGia(Long.valueOf(giaThap),Long.valueOf(giaCao), pageNo, 5);
+                for (Product product : pageProduct) {
+                    if (product.getProductImage().isEmpty()) {
+                        model.addAttribute("img", null);
+                    } else {
+                        model.addAttribute("img", "img");
+                    }
+                }
+                model.addAttribute("pageProduct", pageProduct.getContent());
+                model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+                model.addAttribute("pageNumber", pageNo);
+                model.addAttribute("Cate", new Product());
+                model.addAttribute("a", "a");
+                return "/admin/sanpham/dashboard-myproducts";
+            }
+
+        } else {
+            Page<Product> pageProduct = productService.timKiemTen('%' + tenSanPham + '%', pageNo, 5);
+            for (Product product : pageProduct) {
+                if (product.getProductImage().isEmpty()) {
+                    model.addAttribute("img", null);
+                } else {
+                    model.addAttribute("img", "img");
+                }
+            }
+            model.addAttribute("pageProduct", pageProduct.getContent());
+            model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+            model.addAttribute("pageNumber", pageNo);
+            model.addAttribute("Cate", new Product());
+            model.addAttribute("a", "a");
+
+            return "/admin/sanpham/dashboard-myproducts";
+        }
+
+
+    }
 
 }
