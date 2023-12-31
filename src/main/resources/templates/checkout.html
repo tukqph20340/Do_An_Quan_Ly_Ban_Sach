@@ -333,19 +333,7 @@
                                             <input class="form-control" name="phone1" id="sdt1" type="text"
                                                    placeholder="Số điện thoại"  onblur="validatePhoneNumber()">
                                         </div>
-                                        <script>
-                                            function validatePhoneNumber() {
-                                                var phoneNumberInput = document.getElementById('sdt1');
-                                                var phoneNumber = phoneNumberInput.value;
-
-                                                // Kiểm tra xem chuỗi chỉ chứa chữ số và có đúng 10 ký tự hay không
-                                                if (/^\d{10}$/.test(phoneNumber)) {
-                                                    console.log("Số điện thoại hợp lệ: " + phoneNumber);
-                                                } else {
-                                                    alert("Số điện thoại không hợp lệ. Vui lòng nhập 10 chữ số.");
-                                                }
-                                            }
-                                        </script>
+                                        
                                         <div class="col-md-6 form-group">
                                             <label for="province">Tỉnh:</label>
                                             <span style="color: red">*</span>
