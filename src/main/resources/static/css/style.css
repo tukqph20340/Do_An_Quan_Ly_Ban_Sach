@@ -1915,14 +1915,11 @@ ol {
 }
 
 .product__details__tab {
-	padding-top: 60px;
+	padding-top: 40px;
 }
 
 .product__details__tab .nav-tabs {
 	border-bottom: 1px solid #e5e5e5;
-	-webkit-box-pack: center;
-	-ms-flex-pack: center;
-	justify-content: center;
 }
 
 .product__details__tab .nav-tabs .nav-item {
