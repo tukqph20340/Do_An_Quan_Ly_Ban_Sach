@@ -1649,7 +1649,7 @@ public class AdminController {
                 return "/admin/sanpham/dashboard-addproduct";
 
 
-            } else {
+            } else{
                 for (MultipartFile y : listImage) {
                     String urlImg = cloudinaryService.uploadFile(y);
                     ProductImage img = new ProductImage();
