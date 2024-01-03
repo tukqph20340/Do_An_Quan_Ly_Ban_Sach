@@ -142,7 +142,7 @@
     <div class="row">
         <div class="col-md-6">
             <div id="logo">
-                <img src="img/logo.png" alt="">
+                <img src="/images/logo3.png" alt="">
             </div>
         </div>
         <div class="col-md-6">
@@ -170,7 +170,6 @@
             <table class="margin-top-20">
                 <tr>
                     <th>Sản Phẩm</th>
-                    <th>Ảnh</th>
                     <th>Số Lượng</th>
                     <th>Giá</th>
                 </tr>
@@ -178,35 +177,19 @@
                     <tr>
                         <td th:text="${y.product.product_Name}"></td>
                         <td th:text="${y.count}"></td>
-                        <td th:text="${#numbers.formatDecimal(y.product.price * y.count, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></td>
+                        <td th:text="${y.unit_price} + ' VNĐ'"></td>
                     </tr>
                 </th:block>
+
             </table>
+
             <p>
                 <strong class="margin-bottom-5">Địa Chỉ: </strong>
-                <i th:text="${order.address}"></i><br>
+                <i th:text="${order.note}+'-'"></i><i th:text="${order.wards}+'-'"></i><i th:text="${order.address}+'-'"></i> <i th:text="${order.country}"></i><br>
                 <strong class="margin-bottom-5">Hình Thức Thanh Toán: </strong>
                 <i th:text="${order.payment_Method == 'Payment on delivery' ? 'Thanh Toán Khi Nhận Hàng' : (order.payment_Method == 'Payment with momo' ? 'Thanh Toán Bằng Ví MoMo' : 'Thanh Toán Bằng Ví Dự Chữ')}"></i>
+
             </p>
-
-            <div class="col-md-4 col-md-offset-8">
-
-                <table id="totals">
-                    <tr>
-                        <th>Phí Vận Chuyển</th>
-                        <th><span
-                                th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Tổng Giá</th>
-                        <th><span
-                                th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
-                        </th>
-
-                    </tr>
-                </table>
-            </div>
             <br>
             <br>
             <hr>
@@ -220,11 +203,23 @@
                 <div class="col-md-2">
                     <img th:src="${y.urlImage}" height="100px" width="100px">
                 </div>
-            </th:block>
 
         </div>
 
+        <div class="col-md-4 col-md-offset-8">
 
+            <table id="totals">
+                <tr>
+                    <th>Phí Vận Chuyển</th>
+                    <th><span th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
+                </tr>
+                <tr>
+                    <th>Tổng Giá</th>
+                    <th><span th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
+
+                </tr>
+            </table>
+        </div>
     </div>
     <br>
     <br>

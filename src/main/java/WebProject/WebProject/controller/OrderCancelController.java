@@ -272,7 +272,7 @@ public class OrderCancelController {
                     wallet.setPrice(Float.valueOf(listOrders.getTotal()));
                     wallet.setUser(use);
                     walletRepository.save(wallet);
-                    return "redirect:/dashboard-orders1";
+                    return "redirect:/quan-ly-don-hang";
 
 
                 } else {
@@ -282,7 +282,7 @@ public class OrderCancelController {
                     wallet1.setPrice(wallet1.getPrice() + Float.valueOf(listOrders.getTotal()));
                     wallet1.setUser(use);
                     walletRepository.save(wallet1);
-                    return "redirect:/dashboard-orders1";
+                    return "redirect:/quan-ly-don-hang";
                 }
 
             }
@@ -314,7 +314,7 @@ public class OrderCancelController {
                     wallet.setPrice(Float.valueOf(listOrders.getTotal()));
                     wallet.setUser(user);
                     walletRepository.save(wallet);
-                    return "redirect:/dashboard-orders1";
+                    return "redirect:/quan-ly-don-hang";
                     // Nếu ví đã tồn tại, cộng thêm tiền
 
                 } else {
@@ -322,7 +322,7 @@ public class OrderCancelController {
                     wallet1.setPrice(Float.valueOf(wallet1.getPrice() + listOrders.getTotal()));
                     wallet1.setUser(user);
                     walletRepository.save(wallet1);
-                    return "redirect:/dashboard-orders1";
+                    return "redirect:/quan-ly-don-hang";
                 }
 
             }
@@ -342,7 +342,7 @@ public class OrderCancelController {
             }
             orderService.saveOrder(listOrders);
             orderCancellationService.saveOrderCancel(order);
-            return "redirect:/dashboard-orders1";
+            return "redirect:/quan-ly-don-hang";
 
 
         }

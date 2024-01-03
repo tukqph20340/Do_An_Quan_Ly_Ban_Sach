@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <title>Admin Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="/listeo/css/style.css">
+    <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
+    <link rel="icon" href="/img/logo-3.png">
+</head>
+<body>
+<div id="wrapper">
+
+    <!-- Header Container
+================================================== -->
+    <header id="header-container" class="fixed fullwidth dashboard">
+
+        <!-- Header -->
+        <div id="header" class="not-sticky" style="background: white">
+            <div class="container">
+
+                <!-- Left Side Content -->
+                <div class="left-side">
+
+                    <!-- Logo -->
+                    <div id="logo" style="background: white;">
+                        <a href="index.html"><img src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                        <a href="index.html" class="dashboard-logo" style="margin-left: 14px;"><img
+                                src="/images/logo3.png" height="100px" width="180px" alt=""></a>
+                    </div>
+
+                    <!-- Mobile Navigation -->
+                    <div class="mmenu-trigger">
+                        <button class="hamburger hamburger--collapse" type="button">
+								<span class="hamburger-box"> <span
+                                        class="hamburger-inner"></span>
+								</span>
+                        </button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- Main Navigation / End -->
+
+                </div>
+                <!-- Left Side Content / End -->
+
+                <!-- Right Side Content / End -->
+                <div class="right-side">
+                    <!-- Header Widget -->
+                    <div class="header-widget">
+
+                        <!-- User Menu -->
+
+
+                    </div>
+                    <!-- Header Widget / End -->
+                </div>
+                <!-- Right Side Content / End -->
+            </div>
+        </div>
+        <!-- Header / End -->
+
+    </header>
+    <div class="clearfix"></div>
+    <!-- Header Container / End -->
+
+
+    <!-- Dashboard -->
+    <div id="dashboard">
+
+        <!-- Navigation
+================================================== -->
+
+        <!-- Responsive Navigation Trigger -->
+
+
+        <div class="dashboard-nav" style="background: white">
+            <div class="dashboard-nav-inner">
+                <ul data-submenu-title="Trang Chủ">
+                    <li class="active"><a href="/home-admin"><i class="sl sl-icon-settings"></i> <span
+                            style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
+                    <li><a href="/thong-ke"><i class="sl sl-icon-wallet"></i> <span
+                            style="font-weight: bold; color: black;">Thông Kê</span></a></li>
+                    <li><a href="/quan-ly-don-hang"><i class="fa fa-calendar-check-o"></i> <span
+                            style="font-weight: bold; color: black;">Quản Lý Hóa Đơn</span></a></li>
+                    <ul data-submenu-title="Sản Phẩm">
+                        <li><a href="#"><i class="sl sl-icon-layers"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Sản Phẩm</span></a>
+                            <ul id="sub">
+                                <li><a href="/san-pham-admin"><span
+                                        style="font-weight: bold; color: black;">Sản Phẩm</span></a></li>
+                                <li><a href="/tac-gia-admin"><span
+                                        style="font-weight: bold; color: black;">Tác Giả</span></a></li>
+                                <li><a href="/nha-san-xuat-admin"><span style="font-weight: bold; color: black;">Nhà Xuất Bản</span></a>
+                                </li>
+                                <li><a href="/bia-admin"><span style="font-weight: bold; color: black;">Bìa Sách</span></a>
+                                </li>
+                                <li><a href="/the-loai-admin"><span style="font-weight: bold; color: black;">Thể Loại Sách</span></a>
+                                </li>
+                                <li><a href="/khuyen-mai/admin"><span style="font-weight: bold; color: black;">Khuyến mãi</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul data-submenu-title="Người Dùng">
+                        <li><a href="/nguoi-dung-admin"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Quản Lý Tài Khoản</span></a></li>
+                        <li><a href="/dang-xuat"><i class="sl sl-icon-power"></i> <span
+                                style="font-weight: bold; color: black;">Đăng Xuất</span></a></li>
+                    </ul>
+                    <ul data-submenu-title="Trang Chủ Bán Hàng">
+                        <li><a href="/dashboard-myprofile"><i class="sl sl-icon-user"></i> <span
+                                style="font-weight: bold; color: black;">Đổi Mật Khẩu</span></a></li>
+                        <li><a href="/home"><i class="im im-icon-Home"></i> <span
+                                style="font-weight: bold; color: black;">Trang Chủ</span></a></li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
+        <!-- Navigation / End -->
+
+
+        <!-- Content
+================================================== -->
+        <div class="dashboard-content">
+            <div class="col-lg-12">
+                <div class="card-body" style="background: white">
+                    <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Tìm Kiếm</h2>
+                    <div class="col-lg-3" style="margin-left: 329px;font-size: 15px; color: #0b7bb5;font-weight: bold"> Tìm kiếm theo khoảng ngày</div>
+                    <br/>
+                    <form th:action="@{/thong-ke-admin-doanh-thu/tim-kiem}" method="get">
+                        <div style="display:flex">
+                            <div style="width: 420px;margin-left: 33px">
+                                <input  style="    margin-left: 300px;
+    border-radius: 30px;
+    width: 340px;" type="datetime-local" name="ngay1" pattern="yyyy-MM-ddTHH:mm:ss">
+                            </div>
+                            <div style="width: 420px; margin-right: 14px">
+                                <input  style="border-radius: 30px;
+        margin-left: 250px;
+    width: 350px;" type="datetime-local" name="ngay2" pattern="yyyy-MM-ddTHH:mm:ss">
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-danger" style="margin-left: 190px ;border-radius:27px;height: 49px;font-size: 17px;background: #00A0D1;width: 100px">Tìm Kiếm
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            </br>
+            <div class="col-lg-12" style="margin-top: 12px">
+                <div class="card-body" style="background: white">
+                    <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Thống Kê</h2>
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs custom-nav-tabs" role="tablist">
+                            <li class="nav-item"><a style="font-size: 15px; color:#0b0b0b;" class="nav-link active"
+                                                    data-toggle="tab" href="#tabs-6" role="tab">Thống kê sản phẩm</a></li>
+                            <li class="nav-item"><a style="font-size: 15px; color:#0b0b0b;" class="nav-link"
+                                                    data-toggle="tab" href="#tabs-7" role="tab">Thông kê theo đơn hàng</a></li>
+                            <li class="nav-item"><a style="font-size: 15px; color:#0b0b0b;" class="nav-link"
+                                                    data-toggle="tab" href="#tabs-8" role="tab">Thông kê theo doanh thu</a></li>
+                        </ul>
+                        <div class="tab-content dashboard-list-box invoices with-icons">
+                            <div class="tab-pane active" id="tabs-6" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane " id="tabs-7" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane " id="tabs-8" role="tabpanel">
+                                <div class="product__details__tab__content">
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content / End -->
+
+
+    </div>
+    <!-- Dashboard / End -->
+
+
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+        src="/scripts/jquery-migrate-3.3.2.min.js"></script>
+<script type="text/javascript" src="/scripts/mmenu.min.js"></script>
+<script type="text/javascript" src="/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/scripts/custom.js"></script>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+<!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
+<script src="/scripts/moment.min.js"></script>
+<script src="/scripts/daterangepicker.js"></script>
+
+
+</body>
+</html>

@@ -118,8 +118,6 @@ public class TraHangController {
                                             @RequestParam("listImage") MultipartFile[] listImage
             , HttpServletRequest request) throws Exception {
         try {
-            long millis = System.currentTimeMillis();
-            Date create_at = new java.sql.Date(millis);
             if (lyDo.isEmpty()) {
                 model.addAttribute("loi1", "Lý do không được để trống không được để trống");
                 Cookie user_name = cookie.read("user_name");
@@ -135,6 +133,8 @@ public class TraHangController {
                 model.addAttribute("order", order1);
                 return "trahang.html";
             }else {
+                long millis = System.currentTimeMillis();
+                Date create_at = new java.sql.Date(millis);
                 Order order = orderService.findById(Integer.valueOf(id));
                 Returns returns = new Returns();
                 returns.setReason(lyDo);
@@ -155,6 +155,7 @@ public class TraHangController {
                 }
                 return "redirect:/myhistory";
             }
+
         } catch (Exception e) {
             return "redirect:/myhistory";
         }
@@ -206,7 +207,7 @@ public class TraHangController {
         Order order = orderService.findById(id);
         order.setActiveOrder(ActiveOrder.builder().id("9").build());
         orderService.saveOrder(order);
-        return "redirect:/dashboard-orders8";
+        return "redirect:/quan-ly-don-hang";
     }
 
     @GetMapping("/xac-nhan-hang/{id}")
@@ -223,7 +224,7 @@ public class TraHangController {
         order.setActiveOrder(ActiveOrder.builder().id("10").build());
         orderService.saveOrder(order);
 
-        return "redirect:/dashboard-orders8";
+        return "redirect:/quan-ly-don-hang";
     }
 
 
