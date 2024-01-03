@@ -2,6 +2,8 @@ package WebProject.WebProject.repository;
 
 import WebProject.WebProject.dto.OrderDto;
 import WebProject.WebProject.entity.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -89,7 +91,7 @@ public interface ThongKeRepository extends JpaRepository<Order, Integer> {
             "SUM(CASE WHEN o.activeOrder.id = 9 THEN 1 ELSE 0 END) as trangThai9Count, " +
             "SUM(CASE WHEN o.activeOrder.id = 10 THEN 1 ELSE 0 END) as trangThai10Count) " +
             "FROM Order o GROUP BY FUNCTION('DATE_FORMAT', o.booking_Date, '%Y-%m-%d %H:%i:%s')")
-    List<Map<String, Object>> getCountByStatusAndDate();
+    Page<Map<String, Object>> getCountByStatusAndDate(Pageable pageable);
 
     @Query("SELECT new map(" +
             "FUNCTION('DATE_FORMAT', o.booking_Date, '%Y-%m-%d %H:%i:%s') as ngay, " +

@@ -22,6 +22,31 @@
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
 </head>
+<style>
+        .giaoDien {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        }
+
+
+        .stats-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        }
+
+        .stats-table th, .stats-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+        }
+
+        .stats-table th {
+        background-color: #4CAF50;
+        color: white;
+        }
+</style>
 <body>
 <div id="wrapper">
 
@@ -144,9 +169,7 @@
                     <form th:action="@{/thong-ke-admin-doanh-thu/tim-kiem}" method="get">
                         <div style="display:flex">
                             <div style="width: 420px;margin-left: 33px">
-                                <input  style="    margin-left: 300px;
-    border-radius: 30px;
-    width: 340px;" type="datetime-local" name="ngay1" pattern="yyyy-MM-ddTHH:mm:ss">
+                                <input  style="margin-left: 300px;border-radius: 30px;width: 340px;" type="datetime-local" name="ngay1" pattern="yyyy-MM-ddTHH:mm:ss">
                             </div>
                             <div style="width: 420px; margin-right: 14px">
                                 <input  style="border-radius: 30px;
@@ -179,6 +202,62 @@
                             <div class="tab-pane active" id="tabs-6" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>STT</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Số Lượng Tồn</th>
+                                                            <th>Số Lượng Đã Bán</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="result, stat : ${listSP}">
+                                                            <td th:text="${stat.index + 1}"></td>
+                                                            <td th:text="${result.product_Name}"></td>
+                                                            <td th:text="${result.quantity}"></td>
+                                                            <td th:text="${result.sold}"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                            <div style="margin-top: 10px">
+                                                <!--phân trang cho sản phẩm-->
+                                                <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                                    <ul class="pagination">
+                                                        <!--trang đầu-->
+                                                        <li class="page-item">
+                                                            <a class="page-link" th:href="@{/thong-ke(pageNo=0)}">Trang
+                                                                Đầu</a>
+                                                        </li>
+                                                        <!--Previous-->
+                                                        <!--số thứ tự trang-->
+                                                        <!--dùng for i trong thymleaf-->
+                                                        <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                   th:href="@{/thong-ke(pageNo=${index})}"
+                                                                   th:text="${index+1}"></a>
+                                                            </li>
+                                                        </div>
+                                                        <!--Next-->
+                                                        <!--trang cuối-->
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               th:href="@{/thong-ke(pageNo=${pageProductPage -1})}">Trang
+                                                                Cuối</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
 
                                     </ul>
                                 </div>
@@ -187,7 +266,80 @@
                             <div class="tab-pane " id="tabs-7" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>STT</th>
+                                                            <th>Ngày</th>
+                                                            <th>Tổng Đơn Hàng</th>
+                                                            <th>Chờ Xác Nhận</th>
+                                                            <th>Chờ Lấy Hàng</th>
+                                                            <th>Đã Lấy Hàng</th>
+                                                            <th>Đang Giao</th>
+                                                            <th>Thành Công</th>
+                                                            <th>Hủy</th>
+                                                            <th>Chờ Xác Nhận Trả Hàng</th>
+                                                            <th>Trả Hàng Thất Bại</th>
+                                                            <th>Trả Hàng Thành Công</th>
+                                                            <th>Thất bại</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="result, stat : ${resultList}">
+                                                            <td th:text="${stat.index + 1}"></td>
+                                                            <td th:text="${result.ngay}"></td>
+                                                            <td th:text="${result.tongDonHang}"></td>
+                                                            <td th:text="${result.trangThai1Count}"></td>
+                                                            <td th:text="${result.trangThai2Count}"></td>
+                                                            <td th:text="${result.trangThai3Count}"></td>
+                                                            <td th:text="${result.trangThai4Count}"></td>
+                                                            <td th:text="${result.trangThai6Count}"></td>
+                                                            <td th:text="${result.trangThai7Count}"></td>
+                                                            <td th:text="${result.trangThai8Count}"></td>
+                                                            <td th:text="${result.trangThai9Count}"></td>
+                                                            <td th:text="${result.trangThai10Count}"></td>
+                                                            <td th:text="${result.trangThai5Count}"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
+                                                </div>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                            <div style="margin-top: 10px">
+                                                <!--phân trang cho sản phẩm-->
+                                                <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                                    <ul class="pagination">
+                                                        <!--trang đầu-->
+                                                        <li class="page-item">
+                                                            <a class="page-link" th:href="@{/thong-ke(pageNo=0)}">Trang
+                                                                Đầu</a>
+                                                        </li>
+                                                        <!--Previous-->
+                                                        <!--số thứ tự trang-->
+                                                        <!--dùng for i trong thymleaf-->
+                                                        <div th:each="index : ${#numbers.sequence(0, resultListPage-1)}">
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                   th:href="@{/thong-ke(pageNo=${index})}"
+                                                                   th:text="${index+1}"></a>
+                                                            </li>
+                                                        </div>
+                                                        <!--Next-->
+                                                        <!--trang cuối-->
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               th:href="@{/thong-ke(pageNo=${resultListPage -1})}">Trang
+                                                                Cuối</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -195,7 +347,39 @@
                             <div class="tab-pane " id="tabs-8" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>STT</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tổng Tiền</th>
+                                                            <th>Tổng Tiền Momo</th>
+                                                            <th>Tổng Tiền Ví</th>
+                                                            <th>Tổng Tiền Trực Tiếp</th>
 
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="result, stat : ${resultList1}">
+                                                            <td th:text="${stat.index + 1}"></td>
+                                                            <td th:text="${result.ngay}"></td>
+                                                            <td th:text="${result.tongTien}"></td>
+                                                            <td th:text="${result.totalMomo} +'VNĐ'"></td>
+                                                            <td th:text="${result.totalVi} +'VNĐ'"></td>
+                                                            <td th:text="${result.totalDelivery} +'VNĐ'"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                                <!-- Pagination / End -->
+                                            </div>
+
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
