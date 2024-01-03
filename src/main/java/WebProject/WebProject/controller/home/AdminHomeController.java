@@ -36,7 +36,7 @@ public class AdminHomeController {
 
         List<Order> listOrderActive1 = orderService.findByActiveOrder_Id("1");
         Collections.reverse(listOrderActive1);
-        model.addAttribute("listOrder", listOrderActive1);
+        model.addAttribute("listOrderActive1", listOrderActive1);
         System.out.println(listOrderActive1);
 
         List<Order> listOrderActive2 = orderService.findByActiveOrder_Id("2");
@@ -74,10 +74,16 @@ public class AdminHomeController {
         Collections.reverse(listOrderActive10);
         model.addAttribute("listOrderActive10", listOrderActive10);
         System.out.println(listOrderActive1);
-        for (Order y : listOrderActive1) {
-            System.out.println(y.getOrder_Item());
-        }
+
         return"/admin/quanlydonhang/quan-ly-don-hang.html";
+    }
+
+    @GetMapping("/thong-ke")
+    public String thongKe(Model model) {
+
+
+
+        return"/admin/quanlydonhang/thong-ke.html";
     }
 }
 
