@@ -22,6 +22,32 @@
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="icon" href="/img/logo-3.png">
 </head>
+
+<style>
+    .giaoDien {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+    }
+
+
+    .stats-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .stats-table th, .stats-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .stats-table th {
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
 <body>
 <div id="wrapper">
 
@@ -139,22 +165,26 @@
             <div class="col-lg-12">
                 <div class="card-body" style="background: white">
                     <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Tìm Kiếm</h2>
-                    <div class="col-lg-3" style="margin-left: 329px;font-size: 15px; color: #0b7bb5;font-weight: bold"> Tìm kiếm theo khoảng ngày</div>
+                    <div class="col-lg-3" style="margin-left: 329px;font-size: 15px; color: #0b7bb5;font-weight: bold">
+                        Tìm kiếm theo khoảng ngày
+                    </div>
                     <br/>
                     <form th:action="@{/thong-ke-admin-doanh-thu/tim-kiem}" method="get">
                         <div style="display:flex">
                             <div style="width: 420px;margin-left: 33px">
-                                <input  style="    margin-left: 300px;
+                                <input style="    margin-left: 300px;
     border-radius: 30px;
     width: 340px;" type="datetime-local" name="ngay1" pattern="yyyy-MM-ddTHH:mm:ss">
                             </div>
                             <div style="width: 420px; margin-right: 14px">
-                                <input  style="border-radius: 30px;
+                                <input style="border-radius: 30px;
         margin-left: 250px;
     width: 350px;" type="datetime-local" name="ngay2" pattern="yyyy-MM-ddTHH:mm:ss">
                             </div>
                             <div>
-                                <button type="button" class="btn btn-danger" style="margin-left: 190px ;border-radius:27px;height: 49px;font-size: 17px;background: #00A0D1;width: 100px">Tìm Kiếm
+                                <button type="button" class="btn btn-danger"
+                                        style="margin-left: 190px ;border-radius:27px;height: 49px;font-size: 17px;background: #00A0D1;width: 100px">
+                                    Tìm Kiếm
                                 </button>
                             </div>
                         </div>
@@ -183,81 +213,69 @@
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
                                                     data-toggle="tab" href="#tabs-12" role="tab">Thất bại</a></li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
-                                                    data-toggle="tab" href="#tabs-13" role="tab">Chờ xác nhận trả hàng</a></li>
+                                                    data-toggle="tab" href="#tabs-13" role="tab">Chờ xác nhận trả
+                                hàng</a></li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
-                                                    data-toggle="tab" href="#tabs-14" role="tab">Từ chối trả hàng</a></li>
+                                                    data-toggle="tab" href="#tabs-14" role="tab">Từ chối trả hàng</a>
+                            </li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
-                                                    data-toggle="tab" href="#tabs-15" role="tab">Đồng ý trả hàng</a></li>
+                                                    data-toggle="tab" href="#tabs-15" role="tab">Đồng ý trả hàng</a>
+                            </li>
                         </ul>
                         <div class="tab-content dashboard-list-box invoices with-icons">
                             <div class="tab-pane active" id="tabs-6" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive1}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Chờ Xác Nhận</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/huy-admin/{id}(id=${y.id})}" class="button gray reject"><i
-                                                                class="sl sl-icon-close"></i> Hủy</a>
-                                                        <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}" class="button gray checkmark"><i
-                                                                class="sl sl-icon-check"></i>Xác nhận đơn hàng</a>
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="3">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive1}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/huy-admin/{id}(id=${y.id})}"
+                                                                   class="button gray reject"><i
+                                                                        class="sl sl-icon-close"></i> Hủy</a></td>
+                                                            <td>
+                                                                <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}"
+                                                                   class="button gray checkmark"><i
+                                                                        class="sl sl-icon-check"></i>Xác nhận đơn
+                                                                    hàng</a></td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -265,69 +283,51 @@
                             <div class="tab-pane " id="tabs-7" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive2}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Chờ Lấy Hàng</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}" class="button gray checkmark"><i
-                                                                class="sl sl-icon-check"></i>Lấy Hàng Thành Công</a>
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="2">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive2}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}"
+                                                                   class="button gray checkmark"><i
+                                                                        class="sl sl-icon-check"></i>Lấy Hàng Thành Công</a>
+                                                            </td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -335,140 +335,107 @@
                             <div class="tab-pane " id="tabs-8" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive3}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Đã Lấy Hàng</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}" class="button gray checkmark"><i
-                                                                class="sl sl-icon-check"></i>Giao Hàng</a>
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="2">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive3}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}"
+                                                                   class="button gray checkmark"><i
+                                                                        class="sl sl-icon-check"></i>Giao Hàng</a></td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
                             <div class="tab-pane " id="tabs-9" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive4}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="3">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive4}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
 
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Đang Giao Hàng</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/dashboard-orders-active5/edit/{id}(id=${y.id})}"  class="button gray approve"><i
-                                                                class="sl sl-icon-check"></i>Giao Hàng Thành Công</a>
-                                                        <a th:href="@{/dashboard-orders-active4/edit/{id}(id=${y.id})}"  class="button gray checkmark"><i
-                                                                class="sl sl-icon-close"></i>Giao Hàng Thất Bại</a>
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                                            <td>
+                                                                <a th:href="@{/dashboard-orders-active5/edit/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="sl sl-icon-check"></i>Giao Hàng Thành
+                                                                    Công</a></td>
+                                                            <td>
+                                                                <a th:href="@{/dashboard-orders-active4/edit/{id}(id=${y.id})}"
+                                                                   class="button gray checkmark"><i
+                                                                        class="sl sl-icon-close"></i>Giao Hàng Thất Bại</a>
+                                                            </td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -476,67 +443,46 @@
                             <div class="tab-pane " id="tabs-10" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive6}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Thành Công</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="1">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive6}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -544,67 +490,46 @@
                             <div class="tab-pane " id="tabs-11" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive7}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Đã Hủy</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="1">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive7}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -612,269 +537,183 @@
                             <div class="tab-pane" id="tabs-12" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive5}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Thất Bại</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="1">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive5}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-13" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive8}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Chờ Xác Nhận Trả Hàng</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div>
-                                                        <a th:href="@{/dashboard-invoice-tra-hang/{id}(id=${y.id})}"
-                                                           class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i> Kiểm Tra Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="1">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive8}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/dashboard-invoice-tra-hang/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i> Kiểm Tra Đơn Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-14" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive9}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Từ Chối Trả Hàng</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="1">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive9}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tabs-15" role="tabpanel">
                                 <div class="product__details__tab__content">
                                     <ul>
-                                        <th:block th:each="y : ${listOrderActive10}">
-                                            <li  class="pending-booking">
-                                                <div class="list-box-listing bookings">
-                                                    <div class="list-box-listing-img">
-                                                        <img th:src="${y.user.avatar}" alt="">
-                                                    </div>
-                                                    <div class="list-box-listing-content">
-                                                        <div class="inner">
-                                                            <div></div>
-                                                            <h3 th:if="${y.order_Item.size() == 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name}"></h3>
-                                                            <h3 th:if="${y.order_Item.size() > 1}"
-                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' còn nữa ...)'"></h3>
-                                                            <div class="inner-booking-list">
-                                                                <h5>MDH:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${'HD'+(y.id)}"></li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="inner-booking-list">
-                                                                <h5>Ngày Mua:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted"
-                                                                        th:text="${y.booking_Date}"></li>
-                                                                </ul>
-                                                            </div>
-
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Trạng Thái: </h5>
-                                                                <ul class="booking-list">
-                                                                    <li class="highlighted">
-                                                                        <span>Trả Hàng Thành Công</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-
-
-                                                            <div class="inner-booking-list">
-                                                                <h5>Khách Hàng:</h5>
-                                                                <ul class="booking-list">
-                                                                    <li th:text="${y.user.user_Name}"></li>
-                                                                    <li th:text="${y.user.email}"></li>
-                                                                    <li th:text="${y.user.phone_Number}"></li>
-                                                                </ul>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-to-right">
-                                                    <div >
-                                                        <a th:href="@{/invoice/{id}(id=${y.id})}" class="button gray approve"><i
-                                                                class="im im-icon-Coin"></i>Chi Tiết Đơn Hàng</a>
-                                                    </div>
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="dashboard-list-box margin-top-0">
+                                                <div class="giaoDien">
+                                                    <table class="stats-table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Mã Đơn Hàng</th>
+                                                            <th>Tên Sản Phẩm</th>
+                                                            <th>Ngày Mua</th>
+                                                            <th>Tên Khách Hàng</th>
+                                                            <th>Số Điện Thoại</th>
+                                                            <th>Email</th>
+                                                            <th colspan="1">Cập Nhật</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <!-- Dữ liệu thống kê được thêm vào đây bằng Thymeleaf -->
+                                                        <tr th:each="y : ${listOrderActive10}">
+                                                            <td th:text="${'HD'+(y.id)}"></td>
+                                                            <td th:if="${y.order_Item.size() == 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name}"></td>
+                                                            <td th:if="${y.order_Item.size() > 1}"
+                                                                th:text="${y.order_Item[0].product.product_Name} + '( Và '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
+                                                            <td th:text="${y.booking_Date}"></td>
+                                                            <td th:text="${y.user.user_Name}"></td>
+                                                            <td th:text="${y.user.phone_Number}"></td>
+                                                            <td th:text="${y.user.email}"></td>
+                                                            <td>
+                                                                <a th:href="@{/invoice/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="im im-icon-Coin"></i>Chi Tiết Đơn
+                                                                    Hàng</a></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
                                                 </div>
-                                            </li>
-                                        </th:block>
+                                                <!-- Pagination / End -->
+                                            </div>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
