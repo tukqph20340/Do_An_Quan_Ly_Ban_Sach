@@ -169,7 +169,7 @@
                                     <div class="lg">
                                         <div class="col-lg-6">
                                             <h5>Tên Sản Phẩm</h5>
-                                            <input name="product_name" class="search-field" type="text"
+                                            <input name="product_name" class="search-field" type="text" id="macode"
                                                    th:value="${product.product_Name}" placeholder="Tên Sản Phẩm"/>
                                             <input type="hidden" id="id"
                                                    th:value="${product.id}" placeholder="Tên Sản Phẩm"/>
@@ -177,7 +177,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <h5>Giá</h5>
-                                            <input name="price" type="number" placeholder="Giá"
+                                            <input name="price" type="number" placeholder="Giá" id="date"
                                                    th:value="${product.price}">
                                             <p style="color: red">[[${loi1}]] [[${loi2}]]</p>
                                         </div>
@@ -189,14 +189,14 @@
 
                                     <div class="col-md-6">
                                         <h5>Số Lượng</h5>
-                                        <input name="availability" type="text" th:value="${product.quantity}"
+                                        <input name="availability" type="text" id="soGiam" th:value="${product.quantity}"
                                                placeholder="Số Lượng">
                                         <p style="color: red">[[${loi3}]] [[${loi4}]]</p>
                                     </div>
                                     <!-- Status -->
                                     <div class="col-md-6">
                                         <h5>Loại Sản Phẩm</h5>
-                                        <select name="category" class="chosen-select-no-single" multiple="multiple">
+                                        <select name="category" id="loaiSanPham" class="chosen-select-no-single" multiple="multiple">
                                             <th:block th:each="category : ${listCategories}"
                                                       th:if="${not #lists.isEmpty(listCategories)}">
                                                 <option th:value="${category.id}"
@@ -238,14 +238,14 @@
                                     <!-- Price -->
                                     <div class="col-md-6">
                                         <h5>Số Trang</h5>
-                                        <input name="page_number" type="text" placeholder="Số Trang"
+                                        <input name="page_number" type="text" placeholder="Số Trang" id="giatrigiam"
                                                th:value="${product.pageNumber}">
                                         <p style="color: red">[[${loi4}]] [[${loi6}]]</p>
                                     </div>
 
                                     <div class="col-md-6">
                                         <h5>Kích Thước</h5>
-                                        <input name="book_size" type="text"
+                                        <input name="book_size" type="text" id="kichthuoc"
                                                placeholder="Kích Thước" th:value="${product.bookSize}">
                                         <p style="color: red">[[${loi10}]]</p>
                                     </div>
@@ -254,14 +254,14 @@
                                     <!-- Status -->
                                     <div class="col-md-6">
                                         <h5>Năm Sản Xuất</h5>
-                                        <input name="year_publication" type="text"
+                                        <input name="year_publication" type="text" id="namXuatBan"
                                                placeholder="Năm Xuất Bản" th:value="${product.yearPublication}">
                                         <p style="color: red">[[${loi7}]] [[${loi8}]]</p>
                                     </div>
 
                                     <div class="col-md-6">
                                         <h5>Ngôn Ngữ</h5>
-                                        <input name="language" type="text" placeholder="Ngôn Ngữ"
+                                        <input name="language" type="text" placeholder="Ngôn Ngữ" id="ngonNgu"
                                                th:value="${product.language}">
                                         <p style="color: red">[[${loi9}]]</p>
                                     </div>
@@ -271,7 +271,7 @@
                                 <div class="row with-forms">
                                     <div class="col-md-4">
                                         <h5>Tác Giả</h5>
-                                        <select name="author" class="chosen-select-no-single" multiple="multiple">
+                                        <select name="author" class="chosen-select-no-single" multiple="multiple" id="tacgia">
                                             <th:block th:each="author : ${listAuthor}"
                                                       th:if="${not #lists.isEmpty(listAuthor)}">
                                                 <option th:value="${author.id}" th:text="${author.nameAuthor}">
@@ -345,8 +345,8 @@
                                 <!-- Description -->
                                 <div class="form">
                                     <h5>Mô Tả Chi Tiết</h5>
-                                    <textarea name="description" class="WYSIWYG" cols="40"
-                                              rows="3" id="summary" spellcheck="true" th:field="*{product.description}"
+                                    <textarea name="description" class="WYSIWYG" cols="40" id="moTa"
+                                              rows="3" spellcheck="true" th:field="*{product.description}"
                                               placeholder="Mô Tả Chi Tiết"></textarea>
                                     <p style="color: red">[[${loi11}]]</p>
                                 </div>
@@ -393,7 +393,7 @@
                                     <div class="upload__box" style="padding-top: 40px;">
                                         <div class="upload__btn-box">
                                             <label class="upload__btn" style="border-radius: 50px;">
-                                                <p style="margin-bottom: 0px;">Thêm Ảnh</p> <input
+                                                <p style="margin-bottom: 0px;">Thêm Ảnh</p> <input id="imageInput"
                                                     name="listImage" accept="image/*" type="file"
                                                     data-max_length="20" class="upload__inputfile" multiple>
                                             </label>
