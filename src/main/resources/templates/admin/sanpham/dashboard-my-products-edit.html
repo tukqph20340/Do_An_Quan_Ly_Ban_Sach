@@ -459,28 +459,57 @@
                 confirmButtonText: 'Đồng ý'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Nếu người dùng đồng ý, thực hiện AJAX request
-                    var formData = new FormData($("#yourFormId")[0]);
-                    var id = document.getElementById("id").value;
-                    $.ajax({
-                        type: "POST",
-                        url: "/san-pham/sua/" + id,
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Thành công',
-                                time: 1000,
-                            }).then(function() {
-                                window.location.href = '/san-pham-admin';
-                            });
-                        },
-                        error: function(error) {
-                            // Xử lý lỗi nếu cần thiết
+                    if (result.isConfirmed) {
+                        // Nếu người dùng đồng ý, thực hiện AJAX request
+                        var formData = new FormData($("#yourFormId")[0]);
+                        var check = document.getElementById("macode").value;
+                        var id = document.getElementById("id").value;
+                        var price = document.getElementById("date").value;
+                        var soGiam = document.getElementById("soGiam").value;
+                        var namXuatBan = document.getElementById("namXuatBan").value;
+                        var giatrigiam = document.getElementById("giatrigiam").value;
+                        var moTa = document.getElementById("moTa").value;
+                        var kichthuoc = document.getElementById("kichthuoc").value;
+                        var ngonNgu = document.getElementById("ngonNgu").value;
+                        if (!check.trim() || !soGiam.trim() || !giatrigiam.trim() || !moTa.trim() || !namXuatBan.trim() || !kichthuoc.trim() || !ngonNgu.trim()) {
+                            Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin cần thêm!', 'error');
+                            return;
                         }
-                    });
+
+                        if (isNaN(price)) {
+                            // Nếu giá trị không phải là số
+                            Swal.fire('Lỗi!', 'Vui lòng nhập giá trị hợp lệ!', 'error');
+                            return;
+                        } else if (price < 0) {
+                            // Nếu giá trị âm
+                            Swal.fire('Lỗi!', 'Giá trị không được âm!', 'error');
+                            return;
+                        }
+                        if (price < 1000) {
+                            Swal.fire('Lỗi!', 'Giá không được thấp hơn 1000!', 'error');
+                            return;
+                        }
+                        $.ajax({
+                            type: "POST",
+                            url: "/san-pham/sua/" + id,
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công',
+                                    time: 1000,
+                                }).then(function () {
+                                    window.location.href = '/san-pham-admin';
+                                });
+                            },
+                            error: function (error) {
+
+                            }
+
+                        });
+                    }
                 }
             });
         });
