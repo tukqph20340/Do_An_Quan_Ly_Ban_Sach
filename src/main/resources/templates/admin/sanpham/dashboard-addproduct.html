@@ -237,7 +237,7 @@
                                     <!-- Status -->
                                     <div class="col-md-6">
                                         <h5>loại Sản Phẩm</h5>
-                                        <select name="category" class="chosen-select-no-single" multiple="multiple">
+                                        <select name="category" class="chosen-select-no-single" multiple="multiple" id="loaiSanPham">
                                             <th:block th:each="category : ${listCategories}"
                                                       th:if="${not #lists.isEmpty(listCategories)}">
                                                 <option th:value="${category.id}"
@@ -268,14 +268,14 @@
                                     <!-- Status -->
                                     <div class="col-md-6">
                                         <h5>Năm Sản Xuất</h5>
-                                        <input name="year_publication" type="text"
+                                        <input name="year_publication" type="text" id="namXuatBan"
                                                placeholder="Năm Xuất Bản">
                                         <p style="color: red">[[${loi8}]] [[${loi9}]]</p>
                                     </div>
 
                                     <div class="col-md-6">
                                         <h5>Ngôn Ngữ</h5>
-                                        <input name="language" type="text" placeholder="Ngôn Ngữ">
+                                        <input name="language" type="text" id="ngonNgu" placeholder="Ngôn Ngữ">
                                         <p style="color: red">[[${loi10}]]</p>
                                     </div>
 
@@ -356,7 +356,7 @@
                                 <div class="submit-section">
                                     <div class="upload__box">
                                         <div class="upload__btn-box">
-                                            <label class="upload__btn">
+                                            <label class="upload__btn" id="listImage">
                                                 <p style="margin-bottom: 0px;">Chọn Ảnh</p> <input
                                                     name="listImage" accept="image/*" type="file"
                                                     data-max_length="20" class="upload__inputfile" multiple>
@@ -470,20 +470,42 @@
                 if (result.isConfirmed) {
                     // Nếu người dùng đồng ý, thực hiện AJAX request
                     var formData = new FormData($("#yourFormId")[0]);
-                    var formData = new FormData($("#yourFormId")[0]);
                     var check = document.getElementById("macode").value;
-                    var date = document.getElementById("date").value;
+                    var price = document.getElementById("date").value;
                     var soGiam = document.getElementById("soGiam").value;
-                    // var hethan = document.getElementById("hethan").value;
+                    var namXuatBan = document.getElementById("namXuatBan").value;
                     var giatrigiam = document.getElementById("giatrigiam").value;
-                    // var tacgia = document.getElementById("soGiam").value;
-                    // var nhaxuatban = document.getElementById("nhaxuatban").value;
+                    var tacgia = document.getElementById("tacgia").value;
+                    var loaiSanPham = document.getElementById("loaiSanPham").value;
                     var moTa = document.getElementById("moTa").value;
                     var kichthuoc = document.getElementById("kichthuoc").value;
-                if (!check.trim() || !date.trim() || !soGiam.trim()|| !giatrigiam.trim()  || !moTa.trim()) {
-                        Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
+                    var ngonNgu = document.getElementById("ngonNgu").value;
+                if (!check.trim() || !soGiam.trim()|| !giatrigiam.trim() || !moTa.trim() || !namXuatBan.trim() || !kichthuoc.trim() || !ngonNgu.trim()) {
+                        Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin cần thêm!', 'error');
                         return;
-                    }else {
+                    }
+                    if (!tacgia.trim()) {
+                        Swal.fire('Lỗi!', 'Vui lòng chọn tác giả!', 'error');
+                        return;
+                    }
+                    if (!loaiSanPham.trim()) {
+                        Swal.fire('Lỗi!', 'Vui lòng chọn loại sản phẩm!', 'error');
+                        return;
+                    }
+                    if (isNaN(price)) {
+                        // Nếu giá trị không phải là số
+                        Swal.fire('Lỗi!', 'Vui lòng nhập giá trị hợp lệ!', 'error');
+                        return;
+                    } else if (price < 0) {
+                        // Nếu giá trị âm
+                        Swal.fire('Lỗi!', 'Giá trị không được âm!', 'error');
+                        return;
+                    }
+                    if(price <1000){
+                        Swal.fire('Lỗi!', 'Giá không được thấp hơn 1000!', 'error');
+                        return;
+                    }
+                else {
                         $.ajax({
                             type: "POST",
                             url: "/add-san-pham",
