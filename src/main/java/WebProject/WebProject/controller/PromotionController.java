@@ -46,31 +46,20 @@ public class PromotionController {
         return "/admin/khuyenmai/khuyen-mai";
 
     }
+
     @GetMapping("/tim-kiem-khuyen-mai")
     public String DashboardMyProducerView111(Model model,
                                              @RequestParam("name") String name, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
-        Page<Promotion> book = service.fillByName(pageNo, 5,'%'+name+'%');
+        Page<Promotion> book = service.fillByName(pageNo, 5, '%' + name + '%');
         model.addAttribute("pagePromotion", book.getContent());
         model.addAttribute("pagePromotionPage", book.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Promotion", new Promotion());
-        model.addAttribute("a","a");
+        model.addAttribute("a", "a");
         return "/admin/khuyenmai/khuyen-mai";
 
     }
 
-//    @GetMapping("/phan-trang-khuyen-mai/{page}")
-//    public String phanTrang(Model model, @PathVariable() int page) {
-//        User admin = (User) session.getAttribute("admin");
-//        if (admin == null) {
-//            return "redirect:/signin-admin";
-//        } else {
-//            Pageable pageable = PageRequest.of(page, 5);
-//            Page<Promotion> pageKhuyenMai = service.findAll(pageable);
-//            model.addAttribute("list", pageKhuyenMai);
-//            return "/admin/khuyenmai/khuyen-mai.html";
-//        }
-//    }
 
     @GetMapping("/view-add-khuyen-mai")
     public String DashboardAddProducerView(Model model) {
@@ -92,8 +81,6 @@ public class PromotionController {
                                              @RequestParam("createdAt") Date createdAt,
                                              @RequestParam("discountValue") Long discountValue,
                                              @RequestParam("expiredAt") Date expiredAt,
-//                                             @RequestParam("isActive") Boolean isActive,
-//                                             @RequestParam("isPublic") Boolean isPublic,
                                              @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
                                              @RequestParam("name") String name
     ) throws Exception {
@@ -114,8 +101,6 @@ public class PromotionController {
                 promotion.setCreatedAt(createdAt);
                 promotion.setDiscountValue(discountValue);
                 promotion.setExpiredAt(expiredAt);
-//                promotion.setIsActive(isActive);
-//                promotion.setIsPublic(isPublic);
                 promotion.setMaximumDiscountValue(maximumDiscountValue);
                 promotion.setName(name);
                 service.savePromotion(promotion);
@@ -147,8 +132,6 @@ public class PromotionController {
                                              @RequestParam("createdAt") Date createdAt,
                                              @RequestParam("discountValue") Long discountValue,
                                              @RequestParam("expiredAt") Date expiredAt,
-//                                             @RequestParam("isActive") Boolean isActive,
-//                                             @RequestParam("isPublic") Boolean isPublic,
                                              @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
                                              @RequestParam("name") String name
     ) throws Exception {
@@ -169,8 +152,6 @@ public class PromotionController {
                 promotion.setCreatedAt(createdAt);
                 promotion.setDiscountValue(discountValue);
                 promotion.setExpiredAt(expiredAt);
-//                promotion.setIsActive(isActive);
-//                promotion.setIsPublic(isPublic);
                 promotion.setMaximumDiscountValue(maximumDiscountValue);
                 promotion.setName(name);
                 service.savePromotion(promotion);
