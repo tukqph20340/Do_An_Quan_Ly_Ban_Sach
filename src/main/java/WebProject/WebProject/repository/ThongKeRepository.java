@@ -26,6 +26,9 @@ public interface ThongKeRepository extends JpaRepository<Order, Integer> {
             "FROM Order o GROUP BY FUNCTION('DATE_FORMAT', o.booking_Date, '%Y-%m-%d %H:%i:%s')")
     List<Map<String, Object>> getTotalRevenueByDate();
 
+
+
+
     @Query("SELECT new map(FUNCTION('DATE_FORMAT', o.booking_Date, '%Y-%m-%d %H:%i:%s') as ngay, " +
             "SUM(CASE WHEN o.payment_Method = 'Payment with momo' THEN o.total ELSE 0 END) as totalMomo, " +
             "SUM(CASE WHEN o.payment_Method = 'Ví' THEN o.total ELSE 0 END) as totalVi, " +
@@ -107,7 +110,7 @@ public interface ThongKeRepository extends JpaRepository<Order, Integer> {
             "SUM(CASE WHEN o.activeOrder.id = 9 THEN 1 ELSE 0 END) as trangThai9Count, " +
             "SUM(CASE WHEN o.activeOrder.id = 10 THEN 1 ELSE 0 END) as trangThai10Count) " +
             "FROM Order o WHERE o.booking_Date BETWEEN :startDate AND :endDate  GROUP BY FUNCTION('DATE_FORMAT', o.booking_Date, '%d-%m-%Y')")
-    List<Map<String, Object>> getCountByStatusAndDate12(@Param("startDate") String startDate, @Param("endDate") String endDate);
+    Page<Map<String, Object>> getCountByStatusAndDate12(@Param("startDate") String startDate, @Param("endDate") String endDate,Pageable pageable);
 
 
 

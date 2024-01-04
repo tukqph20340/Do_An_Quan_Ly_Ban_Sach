@@ -161,21 +161,21 @@ public class thongKeTableController {
 //        return "thongKeDH.html";
 //    }
 
-    @GetMapping("/thong-ke-admin-don-hang/tim-kiem")
-    public String getAll51(Model model, @RequestParam("ngay1") String ngay1
-            , @RequestParam("ngay2") String ngay2) {
-
-        if (ngay1.isEmpty() || ngay2.isEmpty()) {
-            return "redirect:/thong-ke-admin-don-hang";
-        } else {
-
-            List<Map<String, Object>> resultList = thongKeRepository.getCountByStatusAndDate12(ngay1, ngay2);
-            model.addAttribute("resultList", resultList);
-
-            return "thongKeDH.html";
-        }
-
-    }
+//    @GetMapping("/thong-ke-admin-don-hang/tim-kiem")
+//    public String getAll51(Model model, @RequestParam("ngay1") String ngay1
+//            , @RequestParam("ngay2") String ngay2) {
+//
+//        if (ngay1.isEmpty() || ngay2.isEmpty()) {
+//            return "redirect:/thong-ke-admin-don-hang";
+//        } else {
+//
+//            List<Map<String, Object>> resultList = thongKeRepository.getCountByStatusAndDate12(ngay1, ngay2);
+//            model.addAttribute("resultList", resultList);
+//
+//            return "thongKeDH.html";
+//        }
+//
+//    }
 
     @GetMapping("/thong-tin")
     public String getAll10(Model model) {
