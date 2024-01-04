@@ -102,6 +102,54 @@ public class AdminHomeController {
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Cate", new Product());
 
+
+
+        return"/admin/quanlydonhang/thong-ke.html";
+    }
+    @GetMapping("/thong-ke-admin-doanh-thu")
+    public String DashboardWalletView(Model model,@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        // doanh thu
+
+
+        List<Map<String, Object>> resultList1 = thongKeRepository.getTotalRevenueByDate();
+        model.addAttribute("resultList1", resultList1);
+
+
+        List<Order> listOrder = orderService.findAll();
+        List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Payment with momo");
+        List<Order> listVi = orderService.findAllByPayment_Method("Ví");
+        List<Order> listPaymentOnDelivery = orderService.findAllByPayment_Method("Payment on delivery");
+        long TotalMomo = 0;
+        long vi = 0;
+        long TotalDelivery = 0;
+        for (Order y : listPaymentWithMomo) {
+            TotalMomo = TotalMomo + y.getTotal();
+        }
+        for (Order y : listPaymentOnDelivery) {
+            TotalDelivery = TotalDelivery + y.getTotal();
+        }
+        for (Order y : listVi) {
+            vi = vi + y.getTotal();
+        }
+        List<Order> listRecentMomo = orderService.findTop5OrderByPaymentMethod("Payment with momo");
+        List<Order> vi1 = orderService.findTop5OrderByPaymentMethod("Ví");
+        List<Order> listRecentDelivery = orderService.findTop5OrderByPaymentMethod("Payment on delivery");
+
+
+        model.addAttribute("vi", vi);
+        model.addAttribute("vi1", vi1);
+        model.addAttribute("TotalMomo", TotalMomo);
+        model.addAttribute("TotalDelivery", TotalDelivery);
+        model.addAttribute("TotalOrder", listOrder.size());
+        model.addAttribute("listRecentDelivery", listRecentDelivery);
+        model.addAttribute("listRecentMomo", listRecentMomo);
+            return"/admin/quanlydonhang/thongkedoanhthu.html";
+        }
+
+    @GetMapping("/thong-ke-don-hang")
+    public String thongKedonHang(Model model,@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+
         // don hang
         List<Order> list1 = orderService.findByActiveOrder_Id("1");
         int trangThai1Sum = 0;
@@ -180,42 +228,9 @@ public class AdminHomeController {
         model.addAttribute("resultList", resultList.getContent());
         model.addAttribute("resultListPage", resultList.getTotalPages());
         model.addAttribute("pageNumber1", pageNo);
-       // doanh thu
+        // doanh thu
 
-
-            List<Map<String, Object>> resultList1 = thongKeRepository.getTotalRevenueByDate();
-            model.addAttribute("resultList1", resultList1);
-
-
-            List<Order> listOrder = orderService.findAll();
-            List<Order> listPaymentWithMomo = orderService.findAllByPayment_Method("Payment with momo");
-            List<Order> listVi = orderService.findAllByPayment_Method("Ví");
-            List<Order> listPaymentOnDelivery = orderService.findAllByPayment_Method("Payment on delivery");
-            long TotalMomo = 0;
-            long vi = 0;
-            long TotalDelivery = 0;
-            for (Order y : listPaymentWithMomo) {
-                TotalMomo = TotalMomo + y.getTotal();
-            }
-            for (Order y : listPaymentOnDelivery) {
-                TotalDelivery = TotalDelivery + y.getTotal();
-            }
-            for (Order y : listVi) {
-                vi = vi + y.getTotal();
-            }
-            List<Order> listRecentMomo = orderService.findTop5OrderByPaymentMethod("Payment with momo");
-            List<Order> vi1 = orderService.findTop5OrderByPaymentMethod("Ví");
-            List<Order> listRecentDelivery = orderService.findTop5OrderByPaymentMethod("Payment on delivery");
-
-
-            model.addAttribute("vi", vi);
-            model.addAttribute("vi1", vi1);
-            model.addAttribute("TotalMomo", TotalMomo);
-            model.addAttribute("TotalDelivery", TotalDelivery);
-            model.addAttribute("TotalOrder", listOrder.size());
-            model.addAttribute("listRecentDelivery", listRecentDelivery);
-            model.addAttribute("listRecentMomo", listRecentMomo);
-        return"/admin/quanlydonhang/thong-ke.html";
+        return"/admin/quanlydonhang/thongkedonhang.html";
     }
 }
 
