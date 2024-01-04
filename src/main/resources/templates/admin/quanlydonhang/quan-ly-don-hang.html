@@ -164,38 +164,68 @@
         <div class="dashboard-content">
             <div class="col-lg-12">
                 <div class="card-body" style="background: white">
-                    <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Tìm Kiếm</h2>
-                    <div class="col-lg-3" style="margin-left: 329px;font-size: 15px; color: #0b7bb5;font-weight: bold">
-                        Tìm kiếm theo khoảng ngày
-                    </div>
-                    <br/>
-                    <form th:action="@{/thong-ke-admin-doanh-thu/tim-kiem}" method="get">
-                        <div style="display:flex">
-                            <div style="width: 420px;margin-left: 33px">
-                                <input style="    margin-left: 300px;
-    border-radius: 30px;
-    width: 340px;" type="datetime-local" name="ngay1" pattern="yyyy-MM-ddTHH:mm:ss">
-                            </div>
-                            <div style="width: 420px; margin-right: 14px">
-                                <input style="border-radius: 30px;
-        margin-left: 250px;
-    width: 350px;" type="datetime-local" name="ngay2" pattern="yyyy-MM-ddTHH:mm:ss">
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-danger"
-                                        style="margin-left: 190px ;border-radius:27px;height: 49px;font-size: 17px;background: #00A0D1;width: 100px">
-                                    Tìm Kiếm
-                                </button>
+                    <h4 style="font-weight: bold;margin-bottom: 30px;">Tìm Kiếm đơn hàng</h4>
+                    <form th:action="@{/}" method="get">
+                        <div class="justify-content-center">
+                            <div class="input-group mb-3">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-4">
+                                        <label style="font-weight: bold;">Tìm theo tên hóa đơn</label>
+                                        <input  style="    width: 390px;
+    height: 40px;
+    border-radius: 30px;" type="text" name="tenSanPham" class="form-control input-text"
+                                                placeholder="Nhập tên hóa đơn hoặc mã " aria-label="Recipient's username"
+                                                aria-describedby="basic-addon2">
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <label style="font-weight: bold;width: 400px">Tìm theo khoảng ngày</label>
+<!--                                        <input style="margin-left: 100px;border-radius: 30px;width: 300px;-->
+<!--                                    height: 40px;" type="datetime-local" name="ngayBatDau" class="form-control"-->
+<!--                                               placeholder="Chọn ngày bắt đầu">-->
+                                        <input
+                                                style="border-radius: 30px;width:330px;height: 40px;"
+                                                name="ngayBatDau"
+                                                id="ngayBatDau"
+                                                type="datetime-local"
+                                        />
+                                    </div>
+
+                                    <div class="col-lg-3">
+<!--                                        <input style="height: 42px;width: 300px;  border-radius: 30px; margin-top: 33px;margin-left: 70px;"-->
+<!--                                               type="datetime-local" name="ngayKetThuc" class="form-control"-->
+<!--                                               placeholder="Nhập ngày kết thúc"-->
+<!--                                              >-->
+                                        <input
+                                                style="height: 42px;width: 300px;  border-radius: 30px; margin-top: 33px;"
+                                                name="ngayKetThuc"
+                                                id="ngayKetThuc"
+                                                type="datetime-local"
+                                        />
+
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <button class="btn btn-info" style="
+    margin-top: 35px;
+    width: 100px;
+    height: 39px;
+    font-size: 15px;
+    border-radius: 30px;"
+                                                type="submit">Tìm Kiếm
+                                        </button>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </form>
 
                 </div>
             </div>
-            </br>
             <div class="col-lg-12" style="margin-top: 12px">
                 <div class="card-body" style="background: white">
                     <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Quản lý đơn hàng</h2>
+
                     <div class="product__details__tab">
                         <ul class="nav nav-tabs custom-nav-tabs" role="tablist">
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link active"
@@ -613,7 +643,8 @@
                                                             <td>
                                                                 <a th:href="@{/dashboard-invoice-tra-hang/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
-                                                                        class="im im-icon-Coin"></i> Kiểm Tra Đơn Hàng</a></td>
+                                                                        class="im im-icon-Coin"></i> Kiểm Tra Đơn
+                                                                    Hàng</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -719,8 +750,9 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
+        </div>
         </div>
         <!-- Content / End -->
 
@@ -763,6 +795,65 @@
 <script src="/scripts/moment.min.js"></script>
 <script src="/scripts/daterangepicker.js"></script>
 
+<!--<script>-->
+<!--    $(function () {-->
+
+<!--        var start = moment().subtract(29, 'days');-->
+<!--        var end = moment();-->
+
+<!--        function cb(start, end) {-->
+<!--            $('#booking-date-range span').html(-->
+<!--                start.format('MMMM D, YYYY') +-->
+<!--                + end.format('MMMM D, YYYY'));-->
+<!--        }-->
+
+<!--        cb(start, end);-->
+<!--        $('#booking-date-range').daterangepicker(-->
+<!--            {-->
+<!--                "opens": "left",-->
+<!--                "autoUpdateInput": false,-->
+<!--                "alwaysShowCalendars": true,-->
+<!--                startDate: start,-->
+<!--                endDate: end,-->
+<!--                ranges: {-->
+<!--                    'Today': [moment(), moment()],-->
+<!--                    'Yesterday': [moment().subtract(1, 'days'),-->
+<!--                        moment().subtract(1, 'days')],-->
+<!--                    'Last 7 Days': [moment().subtract(6, 'days'),-->
+<!--                        moment()],-->
+<!--                    'Last 30 Days': [moment().subtract(29, 'days'),-->
+<!--                        moment()],-->
+<!--                    'This Month': [moment().startOf('month'),-->
+<!--                        moment().endOf('month')],-->
+<!--                    'Last Month': [-->
+<!--                        moment().subtract(1, 'month').startOf(-->
+<!--                            'month'),-->
+<!--                        moment().subtract(1, 'month')-->
+<!--                            .endOf('month')]-->
+<!--                }-->
+<!--            }, cb);-->
+
+<!--        cb(start, end);-->
+
+<!--    });-->
+
+<!--    // Calendar animation and visual settings-->
+<!--    $('#booking-date-range')-->
+<!--        .on(-->
+<!--            'show.daterangepicker',-->
+<!--            function (ev, picker) {-->
+<!--                $('.daterangepicker')-->
+<!--                    .addClass(-->
+<!--                        'calendar-visible calendar-animated bordered-style');-->
+<!--                $('.daterangepicker')-->
+<!--                    .removeClass('calendar-hidden');-->
+<!--            });-->
+<!--    $('#booking-date-range').on('hide.daterangepicker',-->
+<!--        function (ev, picker) {-->
+<!--            $('.daterangepicker').removeClass('calendar-visible');-->
+<!--            $('.daterangepicker').addClass('calendar-hidden');-->
+<!--        });-->
+<!--</script>-->
 
 </body>
 </html>
