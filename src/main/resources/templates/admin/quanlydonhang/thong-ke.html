@@ -8,14 +8,14 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
@@ -226,14 +226,14 @@
             <div class="col-lg-12" style="margin-top: 12px">
                 <div class="card-body" style="background: white">
                     <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Thống kê sản phẩm</h2>
-                    <form th:action="@{/}" method="get">
+                    <form th:action="@{/thong-ke/tim-kiem}" method="get">
                         <div class="justify-content-center">
                             <div class="input-group mb-3">
                                 <div class="col-lg-12">
                                     <div class="col-lg-4">
                                         <input  style="    width: 390px;
     height: 40px;    margin-left: 840px;
-    border-radius: 30px;" type="text" name="tenSanPham" class="form-control input-text"
+    border-radius: 30px;" type="text" name="tenSP" class="form-control input-text"
                                                 placeholder="Tìm kiếm theo tên đang tìm... " aria-label="Recipient's username"
                                                 aria-describedby="basic-addon2">
                                     </div>
@@ -292,9 +292,9 @@
                                                 </div>
                                                 <!-- Pagination / End -->
                                             </div>
-                                            <div style="margin-top: 10px">
+                                            <div th:if="${a==null}" style="margin-top: 10px">
                                                 <!--phân trang cho sản phẩm-->
-                                                <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                                                <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">
                                                     <ul class="pagination">
                                                         <!--trang đầu-->
                                                         <li class="page-item">
@@ -304,7 +304,7 @@
                                                         <!--Previous-->
                                                         <!--số thứ tự trang-->
                                                         <!--dùng for i trong thymleaf-->
-                                                        <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
+                                                        <div th:each="index : ${#numbers.sequence(0, listSPtPage-1)}">
                                                             <li class="page-item">
                                                                 <a class="page-link"
                                                                    th:href="@{/thong-ke(pageNo=${index})}"
@@ -315,7 +315,36 @@
                                                         <!--trang cuối-->
                                                         <li class="page-item">
                                                             <a class="page-link"
-                                                               th:href="@{/thong-ke(pageNo=${pageProductPage -1})}">Trang
+                                                               th:href="@{/thong-ke(pageNo=${listSPtPage -1})}">Trang
+                                                                Cuối</a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                            <div th:if="${a!=null}" style="margin-top: 10px">
+                                                <!--phân trang cho sản phẩm-->
+                                                <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">
+                                                    <ul class="pagination">
+                                                        <!--trang đầu-->
+                                                        <li class="page-item">
+                                                            <a class="page-link" th:href="@{/thong-ke(pageNo=0)}">Trang
+                                                                Đầu</a>
+                                                        </li>
+                                                        <!--Previous-->
+                                                        <!--số thứ tự trang-->
+                                                        <!--dùng for i trong thymleaf-->
+                                                        <div th:each="index : ${#numbers.sequence(0, listSPtPage-1)}">
+                                                            <li class="page-item">
+                                                                <a class="page-link"
+                                                                   th:href="@{/thong-ke(pageNo=${index})}"
+                                                                   th:text="${index+1}"></a>
+                                                            </li>
+                                                        </div>
+                                                        <!--Next-->
+                                                        <!--trang cuối-->
+                                                        <li class="page-item">
+                                                            <a class="page-link"
+                                                               th:href="@{/thong-ke(pageNo=${listSPtPage -1})}">Trang
                                                                 Cuối</a>
                                                         </li>
                                                     </ul>
@@ -359,16 +388,16 @@
 <script type="text/javascript" src="/scripts/tooltips.min.js"></script>
 <script type="text/javascript" src="/scripts/custom.js"></script>
 
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/jquery.nicescroll.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/jquery.countdown.min.js"></script>
-<script src="js/jquery.slicknav.js"></script>
-<script src="js/mixitup.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
 <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
 <script src="/scripts/moment.min.js"></script>
 <script src="/scripts/daterangepicker.js"></script>

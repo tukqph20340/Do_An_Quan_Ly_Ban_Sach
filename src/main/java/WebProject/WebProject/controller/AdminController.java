@@ -1229,14 +1229,15 @@ public class AdminController {
                                 model.addAttribute("editProduct", editProduct);
                                 session.setAttribute("editProduct", null);
                                 return "/admin/sanpham/dashboard-my-products-edit";
-                            } else {
-                                ProductCategory productCategory = new ProductCategory();
-                                productCategory.setProduct(newPro1);
-                                Category category1 = categoryService.getAllCategoryById(Integer.valueOf(category));
-                                productCategory.setCategory(category1);
-                                productCategoryRepository.save(productCategory);
                             }
+
+
                         }
+                        ProductCategory productCategory = new ProductCategory();
+                        productCategory.setProduct(newPro1);
+                        Category category1 = categoryService.getAllCategoryById(Integer.valueOf(category));
+                        productCategory.setCategory(category1);
+                        productCategoryRepository.save(productCategory);
 
                         if (author == null || author.length == 0) {
                             return "redirect:/san-pham-admin";
