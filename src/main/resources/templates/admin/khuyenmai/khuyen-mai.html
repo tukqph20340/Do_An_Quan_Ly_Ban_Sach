@@ -213,7 +213,6 @@
                             <tr>
                                 <th style="text-align: center;vertical-align: middle;">ID</th>
                                 <th style="text-align: center;vertical-align: middle;">Mã giảm giá</th>
-                                <th style="text-align: center;vertical-align: middle;">Ngày tạo</th>
                                 <th style="text-align: center;vertical-align: middle;">Giá trị giảm</th>
                                 <th style="text-align: center;vertical-align: middle;">Ngày hết hạn</th>
                                 <th style="text-align: center;vertical-align: middle;">Giá trị giảm tối đa</th>
@@ -223,7 +222,6 @@
                             <tr th:each="list:${pagePromotion}">
                                 <td>[[${list.id}]]</td>
                                 <td>[[${list.couponCode}]]</td>
-                                <td>[[${list.createdAt}]]</td>
                                 <td>[[${list.discountValue}]]</td>
                                 <td>[[${list.expiredAt}]]</td>
                                 <td>[[${list.maximumDiscountValue}]]</td>

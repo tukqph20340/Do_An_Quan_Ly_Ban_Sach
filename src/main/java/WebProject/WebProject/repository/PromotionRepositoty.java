@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public interface PromotionRepositoty extends JpaRepository<Promotion, Integer> {
+
     @Query(nativeQuery = true,value = "SELECT  * FROM promotion p WHERE p.expired_at > now() AND p.coupon_code = ?1")
     Promotion checkPromotion(String code);
 

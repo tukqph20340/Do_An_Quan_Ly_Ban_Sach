@@ -1,29 +1,22 @@
 package WebProject.WebProject.controller;
 
 
-import WebProject.WebProject.entity.Category;
-import WebProject.WebProject.entity.Producer;
+import WebProject.WebProject.entity.AuthorImage;
 import WebProject.WebProject.entity.Promotion;
 import WebProject.WebProject.entity.User;
+import WebProject.WebProject.service.CloudinaryService;
+import WebProject.WebProject.service.CookieService;
 import WebProject.WebProject.service.PromotionService;
 import WebProject.WebProject.service.impl.PromotionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 @Controller
 @RequestMapping("")
@@ -35,6 +28,11 @@ public class PromotionController {
     @Autowired
     HttpSession session;
 
+    @Autowired
+    CookieService cookieService;
+
+    @Autowired
+    CloudinaryService cloudinaryService;
 
     @GetMapping("/khuyen-mai/admin")
     public String load(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
@@ -46,31 +44,19 @@ public class PromotionController {
         return "/admin/khuyenmai/khuyen-mai";
 
     }
+
     @GetMapping("/tim-kiem-khuyen-mai")
     public String DashboardMyProducerView111(Model model,
                                              @RequestParam("name") String name, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
-        Page<Promotion> book = service.fillByName(pageNo, 5,'%'+name+'%');
+        Page<Promotion> book = service.fillByName(pageNo, 5, '%' + name + '%');
         model.addAttribute("pagePromotion", book.getContent());
         model.addAttribute("pagePromotionPage", book.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
         model.addAttribute("Promotion", new Promotion());
-        model.addAttribute("a","a");
+        model.addAttribute("a", "a");
         return "/admin/khuyenmai/khuyen-mai";
 
     }
-
-//    @GetMapping("/phan-trang-khuyen-mai/{page}")
-//    public String phanTrang(Model model, @PathVariable() int page) {
-//        User admin = (User) session.getAttribute("admin");
-//        if (admin == null) {
-//            return "redirect:/signin-admin";
-//        } else {
-//            Pageable pageable = PageRequest.of(page, 5);
-//            Page<Promotion> pageKhuyenMai = service.findAll(pageable);
-//            model.addAttribute("list", pageKhuyenMai);
-//            return "/admin/khuyenmai/khuyen-mai.html";
-//        }
-//    }
 
     @GetMapping("/view-add-khuyen-mai")
     public String DashboardAddProducerView(Model model) {
@@ -89,40 +75,39 @@ public class PromotionController {
     @PostMapping("/add-khuyen-mai")
     public String DashboardAddProducerHandel(Model model,
                                              @RequestParam("couponCode") String couponCode,
-                                             @RequestParam("createdAt") Date createdAt,
-                                             @RequestParam("discountValue") Long discountValue,
-                                             @RequestParam("expiredAt") Date expiredAt,
-//                                             @RequestParam("isActive") Boolean isActive,
-//                                             @RequestParam("isPublic") Boolean isPublic,
-                                             @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
+                                             @RequestParam("discountValue") String discountValue,
+                                             @RequestParam("expiredAt") String expiredAt,
+                                             @RequestParam("maximumDiscountValue") String maximumDiscountValue,
                                              @RequestParam("name") String name
     ) throws Exception {
-
-        User admin = (User) session.getAttribute("admin");
-        if (admin == null) {
-            return "redirect:/signin-admin";
+        long millis = System.currentTimeMillis();
+        if (couponCode.trim().isEmpty()) {
+            model.addAttribute("loi", "Không được để trống");
+            return "/admin/khuyenmai/add-khuyen-mai";
+        } else if (discountValue.trim().isEmpty()) {
+            model.addAttribute("loi2", "Không được để trống");
+            return "/admin/khuyenmai/add-khuyen-mai";
+        } else if (expiredAt.trim().isEmpty()) {
+            model.addAttribute("loi3", "Không được để trống");
+            return "/admin/khuyenmai/add-khuyen-mai";
+        } else if (maximumDiscountValue.trim().isEmpty()) {
+            model.addAttribute("loi4", "Không được để trống");
+            return "/admin/khuyenmai/add-khuyen-mai";
+        } else if (name.trim().isEmpty()) {
+            model.addAttribute("loi5", "Không được để trống");
+            return "/admin/khuyenmai/add-khuyen-mai";
         } else {
-            if (couponCode.trim().isEmpty()) {
-                model.addAttribute("loi", "Không được để trống");
-                return "/admin/khuyenmai/add-khuyen-mai";
-            } else if (name.trim().isEmpty()) {
-                model.addAttribute("loi2", "Không được để trống");
-                return "/admin/khuyenmai/add-khuyen-mai";
-            } else {
-                Promotion promotion = new Promotion();
-                promotion.setCouponCode(couponCode);
-                promotion.setCreatedAt(createdAt);
-                promotion.setDiscountValue(discountValue);
-                promotion.setExpiredAt(expiredAt);
-//                promotion.setIsActive(isActive);
-//                promotion.setIsPublic(isPublic);
-                promotion.setMaximumDiscountValue(maximumDiscountValue);
-                promotion.setName(name);
-                service.savePromotion(promotion);
-                System.out.println(promotion);
-                return "redirect:/khuyen-mai/admin";
-            }
+            Promotion promotion = new Promotion();
+            promotion.setCouponCode(couponCode);
+            promotion.setDiscountValue(Long.valueOf(discountValue));
+            promotion.setExpiredAt(Date.valueOf(expiredAt));
+            promotion.setMaximumDiscountValue(Long.valueOf(maximumDiscountValue));
+            promotion.setName(name);
+            service.savePromotion(promotion);
+            System.out.println(promotion);
+            return "redirect:/khuyen-mai/admin";
         }
+
     }
 
     @GetMapping("/view-sua-khuyen-mai/{id}")
@@ -144,7 +129,7 @@ public class PromotionController {
     @PostMapping("/sua-khuyen-mai/{id}")
     public String DashboardAddProducerHandel(Model model, @PathVariable("id") int id,
                                              @RequestParam("couponCode") String couponCode,
-                                             @RequestParam("createdAt") Date createdAt,
+//                                             @RequestParam("createdAt") Date createdAt,
                                              @RequestParam("discountValue") Long discountValue,
                                              @RequestParam("expiredAt") Date expiredAt,
 //                                             @RequestParam("isActive") Boolean isActive,
@@ -166,7 +151,7 @@ public class PromotionController {
             } else {
                 Promotion promotion = service.getAllPromotionById(id);
                 promotion.setCouponCode(couponCode);
-                promotion.setCreatedAt(createdAt);
+//                promotion.setCreatedAt(createdAt);
                 promotion.setDiscountValue(discountValue);
                 promotion.setExpiredAt(expiredAt);
 //                promotion.setIsActive(isActive);

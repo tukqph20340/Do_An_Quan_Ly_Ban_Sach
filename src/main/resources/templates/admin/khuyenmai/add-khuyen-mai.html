@@ -131,7 +131,6 @@
         <!-- Navigation / End -->
 
 
-
         <!-- Content
 ================================================== -->
         <div class="dashboard-content">
@@ -177,17 +176,10 @@
                                 </div>
                                 <div class="row with-forms">
                                     <div class="col-md-6">
-                                        <h5>Ngày Tạo</h5>
-                                        <input name="createdAt" class="search-field" type="date" id="date"
-                                               value="" placeholder="Ngày Tạo"/>
-                                        <!--                                        <p style="color: red">[[${loi3}]]</p>-->
-                                    </div>
-                                    <div class="col-md-6">
                                         <h5>Giá Trị Giảm</h5>
                                         <input name="discountValue" class="search-field" type="number" id="soGiam"
                                                value="" placeholder="Giá Trị Giảm"/>
-                                        <!--                                        <p style="color: red">[[${loi2}]]</p>-->
-                                        <!--                                        <p style="color: red">[[${loi10}]]</p>-->
+                                        <p style="color: red">[[${loi2}]] </p>
                                     </div>
                                 </div>
                                 <div class="row with-forms">
@@ -195,13 +187,14 @@
                                         <h5>Ngày Hết Hạn</h5>
                                         <input name="expiredAt" class="search-field" type="date" id="hethan"
                                                value="" placeholder="Ngày Hết Hạn"/>
-                                        <!--                                        <p style="color: red">[[${loi3}]]</p>-->
+                                        <p style="color: red">[[${loi3}]] </p>
                                     </div>
                                     <div class="col-md-6">
                                         <h5>Giá Trị Giảm Tối Đa</h5>
-                                        <input name="maximumDiscountValue" class="search-field" type="number" id="giatrigiam"
+                                        <input name="maximumDiscountValue" class="search-field" type="number"
+                                               id="giatrigiam"
                                                value="" placeholder="Giá Trị Giảm Tối Đa"/>
-                                        <!--                                        <p style="color: red">[[${loi4}]]</p>-->
+                                        <p style="color: red">[[${loi4}]]</p>
                                     </div>
                                 </div>
                                 <!-- Row / End -->
@@ -225,7 +218,7 @@
                                     <textarea name="name" class="WYSIWYG" cols="40" id="mota"
                                               rows="3" spellcheck="true"
                                               placeholder="Mô Tả Chi Tiết"></textarea>
-                                    <p style="color: red">[[${loi2}]]</p>
+                                    <p style="color: red">[[${loi5}]]</p>
                                 </div>
                             </div>
                             <!-- Section / End -->
@@ -277,8 +270,8 @@
 <script type="text/javascript" src="scripts/dropzone.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#submitButton").click(function() {
+    $(document).ready(function () {
+        $("#submitButton").click(function () {
             // Hiển thị SweetAlert2 xác nhận
             Swal.fire({
                 title: 'Bạn có muốn thêm sản phẩm?',
@@ -308,16 +301,16 @@
                         data: formData,
                         processData: false,
                         contentType: false,
-                        success: function(response) {
+                        success: function (response) {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Thêm thành công',
                                 time: 1000,
-                            }).then(function() {
+                            }).then(function () {
                                 window.location.href = '/khuyen-mai/admin';
                             });
                         },
-                        error: function(error) {
+                        error: function (error) {
                             // Xử lý lỗi nếu cần thiết
                         }
                     });
