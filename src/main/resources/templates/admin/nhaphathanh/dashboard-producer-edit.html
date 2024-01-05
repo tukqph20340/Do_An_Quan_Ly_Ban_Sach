@@ -293,8 +293,15 @@
             Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
             return;
         }
-        if(phone.trim().length !==10){
-            Swal.fire('Lỗi!', 'Số điện thoại không đúng!', 'error');
+        if (phone.trim().length < 10 || phone.trim().length > 11 || isNaN(phone.trim())) {
+            Swal.fire('Lỗi!', 'Số điện thoại không đúng định dạng!', 'error');
+            return;
+        }
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+            // Nếu địa chỉ email không đúng định dạng
+            Swal.fire('Lỗi!', 'Vui lòng nhập địa chỉ email hợp lệ!', 'error');
             return;
         }
         if (id !== null && coverType !== null && description !== null) {
