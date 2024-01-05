@@ -279,6 +279,8 @@
                                                 </option>
                                             </th:block>
                                         </select>
+
+                                        <input type="hidden" id="existingAuthorId" th:value="${existingAuthorId}" />
                                         <p style="color: red">[[${loiTacGia}]] [[${loi13}]]</p>
                                         <div class="chosen-container chosen-container-multi" style="width: 100%;"
                                              title="">
@@ -309,6 +311,27 @@
                                         </div>
 
                                     </div>
+                                    <script>
+                                        $(document).ready(function () {
+                                            // Get the ID of the existing author for the product
+                                            var existingAuthorId = $('#existingAuthorId').val();
+
+                                            // Disable the option for the existing author
+                                            $('#tacgia option[value="' + existingAuthorId + '"]').prop('disabled', true);
+
+                                            // Update options when selection changes
+                                            $('#tacgia').on('change', function () {
+                                                var selectedValue = $(this).val();
+
+                                                // Check if the selected author is the existing author
+                                                if (selectedValue && selectedValue.includes(existingAuthorId)) {
+                                                    alert('Cannot select the existing author again.');
+                                                    // Reset the selection to prevent selecting the existing author
+                                                    $(this).val(null).trigger('chosen:updated');
+                                                }
+                                            });
+                                        });
+                                    </script>
 
                                     <div class="col-md-4">
                                         <h5>Nhà Xuất Bản</h5>
@@ -434,6 +457,7 @@
 <!-- Scripts
 ================================================== -->
 <script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript"
         src="/scripts/jquery-migrate-3.3.2.min.js"></script>
 <script type="text/javascript" src="/scripts/mmenu.min.js"></script>
