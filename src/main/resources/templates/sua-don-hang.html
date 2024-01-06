@@ -15,18 +15,18 @@
             rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 
-    <link rel="stylesheet" href="listeo/css/style.css">
-    <link rel="stylesheet" href="listeo/css/main-color.css" id="colors">
-    <link rel="stylesheet" href="css/invoice.css">
+    <link rel="stylesheet" href="/listeo/css/style.css">
+    <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
+    <link rel="stylesheet" href="/css/invoice.css">
 <style>
     div.stars {
         width: 270px;
@@ -134,111 +134,16 @@
 </div>
 
 <!-- Offcanvas Menu Begin -->
-<div class="offcanvas-menu-overlay"></div>
-<div class="offcanvas-menu-wrapper">
-    <div class="offcanvas__option">
-        <div class="offcanvas__links">
-            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập</a> <a
-                th:if="${session.acc != null}" th:text="${session.acc.user_Name}"></a>
-            <a th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
-        </div>
-    </div>
-    <div class="offcanvas__nav__option">
-        <a href="#" class="search-switch"><img src="img/icon/search.png"
-                                               alt=""></a> <a href="#"><img src="img/icon/heart.png" alt=""></a>
-        <a th:href="@{/cart}"><img src="img/icon/cart.png" alt=""></a>
-    </div>
-    <div id="mobile-menu-wrap"></div>
-    <div class="offcanvas__text">
-
-    </div>
-</div>
 <!-- Offcanvas Menu End -->
 
 <!-- Header Section Begin -->
-<header class="header">
-    <div class="header__top">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-6 col-md-7">
-                    <div class="header__top__left">
-
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-5">
-                    <div class="header__top__right">
-                        <div class="header__top__links">
-                            <a th:if="${session.acc == null}" th:href="@{/signin}">Đăng Nhập
-                                </a> <a th:if="${session.acc != null}"
-                                          th:text="${session.acc.user_Name}" style="color: white;"></a> <a
-                                th:if="${session.acc != null}" th:href="@{/signout}">Đăng Xuất</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="header__logo">
-                    <a th:href="@{/home}"><img src="img/logo.png" alt=""></a>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <nav class="header__menu mobile-menu">
-                    <ul>
-                        <li class="active"><a style="font-size: 15px;" th:href="@{/home}">Trang Chủ</a></li>
-                        <li><a style="font-size: 15px;"th:href="@{/shop}">Cửa Hàng</a></li>
-                        <li><a style="font-size: 15px;"href="#">Thông Tin</a>
-                            <ul class="dropdown">
-                                <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
-                                <li><a th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
-                                <li><a th:href="@{/myhistory}">Lịch Sử Đã Mua</a></li>
-                                <li><a th:href="@{/about}">Về Chúng Tôi</a></li>
-                            </ul>
-                        </li>
-                        <li><a style="font-size: 15px;"th:href="@{/blog}">Tin Tức</a></li>
-                        <li><a style="font-size: 15px;"th:href="@{/contact}">Liên Lạc</a></li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="header__nav__option">
-                    <a href="#" class="search-switch"><img
-                            src="img/icon/search.png" alt=""></a> <a href="#"><img
-                        src="img/icon/heart.png" alt=""></a> <a th:href="@{/cart}"><img
-                        src="img/icon/cart.png" alt=""></a>
-                </div>
-            </div>
-        </div>
-        <div class="canvas__open">
-            <i class="fa fa-bars"></i>
-        </div>
-    </div>
-</header>
-<div id="dashboard" style="padding-top: 0px;">
 
 
+<div style="margin-top: 10px"></div>
     <!-- Content
 ================================================== -->
-    <div class="dashboard-content" style="width: 80%; margin-left: 0px; margin: 0 100px;">
-
         <!-- Titlebar -->
-        <div id="titlebar">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Đánh Giá</h2>
-                    <!-- Breadcrumbs -->
-                    <nav id="breadcrumbs">
-                        <ul>
-                            <li><a th:href="@{/home}">Trang Chủ</a></li>
-                            <li>Đánh Giá</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
+
         <div id="invoice">
 
             <!-- Header -->
@@ -283,8 +188,8 @@
                                 <td th:text="${y.count}"></td>
                                 <td th:text="${y.unit_price} + ' VNĐ'"></td>
                                 <td th:if="${s}==null">
-                                    <a th:href="'#product-' + ${y.product.id}" class="button gray">Đánh
-                                        giá</a>
+                                    <a th:if="${a!=null}" th:href="@{/xoa-don-hang/{id}(${y.id})}" class="button gray">Xóa Sản Phẩm</a>
+                                    <a th:href="@{/sua-don-hang/{id}(${y.id})}" class="button gray">Sửa Sản Phẩm</a>
                                 </td>
                                 <td th:if="${s}!=null">
 
@@ -371,101 +276,24 @@
     <!-- Content / End -->
 </div>
 <!-- Contact Section End -->
-
+<div style="margin-top: 2px"></div>
 <!-- Footer Section Begin -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="footer__about">
-                    <div class="footer__logo">
-                        <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                    </div>
-                    <p>Khách hàng là trung tâm của mô hình kinh doanh độc đáo của chúng tôi, bao gồm cả thiết kế</p>
-                    <a href="#"><img src="img/payment.png" alt=""></a>
-                </div>
-            </div>
-            <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Mua Sắm</h6>
-                    <ul>
-                        <li><a href="#">Cửa hàng Sách</a></li>
-                        <li><a href="#">Sách Xu Hướng</a></li>
-                        <li><a href="#">Doanh thu</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Mua Sắm</h6>
-                    <ul>
-                        <li><a href="#">Liên hệ chúng tôi</a></li>
-                        <li><a href="#">Phương thức thanh toán</a></li>
-                        <li><a href="#">Vận chuyển</a></li>
-                        <li><a href="#">Trả lại & Trao đổi</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                <div class="footer__widget">
-                    <h6>Tin tứcThư</h6>
-                    <div class="footer__newslatter">
-                        <p>Hãy là người đầu tiên biết về hàng mới về, lookbook, sale
-                            & khuyến mãi!</p>
-                        <form action="#">
-                            <input type="text" placeholder="Your email">
-                            <button type="submit">
-                                <span class="icon_mail_alt"></span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="footer__copyright__text">
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    <p>
-                        Copyright ©
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        Mọi quyền được bảo lưu | Mẫu này được thực hiện với <i
-                            class="fa fa-heart-o" aria-hidden="true"></i> qua <a
-                            href="https://colorlib.com" target="_blank">SD-81</a>
-                    </p>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
 <!-- Footer Section End -->
 
 <!-- Search Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch">+</div>
-        <form th:action="@{/search}" method="POST" class="search-model-form">
-            <input name="search-input" type="text" id="search-input"
-                   placeholder="Search here.....">
-        </form>
-    </div>
-</div>
 <!-- Search End -->
 
 <!-- Js Plugins -->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/jquery.nicescroll.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/jquery.countdown.min.js"></script>
-<script src="js/jquery.slicknav.js"></script>
-<script src="js/mixitup.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/jquery.nicescroll.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/jquery.countdown.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
 
 </body>
 

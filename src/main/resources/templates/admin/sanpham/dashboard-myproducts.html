@@ -8,14 +8,14 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
     <!-- CSS
     ================================================== -->
     <link rel="stylesheet" href="/listeo/css/style.css">
@@ -279,7 +279,7 @@
                         </table>
                         <div th:if="${a==null}">
                             <!--phân trang cho sản phẩm-->
-                            <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                            <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">
                                 <ul class="pagination">
                                     <!--trang đầu-->
                                     <li class="page-item">
@@ -308,7 +308,7 @@
                         </div>
                         <div th:if="${a!=null}">
                             <!--phân trang cho sản phẩm-->
-                            <nav aria-label="..." style="margin-left: 370px ;font-size: 15px;color: black">
+                            <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">
                                 <ul class="pagination">
                                     <!--trang đầu-->
                                     <li class="page-item">
@@ -369,6 +369,12 @@
 <script src="/scripts/moment.min.js"></script>
 <script src="/scripts/daterangepicker.js"></script>
 
+<script th:if="${thongBao == null}">
+    alert("Thêm sản phẩn thành công");
+</script>
 
+<script th:if="${thongBao == 'b'}">
+    alert("Sửa sản phẩn thành công");
+</script>
 </body>
 </html>

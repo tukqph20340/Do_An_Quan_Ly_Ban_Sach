@@ -266,6 +266,7 @@ public class AdminController {
                 model.addAttribute("img", "img");
             }
         }
+        model.addAttribute("thongBao", "a");
         model.addAttribute("pageProduct", pageProduct.getContent());
         model.addAttribute("pageProductPage", pageProduct.getTotalPages());
         model.addAttribute("pageNumber", pageNo);
@@ -400,7 +401,7 @@ public class AdminController {
                                                @RequestParam("book_cover") int bookCover,
                                                @RequestParam("producer") int producer,
                                                @RequestParam("listImage") MultipartFile[] listImage
-            , HttpServletRequest request
+            , HttpServletRequest request, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo
     ) throws Exception {
 
 
@@ -1098,7 +1099,21 @@ public class AdminController {
 
                 if (categories == null || categories.length == 0) {
                     if (author == null || author.length == 0) {
-                        return "redirect:/san-pham-admin";
+                        Page<Product> pageProduct = productService.findAll(pageNo, 5);
+                        for (Product product : pageProduct) {
+                            if (product.getProductImage().isEmpty()) {
+                                model.addAttribute("img", null);
+                            } else {
+                                model.addAttribute("img", "img");
+                            }
+                        }
+                        model.addAttribute("thongBao", "b");
+                        model.addAttribute("pageProduct", pageProduct.getContent());
+                        model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+                        model.addAttribute("pageNumber", pageNo);
+                        model.addAttribute("Cate", new Product());
+                        model.addAttribute("a", null);
+                        return "/admin/sanpham/dashboard-myproducts";
                     } else {
 //                 Lặp qua danh sách tác giả và thêm vào bảng product_author
                         List<ProductAuthor> list = productAuthorRepository.findByProductId(id);
@@ -1240,7 +1255,21 @@ public class AdminController {
                         productCategoryRepository.save(productCategory);
 
                         if (author == null || author.length == 0) {
-                            return "redirect:/san-pham-admin";
+                            Page<Product> pageProduct = productService.findAll(pageNo, 5);
+                            for (Product product : pageProduct) {
+                                if (product.getProductImage().isEmpty()) {
+                                    model.addAttribute("img", null);
+                                } else {
+                                    model.addAttribute("img", "img");
+                                }
+                            }
+                            model.addAttribute("thongBao", "b");
+                            model.addAttribute("pageProduct", pageProduct.getContent());
+                            model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+                            model.addAttribute("pageNumber", pageNo);
+                            model.addAttribute("Cate", new Product());
+                            model.addAttribute("a", null);
+                            return "/admin/sanpham/dashboard-myproducts";
                         } else {
 //                 Lặp qua danh sách tác giả và thêm vào bảng product_author
                             List<ProductAuthor> listTG = productAuthorRepository.findByProductId(id);
@@ -1322,11 +1351,39 @@ public class AdminController {
                     img.setUrl_Image(urlImg);
                     productImageService.save(img);
                 }
-                return "redirect:/san-pham-admin";
+                Page<Product> pageProduct = productService.findAll(pageNo, 5);
+                for (Product product : pageProduct) {
+                    if (product.getProductImage().isEmpty()) {
+                        model.addAttribute("img", null);
+                    } else {
+                        model.addAttribute("img", "img");
+                    }
+                }
+                model.addAttribute("thongBao", "b");
+                model.addAttribute("pageProduct", pageProduct.getContent());
+                model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+                model.addAttribute("pageNumber", pageNo);
+                model.addAttribute("Cate", new Product());
+                model.addAttribute("a", null);
+                return "/admin/sanpham/dashboard-myproducts";
 
             }
         } catch (Exception e) {
-            return "redirect:/san-pham-admin";
+            Page<Product> pageProduct = productService.findAll(pageNo, 5);
+            for (Product product : pageProduct) {
+                if (product.getProductImage().isEmpty()) {
+                    model.addAttribute("img", null);
+                } else {
+                    model.addAttribute("img", "img");
+                }
+            }
+            model.addAttribute("thongBao", "b");
+            model.addAttribute("pageProduct", pageProduct.getContent());
+            model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+            model.addAttribute("pageNumber", pageNo);
+            model.addAttribute("Cate", new Product());
+            model.addAttribute("a", null);
+            return "/admin/sanpham/dashboard-myproducts";
         }
     }
 
@@ -1461,6 +1518,7 @@ public class AdminController {
                                             @RequestParam("description") String description,
 //                                            @RequestParam("author") List<Author> author,
                                             @RequestParam("book_cover") int bookCover,
+                                            @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
                                             @RequestParam("producer") int producer,
                                             @RequestParam("listImage") MultipartFile[] listImage
             , HttpServletRequest request
@@ -1761,10 +1819,24 @@ public class AdminController {
 
 
                 }
-                session.setAttribute("addProduct", "addProductSuccess");
-                return "redirect:/san-pham-admin";
+                model.addAttribute("thongBao", null);
+                Page<Product> pageProduct = productService.findAll(pageNo, 5);
+                for (Product product : pageProduct) {
+                    if (product.getProductImage().isEmpty()) {
+                        model.addAttribute("img", null);
+                    } else {
+                        model.addAttribute("img", "img");
+                    }
+                }
+                model.addAttribute("pageProduct", pageProduct.getContent());
+                model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+                model.addAttribute("pageNumber", pageNo);
+                model.addAttribute("Cate", new Product());
+                model.addAttribute("a", null);
+                return "/admin/sanpham/dashboard-myproducts";
             }
         } catch (Exception e) {
+
             model.addAttribute("loiimg", "Ảnh không được để trống");
             String addProduct = (String) session.getAttribute("addProduct");
             model.addAttribute("addProduct", addProduct);
@@ -2189,6 +2261,7 @@ public class AdminController {
             return "redirect:/san-pham-admin";
         }
 
+
         if (tenSanPham.trim().isEmpty()) {
             if (giaThap.trim().isEmpty()) {
                 Page<Product> pageProduct = productService.timKiemnhoHon(Long.valueOf(giaCao), pageNo, 5);
@@ -2199,6 +2272,7 @@ public class AdminController {
                         model.addAttribute("img", "img");
                     }
                 }
+                model.addAttribute("thongBao", "a");
                 model.addAttribute("pageProduct", pageProduct.getContent());
                 model.addAttribute("pageProductPage", pageProduct.getTotalPages());
                 model.addAttribute("pageNumber", pageNo);
@@ -2214,6 +2288,7 @@ public class AdminController {
                         model.addAttribute("img", "img");
                     }
                 }
+                model.addAttribute("thongBao", "a");
                 model.addAttribute("pageProduct", pageProduct.getContent());
                 model.addAttribute("pageProductPage", pageProduct.getTotalPages());
                 model.addAttribute("pageNumber", pageNo);
@@ -2230,6 +2305,7 @@ public class AdminController {
                         model.addAttribute("img", "img");
                     }
                 }
+                model.addAttribute("thongBao", "a");
                 model.addAttribute("pageProduct", pageProduct.getContent());
                 model.addAttribute("pageProductPage", pageProduct.getTotalPages());
                 model.addAttribute("pageNumber", pageNo);
@@ -2247,6 +2323,7 @@ public class AdminController {
                     model.addAttribute("img", "img");
                 }
             }
+            model.addAttribute("thongBao", "a");
             model.addAttribute("pageProduct", pageProduct.getContent());
             model.addAttribute("pageProductPage", pageProduct.getTotalPages());
             model.addAttribute("pageNumber", pageNo);

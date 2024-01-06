@@ -261,7 +261,7 @@
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
                                                             <th>Email</th>
-                                                            <th colspan="3">Cập Nhật</th>
+                                                            <th colspan="4">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -280,6 +280,10 @@
                                                                 <a th:href="@{/huy-admin/{id}(id=${y.id})}"
                                                                    class="button gray reject"><i
                                                                         class="sl sl-icon-close"></i> Hủy</a></td>
+                                                            <td>
+                                                                <a th:href="@{/sua-hang/{id}(id=${y.id})}"
+                                                                   class="button gray reject"><i
+                                                                        class="sl sl-icon-note"></i> Sửa</a></td>
                                                             <td>
                                                                 <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}"
                                                                    class="button gray checkmark"><i
