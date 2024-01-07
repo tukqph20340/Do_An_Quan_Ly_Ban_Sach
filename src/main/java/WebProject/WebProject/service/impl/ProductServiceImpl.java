@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAllProduct() {
 		// TODO Auto-generated method stub
-		return productRepository.findAll();
+		return productRepository.getAllProduct();
 	}
 
 	@Override
