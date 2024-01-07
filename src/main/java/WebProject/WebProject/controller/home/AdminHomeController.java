@@ -7,17 +7,24 @@ import WebProject.WebProject.entity.User;
 import WebProject.WebProject.entity.Wallet;
 import WebProject.WebProject.repository.OrderRepository;
 import WebProject.WebProject.service.CookieService;
+import WebProject.WebProject.service.Order_ItemService;
+
 import WebProject.WebProject.service.ProductService;
 import WebProject.WebProject.repository.ThongKeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
@@ -35,6 +42,8 @@ public class AdminHomeController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    Order_ItemService order_itemService;
 
 
     @Autowired
@@ -466,6 +475,23 @@ public class AdminHomeController {
 
             return "/admin/quanlydonhang/thongkedonhang.html";
 
+        }
+    }
+
+
+
+
+    @PostMapping("/sua-so-luong-don-hang")
+    @ResponseBody
+    public ResponseEntity<String> updateCartQuantity(@RequestParam("orderId") String orderId,
+            @RequestParam("soLuong") String soLuong
+                                                    ) {
+        try {
+            order_itemService.updateCartItemQuantity(orderId,Long.valueOf(soLuong));
+            return ResponseEntity.ok("Success");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating selection status");
         }
     }
 }

@@ -27,105 +27,105 @@
     <link rel="stylesheet" href="/listeo/css/style.css">
     <link rel="stylesheet" href="/listeo/css/main-color.css" id="colors">
     <link rel="stylesheet" href="/css/invoice.css">
-<style>
-    div.stars {
-        width: 270px;
-        display: inline-block;
-    }
+    <style>
+        div.stars {
+            width: 270px;
+            display: inline-block;
+        }
 
-    input.star {
-        display: none;
-    }
+        input.star {
+            display: none;
+        }
 
-    label.star {
-        float: right;
-        padding: 10px;
-        font-size: 36px;
-        color: #444;
-        transition: all .2s;
-    }
+        label.star {
+            float: right;
+            padding: 10px;
+            font-size: 36px;
+            color: #444;
+            transition: all .2s;
+        }
 
-    .stars {
-        text-align: center;
-        display: flex;
-        justify-content: center; /* Canh giữa theo chiều ngang */
-        align-items: center; /* Canh giữa theo chiều dọc */
-    }
-
-
-    input.star:checked ~ label.star:before {
-        content: '\f005';
-        color: #FD4;
-        transition: all .25s;
-    }
-
-    input.star-5:checked ~ label.star:before {
-        color: #FE7;
-        text-shadow: 0 0 20px #952;
-    }
-
-    input.star-1:checked ~ label.star:before {
-        color: #F62;
-    }
-
-    label.star:hover {
-        transform: rotate(-15deg) scale(1.3);
-    }
-
-    label.star:before {
-        content: '\f006';
-        font-family: FontAwesome;
-    }
-
-    .wrapper a {
-        display: inline-block;
-        text-decoration: none;
-        padding: 15px;
-        background-color: #fff;
-        border-radius: 3px;
-        text-transform: uppercase;
-        color: #585858;
-    }
-
-    .modal {
-        visibility: hidden;
-        opacity: 0;
-        position: fixed; /* Đặt vị trí là fixed để modal không bị cuốn khi cuộn trang */
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(77, 77, 77, .7);
-        transition: all .4s;
-        z-index: 999; /* Đặt z-index cao để modal nằm trên các phần còn lại của trang */
-    }
+        .stars {
+            text-align: center;
+            display: flex;
+            justify-content: center; /* Canh giữa theo chiều ngang */
+            align-items: center; /* Canh giữa theo chiều dọc */
+        }
 
 
-    .modal:target {
-        visibility: visible;
-        opacity: 1;
-    }
+        input.star:checked ~ label.star:before {
+            content: '\f005';
+            color: #FD4;
+            transition: all .25s;
+        }
 
-    .modal__content {
-        border-radius: 4px;
-        position: relative;
-        width: 500px;
-        max-width: 90%;
-        background: #fff;
-        padding: 1em 2em;
-    }
+        input.star-5:checked ~ label.star:before {
+            color: #FE7;
+            text-shadow: 0 0 20px #952;
+        }
 
-    .modal__close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: #585858;
-        text-decoration: none;
-    }
-</style>
+        input.star-1:checked ~ label.star:before {
+            color: #F62;
+        }
+
+        label.star:hover {
+            transform: rotate(-15deg) scale(1.3);
+        }
+
+        label.star:before {
+            content: '\f006';
+            font-family: FontAwesome;
+        }
+
+        .wrapper a {
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 3px;
+            text-transform: uppercase;
+            color: #585858;
+        }
+
+        .modal {
+            visibility: hidden;
+            opacity: 0;
+            position: fixed; /* Đặt vị trí là fixed để modal không bị cuốn khi cuộn trang */
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(77, 77, 77, .7);
+            transition: all .4s;
+            z-index: 999; /* Đặt z-index cao để modal nằm trên các phần còn lại của trang */
+        }
+
+
+        .modal:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal__content {
+            border-radius: 4px;
+            position: relative;
+            width: 500px;
+            max-width: 90%;
+            background: #fff;
+            padding: 1em 2em;
+        }
+
+        .modal__close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #585858;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -140,140 +140,222 @@
 
 
 <div style="margin-top: 10px"></div>
-    <!-- Content
+<!-- Content
 ================================================== -->
-        <!-- Titlebar -->
+<!-- Titlebar -->
 
-        <div id="invoice">
+<div id="invoice">
 
-            <!-- Header -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div id="logo">
-                        <img src="/images/logo3.png" alt="">
-                    </div>
-                </div>
-                <div class="col-md-6">
-
-                    <p id="details">
-                        <strong>Mã Hóa Đơn: </strong><i th:text="'#' + ${order.id}"></i><br>
-                        <strong>Ngày: </strong><i  th:text="${order.booking_Date}"></i><br>
-                    </p>
-                </div>
+    <!-- Header -->
+    <div class="row">
+        <div class="col-md-6">
+            <div id="logo">
+                <img src="/images/logo3.png" alt="">
             </div>
-            <!-- Client & Supplier -->
-            <div class="row">
-                <div class="col-md-6">
-                    <strong class="margin-bottom-5">Khách Hàng</strong>
-                    <p>
-                        <i th:text="${order.fullname}"></i> <br> <i
-                            th:text="'SĐT: ' + ${order.phone}"></i> <br> <i
-                            th:text="'Email: ' + ${order.email}"></i> <br>
-                    </p>
-                </div>
-            </div>
-            <!-- Invoice -->
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="margin-top-20">
-                        <tr>
-                            <th>Tên Sản Phẩm</th>
-                            <th>Số Lượng</th>
-                            <th>Giá</th>
-                            <th></th>
-                        </tr>
-                        <th:block th:each="y: ${listOrder_Item}">
-                            <tr>
-                                <td th:text="${y.product.product_Name}"></td>
-                                <td th:text="${y.count}"></td>
-                                <td th:text="${y.unit_price} + ' VNĐ'"></td>
-                                <td th:if="${s}==null">
-                                    <a th:if="${a!=null}" th:href="@{/xoa-don-hang/{id}(${y.id})}" class="button gray">Xóa Sản Phẩm</a>
-                                    <a th:href="@{/sua-don-hang/{id}(${y.id})}" class="button gray">Sửa Sản Phẩm</a>
-                                </td>
-                                <td th:if="${s}!=null">
+        </div>
+        <div class="col-md-6">
 
-                                </td>
-                                <!-- Modal for Đánh giá -->
-                                <div th:id="'product-' + ${y.product.id}" class="modal">
-                                    <div class="modal__content modal-fragment">
-                                        <h1 style="text-align: center"
-                                            th:text="'Sản Phẩm: ' + ${y.product.product_Name}"></h1>
-                                        <br>
-                                        <form th:action="@{/addToStatistic}" method="post">
-                                            <div class="stars" style="text-align: center">
-                                                <input type="hidden" th:value="${(order.id)}"
-                                                       name="order_id">
-                                                <input type="hidden" th:value="${y.product.id}"
-                                                       name="id_product">
-
-
-                                                <input class="star star-5" th:id="'star-5-' + ${y.product.id}"
-                                                       type="radio" name="starRating" value="5"/>
-                                                <label th:for="'star-5-' + ${y.product.id}"
-                                                       class="star star-5"></label>
-                                                <input class="star star-4" th:id="'star-4-' + ${y.product.id}"
-                                                       type="radio" name="starRating" value="4"/>
-                                                <label th:for="'star-4-' + ${y.product.id}"
-                                                       class="star star-4"></label>
-                                                <input class="star star-3" th:id="'star-3-' + ${y.product.id}"
-                                                       type="radio" name="starRating" value="3"/>
-                                                <label th:for="'star-3-' + ${y.product.id}"
-                                                       class="star star-3"></label>
-                                                <input class="star star-2" th:id="'star-2-' + ${y.product.id}"
-                                                       type="radio" name="starRating" value="2"/>
-                                                <label th:for="'star-2-' + ${y.product.id}"
-                                                       class="star star-2"></label>
-                                                <input class="star star-1" th:id="'star-1-' + ${y.product.id}"
-                                                       type="radio" name="starRating" value="1"/>
-                                                <label th:for="'star-1-' + ${y.product.id}"
-                                                       class="star star-1"></label>
-                                                <input type="hidden"  name="starRating" value="0"/>
-
-
-
-                                                <!-- Repeat this for other star rating options -->
-                                            </div>
-                                            <br>
-                                            <textarea name="description"
-                                                      placeholder="Viết đánh giá"></textarea>
-                                            <input type="submit" value="Đánh giá" class="button gray">
-                                            <a href="#" class="modal__close">&times;</a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </tr>
-                        </th:block>
-
-                    </table>
-
-                    <p>
-                        <strong class="margin-bottom-5">Địa Chỉ: </strong>
-                        <i th:text="${order.note}+'-'"></i><i th:text="${order.wards}+'-'"></i><i th:text="${order.address}+'-'"></i> <i th:text="${order.country}"></i><br>
-                        <strong class="margin-bottom-5">Hình Thức Thanh Toán: </strong>
-                        <i th:text="${order.payment_Method == 'Payment on delivery' ? 'Thanh Toán Khi Nhận Hàng' : (order.payment_Method == 'Payment with momo' ? 'Thanh Toán Bằng Ví MoMo' : 'Thanh Toán Bằng Ví Dự Chữ')}"></i>
-                    </p>
-
-
-                </div>
-
-                <div class="col-md-4 col-md-offset-8">
-
-                    <table id="totals">
-                        <tr>
-                            <th>Tổng Giá</th>
-                            <th><span
-                                    th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
-                            </th>
-
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
+            <p id="details">
+                <strong>Mã Hóa Đơn: </strong><i th:text="'#' + ${order.id}"></i><br>
+                <strong>Ngày: </strong><i th:text="${order.booking_Date}"></i><br>
+            </p>
         </div>
     </div>
-    <!-- Content / End -->
+    <!-- Client & Supplier -->
+    <div class="row">
+        <div class="col-md-6">
+            <strong class="margin-bottom-5">Khách Hàng</strong>
+            <p>
+                <i th:text="${order.fullname}"></i> <br> <i
+                    th:text="'SĐT: ' + ${order.phone}"></i> <br> <i
+
+            </p>
+        </div>
+    </div>
+    <!-- Invoice -->
+    <d class="row">
+        <div class="col-md-12">
+            <a class="button stars" onclick="open1();">Thêm Sản Phẩm</a>
+        </div>
+        <dialog id="data-modal" class="tab-pane " role="tabpanel">
+            <table class="margin-top-20" style="text-align: center">
+                <tr>
+                    <th style="text-align: center;vertical-align: middle;">STT</th>
+                    <th style="text-align: center;vertical-align: middle;">Tên Sản Phẩm</th>
+                    <th th:if="${img!=null}" style="text-align: center;vertical-align: middle;">Ảnh Sản
+                        Phẩm
+                    </th>
+                    <th style="text-align: center;vertical-align: middle;">Giá Sản Phẩm</th>
+                    <th></th>
+                </tr>
+                <th:block th:each="list,index:${pageProduct}">
+                    <tr>
+                        <td style="text-align: center">[[${index.index+1}]]</td>
+                        <td style="text-align: center">[[${list.product_Name}]]
+                        </td>
+                        <td style="text-align: center" th:if="${img!=null}"><img
+                                th:src="${list.productImage[0].url_Image}" height="100px"
+                                width="100px"></td>
+                        <td style="text-align: center">[[${list.price}]] VNĐ</td>
+                        <td style="text-align: center">
+                            <form th:action="@{/them-don-hang/{id}(id=${idHoaDon})}" method="post">
+                                <input type="hidden" name="idSP" th:value="${list.id}">
+                                <button type="submit" style="margin-left: 15px" class="btn-danger">Thêm Sản Phẩm
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+                </th:block>
+            </table>
+            <div>
+                <!--phân trang cho sản phẩm-->
+                <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">
+                    <ul class="pagination">
+                        <!--trang đầu-->
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=0)}"
+                               onclick="return open1();">Trang
+                                Đầu</a>
+                        </li>
+                        <!--Previous-->
+                        <!--số thứ tự trang-->
+                        <!--dùng for i trong thymleaf-->
+                        <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
+                            <li class="page-item">
+                                <a class="page-link" onclick="open1();"
+                                   th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${index})}"
+                                   th:text="${index+1}"></a>
+                            </li>
+                        </div>
+                        <!--Next-->
+                        <!--trang cuối-->
+                        <li class="page-item">
+                            <a class="page-link" onclick="open1();"
+                               th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${pageProductPage -1})}">Trang
+                                Cuối</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <br>
+            <button onclick="out();" class="btn-primary" style="margin-left: 803px;">Thoát</button>
+        </dialog>
+        <script>
+            function open1() {
+                var moder = document.getElementById("data-modal")
+                moder.showModal();
+
+            }
+
+            function out() {
+                var moder = document.getElementById("data-modal")
+                moder.close();
+
+            }
+
+        </script>
+        <div class="col-md-12">
+            <table class="margin-top-20">
+                <tr>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Số Lượng</th>
+                    <th>Giá</th>
+                    <th></th>
+                </tr>
+                <th:block th:each="y: ${listOrder_Item}">
+                    <tr>
+                        <td th:text="${y.product.product_Name}"></td>
+                        <td>
+                            <input th:value="${y.count}" id="soLuong" name="soLuong" type="number"
+                                   th:onchange="updateQuantitya(this, [[${y.unit_price}]], [[${y.id}]])"
+                                   th:attr="data-order-id=${y.id}">
+                        </td>
+
+                        <td><span th:id="'gia'+${y.id}" th:text="${y.unit_price} + ' VNĐ'"></span></td>
+
+                        <script>
+                            function updateQuantitya(inputElement, unitPrice, orderId) {
+                                var soLuong = inputElement.value;
+
+                                // Check if the value is less than 1 or not a number
+                                if (isNaN(soLuong) || soLuong < 1) {
+                                    // Set the value back to 1
+                                    inputElement.value = 1;
+                                    var gia = 1 * unitPrice;
+                                } else {
+                                    var gia = soLuong * unitPrice;
+                                }
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/sua-so-luong-don-hang",
+                                    data: {
+                                        orderId: orderId,
+                                        soLuong: soLuong,
+                                    },
+                                    success: function (response) {
+                                        console.log("Check Input");
+                                        var formattedPrice = new Intl.NumberFormat('vi-VN', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        }).format(gia);
+                                        document.getElementById("gia").innerText = formattedPrice;
+                                    },
+                                    error: function (error) {
+                                        // Handle errors if necessary
+                                    }
+                                });
+                            }
+                        </script>
+
+
+                        <td>
+                            <a th:if="${a!=null}" th:href="@{/xoa-don-hang/{id}(id=${y.id})}" class="button gray">Xóa
+                                Sản
+                                Phẩm</a>
+                            <a th:href="@{/sua-don-hang/{id}(id=${y.id})}" class="button gray">Sửa Thông Tin</a>
+                        </td>
+
+                        <!-- Modal for Đánh giá -->
+                    </tr>
+                </th:block>
+
+            </table>
+
+            <p>
+                <strong class="margin-bottom-5">Địa Chỉ: </strong>
+                <i th:text="${order.note}+'-'"></i><i th:text="${order.wards}+'-'"></i><i
+                    th:text="${order.address}+'-'"></i> <i th:text="${order.country}"></i><br>
+                <strong class="margin-bottom-5">Hình Thức Thanh Toán: </strong>
+                <i th:text="${order.payment_Method == 'Payment on delivery' ? 'Thanh Toán Khi Nhận Hàng' : (order.payment_Method == 'Payment with momo' ? 'Thanh Toán Bằng Ví MoMo' : 'Thanh Toán Bằng Ví Dự Chữ')}"></i>
+            </p>
+
+
+        </div>
+
+        <div class="col-md-4 col-md-offset-8">
+
+            <table id="totals">
+                <tr>
+                    <th>Phí Vận Chuyển</th>
+                    <th><span
+                            th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Tổng Giá</th>
+                    <th><span th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
+                    </th>
+
+                </tr>
+            </table>
+        </div>
+</div>
+
+</div>
+</div>
+<!-- Content / End -->
 </div>
 <!-- Contact Section End -->
 <div style="margin-top: 2px"></div>

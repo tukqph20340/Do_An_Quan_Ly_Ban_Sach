@@ -15,6 +15,7 @@ import WebProject.WebProject.entity.Producer;
 import WebProject.WebProject.entity.Statistic;
 import WebProject.WebProject.entity.Wallet;
 import WebProject.WebProject.repository.WalletRepository;
+import WebProject.WebProject.repository.BookCoverRepository;
 import WebProject.WebProject.service.AuthorService;
 import WebProject.WebProject.service.ProducerService;
 import WebProject.WebProject.service.StatisticService;
@@ -74,6 +75,9 @@ public class ProductControler {
 	ProductRepository productRepository;
 
 	@Autowired
+	BookCoverRepository bookCoverRepository;
+
+	@Autowired
 	CartService cartService;
 
 	@Autowired
@@ -125,6 +129,8 @@ public class ProductControler {
 		model.addAttribute("Top12ProductNewArrivals", Top12ProductNewArrivals);
 		return "index";
 	}
+
+
 	@GetMapping("/shop")
 	public String shop(Model model) throws Exception {
 		User acc = (User) session.getAttribute("acc");
@@ -135,6 +141,7 @@ public class ProductControler {
 		if (session.getAttribute("acc") == null)
 			session.setAttribute("countCart", "0");
 		List<Product> lp = productService.getAllProduct();
+
 		Cookie user_name = cookie.read("user_name");
 		Wallet vi = walletRepository.findByUserId(user_name.getValue());
 		model.addAttribute("vi", vi);
@@ -146,6 +153,7 @@ public class ProductControler {
 		String search_input = (String) session.getAttribute("search_input");
 		model.addAttribute("listProduct", page);
 		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("listBookCover", bookCoverRepository.findAll());
 		List<Producer> productProducers = producerController.getAllProducer();
 		List<Author> author = authorController.getAllAuthor();
 		model.addAttribute("listProducer", productProducers);
