@@ -288,15 +288,23 @@
                         Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
                         return;
                     }
-                    // if (!soGiam.trim().length <= 100){
-                    //     Swal.fire('Lỗi!', 'Giá trị giảm không được quá 100%', 'error');
-                    //     return;
-                    // }
+                    else if (soGiam > 100){
+                        Swal.fire('Lỗi!', 'Giá trị không được lớn hơn 100%', 'error');
+                        return;
+                    }
 
-                    // if (giatrigiam.length > 1000){
-                    //     Swal.fire('Lỗi!', 'Giá trị giảm không được nhỏ hơn 1000VND', 'error');
-                    //     return;
-                    // }
+                    if (giatrigiam < 1000){
+                        Swal.fire('Lỗi!', 'Giá trị giảm không được nhỏ hơn 1000VND', 'error');
+                        return;
+                    }
+                    if (giatrigiam < 0){
+                        Swal.fire('Lỗi!', 'Giá trị giảm không được âm', 'error');
+                        return;
+                    }
+                    if (soGiam < 0){
+                        Swal.fire('Lỗi!', 'Giá trị giảm không được âm', 'error');
+                        return;
+                    }
 
                     $.ajax({
                         type: "POST",
