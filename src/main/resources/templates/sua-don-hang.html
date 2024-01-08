@@ -174,8 +174,9 @@
     </div>
     <!-- Invoice -->
     <d class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="display: flex">
             <a class="button stars" onclick="open1();">Thêm Sản Phẩm</a>
+            <a th:href="@{/sua-don-hang/{id}(id=${idHoaDon})}" class="button gray">Sửa Thông Tin</a>
         </div>
         <dialog id="data-modal" class="tab-pane " role="tabpanel">
             <table class="margin-top-20" style="text-align: center">
@@ -255,6 +256,7 @@
             }
 
         </script>
+
         <div class="col-md-12">
             <table class="margin-top-20">
                 <tr>
@@ -314,7 +316,7 @@
                             <a th:if="${a!=null}" th:href="@{/xoa-don-hang/{id}(id=${y.id})}" class="button gray">Xóa
                                 Sản
                                 Phẩm</a>
-                            <a th:href="@{/sua-don-hang/{id}(id=${y.id})}" class="button gray">Sửa Thông Tin</a>
+
                         </td>
 
                         <!-- Modal for Đánh giá -->

@@ -109,4 +109,93 @@ public class SuaHoaDonController {
     }
 
 
+    @GetMapping("/sua-don-hang/{id}")
+    public String giaoDien(@PathVariable() int id, Model model) {
+        model.addAttribute("id", id);
+        Order order = orderService.findById(id);
+
+        model.addAttribute("detail", order);
+        return "sua-thong-tin-don-hang-admin.html";
+    }
+
+    @PostMapping("/sua-thong-tin-khach-hang/{id}")
+    public String suaThongTin(@PathVariable() int id, @RequestParam("fullname1") String fullname1,
+                              @RequestParam("phone1") String phone1,
+                              @RequestParam("province1") String province1,
+                              @RequestParam("districts1") String districts1,
+                              @RequestParam("wards1") String wards1,
+                              @RequestParam("note1") String note1,
+                              @RequestParam("ship") String ship,
+                              Model model) {
+        if (fullname1.trim().isEmpty()) {
+            model.addAttribute("loiten", "Tên không được để trống");
+            model.addAttribute("id", id);
+            Order order = orderService.findById(id);
+            model.addAttribute("detail", order);
+            return "sua-thong-tin-don-hang-admin.html";
+
+        } else if (phone1.trim().isEmpty()) {
+            model.addAttribute("loisdt", "Số điện thoại không được để trống");
+            model.addAttribute("id", id);
+            Order order = orderService.findById(id);
+            model.addAttribute("detail", order);
+            return "sua-thong-tin-don-hang-admin.html";
+        } else if (phone1.trim().length() < 10 || phone1.trim().length() > 10) {
+            model.addAttribute("loisdt1", "Số điện thoại phải có 10 số");
+            model.addAttribute("id", id);
+            Order order = orderService.findById(id);
+            model.addAttribute("detail", order);
+            return "sua-thong-tin-don-hang-admin.html";
+        } else if (Integer.valueOf(phone1) < 1) {
+            model.addAttribute("loisdt2", "Số điện thoại không được âm");
+            model.addAttribute("id", id);
+            Order order = orderService.findById(id);
+            model.addAttribute("detail", order);
+            return "sua-thong-tin-don-hang-admin.html";
+        } else if (province1.isEmpty()) {
+            model.addAttribute("tinh", "Vui lòng chọn tỉnh ");
+            model.addAttribute("id", id);
+            Order order = orderService.findById(id);
+            model.addAttribute("detail", order);
+            return "sua-thong-tin-don-hang-admin.html";
+        } else if (note1.trim().isEmpty()) {
+            model.addAttribute("soNha", "Vui lòng nhập số nhà cụ thể ");
+            model.addAttribute("id", id);
+            Order order = orderService.findById(id);
+            model.addAttribute("detail", order);
+            return "sua-thong-tin-don-hang-admin.html";
+        } else {
+            try {
+                Order order = orderService.findById(id);
+
+                Long giaTong = order.getTotal();
+                Long giaShip = Long.valueOf(order.getTotalShip());
+                Long shi1p = Long.valueOf(ship);
+                System.out.println(giaTong);
+                System.out.println(giaShip);
+                System.out.println(shi1p);
+                Long a1 = giaTong - giaShip + shi1p;
+                System.out.println(a1);
+                order.setFullname(fullname1);
+                order.setPhone(phone1);
+                order.setCountry(province1);
+                order.setAddress(districts1);
+                order.setWards(wards1);
+                order.setNote(note1);
+                order.setTotalShip(Integer.valueOf(ship));
+                order.setTotal(a1);
+                orderService.saveOrder(order);
+                return "redirect:/sua-hang/" + id;
+            } catch (Exception e) {
+                model.addAttribute("huyen", "Vui lòng chọn huyện ");
+                model.addAttribute("xa", "Vui lòng chọn xã ");
+                model.addAttribute("id", id);
+                Order order = orderService.findById(id);
+                model.addAttribute("detail", order);
+                return "sua-thong-tin-don-hang-admin.html";
+            }
+        }
+
+    }
+
 }
