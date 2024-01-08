@@ -213,7 +213,6 @@
                             <tr>
                                 <th style="text-align: center;vertical-align: middle;">ID</th>
                                 <th style="text-align: center;vertical-align: middle;">Mã giảm giá</th>
-                                <th style="text-align: center;vertical-align: middle;">Ngày tạo</th>
                                 <th style="text-align: center;vertical-align: middle;">Giá trị giảm</th>
                                 <th style="text-align: center;vertical-align: middle;">Ngày hết hạn</th>
                                 <th style="text-align: center;vertical-align: middle;">Giá trị giảm tối đa</th>
@@ -223,16 +222,17 @@
                             <tr th:each="list:${pagePromotion}">
                                 <td>[[${list.id}]]</td>
                                 <td>[[${list.couponCode}]]</td>
-                                <td>[[${list.createdAt}]]</td>
                                 <td>[[${list.discountValue}]]</td>
                                 <td>[[${list.expiredAt}]]</td>
                                 <td>[[${list.maximumDiscountValue}]]</td>
                                 <td>[[${list.name}]]</td>
                                 <td>
+
                                     <button class="btn btn-warning" style=" height: 32px; width: 32px;"><a
-                                            class="sl sl-icon-note" th:href="@{/view-all-khuyen-mai/{id}(id=${list.id})}"></a>
+                                            class="sl sl-icon-eye" th:href="@{/view-all-khuyen-mai/{id}(id=${list.id})}">
                                         <ion-icon name="eye-outline"></ion-icon>
-                                        </a></button>
+                                    </a></button>
+
 
                                     <button class="btn btn-primary" style=" height: 32px; width: 32px;"><a
                                             class="sl sl-icon-note" th:href="@{/view-sua-khuyen-mai/{id}(id=${list.id})}"></a>
@@ -249,15 +249,6 @@
                                         <a class="page-link" th:href="@{/khuyen-mai/admin(pageNo=0)}">Trang
                                             Đầu</a>
                                     </li>
-                                    <!--Previous-->
-                                    <li class="page-item" th:if="${pageNumber>0}">
-                                        <a class="page-link"
-                                           th:href="@{/khuyen-mai/admin(pageNo=${pageNumber} -1)}">Trước</a>
-                                    </li>
-                                    <li class="page-item" th:if="${pageNumber == 0}">
-                                        <a class="page-link" th:disabled="true">Trước</a>
-                                    </li>
-                                    <!--số thứ tự trang-->
                                     <!--dùng for i trong thymleaf-->
                                     <div th:each="index : ${#numbers.sequence(0, pagePromotionPage-1)}">
                                         <li class="page-item">
@@ -267,13 +258,6 @@
                                         </li>
                                     </div>
                                     <!--Next-->
-                                    <li class="page-item" th:if="${pageNumber < (pagePromotionPage -1)}">
-                                        <a class="page-link"
-                                           th:href="@{/khuyen-mai/admin(pageNo=${pagePromotionPage} +1)}">Tiếp</a>
-                                    </li>
-                                    <li class="page-item" th:if="${pageNumber == (pagePromotionPage -1)}">
-                                        <a class="page-link" th:disabled="true">Tiếp</a>
-                                    </li>
                                     <!--trang cuối-->
                                     <li class="page-item">
                                         <a class="page-link"
