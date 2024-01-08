@@ -78,7 +78,6 @@ public class PromotionController {
     @PostMapping("/add-khuyen-mai")
     public String DashboardAddProducerHandel(Model model,
                                              @RequestParam("couponCode") String couponCode,
-                                             @RequestParam("createdAt") Date createdAt,
                                              @RequestParam("discountValue") Long discountValue,
                                              @RequestParam("expiredAt") Date expiredAt,
                                              @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
@@ -98,7 +97,6 @@ public class PromotionController {
             } else {
                 Promotion promotion = new Promotion();
                 promotion.setCouponCode(couponCode);
-                promotion.setCreatedAt(createdAt);
                 promotion.setDiscountValue(discountValue);
                 promotion.setExpiredAt(expiredAt);
                 promotion.setMaximumDiscountValue(maximumDiscountValue);
@@ -129,7 +127,6 @@ public class PromotionController {
     @PostMapping("/sua-khuyen-mai/{id}")
     public String DashboardAddProducerHandel(Model model, @PathVariable("id") int id,
                                              @RequestParam("couponCode") String couponCode,
-                                             @RequestParam("createdAt") Date createdAt,
                                              @RequestParam("discountValue") Long discountValue,
                                              @RequestParam("expiredAt") Date expiredAt,
                                              @RequestParam("maximumDiscountValue") Long maximumDiscountValue,
@@ -149,7 +146,6 @@ public class PromotionController {
             } else {
                 Promotion promotion = service.getAllPromotionById(id);
                 promotion.setCouponCode(couponCode);
-                promotion.setCreatedAt(createdAt);
                 promotion.setDiscountValue(discountValue);
                 promotion.setExpiredAt(expiredAt);
                 promotion.setMaximumDiscountValue(maximumDiscountValue);

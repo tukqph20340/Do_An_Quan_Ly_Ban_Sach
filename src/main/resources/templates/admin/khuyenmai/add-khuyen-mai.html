@@ -151,7 +151,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form action="/add-khuyen-mai" method="post" id="yourFormId"
+                    <form th:action="@{/add-khuyen-mai}" method="post" id="yourFormId"
                           enctype="multipart/form-data">
                         <div id="add-listing">
 
@@ -161,7 +161,7 @@
                                 <!-- Headline -->
                                 <div class="add-listing-headline">
                                     <h3>
-                                        <i class="sl sl-icon-doc"></i> Thông Tin
+                                        <i class="sl sl-icon-doc"></i> Thêm Thông Tin Khuyến Mãi
                                     </h3>
                                 </div>
 
@@ -174,12 +174,7 @@
                                     </div>
                                 </div>
                                 <div class="row with-forms">
-                                    <div class="col-md-6">
-                                        <h5>Ngày Tạo</h5>
-                                        <input name="createdAt" class="search-field" type="date" id="date"
-                                               value="" placeholder="Ngày Tạo"/>
-                                    </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <h5>Giá Trị Giảm(%)</h5>
                                         <input name="discountValue" class="search-field" type="number" id="soGiam"
                                                value="" placeholder="Giá Trị Giảm"/>
@@ -285,15 +280,23 @@
                     // Nếu người dùng đồng ý, thực hiện AJAX request
                     var formData = new FormData($("#yourFormId")[0]);
                     var check = document.getElementById("macode").value;
-                    var date = document.getElementById("date").value;
                     var soGiam = document.getElementById("soGiam").value;
                     var hethan = document.getElementById("hethan").value;
                     var giatrigiam = document.getElementById("giatrigiam").value;
                     var mota = document.getElementById("mota").value;
-                    if (!check.trim() || !date.trim || !soGiam.trim || !hethan.trim || !giatrigiam.trim || !mota.trim()) {
+                    if (!check.trim() || !soGiam.trim() || !hethan.trim() || !giatrigiam.trim() || !mota.trim()) {
                         Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
                         return;
                     }
+                    // if (!soGiam.trim().length <= 100){
+                    //     Swal.fire('Lỗi!', 'Giá trị giảm không được quá 100%', 'error');
+                    //     return;
+                    // }
+
+                    // if (giatrigiam.length > 1000){
+                    //     Swal.fire('Lỗi!', 'Giá trị giảm không được nhỏ hơn 1000VND', 'error');
+                    //     return;
+                    // }
 
                     $.ajax({
                         type: "POST",
