@@ -572,6 +572,34 @@ public class OrderController {
         return "redirect:/invoice";
     }
 
+    @GetMapping("invoice1")
+    public String Invoice1 (Model model){
+        Cookie user_name = cookie.read("user_name");
+        Wallet vi = walletRepository.findByUserId(user_name.getValue());
+        model.addAttribute("vi", vi);
+        Order order = (Order) session.getAttribute("order");
+        String invoiceView = (String) session.getAttribute("invoiceView");
+        session.setAttribute("invoiceView", null);
+        List<Order_Item> listOrder_Item = order_ItemService.getAllByOrder_Id(order.getId());
+        model.addAttribute("invoiceView", invoiceView);
+        model.addAttribute("listOrder_Item", listOrder_Item);
+        model.addAttribute("order", order);
+        return "/admin/detail/invoice";
+    }
+
+    @GetMapping("/invoice1/{id}")
+    public String InvoiceView1 ( @PathVariable int id, Model model, HttpServletRequest request){
+        Cookie user_name = cookie.read("user_name");
+        Wallet vi = walletRepository.findByUserId(user_name.getValue());
+        model.addAttribute("vi", vi);
+        String referer = request.getHeader("Referer");
+        model.addAttribute("referer", referer);
+        Order order = orderService.findById(id);
+        session.setAttribute("order", order);
+        session.setAttribute("invoiceView", "view");
+        return "redirect:/invoice1";
+    }
+
     @GetMapping("statistic")
     public String Statistic(Model model) {
         Cookie user_name = cookie.read("user_name");

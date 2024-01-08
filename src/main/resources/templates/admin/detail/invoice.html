@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Male-Fashion</title>
+	<link rel="icon" href="/img/logo-3.png">
+	<link rel="stylesheet" href="css/invoice.css">
+</head>
+
+<body>
+
+<!-- Print Button -->
+<div style="display: flex;">
+	<a  th:href="@{/quan-ly-don-hang}" class="print-button">Quay Lại</a>
+
+
+</div>
+
+
+<!-- Invoice -->
+<div id="invoice">
+
+	<!-- Header -->
+	<div class="row">
+		<div class="col-md-6">
+			<div id="logo">
+				<img src="/images/logo3.png" alt="">
+			</div>
+		</div>
+		<div class="col-md-6">
+
+			<p id="details">
+				<strong>Mã Hóa Đơn: </strong><i th:text="'#' + ${order.id}"></i><br>
+				<strong>Ngày: </strong><i  th:text="${order.booking_Date}"></i><br>
+			</p>
+		</div>
+	</div>
+	<!-- Client & Supplier -->
+	<div class="row">
+		<div class="col-md-6">
+			<strong class="margin-bottom-5">Khách Hàng</strong>
+			<p>
+				<i th:text="${order.fullname}"></i> <br> <i
+					th:text="'SĐT: ' + ${order.phone}"></i> <br> <i
+					th:text="'Email: ' + ${order.email}"></i> <br>
+			</p>
+		</div>
+	</div>
+	<!-- Invoice -->
+	<div class="row">
+		<div class="col-md-12">
+			<table class="margin-top-20">
+				<tr>
+					<th>Sản Phẩm</th>
+					<th>Số Lượng</th>
+					<th>Giá</th>
+				</tr>
+				<th:block th:each="y: ${listOrder_Item}">
+					<tr>
+						<td th:text="${y.product.product_Name}"></td>
+						<td th:text="${y.count}"></td>
+						<td th:text="${y.unit_price} + ' VNĐ'"></td>
+					</tr>
+				</th:block>
+
+			</table>
+
+			<p>
+				<strong class="margin-bottom-5">Địa Chỉ: </strong>
+				<i th:text="${order.note}+'-'"></i><i th:text="${order.wards}+'-'"></i><i th:text="${order.address}+'-'"></i> <i th:text="${order.country}"></i><br>
+				<strong class="margin-bottom-5">Hình Thức Thanh Toán: </strong>
+				<i th:text="${order.payment_Method == 'Payment on delivery' ? 'Thanh Toán Khi Nhận Hàng' : (order.payment_Method == 'Payment with momo' ? 'Thanh Toán Bằng Ví MoMo' : 'Thanh Toán Bằng Ví Dự Chữ')}"></i>
+
+			</p>
+
+
+		</div>
+
+		<div class="col-md-4 col-md-offset-8">
+
+			<table id="totals">
+				<tr>
+					<th>Phí Vận Chuyển</th>
+					<th><span th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
+				</tr>
+				<tr>
+					<th>Tổng Giá</th>
+					<th><span th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
+
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+</body>
+
+</html>

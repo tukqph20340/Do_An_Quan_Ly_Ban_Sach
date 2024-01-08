@@ -77,8 +77,26 @@ public class SuaHoaDonController {
 
     @GetMapping("/xoa-don-hang/{id}")
     public String xoaDonHang(@PathVariable int id, Model model) {
-        Cookie cookie = cookieService.read("idHoaDon");
+        Order_Item order_ite1m = order_ItemService.detail(id);
+        Product product = productService.getProductById(order_ite1m.getProduct().getId());
+        product.setQuantity(product.getQuantity() + order_ite1m.getCount());
+        productService.saveProduct(product);
         order_ItemService.deleteById(id);
+        Cookie cookie = cookieService.read("idHoaDon");
+        List<Order_Item> orderList = order_ItemService.getAllByOrder_Id(Integer.valueOf(cookie.getValue()));
+        Long giaTien = Long.valueOf(0);
+        for (Order_Item order_item : orderList) {
+            giaTien += order_item.getUnit_price();
+        }
+
+
+        List<Order> orderList1 = orderService.findOrderById(Integer.valueOf(cookie.getValue()));
+        for (Order order : orderList1) {
+            order.setTotal(giaTien + order.getTotalShip());
+            orderService.saveOrder(order);
+        }
+
+
         return "redirect:/sua-hang/" + cookie.getValue();
     }
 
@@ -87,25 +105,33 @@ public class SuaHoaDonController {
         Product product = productService.getProductById(Integer.valueOf(idSP));
         List<Order> orderList = orderService.findOrderById(id);
         List<Order_Item> list = order_ItemService.getAllByOrder_Id(id);
+        Long gia = Long.valueOf(0);
         for (Order_Item order_item : list) {
-
             if (order_item.getProduct().getId() == Integer.valueOf(idSP)) {
-
                 return "redirect:/sua-hang/" + id;
             }
+            gia += order_item.getUnit_price() * order_item.getCount();
         }
+
+
         for (Order order : orderList) {
             Order_Item order_item1 = new Order_Item();
             order_item1.setCount(1);
             order_item1.setUnit_price(product.getPrice());
             order_item1.setProduct(product);
             order_item1.setOrder(order);
+
+            System.out.println(gia + product.getPrice() + order.getTotalShip());
+            order.setTotal(gia + product.getPrice() + order.getTotalShip());
+            orderService.saveOrder(order);
             order_ItemService.saveOrder_Item(order_item1);
+            product.setQuantity(product.getQuantity() - 1);
+            productService.saveProduct(product);
             return "redirect:/sua-hang/" + id;
         }
 
-
         return "redirect:/sua-hang/" + id;
+
     }
 
 
@@ -198,4 +224,53 @@ public class SuaHoaDonController {
 
     }
 
+
+    @PostMapping("/cap-nhap/{id}")
+    public String capNhap(@PathVariable int id, HttpServletRequest request, Model model) {
+        List<Order_Item> orderItems = order_ItemService.getAllByOrder_Id(id);
+        Order order = orderService.findById(id);
+        int a = 1;
+        Long giaTong = Long.valueOf(0);
+        for (Order_Item orderItem : orderItems) {
+            Product product = productService.getProductById(orderItem.getProduct().getId());
+
+
+            String soLuongParameter = request.getParameter("soLuong" + a);
+            String giaTienParameter = request.getParameter("giaTien" + a);
+
+            // Validate and parse parameters
+            try {
+                int count = Integer.parseInt(soLuongParameter);
+                int giaTien = Integer.parseInt(giaTienParameter);
+
+                // Update the order item with the new values
+                System.out.println(count);
+                System.out.println(giaTien);
+                product.setQuantity(product.getQuantity()+orderItem.getCount()-count);
+                productService.saveProduct(product);
+                orderItem.setCount(count);
+                orderItem.setUnit_price(Long.valueOf(giaTien));
+                order_ItemService.saveOrder_Item(orderItem);
+
+
+
+            } catch (NumberFormatException e) {
+                // Handle the case where parsing fails (invalid input)
+                e.printStackTrace(); // Log or handle the exception as needed
+            }
+
+            a++;
+        }
+        for (Order_Item orderItem : orderItems) {
+            giaTong += orderItem.getUnit_price();
+        }
+        Long b= giaTong + order.getTotalShip();
+        System.out.println(giaTong);
+        System.out.println(b);
+        order.setTotal(giaTong+order.getTotalShip());
+        orderService.saveOrder(order);
+
+
+        return "redirect:/sua-hang/" + id;
+    }
 }
