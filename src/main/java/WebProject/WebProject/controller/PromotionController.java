@@ -108,7 +108,7 @@ public class PromotionController {
         }
     }
 
-    @GetMapping("/view-sua-khuyen-mai/{id}")
+    @GetMapping("/sua-khuyen-mai/{id}")
     public String DashboardMyProducerEditView(@PathVariable int id, Model model) {
         Promotion promotion = service.getAllPromotionById(id);
         model.addAttribute("detail", promotion);
@@ -137,13 +137,6 @@ public class PromotionController {
         if (admin == null) {
             return "redirect:/signin-admin";
         } else {
-            if (couponCode.trim().isEmpty()) {
-                model.addAttribute("loi", "Không được để trống");
-                return "/admin/khuyenmai/add-khuyen-mai";
-            } else if (name.trim().isEmpty()) {
-                model.addAttribute("loi2", "Không được để trống");
-                return "/admin/khuyenmai/add-khuyen-mai";
-            } else {
                 Promotion promotion = service.getAllPromotionById(id);
                 promotion.setCouponCode(couponCode);
                 promotion.setDiscountValue(discountValue);
@@ -152,8 +145,6 @@ public class PromotionController {
                 promotion.setName(name);
                 service.savePromotion(promotion);
                 return "redirect:/khuyen-mai/admin";
-
-            }
 
         }
 

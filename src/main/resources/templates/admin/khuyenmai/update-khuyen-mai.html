@@ -16,6 +16,7 @@
     <link rel="icon" href="/img/logo-3.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -220,7 +221,7 @@
                             <!-- Section / End -->
 
                             <!-- Section -->
-                            <button class="button preview" type="submit" >
+                            <button class="button preview" type="button" id="submitButton" >
                                 Sửa <i class="fa fa-arrow-circle-right"></i>
                             </button>
 
@@ -247,6 +248,26 @@
 </div>
 <!-- Wrapper / End -->
 
+
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+        src="/scripts/jquery-migrate-3.3.2.min.js"></script>
+<script type="text/javascript" src="/scripts/mmenu.min.js"></script>
+<script type="text/javascript" src="/scripts/chosen.min.js"></script>
+<script type="text/javascript" src="/scripts/slick.min.js"></script>
+<script type="text/javascript" src="/scripts/rangeslider.min.js"></script>
+<script type="text/javascript" src="/scripts/magnific-popup.min.js"></script>
+<script type="text/javascript" src="/scripts/waypoints.min.js"></script>
+<script type="text/javascript" src="/scripts/counterup.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/scripts/tooltips.min.js"></script>
+<script type="text/javascript" src="/scripts/custom.js"></script>
+
+<!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
+<script src="/scripts/moment.min.js"></script>
+<script src="/scripts/daterangepicker.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#submitButton").click(function () {
@@ -270,6 +291,23 @@
                     var mota = document.getElementById("mota").value;
                     if (!check.trim() || !soGiam.trim() || !hethan.trim() || !giatrigiam.trim() || !mota.trim()) {
                         Swal.fire('Lỗi!', 'Vui lòng điền đầy đủ thông tin.', 'error');
+                        return;
+                    }
+                    else if (soGiam > 100){
+                        Swal.fire('Lỗi!', 'Giá trị không được lớn hơn 100%', 'error');
+                        return;
+                    }
+                    if (soGiam < 0){
+                        Swal.fire('Lỗi!', 'Giá trị giảm không được âm', 'error');
+                        return;
+                    }
+
+                    if (giatrigiam < 1000){
+                        Swal.fire('Lỗi!', 'Giá trị giảm không được nhỏ hơn 1000VND', 'error');
+                        return;
+                    }
+                    if (giatrigiam < 0){
+                        Swal.fire('Lỗi!', 'Giá trị giảm không được âm', 'error');
                         return;
                     }
 
@@ -297,24 +335,5 @@
         });
     });
 </script>
-
-<!-- Scripts
-================================================== -->
-<script type="text/javascript" src="scripts/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"
-        src="scripts/jquery-migrate-3.3.2.min.js"></script>
-<script type="text/javascript" src="scripts/mmenu.min.js"></script>
-<script type="text/javascript" src="scripts/chosen.min.js"></script>
-<script type="text/javascript" src="scripts/slick.min.js"></script>
-<script type="text/javascript" src="scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="scripts/counterup.min.js"></script>
-<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
-<script type="text/javascript" src="scripts/dropzone.js"></script>
-
-
 </body>
 </html>
