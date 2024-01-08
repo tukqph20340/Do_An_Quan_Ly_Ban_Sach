@@ -46,7 +46,21 @@ public class CartController {
         model.addAttribute("vi", vi);
         User user = (User) session.getAttribute("acc");
         if (user == null) {
-            return "redirect:/home";
+            List<Cart> listCart = cartService.GetAllCartByUser_id(null);
+
+            long Total = 0;
+            for (Cart y : listCart) {
+                if (y.isSelected()) {
+                    Total = Total + y.getCount() * y.getProduct().getPrice();
+                }
+                if (listCart != null) {
+                    model.addAttribute("Total", Total);
+                    model.addAttribute("listCart", listCart);
+
+                }
+                model.addAttribute("soLuong", listCart.size());
+            }
+            return "shopping-cart";
         } else {
             List<Cart> listCart = cartService.GetAllCartByUser_id(user.getId());
 
@@ -100,7 +114,12 @@ public class CartController {
         String referer = request.getHeader("Referer");
         User user = (User) session.getAttribute("acc");
         if (user == null) {
-            return "redirect:" + referer;
+            System.out.println(id);
+            cartService.deleteById(id);
+            session.setAttribute("CartDelete", id);
+            List<Cart> listCart = cartService.GetAllCartByUser_id(null);
+            session.setAttribute("countCart", listCart.size());
+            return "redirect:/cart";
         } else {
             System.out.println(id);
             cartService.deleteById(id);
@@ -141,7 +160,30 @@ public class CartController {
         String referer = request.getHeader("Referer");
         User user = (User) session.getAttribute("acc");
         if (user == null) {
-            session.setAttribute("AddToCartErr", "Vui lòng đăng nhập trước khi thực hiện thao tác");
+            List<Cart> listCart = cartService.GetAllCartByUser_id(null);
+            Product product = productService.getProductById(id);
+            int cart = 0;
+            for (Cart y : listCart) {
+                if (y.getProduct().getId() == id) {
+                    cart++;
+                }
+            }
+            if (cart > 0) {
+                for (Cart y : listCart) {
+                    if (y.getProduct().getId() == id) {
+                        y.setCount(y.getCount() + 1);
+                        cartService.saveCart(y);
+                    }
+                }
+            } else {
+                Cart newCart = new Cart();
+                newCart.setCount(Long.valueOf(1));
+                newCart.setProduct(product);
+                newCart.setUser(null);
+                cartService.saveCart(newCart);
+            }
+            listCart = cartService.GetAllCartByUser_id(null);
+            session.setAttribute("countCart", listCart.size());
             return "redirect:" + referer;
         } else {
             List<Cart> listCart = cartService.GetAllCartByUser_id(user.getId());
@@ -178,13 +220,33 @@ public class CartController {
         int count = Integer.parseInt(a);
         String referer = request.getHeader("Referer");
         User user = (User) session.getAttribute("acc");
+        Product product = productService.getProductById(product_id);
+        int cart = 0;
         if (user == null) {
-            session.setAttribute("AddToCartErr", "Vui lòng đăng nhập trước khi thực hiện thao tác");
+//            Product product = productService.getProductById(product_id);
+//            int cart = 0;
+            List<Cart> listCart = cartService.GetAllCartByUser_id(null);
+            for (Cart y : listCart) {
+                if (y.getProduct().getId() == product_id) {
+                    y.setCount(y.getCount() + count);
+                    cartService.saveCart(y);
+                    cart++;
+                }
+            }
+            if (cart == 0) {
+                Cart newCart = new Cart();
+                newCart.setCount(Long.valueOf(count));
+                newCart.setProduct(product);
+                newCart.setUser(null);
+                cartService.saveCart(newCart);
+            }
+            listCart = cartService.GetAllCartByUser_id(null);
+            session.setAttribute("countCart", listCart.size());
             return "redirect:" + referer;
         } else {
             List<Cart> listCart = cartService.GetAllCartByUser_id(user.getId());
-            Product product = productService.getProductById(product_id);
-            int cart = 0;
+//            Product product = productService.getProductById(product_id);
+//            int cart = 0;
             for (Cart y : listCart) {
                 if (y.getProduct().getId() == product_id) {
                     y.setCount(y.getCount() + count);
@@ -203,6 +265,7 @@ public class CartController {
             session.setAttribute("countCart", listCart.size());
             return "redirect:" + referer;
         }
+
 
     }
 

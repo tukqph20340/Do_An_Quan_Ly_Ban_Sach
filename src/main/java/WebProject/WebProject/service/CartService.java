@@ -11,7 +11,7 @@ public interface CartService {
 
 	List<Cart> GetAllCartByUser_id(String user_id);
 
-	List<Cart> getListCartSelected();
+	List<Cart> getListCartSelected(String user_id);
 
 	void saveCart(Cart cart);
 

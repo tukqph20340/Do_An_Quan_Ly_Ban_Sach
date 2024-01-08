@@ -93,18 +93,97 @@ public class OrderController {
     @GetMapping("checkout")
     public String CheckOutView(Model model, @RequestParam(name = "discountCode", required = false) String discountCode) {
         User user = (User) session.getAttribute("acc");
-        List<Cart> listCart1 = cartService.getListCartSelected();
         List<Promotion> listPo = promotionService.getAll();
         model.addAttribute("listKhuyenMai", listPo);
         Cookie user_name = cookie.read("user_name");
         Wallet vi = walletRepository.findByUserId(user_name.getValue());
         model.addAttribute("vi", vi);
         if (user == null) {
-            session.setAttribute("AddToCartErr", "Vui lòng đăng nhập trước khi thực hiện thao tác!");
-            return "redirect:/home";
+            List<Cart> listCart2 = cartService.getListCartSelected(null);
+            List<Cart> Cart = cartService.GetAllCartByUser_id(null);
+            System.out.println(Cart);
+            long Total = 0;
+            if (!Cart.isEmpty() && !listCart2.isEmpty()) {
+                for (Cart cart : Cart) {
+                    System.out.println();
+                    Product listP = productService.getProductById(cart.getProduct().getId());
+                    if (cart.getCount() <= listP.getQuantity()) {
+                        System.out.println(cart.getCount());
+                        if (cart.isSelected()) {
+                            long price = cart.getProduct().getPrice();
+                            System.out.println(price);
+                            long quantity = cart.getCount();
+                            Total += price * quantity;
+                        }
+
+                    } else {
+                        session.setAttribute("loiSL", "Số Lượng Không Đủ ");
+                        List<Cart> listCart = cartService.GetAllCartByUser_id(null);
+                        for (Cart y : listCart) {
+                            if (cart.isSelected() && cart.getUser().getId()==null) {
+                                y.setCount(Long.valueOf(1));
+                                cartService.saveCart(cart);
+                                Total = Total + y.getCount() * y.getProduct().getPrice();
+                                if (listCart != null) {
+                                    model.addAttribute("Total", Total);
+                                    model.addAttribute("listCart", listCart);
+
+                                }
+                            }
+
+                            model.addAttribute("soLuong", listCart.size());
+                        }
+                        return "shopping-cart";
+                    }
+
+                }
+                model.addAttribute("Total", Total);
+                session.setAttribute("Total", Total);
+                if (discountCode != null && !discountCode.isEmpty()) {
+                    // Tìm mã giảm giá trong cơ sở dữ liệu dựa trên discountCode
+                    Promotion discount = promotionService.checkPromotion(discountCode);
+                    if (discount != null) {
+//                        int giamGia = Math.toIntExact(discount.getDiscountValue()); // Lấy giá trị giảm giá từ mã
+//                        int discountType = discount.getDiscountType();
+//                        if (discountType == 0) {
+//                            // Giảm theo giá trị cố định
+//                            giamGia = Math.toIntExact(discount.getDiscountValue());
+//
+//                        } else if (discountType == 1) {
+                        // Giảm theo phần trăm
+                        int giamGia = 0;
+                        giamGia = (int) (Total * (discount.getDiscountValue() / 100.0));
+//                        }
+
+
+                        int maximumDiscountValue = Math.toIntExact(discount.getMaximumDiscountValue());
+                        if (giamGia > maximumDiscountValue) {
+                            giamGia = maximumDiscountValue;
+                        }
+                        long totalAfterDiscount = Total - giamGia;
+                        if (totalAfterDiscount < 0) {
+                            totalAfterDiscount = 0;
+                        }
+                        System.out.println(Total);
+                        System.out.println(giamGia);
+                        model.addAttribute("discount", giamGia);
+                        model.addAttribute("totalAfterDiscount", totalAfterDiscount);
+                    } else {
+                        // Hiển thị thông báo mã giảm giá không tồn tại
+                        model.addAttribute("discountNotFound", "Mã giảm giá không tồn tại.");
+                    }
+                }
+
+                List<Cart> listCart = cartService.getListCartSelected(null);
+                System.out.println(listCart2);
+                model.addAttribute("listCart", listCart);
+                return "checkout";
+            } else {
+                session.setAttribute("CartIsEmpty", "CartIsEmpty");
+                return "redirect:/cart";
+            }
         } else {
-
-
+            List<Cart> listCart1 = cartService.getListCartSelected(user.getId());
             List<Cart> Cart = cartService.GetAllCartByUser_id(user.getId());
 
             System.out.println(Cart);
@@ -130,11 +209,11 @@ public class OrderController {
                                 y.setCount(Long.valueOf(1));
                                 cartService.saveCart(cart);
                                 Total = Total + y.getCount() * y.getProduct().getPrice();
-                            }
-                            if (listCart != null) {
-                                model.addAttribute("Total", Total);
-                                model.addAttribute("listCart", listCart);
+                                if (listCart != null) {
+                                    model.addAttribute("Total", Total);
+                                    model.addAttribute("listCart", listCart);
 
+                                }
                             }
                             model.addAttribute("soLuong", listCart.size());
                         }
@@ -179,7 +258,7 @@ public class OrderController {
                     }
                 }
                 @SuppressWarnings("unchecked")
-                List<Cart> listCart = cartService.getListCartSelected();
+                List<Cart> listCart = cartService.getListCartSelected(user.getId());
                 System.out.println(listCart1);
                 model.addAttribute("listCart", listCart);
                 return "checkout";
@@ -192,6 +271,7 @@ public class OrderController {
     }
 
 
+
     @PostMapping("/checkout")
     public String CheckOut(@ModelAttribute("fullname") String fullname, @ModelAttribute("country") String country,
                            @ModelAttribute("address") String address, @ModelAttribute("phone") String phone,
@@ -201,180 +281,158 @@ public class OrderController {
                            @RequestParam(value = "payWithMomo", defaultValue = "false") boolean payWithMomo,
                            @RequestParam(value = "payVi", defaultValue = "false") boolean payVi, Model model,
                            HttpServletResponse resp, HttpServletRequest request1) throws Exception {
-        try {
+//        try {
 
-            String vi = request1.getParameter("discal");
-            System.out.println(vi);
-            String giaShip = request1.getParameter("ship");
-            String toTalFinal = request1.getParameter("toTalFinal");
-            System.out.println(giaShip);
-            System.out.println(toTalFinal);
-            String a = session.getAttribute("Total").toString();
-            User user = (User) session.getAttribute("acc");
-            Mail mail1 = new Mail();
-            mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
-            mail1.setMailTo(user.getEmail());
-            mail1.setMailSubject("Nhà sách Opacarophile");
-            mail1.setMailContent("Quý Khách Đã Mua Hàng Thành Công Đơn Hàng Đang Chờ Xác Nhận");
-            mailService.sendEmail(mail1);
-            long Total = Long.valueOf(a);
-            int toTalShip = Integer.parseInt(giaShip);
-            Long toTalAll = Long.valueOf(toTalFinal);
-            String diaChiChon = request1.getParameter("diaChiChon");
-            if ("diaChiCu".equals(diaChiChon) || "diaChiMoi".equals(diaChiChon)) {
-                TimeZone vietnamTimeZone = TimeZone.getTimeZone("Asia/Jakarta");
+        String vi = request1.getParameter("discal");
+        System.out.println(vi);
+        String giaShip = request1.getParameter("ship");
+        String toTalFinal = request1.getParameter("toTalFinal");
+        System.out.println(giaShip);
+        System.out.println(toTalFinal);
+        String a = session.getAttribute("Total").toString();
+        User user = (User) session.getAttribute("acc");
+//            Mail mail1 = new Mail();
+//            mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
+//            mail1.setMailTo(user.getEmail());
+//            mail1.setMailSubject("Nhà sách Opacarophile");
+//            mail1.setMailContent("Quý Khách Đã Mua Hàng Thành Công Đơn Hàng Đang Chờ Xác Nhận");
+//            mailService.sendEmail(mail1);
+        long Total = Long.valueOf(a);
+        int toTalShip = Integer.parseInt(giaShip);
+        Long toTalAll = Long.valueOf(toTalFinal);
+        String diaChiChon = request1.getParameter("diaChiChon");
+        if ("diaChiCu".equals(diaChiChon) || "diaChiMoi".equals(diaChiChon)) {
+            TimeZone vietnamTimeZone = TimeZone.getTimeZone("Asia/Jakarta");
 
 
-                // Tạo đối tượng SimpleDateFormat với múi giờ của Việt Nam
-                SimpleDateFormat vietnamDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                vietnamDateFormat.setTimeZone(vietnamTimeZone);
+            // Tạo đối tượng SimpleDateFormat với múi giờ của Việt Nam
+            SimpleDateFormat vietnamDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            vietnamDateFormat.setTimeZone(vietnamTimeZone);
 
-                // Lấy ngày giờ hiện tại theo múi giờ của Việt Nam và định dạng thành chuỗi
-                long millis = System.currentTimeMillis();
-                String booking_date = vietnamDateFormat.format(millis);
-                System.out.println(booking_date);
-                @SuppressWarnings("unchecked")
-                List<Cart> listCart = cartService.getListCartSelected();
+            // Lấy ngày giờ hiện tại theo múi giờ của Việt Nam và định dạng thành chuỗi
+            long millis = System.currentTimeMillis();
+            String booking_date = vietnamDateFormat.format(millis);
+            System.out.println(booking_date);
+            List<Cart> listCart;
+            if (user == null) {
+                listCart = cartService.getListCartSelected(null);
+            } else {
+                listCart = cartService.getListCartSelected(user.getId());
+            }
+            String status = "Pending";
+            String payment_method = null;
+            if (payOndelivery == true) {
+                payment_method = "Payment on delivery";
+            } else if (payWithMomo == true) {
+                payment_method = "Payment with momo";
+            } else {
+                payment_method = "Ví";
+            }
+            Order newOrder = new Order();
 
-                String status = "Pending";
-                String payment_method = null;
-                if (payOndelivery == true) {
-                    payment_method = "Payment on delivery";
-                } else if (payWithMomo == true) {
-                    payment_method = "Payment with momo";
-                } else {
-                    payment_method = "Ví";
+            String tenKhachHangCu = request1.getParameter("fullname1");
+            System.out.println("test" + tenKhachHangCu);
+            String soDienThoaiCu = request1.getParameter("phone1");
+            String mail = request1.getParameter("email1");
+            String quocGiaCu = request1.getParameter("province1");
+            String thanhPhoCu = request1.getParameter("districts1");
+            String diaChiCu = request1.getParameter("wards1");
+            String messCu = request1.getParameter("note1");
+            if (vi == null) {
+                newOrder.setTotal(toTalAll);
+                newOrder.setTotalShip(toTalShip);
+                newOrder.setAddress("diaChiMoi".equals(diaChiChon) ? thanhPhoCu : address);
+                newOrder.setBooking_Date(booking_date);
+                newOrder.setCountry("diaChiMoi".equals(diaChiChon) ? quocGiaCu : country);
+                newOrder.setWards("diaChiMoi".equals(diaChiChon) ? diaChiCu : wards);
+                newOrder.setEmail("diaChiMoi".equals(diaChiChon) ? mail : email);
+                newOrder.setFullname("diaChiMoi".equals(diaChiChon) ? tenKhachHangCu : fullname);
+                newOrder.setNote("diaChiMoi".equals(diaChiChon) ? messCu : note);
+                newOrder.setPayment_Method(payment_method);
+                newOrder.setPhone("diaChiMoi".equals(diaChiChon) ? soDienThoaiCu : phone);
+                newOrder.setStatus(status);
+                newOrder.setUser(user);
+                newOrder.setActiveOrder(ActiveOrder.builder().id("1").build());
+                newOrder.setTotalDiscount(Float.valueOf(0));
+            } else {
+                newOrder.setTotal(toTalAll);
+                newOrder.setTotalShip(toTalShip);
+                newOrder.setAddress("diaChiMoi".equals(diaChiChon) ? thanhPhoCu : address);
+                newOrder.setBooking_Date(booking_date);
+                newOrder.setCountry("diaChiMoi".equals(diaChiChon) ? quocGiaCu : country);
+                newOrder.setWards("diaChiMoi".equals(diaChiChon) ? diaChiCu : wards);
+                newOrder.setEmail("diaChiMoi".equals(diaChiChon) ? mail : email);
+                newOrder.setFullname("diaChiMoi".equals(diaChiChon) ? tenKhachHangCu : fullname);
+                newOrder.setNote("diaChiMoi".equals(diaChiChon) ? messCu : note);
+                newOrder.setPayment_Method(payment_method);
+                newOrder.setPhone("diaChiMoi".equals(diaChiChon) ? soDienThoaiCu : phone);
+                newOrder.setStatus(status);
+                newOrder.setUser(user);
+                newOrder.setActiveOrder(ActiveOrder.builder().id("1").build());
+                newOrder.setTotalDiscount(Float.valueOf(vi));
+            }
+
+
+            if (payment_method == "Payment with momo") {
+                session.setAttribute("newOrder", newOrder);
+                ObjectMapper mapper = new ObjectMapper();
+                int code = (int) Math.floor(((Math.random() * 89999999) + 10000000));
+                String orderId = Integer.toString(code);
+                MomoModel jsonRequest = new MomoModel();
+                jsonRequest.setPartnerCode(Constant.IDMOMO);
+                jsonRequest.setOrderId(orderId);
+                jsonRequest.setStoreId(orderId);
+                jsonRequest.setRedirectUrl(Constant.redirectUrl);
+                jsonRequest.setIpnUrl(Constant.ipnUrl);
+                jsonRequest.setAmount(String.valueOf(toTalAll));
+                jsonRequest.setOrderInfo("Thanh toán Opacarophlie");
+                jsonRequest.setRequestId(orderId);
+                jsonRequest.setOrderType(Constant.orderType);
+                jsonRequest.setRequestType(Constant.requestType);
+                jsonRequest.setTransId("1");
+                jsonRequest.setResultCode("200");
+                jsonRequest.setMessage("");
+                jsonRequest.setPayType(Constant.payType);
+                jsonRequest.setResponseTime("300000");
+                jsonRequest.setExtraData("");
+                String decode = "accessKey=" + Constant.accessKey + "&amount=" + jsonRequest.amount + "&extraData="
+                        + jsonRequest.extraData + "&ipnUrl=" + Constant.ipnUrl + "&orderId=" + orderId + "&orderInfo="
+                        + jsonRequest.orderInfo + "&partnerCode=" + jsonRequest.getPartnerCode() + "&redirectUrl="
+                        + Constant.redirectUrl + "&requestId=" + jsonRequest.getRequestId() + "&requestType="
+                        + Constant.requestType;
+                String signature = Decode.encode(Constant.serectkey, decode);
+                jsonRequest.setSignature(signature);
+                String json = mapper.writeValueAsString(jsonRequest);
+                HttpClient client = HttpClient.newHttpClient();
+                ResultMoMo res = new ResultMoMo();
+
+                try {
+                    HttpRequest request = HttpRequest.newBuilder().uri(new URI(Constant.Url))
+                            .POST(HttpRequest.BodyPublishers.ofString(json)).headers("Content-Type", "application/json")
+                            .build();
+                    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                    res = mapper.readValue(response.body(), ResultMoMo.class);
+                } catch (InterruptedException | URISyntaxException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
-                Order newOrder = new Order();
-
-                String tenKhachHangCu = request1.getParameter("fullname1");
-                System.out.println("test" + tenKhachHangCu);
-                String soDienThoaiCu = request1.getParameter("phone1");
-                String mail = request1.getParameter("email1");
-                String quocGiaCu = request1.getParameter("province1");
-                String thanhPhoCu = request1.getParameter("districts1");
-                String diaChiCu = request1.getParameter("wards1");
-                String messCu = request1.getParameter("note1");
-                if (vi == null) {
-                    newOrder.setTotal(toTalAll);
-                    newOrder.setTotalShip(toTalShip);
-                    newOrder.setAddress("diaChiMoi".equals(diaChiChon) ? thanhPhoCu : address);
-                    newOrder.setBooking_Date(booking_date);
-                    newOrder.setCountry("diaChiMoi".equals(diaChiChon) ? quocGiaCu : country);
-                    newOrder.setWards("diaChiMoi".equals(diaChiChon) ? diaChiCu : wards);
-                    newOrder.setEmail("diaChiMoi".equals(diaChiChon) ? mail : email);
-                    newOrder.setFullname("diaChiMoi".equals(diaChiChon) ? tenKhachHangCu : fullname);
-                    newOrder.setNote("diaChiMoi".equals(diaChiChon) ? messCu : note);
-                    newOrder.setPayment_Method(payment_method);
-                    newOrder.setPhone("diaChiMoi".equals(diaChiChon) ? soDienThoaiCu : phone);
-                    newOrder.setStatus(status);
-                    newOrder.setUser(user);
-                    newOrder.setActiveOrder(ActiveOrder.builder().id("1").build());
-                    newOrder.setTotalDiscount(Float.valueOf(0));
+                if (res == null) {
+                    session.setAttribute("error_momo", "Thanh toán thất bại");
+                    return "redirect:/home";
                 } else {
-                    newOrder.setTotal(toTalAll);
-                    newOrder.setTotalShip(toTalShip);
-                    newOrder.setAddress("diaChiMoi".equals(diaChiChon) ? thanhPhoCu : address);
-                    newOrder.setBooking_Date(booking_date);
-                    newOrder.setCountry("diaChiMoi".equals(diaChiChon) ? quocGiaCu : country);
-                    newOrder.setWards("diaChiMoi".equals(diaChiChon) ? diaChiCu : wards);
-                    newOrder.setEmail("diaChiMoi".equals(diaChiChon) ? mail : email);
-                    newOrder.setFullname("diaChiMoi".equals(diaChiChon) ? tenKhachHangCu : fullname);
-                    newOrder.setNote("diaChiMoi".equals(diaChiChon) ? messCu : note);
-                    newOrder.setPayment_Method(payment_method);
-                    newOrder.setPhone("diaChiMoi".equals(diaChiChon) ? soDienThoaiCu : phone);
-                    newOrder.setStatus(status);
-                    newOrder.setUser(user);
-                    newOrder.setActiveOrder(ActiveOrder.builder().id("1").build());
-                    newOrder.setTotalDiscount(Float.valueOf(vi));
-                }
-
-
-                if (payment_method == "Payment with momo") {
-                    session.setAttribute("newOrder", newOrder);
-                    ObjectMapper mapper = new ObjectMapper();
-                    int code = (int) Math.floor(((Math.random() * 89999999) + 10000000));
-                    String orderId = Integer.toString(code);
-                    MomoModel jsonRequest = new MomoModel();
-                    jsonRequest.setPartnerCode(Constant.IDMOMO);
-                    jsonRequest.setOrderId(orderId);
-                    jsonRequest.setStoreId(orderId);
-                    jsonRequest.setRedirectUrl(Constant.redirectUrl);
-                    jsonRequest.setIpnUrl(Constant.ipnUrl);
-                    jsonRequest.setAmount(String.valueOf(toTalAll));
-                    jsonRequest.setOrderInfo("Thanh toán Opacarophlie");
-                    jsonRequest.setRequestId(orderId);
-                    jsonRequest.setOrderType(Constant.orderType);
-                    jsonRequest.setRequestType(Constant.requestType);
-                    jsonRequest.setTransId("1");
-                    jsonRequest.setResultCode("200");
-                    jsonRequest.setMessage("");
-                    jsonRequest.setPayType(Constant.payType);
-                    jsonRequest.setResponseTime("300000");
-                    jsonRequest.setExtraData("");
-                    String decode = "accessKey=" + Constant.accessKey + "&amount=" + jsonRequest.amount + "&extraData="
-                            + jsonRequest.extraData + "&ipnUrl=" + Constant.ipnUrl + "&orderId=" + orderId + "&orderInfo="
-                            + jsonRequest.orderInfo + "&partnerCode=" + jsonRequest.getPartnerCode() + "&redirectUrl="
-                            + Constant.redirectUrl + "&requestId=" + jsonRequest.getRequestId() + "&requestType="
-                            + Constant.requestType;
-                    String signature = Decode.encode(Constant.serectkey, decode);
-                    jsonRequest.setSignature(signature);
-                    String json = mapper.writeValueAsString(jsonRequest);
-                    HttpClient client = HttpClient.newHttpClient();
-                    ResultMoMo res = new ResultMoMo();
-
-                    try {
-                        HttpRequest request = HttpRequest.newBuilder().uri(new URI(Constant.Url))
-                                .POST(HttpRequest.BodyPublishers.ofString(json)).headers("Content-Type", "application/json")
-                                .build();
-                        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                        res = mapper.readValue(response.body(), ResultMoMo.class);
-                    } catch (InterruptedException | URISyntaxException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    if (res == null) {
-                        session.setAttribute("error_momo", "Thanh toán thất bại");
-                        return "redirect:/home";
-                    } else {
 //					return "redirect:/shop";
 //				resp.sendRedirect(res.payUrl);
-                        return "redirect:" + res.payUrl;
-                    }
-                } else if (payment_method.equals("Ví")) {
-                    Wallet wallet = walletRepository.findByUserId(user.getId());
-                    Float tien = wallet.getPrice() - toTalAll;
-                    if (tien < 0) {
-                        session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
-                        return "redirect:/checkout";
-                    } else {
-                        wallet.setPrice(tien);
-                        walletRepository.save(wallet);
-                        orderService.saveOrder(newOrder);
-                        List<Order> listOrder = orderService.getAllOrderByUser_Id(user.getId());
-                        newOrder = listOrder.get(listOrder.size() - 1);
-                        for (Cart y : listCart) {
-                            Product product = y.getProduct();
-                            product.setQuantity(Math.toIntExact(Long.valueOf(product.getQuantity() - y.getCount())));
-                            product.setSold(Math.toIntExact(Long.valueOf(product.getSold() + y.getCount())));
-                            productService.saveProduct(product);
-                            Order_Item newOrder_Item = new Order_Item();
-                            newOrder_Item.setCount(Math.toIntExact(Long.valueOf(y.getCount())));
-                            newOrder_Item.setOrder(newOrder);
-                            newOrder_Item.setProduct(y.getProduct());
-                            newOrder_Item.setUnit_price(Math.toIntExact(Long.valueOf(y.getCount()))*y.getProduct().getPrice());
-                            order_ItemService.saveOrder_Item(newOrder_Item);
-                            cartService.deleteById(y.getId());
-                        }
-                        listOrder = orderService.getAllOrderByUser_Id(user.getId());
-                        newOrder = listOrder.get(listOrder.size() - 1);
-                        session.setAttribute("order", newOrder);
-                        return "redirect:/invoice";
-
-                    }
-
-
+                    return "redirect:" + res.payUrl;
+                }
+            } else if (payment_method.equals("Ví")) {
+                Wallet wallet = walletRepository.findByUserId(user.getId());
+                Float tien = wallet.getPrice() - toTalAll;
+                if (tien < 0) {
+                    session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
+                    return "redirect:/checkout";
                 } else {
+                    wallet.setPrice(tien);
+                    walletRepository.save(wallet);
                     orderService.saveOrder(newOrder);
                     List<Order> listOrder = orderService.getAllOrderByUser_Id(user.getId());
                     newOrder = listOrder.get(listOrder.size() - 1);
@@ -387,7 +445,7 @@ public class OrderController {
                         newOrder_Item.setCount(Math.toIntExact(Long.valueOf(y.getCount())));
                         newOrder_Item.setOrder(newOrder);
                         newOrder_Item.setProduct(y.getProduct());
-                        newOrder_Item.setUnit_price(Math.toIntExact(Long.valueOf(y.getCount()))*y.getProduct().getPrice());
+                        newOrder_Item.setUnit_price(Math.toIntExact(Long.valueOf(y.getCount())) * y.getProduct().getPrice());
                         order_ItemService.saveOrder_Item(newOrder_Item);
                         cartService.deleteById(y.getId());
                     }
@@ -395,22 +453,62 @@ public class OrderController {
                     newOrder = listOrder.get(listOrder.size() - 1);
                     session.setAttribute("order", newOrder);
                     return "redirect:/invoice";
+
                 }
 
+            } else {
+                orderService.saveOrder(newOrder);
+                List<Order> listOrder;
+                if (user == null) {
+                    listOrder = orderService.getAllOrderByUser_Id(null);
+                    System.out.println("list null" + listOrder);
+                } else {
+                    listOrder = orderService.getAllOrderByUser_Id(user.getId());
+                }
 
+                if (!listOrder.isEmpty()) {
+                    newOrder = listOrder.get(listOrder.size() - 1);
+
+                    for (Cart y : listCart) {
+                        Product product = y.getProduct();
+                        int quantity = product.getQuantity() - Math.toIntExact(y.getCount());
+                        int sold = product.getSold() + Math.toIntExact(y.getCount());
+
+                        product.setQuantity(quantity);
+                        product.setSold(sold);
+                        productService.saveProduct(product);
+
+                        Order_Item newOrder_Item = new Order_Item();
+                        newOrder_Item.setCount(Math.toIntExact(y.getCount()));
+                        newOrder_Item.setOrder(newOrder);
+                        newOrder_Item.setProduct(y.getProduct());
+                        newOrder_Item.setUnit_price(Math.toIntExact(y.getCount()) * y.getProduct().getPrice());
+                        order_ItemService.saveOrder_Item(newOrder_Item);
+
+                        cartService.deleteById(y.getId());
+                    }
+
+                    session.setAttribute("order", newOrder);
+                    return "redirect:/invoice";
+                } else {
+                    // Handle the case when the list is empty (no orders found)
+                    // You might want to redirect or display an error message.
+                    return "redirect:/someErrorPage";
+                }
             }
-
-
-        } catch (Exception e) {
-            session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
-            return "redirect:/checkout";
         }
+
+
+//        } catch (Exception e) {
+//            session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
+//            return "redirect:/checkout";
+//        }
 
         return null;
     }
 
     @GetMapping("paywithmomo")
-    public String PayWithMomoGet(@ModelAttribute("message") String message, Model model) {
+    public String PayWithMomoGet (@ModelAttribute("message") String message, Model model){
         Cookie user_name = cookie.read("user_name");
         Wallet vi = walletRepository.findByUserId(user_name.getValue());
         model.addAttribute("vi", vi);
@@ -418,9 +516,9 @@ public class OrderController {
             session.setAttribute("error_momo", "Thanh toán không thành công!");
             return "redirect:/home";
         } else {
-            @SuppressWarnings("unchecked")
-            List<Cart> listCart = cartService.getListCartSelected();
             User user = (User) session.getAttribute("acc");
+            List<Cart> listCart = cartService.getListCartSelected(user.getId());
+
             Order newOrder = (Order) session.getAttribute("newOrder");
             orderService.saveOrder(newOrder);
             List<Order> listOrder = orderService.getAllOrderByUser_Id(user.getId());
@@ -434,6 +532,7 @@ public class OrderController {
                 newOrder_Item.setCount(Math.toIntExact(Long.valueOf(y.getCount())));
                 newOrder_Item.setOrder(newOrder);
                 newOrder_Item.setProduct(y.getProduct());
+                newOrder_Item.setUnit_price(Math.toIntExact(Long.valueOf(y.getCount())) * y.getProduct().getPrice());
                 order_ItemService.saveOrder_Item(newOrder_Item);
                 cartService.deleteById(y.getId());
             }
@@ -446,7 +545,7 @@ public class OrderController {
     }
 
     @GetMapping("invoice")
-    public String Invoice(Model model) {
+    public String Invoice (Model model){
         Cookie user_name = cookie.read("user_name");
         Wallet vi = walletRepository.findByUserId(user_name.getValue());
         model.addAttribute("vi", vi);
@@ -461,7 +560,7 @@ public class OrderController {
     }
 
     @GetMapping("/invoice/{id}")
-    public String InvoiceView(@PathVariable int id, Model model, HttpServletRequest request) {
+    public String InvoiceView ( @PathVariable int id, Model model, HttpServletRequest request){
         Cookie user_name = cookie.read("user_name");
         Wallet vi = walletRepository.findByUserId(user_name.getValue());
         model.addAttribute("vi", vi);
