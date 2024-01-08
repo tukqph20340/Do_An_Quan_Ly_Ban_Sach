@@ -161,7 +161,7 @@
 
         <!-- Content
 ================================================== -->
-        <div class="dashboard-content">
+        <div class="dashboard-content row">
             <div class="col-lg-12">
                 <div class="card-body" style="background: white">
                     <h4 style="font-weight: bold;margin-bottom: 30px;">Tìm Kiếm đơn hàng</h4>
@@ -185,10 +185,10 @@
                                     </div>
 
                                     <div class="col-lg-3">
-<!--                                        <input style="height: 42px;width: 300px;  border-radius: 30px; margin-top: 33px;margin-left: 70px;"-->
-<!--                                               type="datetime-local" name="ngayKetThuc" class="form-control"-->
-<!--                                               placeholder="Nhập ngày kết thúc"-->
-<!--                                              >-->
+                                        <!--                                        <input style="height: 42px;width: 300px;  border-radius: 30px; margin-top: 33px;margin-left: 70px;"-->
+                                        <!--                                               type="datetime-local" name="ngayKetThuc" class="form-control"-->
+                                        <!--                                               placeholder="Nhập ngày kết thúc"-->
+                                        <!--                                              >-->
                                         <input
                                                 style="height: 42px;width: 300px;  border-radius: 30px; margin-top: 33px;"
                                                 name="ngayKetThuc"
@@ -217,14 +217,17 @@
             </div>
             <div class="col-lg-12" style="margin-top: 12px">
                 <div class="card-body" style="background: white">
-                    <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Quản lý đơn hàng</h2>
+                    <h2 style="font-weight: bold; color: black;font-size: 22px ;display: block">Quản lý đơn
+                        hàng</h2>
 
                     <div class="product__details__tab">
                         <ul class="nav nav-tabs custom-nav-tabs" role="tablist">
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link active"
-                                                    data-toggle="tab" href="#tabs-6" role="tab">Chờ xác nhận</a></li>
+                                                    data-toggle="tab" href="#tabs-6" role="tab">Chờ xác nhận</a>
+                            </li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
-                                                    data-toggle="tab" href="#tabs-7" role="tab">Chờ lấy hàng</a></li>
+                                                    data-toggle="tab" href="#tabs-7" role="tab">Chờ lấy hàng</a>
+                            </li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
                                                     data-toggle="tab" href="#tabs-8" role="tab">Đã lấy hàng</a></li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
@@ -239,7 +242,8 @@
                                                     data-toggle="tab" href="#tabs-13" role="tab">Chờ xác nhận trả
                                 hàng</a></li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
-                                                    data-toggle="tab" href="#tabs-14" role="tab">Từ chối trả hàng</a>
+                                                    data-toggle="tab" href="#tabs-14" role="tab">Từ chối trả
+                                hàng</a>
                             </li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;" class="nav-link"
                                                     data-toggle="tab" href="#tabs-15" role="tab">Đồng ý trả hàng</a>
@@ -260,7 +264,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="4">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -273,9 +277,9 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '(  '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
+                                                            <!--                                                                <td th:text="${y.email}"></td>-->
                                                             <td>
                                                                 <a th:href="@{/huy-admin/{id}(id=${y.id})}"
                                                                    class="button gray reject"><i
@@ -321,7 +325,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="2">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -334,13 +338,13 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '(  '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}"
                                                                    class="button gray checkmark"><i
-                                                                        class="sl sl-icon-check"></i>Lấy Hàng Thành Công</a>
+                                                                        class="sl sl-icon-check"></i>Lấy Hàng Thành
+                                                                    Công</a>
                                                             </td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
@@ -373,7 +377,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="2">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -386,13 +390,13 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '(  '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}"
                                                                    class="button gray checkmark"><i
-                                                                        class="sl sl-icon-check"></i>Giao Hàng</a></td>
+                                                                        class="sl sl-icon-check"></i>Giao Hàng</a>
+                                                            </td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
@@ -423,7 +427,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="3">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -436,9 +440,8 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '( '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
 
                                                             <td>
                                                                 <a th:href="@{/dashboard-orders-active5/edit/{id}(id=${y.id})}"
@@ -448,7 +451,8 @@
                                                             <td>
                                                                 <a th:href="@{/dashboard-orders-active4/edit/{id}(id=${y.id})}"
                                                                    class="button gray checkmark"><i
-                                                                        class="sl sl-icon-close"></i>Giao Hàng Thất Bại</a>
+                                                                        class="sl sl-icon-close"></i>Giao Hàng Thất
+                                                                    Bại</a>
                                                             </td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
@@ -481,7 +485,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="1">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -494,9 +498,8 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '('+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
@@ -528,7 +531,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="1">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -541,9 +544,8 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '(  '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
@@ -575,7 +577,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="1">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -588,9 +590,8 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '(  '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
@@ -621,7 +622,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="1">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -634,9 +635,8 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '(  '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/dashboard-invoice-tra-hang/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
@@ -667,7 +667,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="1">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -680,9 +680,8 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '('+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
@@ -713,7 +712,7 @@
                                                             <th>Ngày Mua</th>
                                                             <th>Tên Khách Hàng</th>
                                                             <th>Số Điện Thoại</th>
-                                                            <th>Email</th>
+                                                            <!--                                                                <th>Email</th>-->
                                                             <th colspan="1">Cập Nhật</th>
                                                         </tr>
                                                         </thead>
@@ -726,9 +725,8 @@
                                                             <td th:if="${y.order_Item.size() > 1}"
                                                                 th:text="${y.order_Item[0].product.product_Name} + '(  '+ ${y.order_Item.size() - 1} + ' Và ...)'"></td>
                                                             <td th:text="${y.booking_Date}"></td>
-                                                            <td th:text="${y.user.user_Name}"></td>
-                                                            <td th:text="${y.user.phone_Number}"></td>
-                                                            <td th:text="${y.user.email}"></td>
+                                                            <td th:text="${y.fullname}"></td>
+                                                            <td th:text="${y.phone}"></td>
                                                             <td>
                                                                 <a th:href="@{/invoice/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
@@ -749,10 +747,9 @@
                     </div>
 
                 </div>
+            </div>
+            <!-- Content / End -->
         </div>
-        </div>
-        <!-- Content / End -->
-
 
     </div>
     <!-- Dashboard / End -->

@@ -13,9 +13,10 @@ public interface CartRepository extends JpaRepository<Cart,Integer>{
 //	void deleteById(int id);
 
 
-	@Query(value = "SELECT * from cart c WHERE c.is_selected = true",nativeQuery = true)
-	List<Cart> getListCartSelected();
+	@Query(value = "SELECT * from cart c WHERE c.is_selected = true and (user_id=?1 or (user_id is null and ?1 is null))",nativeQuery = true)
+	List<Cart> getListCartSelected(String user_id);
 
+	@Query(value = "SELECT * FROM cart WHERE user_id = ?1 or (user_id is null and ?1 is null)", nativeQuery = true)
 	List<Cart> findAllByUser_id(String user_id);
 
 

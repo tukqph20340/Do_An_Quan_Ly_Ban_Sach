@@ -140,7 +140,7 @@ public class ProductControler {
 		}
 		if (session.getAttribute("acc") == null)
 			session.setAttribute("countCart", "0");
-		List<Product> lp = productService.getAllProduct();
+		List<Product> lp = productRepository.findAll();
 
 		Cookie user_name = cookie.read("user_name");
 		Wallet vi = walletRepository.findByUserId(user_name.getValue());
@@ -167,7 +167,7 @@ public class ProductControler {
 		Cookie user_name = cookie.read("user_name");
 		Wallet vi = walletRepository.findByUserId(user_name.getValue());
 		model.addAttribute("vi", vi);
-		List<Product> lp = productService.getAllProduct();
+		List<Product> lp = productRepository.findAll();
 		int TotalPro = lp.size();
 		model.addAttribute("TotalPro",TotalPro);
 		Pageable pageable = PageRequest.of(id, 12);

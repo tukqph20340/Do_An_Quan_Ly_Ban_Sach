@@ -177,7 +177,7 @@
                             <tr>
                                 <th><input type="hidden"></th>
                                 <th style="display: none"><input type="checkbox" id="selectAllCheckbox"
-                                           onchange="updateCartItemSelectionAll(this)" ></th>
+                                                                 onchange="updateCartItemSelectionAll(this)" ></th>
                                 <th>Sản Phẩm</th>
                                 <th>Số Lượng</th>
                                 <th>Giá</th>
@@ -542,7 +542,7 @@
                     <div class="cart__total">
                         <h6>Thông Tin</h6>
                         <ul>
-                            <li>Khách Hàng <span th:text="${session.acc.user_Name}"></span></li>
+                            <li th:if="${session.acc != null}">Khách Hàng <span th:text="${session.acc.user_Name}"></span></li>
                             <li>Tổng Giá
                                 <!-- Trong div có class="cart__total" -->
                                 <span id="cartTotal" th:if="${soLuong!=null}"
@@ -647,19 +647,19 @@
         </div>
     </div>
     <!-- Search End -->
-
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.nicescroll.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-
+</footer>
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
 </body>
+
 
 </html>

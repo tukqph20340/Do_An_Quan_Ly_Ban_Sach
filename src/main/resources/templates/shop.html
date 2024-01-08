@@ -22,8 +22,52 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        /*    Css cho giá bán*/
+
+        #priceSlider {
+            width: 280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #giaBan {
+            height: 10px;
+            margin: 10px 0;
+        }
+
+        #priceSlider .noUi-handle {
+            width: 20px;
+            border-radius: 20px 20px 20px;
+            background-color: aliceblue;
+            height: 20px;
+            cursor: ew-resize;
+        }
+
+
+        #giaBan .noUi-handle-lower {
+            margin-left: 30px;
+            background-color: #3498db; /* Màu nền */
+            border-color: #2980b9; /* Màu viền */
+        }
+
+        /* CSS cho nút tăng giá bán */
+        #giaBan .noUi-handle-upper {
+            margin-left: 30px;
+            background-color: #e74c3c; /* Màu nền */
+            border-color: #c0392b; /* Màu viền */
+        }
+
+        /* CSS cho dải mức giá được chọn */
+        #giaBan .noUi-connect {
+            background-color: #2ecc71; /* Màu nền của dải mức giá */
+            border-color: #27ae60; /* Màu viền của dải mức giá */
+        }
+
+
+    </style>
 </head>
 
 <body>
@@ -105,8 +149,8 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li ><a th:href="@{/home}">Trang Chủ</a></li>
-                        <li class="active" ><a th:href="@{/shop}">Cửa Hàng</a></li>
+                        <li><a th:href="@{/home}">Trang Chủ</a></li>
+                        <li class="active"><a th:href="@{/shop}">Cửa Hàng</a></li>
                         <li><a href="#">Thông Tin</a>
                             <ul class="dropdown">
                                 <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
@@ -161,16 +205,11 @@
             <div class="col-lg-3">
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__search">
-                        <form th:action="@{/search}" method="POST">
-                            <input name="search-input" type="text" placeholder="Search..."
-                                   th:value="${search_input}">
-                            <button type="submit">
-                                <span class="icon_search"></span>
-                            </button>
-                        </form>
+                        <input style="width: 260px; height: 35px; border-radius: 5px 5px 5px" type="text"
+                               id="tenGiayTheThao" placeholder="Tên sách" oninput="filterProducts()">
                     </div>
                     <div class="shop__sidebar__accordion">
-                        <div class="accordion" id="accordionExample1">
+                        <div class="accordion" id="accordionExample">
                             <div class="card">
                                 <div class="card-heading">
                                     <a data-toggle="collapse" data-target="#collapseOne">Loại Sách</a>
@@ -181,8 +220,13 @@
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
                                                 <th:block th:each="y : ${listCategory}">
-                                                    <li><a th:href="@{/category/{id}(id=${y.id})}"
-                                                           th:text="${y.category_Name}"></a>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" class="categoryCheckbox"
+                                                                   th:value="${y.category_Name}"
+                                                                   onchange="getSelectedCategory()"/>
+                                                            <span th:text="${y.category_Name}"></span>
+                                                        </label>
                                                     </li>
                                                 </th:block>
                                             </ul>
@@ -196,16 +240,21 @@
                         <div class="accordion" id="accordionExample1">
                             <div class="card">
                                 <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseOne">Tác Giả</a>
+                                    <a data-toggle="collapse" data-target="#collapseOne1">Tác Giả</a>
                                 </div>
-                                <div id="collapseOne" class="collapse show"
-                                     data-parent="#accordionExample">
+                                <div id="collapseOne1" class="collapse show"
+                                     data-parent="#accordionExample1">
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
                                                 <th:block th:each="y : ${author}">
-                                                    <li><a th:href="@{/author/{id}(id=${y.id})}"
-                                                           th:text="${y.nameAuthor}"></a>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" class="authorCheckbox"
+                                                                   th:value="${y.nameAuthor}"
+                                                                   onchange="getSelectedAuthor()"/>
+                                                            <span th:text="${y.nameAuthor}"></span>
+                                                        </label>
                                                     </li>
                                                 </th:block>
                                             </ul>
@@ -216,19 +265,52 @@
                         </div>
                     </div>
                     <div class="shop__sidebar__accordion">
-                        <div class="accordion" id="accordionExample1">
+                        <div class="accordion" id="accordionExample2">
                             <div class="card">
                                 <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseOne">Nhà Xuất Bản</a>
+                                    <a data-toggle="collapse" data-target="#collapseOne2">Nhà Xuất Bản</a>
                                 </div>
-                                <div id="collapseOne" class="collapse show"
-                                     data-parent="#accordionExample">
+                                <div id="collapseOne2" class="collapse show"
+                                     data-parent="#accordionExample2">
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll">
                                                 <th:block th:each="y : ${listProducer}">
-                                                    <li><a th:href="@{/producer/{id}(id=${y.id})}"
-                                                           th:text="${y.nameProducer}"></a>
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" class="producerCheckbox"
+                                                                   th:value="${y.nameProducer}"
+                                                                   onchange="getSelectedProducer()"/>
+                                                            <span th:text="${y.nameProducer}"></span>
+                                                        </label>
+                                                    </li>
+                                                </th:block>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop__sidebar__accordion">
+                        <div class="accordion" id="accordionExample4">
+                            <div class="card">
+                                <div class="card-heading">
+                                    <a data-toggle="collapse" data-target="#collapseOne4">Bìa </a>
+                                </div>
+                                <div id="collapseOne4" class="collapse show"
+                                     data-parent="#accordionExample4">
+                                    <div class="card-body">
+                                        <div class="shop__sidebar__categories">
+                                            <ul class="nice-scroll">
+                                                <th:block th:each="y : ${listBookCover}">
+                                                    <li>
+                                                        <label>
+                                                            <input type="checkbox" class="bookCoverCheckbox"
+                                                                   th:value="${y.cover_type}"
+                                                                   onchange="getSelectedBookCover()"/>
+                                                            <span th:text="${y.cover_type}"></span>
+                                                        </label>
                                                     </li>
                                                 </th:block>
                                             </ul>
@@ -239,29 +321,27 @@
                         </div>
                     </div>
                     <div class="shop__sidebar__accordion" style="margin-top: 30px">
-                        <div class="accordion" id="accordionExample1">
+                        <div class="accordion" id="accordionExample3">
                             <div class="card">
                                 <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseOne">Khoảng Giá</a>
+                                    <a data-toggle="collapse" data-target="#collapseOne3">Khoảng Giá</a>
                                 </div>
-                                <div id="collapseOne" class="collapse show"
-                                     data-parent="#accordionExample">
+                                <div id="collapseOne3" class="collapse show"
+                                     data-parent="#accordionExample3">
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
-                                            <ul class="nice-scroll">
-                                                <li><a href="/0den50"
-                                                >Từ 0 Đến 50000 VNĐ</a></li>
-                                                <li><a href="/50den100"
-                                                >Từ 50000 Đến 100000 VNĐ</a></li>
-                                                <li><a href="/100den200"
-                                                >Từ 100000 Đến 200000 VNĐ</a></li>
-                                                <li><a href="/200den500"
-                                                >Từ 200000 Đến 500000 VNĐ</a></li>
-                                                <li><a href="/500den1000"
-                                                >Từ 500000 VNĐ trở lên</a>
+                                            <div id="priceSlider" style="margin-top: 20px;width: 240px">
+                                                <div style="width: 240px" id="giaBan"
+                                                     class="noUi-target noUi-ltr noUi-horizontal"></div>
 
-                                                </li>
-                                            </ul>
+                                            </div>
+                                            <br>
+                                            <div>
+                                                <p style="color: black">Giá tối thiểu: <span
+                                                        id="minPrice">100.000</span></p>
+                                                <p style="color: black">Giá tối đa: <span id="maxPrice">300.000</span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -275,6 +355,7 @@
 
             <div class="col-lg-9">
                 <div class="shop__product__option">
+
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="shop__product__option__left">
@@ -282,20 +363,35 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12">
+                        <div id="noResults" class="alert alert-warning" style="display: none;margin-top: 10px">
+                            <h5 style="text-align: center;height: 60px;margin-top: 40px">Không có dữ liệu phù hợp với bộ
+                                lọc hiện tại!
+                            </h5>
+                        </div>
+                    </div>
                 </div>
                 <div class="row" style="text-align: center">
                     <th:block th:each="y : ${listProduct.content}">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="col-lg-4 col-md-6 col-sm-6 product-item"
+                             th:data-author="${#strings.arrayJoin(y.author.![nameAuthor], ', ')}"
+                             th:data-category="${#strings.arrayJoin(y.category.![category_Name], ', ')}"
+                             th:data-producer="${y.producer.nameProducer}"
+                             th:data-bookCover="${y.bookCover.cover_type}"
+                             th:data-giaBan="${y.price}">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg"
                                      th:data-setbg="${y.productImage[0].url_Image}">
+
+
                                     <ul class="product__hover">
-                                        <li><a style="margin-left: 50px" th:href="@{/productDetail/{id}(id=${y.id})}"><img
+                                        <li><a style="margin-left: 50px"
+                                               th:href="@{/productDetail/{id}(id=${y.id})}"><img
                                                 src="/img/icon/search.png" alt=""></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6 th:text="${y.product_Name}"></h6>
+                                    <h6 class="card-title" th:text="${y.product_Name}"></h6>
                                     <a th:href="@{/addToCart/{id}(id=${y.id})}" class="add-cart">+
                                         Thêm Vào Giỏ Hàng</a>
                                     <h5
@@ -501,6 +597,160 @@
 <script src="/js/mixitup.min.js"></script>
 <script src="/js/owl.carousel.min.js"></script>
 <script src="/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+
 </body>
 
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var giaBanSlider = document.getElementById('giaBan');
+    var minPrice = document.getElementById('minPrice');
+    var maxPrice = document.getElementById('maxPrice');
+    var selectedCategory = [];
+    var selectedBookCover = [];
+    var selectedProducer = [];
+    var selectedAuthor = []
+    // var selectedTrongLuongs = [];
+    // var selectedChatLieus = [];
+    noUiSlider.create(giaBanSlider, {
+        start: [0, 5000000],
+        connect: true,
+        range: {
+            'min': 0,
+            'max': 5000000
+        }
+    });
+
+    giaBanSlider.noUiSlider.on('update', function (values, handle) {
+        var selectedValues = giaBanSlider.noUiSlider.get();
+        minPrice.innerHTML = parseFloat(selectedValues[0]).toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        });
+        maxPrice.innerHTML = parseFloat(selectedValues[1]).toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        });
+
+        filterProducts();
+    });
+
+    function filterProducts() {
+        // var productList = document.getElementById('product-list');
+        var anyResults = false;
+        var products = document.querySelectorAll('.product-item');
+        var tenGiayFilter = document.getElementById('tenGiayTheThao').value.toLowerCase();
+        var giaBanValues = giaBanSlider.noUiSlider.get();
+
+        products.forEach(function (product) {
+            var productCategories = product.getAttribute('data-category').split(','); // Chia các thể loại thành một mảng
+            var productAuthor = product.getAttribute('data-author').split(',');
+            var productName = product.querySelector('.card-title').textContent.toLowerCase();
+            var productGiaBan = parseFloat(product.getAttribute('data-giaBan'));
+            var authorCondition = selectedAuthor.length === 0 || hasCommonElement(selectedAuthor, productAuthor);
+            var categoryCondition = selectedCategory.length === 0 || hasCommonElement(selectedCategory, productCategories);
+            var bookCoverCondition = selectedBookCover.length === 0 || selectedBookCover.includes(product.getAttribute('data-bookCover'));
+            var producerCondition = selectedProducer.length === 0 || selectedProducer.includes(product.getAttribute('data-producer'));
+            var nameCondition = tenGiayFilter === '' || productName.includes(tenGiayFilter);
+            var priceCondition = productGiaBan >= parseFloat(giaBanValues[0]) && productGiaBan <= parseFloat(giaBanValues[1]);
+            if (categoryCondition && bookCoverCondition && producerCondition && authorCondition && nameCondition && priceCondition) {
+                product.style.display = 'block';
+                anyResults = true;
+            } else {
+                product.style.display = 'none';
+            }
+        });
+
+        var noResultsMessage = document.getElementById('noResults');
+        if (!anyResults) {
+            noResultsMessage.style.display = 'block';
+        } else {
+            noResultsMessage.style.display = 'none';
+        }
+    }
+
+    function hasCommonElement(...arrays) {
+        if (arrays.length < 2) {
+            return false;
+        }
+
+        const firstArray = arrays[0];
+
+        for (let i = 0; i < firstArray.length; i++) {
+            const currentElement = firstArray[i];
+
+            for (let j = 1; j < arrays.length; j++) {
+                const currentArray = arrays[j];
+
+                if (!currentArray.some(element => element.includes(currentElement))) {
+                    break;
+                }
+
+                if (j === arrays.length - 1) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    function getSelectedCategory() {
+        selectedCategory = [];
+        var categoryCheckboxes = document.getElementsByClassName('categoryCheckbox');
+
+        for (var i = 0; i < categoryCheckboxes.length; i++) {
+            if (categoryCheckboxes[i].checked) {
+                selectedCategory.push(categoryCheckboxes[i].value);
+            }
+        }
+
+        filterProducts();
+    }
+
+    function getSelectedBookCover() {
+        selectedBookCover = [];
+        var bookCoverCheckboxes = document.getElementsByClassName('bookCoverCheckbox');
+
+        for (var i = 0; i < bookCoverCheckboxes.length; i++) {
+            if (bookCoverCheckboxes[i].checked) {
+                selectedBookCover.push(bookCoverCheckboxes[i].value);
+            }
+        }
+
+        filterProducts();
+    }
+
+    function getSelectedProducer() {
+        selectedProducer = [];
+        var producerCheckboxes = document.getElementsByClassName('producerCheckbox');
+
+        for (var i = 0; i < producerCheckboxes.length; i++) {
+            if (producerCheckboxes[i].checked) {
+                selectedProducer.push(producerCheckboxes[i].value);
+            }
+        }
+
+        filterProducts();
+    }
+
+    function getSelectedAuthor() {
+        selectedAuthor = [];
+        var authorCheckboxes = document.getElementsByClassName('authorCheckbox');
+
+        for (var i = 0; i < authorCheckboxes.length; i++) {
+            if (authorCheckboxes[i].checked) {
+                selectedAuthor.push(authorCheckboxes[i].value);
+            }
+        }
+
+        filterProducts();
+    }
+
+    giaBanSlider.noUiSlider.on('change', function () {
+        filterProducts();
+    });
+    /*]]>*/
+</script>
 </html>

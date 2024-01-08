@@ -38,9 +38,10 @@ public class CartServicempl implements CartService{
 	}
 
 	@Override
-	public List<Cart> getListCartSelected() {
-		return cartRepository.getListCartSelected();
+	public List<Cart> getListCartSelected(String user_id) {
+		return cartRepository.getListCartSelected(user_id);
 	}
+
 
 	@Override
 	public void saveCart(Cart cart) {
