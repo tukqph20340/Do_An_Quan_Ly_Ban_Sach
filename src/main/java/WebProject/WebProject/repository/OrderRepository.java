@@ -15,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface OrderRepository extends JpaRepository<Order,Integer>{
 
-	@Query(value = "SELECT * FROM `order` WHERE active_order_id = '1' AND user_id = :user_id", nativeQuery = true)
+	@Query(value = "SELECT * FROM `order` WHERE active_order_id = '1' AND (user_id = :user_id OR (user_id IS NULL AND :user_id IS NULL))", nativeQuery = true)
 	List<Order> findAllByUser_id(@Param("user_id") String user_id);
 
 	@Query(value = "select * from `order` WHere active_order_id = '2'AND user_id = :user_id ",nativeQuery = true)
@@ -72,6 +72,8 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 
 	@Query("SELECT c FROM Order c WHERE STR_TO_DATE(c.booking_Date, '%Y-%m-%d %H:%i:%s') BETWEEN :startDate AND :endDate AND c.activeOrder.id LIKE :id")
 	List<Order> findByBookingDateBetweenAndActiveOrderId(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("id") String id);
+
+
 
 
 

@@ -138,14 +138,16 @@
 
 <!-- Header Section Begin -->
 
-
+<div class="col-lg-12">
+    <a class="button-primary" th:href="@{/quan-ly-don-hang}"
+    >Quay Lại</a>
+</div>
 <div style="margin-top: 10px"></div>
 <!-- Content
 ================================================== -->
 <!-- Titlebar -->
 
 <div id="invoice">
-
     <!-- Header -->
     <div class="row">
         <div class="col-md-6">
@@ -258,73 +260,68 @@
         </script>
 
         <div class="col-md-12">
-            <table class="margin-top-20">
-                <tr>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Số Lượng</th>
-                    <th>Giá</th>
-                    <th></th>
-                </tr>
-                <th:block th:each="y: ${listOrder_Item}">
+            <form th:action="@{/cap-nhap/{id}(id=${idHoaDon})}" method="post">
+                <table class="margin-top-20">
                     <tr>
-                        <td th:text="${y.product.product_Name}"></td>
-                        <td>
-                            <input th:value="${y.count}" id="soLuong" name="soLuong" type="number"
-                                   th:onchange="updateQuantitya(this, [[${y.unit_price}]], [[${y.id}]])"
-                                   th:attr="data-order-id=${y.id}">
-                        </td>
-
-                        <td><span th:id="'gia'+${y.id}" th:text="${y.unit_price} + ' VNĐ'"></span></td>
-
-                        <script>
-                            function updateQuantitya(inputElement, unitPrice, orderId) {
-                                var soLuong = inputElement.value;
-
-                                // Check if the value is less than 1 or not a number
-                                if (isNaN(soLuong) || soLuong < 1) {
-                                    // Set the value back to 1
-                                    inputElement.value = 1;
-                                    var gia = 1 * unitPrice;
-                                } else {
-                                    var gia = soLuong * unitPrice;
-                                }
-
-                                $.ajax({
-                                    type: "POST",
-                                    url: "/sua-so-luong-don-hang",
-                                    data: {
-                                        orderId: orderId,
-                                        soLuong: soLuong,
-                                    },
-                                    success: function (response) {
-                                        console.log("Check Input");
-                                        var formattedPrice = new Intl.NumberFormat('vi-VN', {
-                                            style: 'currency',
-                                            currency: 'VND'
-                                        }).format(gia);
-                                        document.getElementById("gia").innerText = formattedPrice;
-                                    },
-                                    error: function (error) {
-                                        // Handle errors if necessary
-                                    }
-                                });
-                            }
-                        </script>
-
-
-                        <td>
-                            <a th:if="${a!=null}" th:href="@{/xoa-don-hang/{id}(id=${y.id})}" class="button gray">Xóa
-                                Sản
-                                Phẩm</a>
-
-                        </td>
-
-                        <!-- Modal for Đánh giá -->
+                        <th>Tên Sản Phẩm</th>
+                        <th>Số Lượng</th>
+                        <th>Giá</th>
+                        <th></th>
                     </tr>
-                </th:block>
+                    <th:block th:each="y,index: ${listOrder_Item}">
+                        <tr>
+                            <td th:text="${y.product.product_Name}"></td>
+                            <td>
+                                <input style="border-radius: 20px; width: 80px; height: 40px"
+                                       th:value="${y.count}"
+                                       th:id="'soLuong' + ${index.index + 1}"
+                                       th:name="'soLuong' + ${index.index + 1}"
+                                       type="number"
+                                       th:onchange="updateQuantitya([[${y.unit_price}/${y.count}]], [[${index.index + 1}]])"
+                                       th:attr="data-order-id=${y.id}">
+                            </td>
 
-            </table>
+                            <td><span th:id="'gia' + ${index.index + 1}" th:text="${y.unit_price} + ' ₫'"></span>
+                                <input th:id="'giaTien' + ${index.index + 1}"  th:name="'giaTien' + ${index.index + 1}" type="hidden" th:value="${y.unit_price}">
+                            </td>
 
+                            <script>
+                                function updateQuantitya(unitPrice, index) {
+                                    var inputElement = document.getElementById('soLuong' + index);
+                                    var soLuong = inputElement.value;
+                                    var giaTien = document.getElementById('giaTien' + index);
+                                    // Check if the value is less than 1 or not a number
+                                    if (isNaN(soLuong) || soLuong < 1) {
+                                        // Set the value back to 1
+                                        inputElement.value = 1;
+                                        soLuong = 1;
+                                    }
+
+                                    var gia = soLuong * unitPrice;
+                                    var formattedPrice = new Intl.NumberFormat('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND'
+                                    }).format(gia);
+                                    document.getElementById('giaTien' + index).value = gia;
+                                    document.getElementById('gia' + index).innerText = formattedPrice;
+                                }
+                            </script>
+
+
+                            <td>
+                                <a th:if="${a!=null}" th:href="@{/xoa-don-hang/{id}(id=${y.id})}" class="button gray">Xóa
+                                    Sản
+                                    Phẩm</a>
+
+                            </td>
+
+                            <!-- Modal for Đánh giá -->
+                        </tr>
+                    </th:block>
+                </table>
+                <button style="margin-left: 603px;" class="btn-primary" type="submit">Lưu số lượng và giá tiền
+                    </button>
+            </form>
             <p>
                 <strong class="margin-bottom-5">Địa Chỉ: </strong>
                 <i th:text="${order.note}+'-'"></i><i th:text="${order.wards}+'-'"></i><i
