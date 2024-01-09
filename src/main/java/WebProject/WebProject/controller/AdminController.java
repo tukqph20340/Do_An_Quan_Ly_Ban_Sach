@@ -1748,7 +1748,7 @@ public class AdminController {
 
                     productService.saveProduct(newPro);
                     List<Product> listProducts = productService.getAllProduct();
-                    Product newPro1 = listProducts.get(listProducts.size() - 1);
+                    Product newPro1 = productService.tenaaaa(product_name);
 
 
                     img.setProduct(newPro1);
@@ -1835,6 +1835,8 @@ public class AdminController {
                 model.addAttribute("a", null);
                 return "/admin/sanpham/dashboard-myproducts";
             }
+
+
         } catch (Exception e) {
 
             model.addAttribute("loiimg", "Ảnh không được để trống");

@@ -41,6 +41,10 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.save(product);
 	}
 
+	@Override
+	public Product tenaaaa(String id) {
+		return productRepository.getTen(id);
+	}
 
 
 	@Override
