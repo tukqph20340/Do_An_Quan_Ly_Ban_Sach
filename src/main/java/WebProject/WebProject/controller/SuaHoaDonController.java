@@ -242,17 +242,21 @@ public class SuaHoaDonController {
             try {
                 int count = Integer.parseInt(soLuongParameter);
                 int giaTien = Integer.parseInt(giaTienParameter);
-
                 // Update the order item with the new values
                 System.out.println(count);
                 System.out.println(giaTien);
-                product.setQuantity(product.getQuantity()+orderItem.getCount()-count);
-                productService.saveProduct(product);
-                orderItem.setCount(count);
-                orderItem.setUnit_price(Long.valueOf(giaTien));
-                order_ItemService.saveOrder_Item(orderItem);
+                if (count>(product.getQuantity()+orderItem.getCount())){
+                    return "redirect:/sua-hang/" + id;
+                }else {
+                    product.setQuantity(product.getQuantity() + orderItem.getCount() - count);
+                    productService.saveProduct(product);
+                    orderItem.setCount(count);
+                    orderItem.setUnit_price(Long.valueOf(giaTien));
+                    order_ItemService.saveOrder_Item(orderItem);
+                    product.setQuantity((product.getQuantity()+orderItem.getCount())-count);
+                    productService.saveProduct(product);
 
-
+                }
 
             } catch (NumberFormatException e) {
                 // Handle the case where parsing fails (invalid input)
