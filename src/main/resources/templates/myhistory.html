@@ -189,16 +189,15 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a th:href="@{/home}"><img src="/images/logo3.png" alt="" style="
-    margin-top: -30px;"></a>
+                    <a th:href="@{/home}"><img src="/images/logo3.png" alt="" style="margin-top: -11px;margin-left: -150px;"></a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
-                    <ul>
-                        <li><a th:href="@{/home}" style="font-size: 15px">Trang Chủ</a></li>
-                        <li><a th:href="@{/shop}" style="font-size: 15px">Cửa Hàng</a></li>
-                        <li class="active"><a href="# " style="font-size: 15px">Thông Tin</a>
+                    <ul style="width: 600px;">
+                        <li class="active"><a th:href="@{/home}">Trang Chủ</a></li>
+                        <li><a th:href="@{/shop}">Cửa Hàng</a></li>
+                        <li><a href="#">Thông Tin</a>
                             <ul class="dropdown">
                                 <li><a th:href="@{/cart}">Giỏ Hàng</a></li>
                                 <li><a th:href="@{/myprofile}">Tài Khoản Của Tôi</a></li>
@@ -206,8 +205,8 @@
                                 <li><a th:href="@{/about}">Về Chúng Tôi</a></li>
                             </ul>
                         </li>
-                        <li><a th:href="@{/blog}" style="font-size: 15px">Tin Tức</a></li>
-                        <li><a th:href="@{/contact}" style="font-size: 15px">Liên Lạc</a></li>
+                        <li><a th:href="@{/blog}">Tin Tức</a></li>
+                        <li><a th:href="@{/contact}">Liên Lạc</a></li>
                     </ul>
                 </nav>
             </div>
@@ -217,7 +216,7 @@
                             src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
                     </a> <a th:href="@{/cart}"><img
                         src="img/icon/cart.png" alt=""> <span
-                        th:text="${session.countCart}"></span></a>
+                        th:text="${session.countCart}" style="top:3px"></span></a>
                 </div>
             </div>
         </div>
@@ -237,7 +236,7 @@
         <div id="titlebar">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Lịch Sử Mua Hàng</h2>
+                    <h2 style="margin-left: 15px">Lịch Sử Mua Hàng</h2>
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs">
                         <ul>
@@ -253,7 +252,7 @@
             <!-- Invoices -->
             <div class="col-lg-12">
                 <div class="product__details__tab">
-                    <ul class="nav nav-tabs custom-nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs custom-nav-tabs table bordered" role="tablist">
                         <li class="nav-item" style=" margin: 0px 20px;"><a style="font-size: 18px;"
                                                                            class="nav-link active"
                                                                            data-toggle="tab" href="#tabs-5"
