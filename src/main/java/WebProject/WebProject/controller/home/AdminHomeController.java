@@ -55,113 +55,343 @@ public class AdminHomeController {
     HttpSession session;
 
     @GetMapping("/quan-ly-don-hang")
-    public String hienThiHomeAdmin(Model model) {
-        List<Order> listOrderActive1 = orderService.findByActiveOrder_Id("1");
-        Collections.reverse(listOrderActive1);
-        model.addAttribute("listOrderActive1", listOrderActive1);
+    public String hienThiHomeAdmin(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"1");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
         System.out.println(listOrderActive1);
 
-        List<Order> listOrderActive2 = orderService.findByActiveOrder_Id("2");
-        Collections.reverse(listOrderActive2);
-        model.addAttribute("listOrderActive2", listOrderActive2);
-
-        List<Order> listOrderActive3 = orderService.findByActiveOrder_Id("3");
-        Collections.reverse(listOrderActive3);
-        model.addAttribute("listOrderActive3", listOrderActive3);
-
-        List<Order> listOrderActive4 = orderService.findByActiveOrder_Id("4");
-        Collections.reverse(listOrderActive4);
-        model.addAttribute("listOrderActive4", listOrderActive4);
-
-        List<Order> listOrderActive6 = orderService.findByActiveOrder_Id("6");
-        Collections.reverse(listOrderActive6);
-        model.addAttribute("listOrderActive6", listOrderActive6);
-
-        List<Order> listOrderActive7 = orderService.findByActiveOrder_Id("7");
-        Collections.reverse(listOrderActive7);
-        model.addAttribute("listOrderActive7", listOrderActive7);
-
-
-        List<Order> listOrderActive5 = orderService.findByActiveOrder_Id("5");
-        Collections.reverse(listOrderActive5);
-        model.addAttribute("listOrderActive5", listOrderActive5);
-
-        List<Order> listOrderActive8 = orderService.findByActiveOrder_Id("8");
-        Collections.reverse(listOrderActive8);
-        model.addAttribute("listOrderActive8", listOrderActive8);
-        List<Order> listOrderActive9 = orderService.findByActiveOrder_Id("9");
-        Collections.reverse(listOrderActive9);
-        model.addAttribute("listOrderActive9", listOrderActive9);
-        List<Order> listOrderActive10 = orderService.findByActiveOrder_Id("10");
-        Collections.reverse(listOrderActive10);
-        model.addAttribute("listOrderActive10", listOrderActive10);
-        System.out.println(listOrderActive1);
 
         return "/admin/quanlydonhang/quan-ly-don-hang.html";
     }
 
+    @GetMapping("/quan-ly-don-hang2")
+    public String hienThiHomeAdmin2(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"2");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang2.html";
+    }
+    @GetMapping("/quan-ly-don-hang3")
+    public String hienThiHomeAdmin3(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"3");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang3.html";
+    }
+    @GetMapping("/quan-ly-don-hang4")
+    public String hienThiHomeAdmin4(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"4");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang4.html";
+    }
+    @GetMapping("/quan-ly-don-hang5")
+    public String hienThiHomeAdmin5(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"5");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang5.html";
+    }
+    @GetMapping("/quan-ly-don-hang6")
+    public String hienThiHomeAdmin6(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"6");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang6.html";
+    }
+    @GetMapping("/quan-ly-don-hang7")
+    public String hienThiHomeAdmin7(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"7");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang7.html";
+    }
+    @GetMapping("/quan-ly-don-hang8")
+    public String hienThiHomeAdmin8(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"8");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang8.html";
+    }
+    @GetMapping("/quan-ly-don-hang9")
+    public String hienThiHomeAdmin9(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"9");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang9.html";
+    }
+    @GetMapping("/quan-ly-don-hang10")
+    public String hienThiHomeAdmin10(Model model , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+
+        Pageable pageable = PageRequest.of(pageNo,5);
+        Page<Order> listOrderActive1 = orderService.findByActiveOrder_Id(pageable,"10");
+        model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+        model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+        model.addAttribute("a", null);
+
+        System.out.println(listOrderActive1);
+
+
+        return "/admin/quanlydonhang/quan-ly-don-hang10.html";
+    }
+
     @GetMapping("/quan-ly-don-hang/tim-kiem")
-    public String hienThiHomeAdmintk(Model model,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+    public String hienThiHomeAdmintk(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
         if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
-           return "redirect:/quan-ly-don-hang";
-        }else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
             return "redirect:/quan-ly-don-hang";
-        }else {
-            List<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc, "1");
-            Collections.reverse(listOrderActive1);
-            model.addAttribute("listOrderActive1", listOrderActive1);
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable,ngayBatDau, ngayKetThuc, "1");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
             System.out.println(listOrderActive1);
-
-            List<Order> listOrderActive2 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"2");
-            Collections.reverse(listOrderActive2);
-            model.addAttribute("listOrderActive2", listOrderActive2);
-
-            List<Order> listOrderActive3 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"3");
-            Collections.reverse(listOrderActive3);
-            model.addAttribute("listOrderActive3", listOrderActive3);
-
-            List<Order> listOrderActive4 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"4");
-            Collections.reverse(listOrderActive4);
-            model.addAttribute("listOrderActive4", listOrderActive4);
-
-            List<Order> listOrderActive6 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"6");
-            Collections.reverse(listOrderActive6);
-            model.addAttribute("listOrderActive6", listOrderActive6);
-
-            List<Order> listOrderActive7 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"7");
-            Collections.reverse(listOrderActive7);
-            model.addAttribute("listOrderActive7", listOrderActive7);
-
-
-            List<Order> listOrderActive5 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"5");
-            Collections.reverse(listOrderActive5);
-            model.addAttribute("listOrderActive5", listOrderActive5);
-
-            List<Order> listOrderActive8 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"8");
-            Collections.reverse(listOrderActive8);
-            model.addAttribute("listOrderActive8", listOrderActive8);
-            List<Order> listOrderActive9 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"9");
-            Collections.reverse(listOrderActive9);
-            model.addAttribute("listOrderActive9", listOrderActive9);
-            List<Order> listOrderActive10 = orderService.findByBookingDateBetweenAndActiveOrderId(ngayBatDau,ngayKetThuc,"10");
-            Collections.reverse(listOrderActive10);
-            model.addAttribute("listOrderActive10", listOrderActive10);
-
             return "/admin/quanlydonhang/quan-ly-don-hang.html";
+
+        }
+    }
+    @GetMapping("/quan-ly-don-hang2/tim-kiem")
+    public String hienThiHomeAdmintk2(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable,ngayBatDau, ngayKetThuc, "2");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang2.html";
+
+
+        }
+    }
+
+
+    @GetMapping("/quan-ly-don-hang3/tim-kiem")
+    public String hienThiHomeAdmintk3(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "3");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang3.html";
+
+        }
+    }
+
+
+    @GetMapping("/quan-ly-don-hang4/tim-kiem")
+    public String hienThiHomeAdmintk4(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "4");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang4.html";
+
+        }
+    }
+    @GetMapping("/quan-ly-don-hang5/tim-kiem")
+    public String hienThiHomeAdmintk5(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "5");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang5.html";
+
+        }
+    }
+
+    @GetMapping("/quan-ly-don-hang6/tim-kiem")
+    public String hienThiHomeAdmintk6(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "6");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang6.html";
+
         }
     }
 
 
 
 
+    @GetMapping("/quan-ly-don-hang7/tim-kiem")
+    public String hienThiHomeAdmintk7(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "7");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang7.html";
+
+        }
+    }
+
+    @GetMapping("/quan-ly-don-hang8/tim-kiem")
+    public String hienThiHomeAdmintk8(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
+
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "8");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang8.html";
+
+        }
+    }
 
 
 
 
+    @GetMapping("/quan-ly-don-hang9/tim-kiem")
+    public String hienThiHomeAdmintk9(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
 
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "9");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang9.html";
 
+        }
+    }
 
+    @GetMapping("/quan-ly-don-hang10/tim-kiem")
+    public String hienThiHomeAdmintk10(Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,@RequestParam("ngayBatDau") String ngayBatDau,@RequestParam("ngayKetThuc") String ngayKetThuc) {
+        if (ngayBatDau.isEmpty() && ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
+            return "redirect:/quan-ly-don-hang";
+        } else {
+            Pageable pageable = PageRequest.of(pageNo, 5);
 
+            Page<Order> listOrderActive1 = orderService.findByBookingDateBetweenAndActiveOrderId(pageable, ngayBatDau, ngayKetThuc, "10");
+            model.addAttribute("listOrderActive1", listOrderActive1.getContent());
+            model.addAttribute("listOrderActive1Page", listOrderActive1.getTotalPages());
+            model.addAttribute("a", "a");
+            System.out.println(listOrderActive1);
+            return "/admin/quanlydonhang/quan-ly-don-hang10.html";
+
+        }
+    }
 
 
 

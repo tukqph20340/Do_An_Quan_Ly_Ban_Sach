@@ -165,7 +165,7 @@
             <div class="col-lg-12">
                 <div class="card-body" style="background: white">
                     <h4 style="font-weight: bold;margin-bottom: 30px;">Tìm Kiếm đơn hàng</h4>
-                    <form th:action="@{/quan-ly-don-hang/tim-kiem}" method="get">
+                    <form th:action="@{/quan-ly-don-hang4/tim-kiem}" method="get">
                         <div class="justify-content-center">
                             <div class="input-group mb-3">
                                 <div class="col-lg-12">
@@ -223,10 +223,10 @@
                     <div class="product__details__tab">
                         <ul class="nav nav-tabs custom-nav-tabs" role="tablist">
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;font-weight: bold"
-                                                  href="/quan-ly-don-hang" >Chờ xác nhận</a>
+                                                    href="/quan-ly-don-hang" >Chờ xác nhận</a>
                             </li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;font-weight: bold"
-                                                   href="/quan-ly-don-hang2" >Chờ lấy hàng</a>
+                                                    href="/quan-ly-don-hang2" >Chờ lấy hàng</a>
                             </li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;font-weight: bold"
                                                     href="/quan-ly-don-hang3" >Đã lấy hàng</a></li>
@@ -237,9 +237,9 @@
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;font-weight: bold"
                                                     href="/quan-ly-don-hang7" >Hủy</a></li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;font-weight: bold"
-                                                     href="/quan-ly-don-hang5" >Thất bại</a></li>
+                                                    href="/quan-ly-don-hang5" >Thất bại</a></li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;font-weight: bold"
-                                                     href="/quan-ly-don-hang8" >Chờ xác nhận trả
+                                                    href="/quan-ly-don-hang8" >Chờ xác nhận trả
                                 hàng</a></li>
                             <li class="nav-item"><a style="font-size: 12px; color:#0b0b0b;font-weight: bold"
                                                     href="/quan-ly-don-hang9" >Từ chối trả
@@ -283,28 +283,21 @@
                                                             <td th:text="${y.payment_Method == 'Payment on delivery' ? 'Thanh Toán Khi Nhận Hàng' : (y.payment_Method == 'Payment with momo' ? 'Thanh Toán Bằng Ví MoMo' : 'Thanh Toán Bằng Ví Dự Chữ')}"></td>
                                                             <!--                                                                <td th:text="${y.email}"></td>-->
                                                             <td>
-                                                                <a th:href="@{/huy-admin/{id}(id=${y.id})}"
-                                                                   class="button gray reject"><i
-                                                                        class="sl sl-icon-close"></i> Hủy</a></td>
-                                                            <td th:if="${y.payment_Method == 'Payment on delivery'}">
-                                                                <a th:href="@{/sua-hang/{id}(id=${y.id})}"
-                                                                   class="button gray reject"><i
-                                                                        class="sl sl-icon-note"></i> Sửa</a></td>
-                                                            <td th:if="${y.payment_Method != 'Payment on delivery'}">
-                                                                <a href="#" onclick="thongBao();"
-                                                                   class="button gray reject"><i
-                                                                        class="sl sl-icon-note" ></i> Sửa</a></td>
+                                                                <a th:href="@{/dashboard-orders-active5/edit/{id}(id=${y.id})}"
+                                                                   class="button gray approve"><i
+                                                                        class="sl sl-icon-check"></i>Giao Hàng Thành
+                                                                    Công</a></td>
                                                             <td>
-                                                                <a th:href="@{/dashboard-orders/edit/{id}(id=${y.id})}"
+                                                                <a th:href="@{/dashboard-orders-active4/edit/{id}(id=${y.id})}"
                                                                    class="button gray checkmark"><i
-                                                                        class="sl sl-icon-check"></i>Xác nhận đơn
-                                                                    hàng</a></td>
+                                                                        class="sl sl-icon-close"></i>Giao Hàng Thất
+                                                                    Bại</a>
+                                                            </td>
                                                             <td>
                                                                 <a th:href="@{/invoice1/{id}(id=${y.id})}"
                                                                    class="button gray approve"><i
                                                                         class="im im-icon-Coin"></i>Chi Tiết Đơn
-                                                                    Hàng</a>
-                                                            </td>
+                                                                    Hàng</a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -314,7 +307,7 @@
                                                             <ul class="pagination">
                                                                 <!--trang đầu-->
                                                                 <li class="page-item">
-                                                                    <a class="page-link" th:href="@{/quan-ly-don-hang(pageNo=0)}">Trang
+                                                                    <a class="page-link" th:href="@{/quan-ly-don-hang4(pageNo=0)}">Trang
                                                                         Đầu</a>
                                                                 </li>
                                                                 <!--Previous-->
@@ -323,7 +316,7 @@
                                                                 <div th:each="index : ${#numbers.sequence(0, listOrderActive1Page-1)}">
                                                                     <li class="page-item">
                                                                         <a class="page-link"
-                                                                           th:href="@{/quan-ly-don-hang(pageNo=${index})}"
+                                                                           th:href="@{/quan-ly-don-hang4(pageNo=${index})}"
                                                                            th:text="${index+1}"></a>
                                                                     </li>
                                                                 </div>
@@ -331,7 +324,7 @@
                                                                 <!--trang cuối-->
                                                                 <li class="page-item">
                                                                     <a class="page-link"
-                                                                       th:href="@{/quan-ly-don-hang(pageNo=${listOrderActive1Page -1})}">Trang
+                                                                       th:href="@{/quan-ly-don-hang4(pageNo=${listOrderActive1Page -1})}">Trang
                                                                         Cuối</a>
                                                                 </li>
                                                             </ul>
@@ -343,7 +336,7 @@
                                                             <ul class="pagination">
                                                                 <!--trang đầu-->
                                                                 <li class="page-item">
-                                                                    <a class="page-link" th:href="@{/quan-ly-don-hang/tim-kiem(pageNo=0)}">Trang
+                                                                    <a class="page-link" th:href="@{/quan-ly-don-hang4/tim-kiem(pageNo=0)}">Trang
                                                                         Đầu</a>
                                                                 </li>
                                                                 <!--Previous-->
@@ -352,7 +345,7 @@
                                                                 <div th:each="index : ${#numbers.sequence(0, listOrderActive1Page-1)}">
                                                                     <li class="page-item">
                                                                         <a class="page-link"
-                                                                           th:href="@{/quan-ly-don-hang/tim-kiem(pageNo=${index})}"
+                                                                           th:href="@{/quan-ly-don-hang4/tim-kiem(pageNo=${index})}"
                                                                            th:text="${index+1}"></a>
                                                                     </li>
                                                                 </div>
@@ -360,7 +353,7 @@
                                                                 <!--trang cuối-->
                                                                 <li class="page-item">
                                                                     <a class="page-link"
-                                                                       th:href="@{/quan-ly-don-hang/tim-kiem(pageNo=${listOrderActive1Page -1})}">Trang
+                                                                       th:href="@{/quan-ly-don-hang4/tim-kiem(pageNo=${listOrderActive1Page -1})}">Trang
                                                                         Cuối</a>
                                                                 </li>
                                                             </ul>
@@ -373,117 +366,112 @@
                                     </ul>
                                 </div>
                             </div>
-                            <script>
-                                function thongBao(){
-                                    alert("Chỉ có thanh toán khi nhận hàng mới sửa được đơn hàng !!");
-                                    return;
-                                }
-                            </script>
+
+
+                        </div>
 
                     </div>
-
                 </div>
+                <!-- Content / End -->
             </div>
-            <!-- Content / End -->
+
         </div>
+        <!-- Dashboard / End -->
+
 
     </div>
-    <!-- Dashboard / End -->
+    <!-- Wrapper / End -->
 
 
-</div>
-<!-- Wrapper / End -->
+    <!-- Scripts
+    ================================================== -->
+    <script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript"
+            src="/scripts/jquery-migrate-3.3.2.min.js"></script>
+    <script type="text/javascript" src="/scripts/mmenu.min.js"></script>
+    <script type="text/javascript" src="/scripts/chosen.min.js"></script>
+    <script type="text/javascript" src="/scripts/slick.min.js"></script>
+    <script type="text/javascript" src="/scripts/rangeslider.min.js"></script>
+    <script type="text/javascript" src="/scripts/magnific-popup.min.js"></script>
+    <script type="text/javascript" src="/scripts/waypoints.min.js"></script>
+    <script type="text/javascript" src="/scripts/counterup.min.js"></script>
+    <script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/scripts/tooltips.min.js"></script>
+    <script type="text/javascript" src="/scripts/custom.js"></script>
 
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery.nicescroll.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.countdown.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/mixitup.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+    <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
+    <script src="/scripts/moment.min.js"></script>
+    <script src="/scripts/daterangepicker.js"></script>
 
-<!-- Scripts
-================================================== -->
-<script type="text/javascript" src="/scripts/jquery-3.6.0.min.js"></script>
-<script type="text/javascript"
-        src="/scripts/jquery-migrate-3.3.2.min.js"></script>
-<script type="text/javascript" src="/scripts/mmenu.min.js"></script>
-<script type="text/javascript" src="/scripts/chosen.min.js"></script>
-<script type="text/javascript" src="/scripts/slick.min.js"></script>
-<script type="text/javascript" src="/scripts/rangeslider.min.js"></script>
-<script type="text/javascript" src="/scripts/magnific-popup.min.js"></script>
-<script type="text/javascript" src="/scripts/waypoints.min.js"></script>
-<script type="text/javascript" src="/scripts/counterup.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/scripts/tooltips.min.js"></script>
-<script type="text/javascript" src="/scripts/custom.js"></script>
+    <!--<script>-->
+    <!--    $(function () {-->
 
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery.nice-select.min.js"></script>
-<script src="/js/jquery.nicescroll.min.js"></script>
-<script src="/js/jquery.magnific-popup.min.js"></script>
-<script src="/js/jquery.countdown.min.js"></script>
-<script src="/js/jquery.slicknav.js"></script>
-<script src="/js/mixitup.min.js"></script>
-<script src="/js/owl.carousel.min.js"></script>
-<script src="/js/main.js"></script>
-<!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
-<script src="/scripts/moment.min.js"></script>
-<script src="/scripts/daterangepicker.js"></script>
+    <!--        var start = moment().subtract(29, 'days');-->
+    <!--        var end = moment();-->
 
-<!--<script>-->
-<!--    $(function () {-->
+    <!--        function cb(start, end) {-->
+    <!--            $('#booking-date-range span').html(-->
+    <!--                start.format('MMMM D, YYYY') +-->
+    <!--                + end.format('MMMM D, YYYY'));-->
+    <!--        }-->
 
-<!--        var start = moment().subtract(29, 'days');-->
-<!--        var end = moment();-->
+    <!--        cb(start, end);-->
+    <!--        $('#booking-date-range').daterangepicker(-->
+    <!--            {-->
+    <!--                "opens": "left",-->
+    <!--                "autoUpdateInput": false,-->
+    <!--                "alwaysShowCalendars": true,-->
+    <!--                startDate: start,-->
+    <!--                endDate: end,-->
+    <!--                ranges: {-->
+    <!--                    'Today': [moment(), moment()],-->
+    <!--                    'Yesterday': [moment().subtract(1, 'days'),-->
+    <!--                        moment().subtract(1, 'days')],-->
+    <!--                    'Last 7 Days': [moment().subtract(6, 'days'),-->
+    <!--                        moment()],-->
+    <!--                    'Last 30 Days': [moment().subtract(29, 'days'),-->
+    <!--                        moment()],-->
+    <!--                    'This Month': [moment().startOf('month'),-->
+    <!--                        moment().endOf('month')],-->
+    <!--                    'Last Month': [-->
+    <!--                        moment().subtract(1, 'month').startOf(-->
+    <!--                            'month'),-->
+    <!--                        moment().subtract(1, 'month')-->
+    <!--                            .endOf('month')]-->
+    <!--                }-->
+    <!--            }, cb);-->
 
-<!--        function cb(start, end) {-->
-<!--            $('#booking-date-range span').html(-->
-<!--                start.format('MMMM D, YYYY') +-->
-<!--                + end.format('MMMM D, YYYY'));-->
-<!--        }-->
+    <!--        cb(start, end);-->
 
-<!--        cb(start, end);-->
-<!--        $('#booking-date-range').daterangepicker(-->
-<!--            {-->
-<!--                "opens": "left",-->
-<!--                "autoUpdateInput": false,-->
-<!--                "alwaysShowCalendars": true,-->
-<!--                startDate: start,-->
-<!--                endDate: end,-->
-<!--                ranges: {-->
-<!--                    'Today': [moment(), moment()],-->
-<!--                    'Yesterday': [moment().subtract(1, 'days'),-->
-<!--                        moment().subtract(1, 'days')],-->
-<!--                    'Last 7 Days': [moment().subtract(6, 'days'),-->
-<!--                        moment()],-->
-<!--                    'Last 30 Days': [moment().subtract(29, 'days'),-->
-<!--                        moment()],-->
-<!--                    'This Month': [moment().startOf('month'),-->
-<!--                        moment().endOf('month')],-->
-<!--                    'Last Month': [-->
-<!--                        moment().subtract(1, 'month').startOf(-->
-<!--                            'month'),-->
-<!--                        moment().subtract(1, 'month')-->
-<!--                            .endOf('month')]-->
-<!--                }-->
-<!--            }, cb);-->
+    <!--    });-->
 
-<!--        cb(start, end);-->
-
-<!--    });-->
-
-<!--    // Calendar animation and visual settings-->
-<!--    $('#booking-date-range')-->
-<!--        .on(-->
-<!--            'show.daterangepicker',-->
-<!--            function (ev, picker) {-->
-<!--                $('.daterangepicker')-->
-<!--                    .addClass(-->
-<!--                        'calendar-visible calendar-animated bordered-style');-->
-<!--                $('.daterangepicker')-->
-<!--                    .removeClass('calendar-hidden');-->
-<!--            });-->
-<!--    $('#booking-date-range').on('hide.daterangepicker',-->
-<!--        function (ev, picker) {-->
-<!--            $('.daterangepicker').removeClass('calendar-visible');-->
-<!--            $('.daterangepicker').addClass('calendar-hidden');-->
-<!--        });-->
-<!--</script>-->
+    <!--    // Calendar animation and visual settings-->
+    <!--    $('#booking-date-range')-->
+    <!--        .on(-->
+    <!--            'show.daterangepicker',-->
+    <!--            function (ev, picker) {-->
+    <!--                $('.daterangepicker')-->
+    <!--                    .addClass(-->
+    <!--                        'calendar-visible calendar-animated bordered-style');-->
+    <!--                $('.daterangepicker')-->
+    <!--                    .removeClass('calendar-hidden');-->
+    <!--            });-->
+    <!--    $('#booking-date-range').on('hide.daterangepicker',-->
+    <!--        function (ev, picker) {-->
+    <!--            $('.daterangepicker').removeClass('calendar-visible');-->
+    <!--            $('.daterangepicker').addClass('calendar-hidden');-->
+    <!--        });-->
+    <!--</script>-->
 
 </body>
 </html>

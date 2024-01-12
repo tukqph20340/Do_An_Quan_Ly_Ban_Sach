@@ -15,14 +15,14 @@
             rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <style>
@@ -237,13 +237,13 @@
                     </form>
                 </div>
             </div>
-            <form onsubmit="return validatePhoneNumber()" action="checkout" method="post">
+            <form action="checkout" method="post">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <h5 class="section-title position-relative text-uppercase mb-3">
                             <span class="">Địa chỉ nhận hàng</span>
                         </h5>
-                        <input th:if="${session.acc != null}" type="checkbox" name="diaChiChon" value="diaChiCu" id="checkbox1" checked>
+                        <input th:if="${session.acc != null}" type="checkbox" name="diaChiChon" value="diaChiCu" id="checkbox1" >
                         <label th:if="${session.acc != null}" for="checkbox1" class="label_check_box">Địa chỉ ban đầu</label>
                         <br>
                         <div th:if="${session.acc != null}" id="view_dia_chi_cu" style="display:block">
@@ -328,22 +328,9 @@
                                         <div class="col-md-6 form-group">
                                             <label>Số điện thoại</label>
                                             <span style="color: red">*</span>
-                                            <input class="form-control" name="phone1" id="sdt1" type="text"
-                                                   placeholder="Số điện thoại"  onblur="validatePhoneNumber()">
+                                            <input class="form-control" name="phone1" id="sdt1" type="number"
+                                                   placeholder="Số điện thoại" >
                                         </div>
-                                        <script>
-                                            function validatePhoneNumber() {
-                                                var phoneNumberInput = document.getElementById('sdt1');
-                                                var phoneNumber = phoneNumberInput.value;
-
-                                                // Kiểm tra xem chuỗi chỉ chứa chữ số và có đúng 10 ký tự hay không
-                                                if (/^\d{10}$/.test(phoneNumber)) {
-                                                    console.log("Số điện thoại hợp lệ: " + phoneNumber);
-                                                } else {
-                                                    alert("Số điện thoại không hợp lệ. Vui lòng nhập 10 chữ số.");
-                                                }
-                                            }
-                                        </script>
                                         <div class="col-md-6 form-group">
                                             <label for="province">Tỉnh:</label>
                                             <span style="color: red">*</span>
