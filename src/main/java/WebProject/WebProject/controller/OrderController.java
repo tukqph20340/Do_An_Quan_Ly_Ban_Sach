@@ -281,7 +281,7 @@ public class OrderController {
                            @RequestParam(value = "payWithMomo", defaultValue = "false") boolean payWithMomo,
                            @RequestParam(value = "payVi", defaultValue = "false") boolean payVi, Model model,
                            HttpServletResponse resp, HttpServletRequest request1) throws Exception {
-//        try {
+        try {
 
         String vi = request1.getParameter("discal");
         System.out.println(vi);
@@ -499,10 +499,10 @@ public class OrderController {
         }
 
 
-//        } catch (Exception e) {
-//            session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
-//            return "redirect:/checkout";
-//        }
+        } catch (Exception e) {
+            session.setAttribute("AddToCartErr", "Thanh toán không thành công!");
+            return "redirect:/checkout";
+        }
 
         return null;
     }

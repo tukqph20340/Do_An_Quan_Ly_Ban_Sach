@@ -71,7 +71,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 
 
 	@Query("SELECT c FROM Order c WHERE STR_TO_DATE(c.booking_Date, '%Y-%m-%d %H:%i:%s') BETWEEN :startDate AND :endDate AND c.activeOrder.id LIKE :id")
-	List<Order> findByBookingDateBetweenAndActiveOrderId(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("id") String id);
+	Page<Order> findByBookingDateBetweenAndActiveOrderId(Pageable pageable,@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("id") String id);
 
 
 
