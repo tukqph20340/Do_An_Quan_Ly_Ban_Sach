@@ -2192,7 +2192,51 @@ public class AdminController {
             return "redirect:" + referer;
         }
     }
+    @PostMapping("/dashboard-orders/edit/{id}")
+    public String updateOrder(@PathVariable int id,
+                              @RequestParam(name = "confirmed", required = false) boolean confirmed,HttpServletRequest request) {
+        User admin = (User) session.getAttribute("admin");
+        long millis = System.currentTimeMillis();
+        Date createAt = new java.sql.Date(millis);
+        if (admin == null) {
+            return "redirect:/signin-admin";
+        } else {
+            String referer = request.getHeader("Referer");
+            Order order = orderService.findById(id);
+            if ("1".equals(order.getActiveOrder().getId())) {
+                Mail mail1 = new Mail();
+                mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
+                mail1.setMailTo(order.getEmail());
+                mail1.setMailSubject("Nhà sách Opacarophile");
+                mail1.setMailContent("Đơn hàng của bạn đã được xác nhận và đang chờ lấy hàng");
 
+                mailService.sendEmail(mail1);
+                order.setActiveOrder(ActiveOrder.builder().id("2").build());
+                order.setConfirmDate(createAt);
+            } else if ("2".equals(order.getActiveOrder().getId())) {
+                Mail mail1 = new Mail();
+                mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
+                mail1.setMailTo(order.getEmail());
+                mail1.setMailSubject("Nhà sách Opacarophile");
+                mail1.setMailContent("Lấy hàng thành công, đơn hàng của bạn đang được giao cho bên vận chuyển");
+                mailService.sendEmail(mail1);
+                order.setActiveOrder(ActiveOrder.builder().id("3").build());
+                order.setPickupDate(createAt);
+            } else if ("3".equals(order.getActiveOrder().getId())) {
+                Mail mail1 = new Mail();
+                mail1.setMailFrom("nguyentrunganhnta43@gmail.com");
+                mail1.setMailTo(order.getEmail());
+                mail1.setMailSubject("Nhà sách Opacarophile");
+                mail1.setMailContent("Bên vẫn chuyển đã nhận đơn hàng, đang trên đường giao ");
+                mailService.sendEmail(mail1);
+                order.setActiveOrder(ActiveOrder.builder().id("4").build());
+                order.setDeliveryDate(createAt);
+            }
+            orderService.saveOrder(order);
+            return "redirect:" + referer;
+        }
+
+    }
     @GetMapping("/dashboard-orders-active4/edit/{id}")
     public String updateOrderActive4(@PathVariable int id, Model model,
                                      @ModelAttribute("active") String active, HttpServletRequest request) {
