@@ -74,7 +74,7 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 	Page<Order> findByBookingDateBetweenAndActiveOrderId(Pageable pageable,@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("id") String id);
 
 
-
+    Page<Order> findById(Pageable pageable,int id);
 
 
 
