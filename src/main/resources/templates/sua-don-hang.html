@@ -180,25 +180,30 @@
             <a class="button stars" onclick="open1();">Thêm Sản Phẩm</a>
             <a th:href="@{/sua-don-hang/{id}(id=${idHoaDon})}" class="button gray">Sửa Thông Tin</a>
         </div>
-        <dialog id="data-modal" class="tab-pane " role="tabpanel">
-            <table class="margin-top-20" style="text-align: center">
-                <tr>
-                    <th style="text-align: center;vertical-align: middle;">STT</th>
-                    <th style="text-align: center;vertical-align: middle;">Tên Sản Phẩm</th>
-                    <th th:if="${img!=null}" style="text-align: center;vertical-align: middle;">Ảnh Sản
-                        Phẩm
-                    </th>
-                    <th style="text-align: center;vertical-align: middle;">Giá Sản Phẩm</th>
-                    <th></th>
-                </tr>
-                <th:block th:each="list,index:${pageProduct}">
+        <dialog id="data-modal" class="tab-pane" role="tabpanel">
+            <form>
+                <label>Tìm kiếm sản phẩm</label>
+                <input id="searchInput" name="timKiem" oninput="filterProducts()">
+            </form>
+
+
+            <!-- Set a fixed height and enable vertical scrolling for the table container -->
+            <div class="table-container" style="max-height: 600px; overflow-y: auto;">
+                <table  class="margin-top-20" style="text-align: center">
                     <tr>
-                        <td style="text-align: center">[[${index.index+1}]]</td>
-                        <td style="text-align: center">[[${list.product_Name}]]
+                        <th style="text-align: center; vertical-align: middle;">Tên Sản Phẩm</th>
+                        <th th:if="${img!=null}" style="text-align: center; vertical-align: middle;">Ảnh Sản Phẩm</th>
+
+                        <th style="text-align: center; vertical-align: middle;">Giá Sản Phẩm</th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="list:${pageProduct}" class="product-item" style="display: table-row;">
+                        <td style="text-align: center"><p  class="card-title">[[${list.product_Name}]]</p></td>
+
+                        <td style="text-align: center" th:if="${img!=null}">
+                            <img th:src="${list.productImage[0].url_Image}" height="100px" width="100px">
                         </td>
-                        <td style="text-align: center" th:if="${img!=null}"><img
-                                th:src="${list.productImage[0].url_Image}" height="100px"
-                                width="100px"></td>
+
                         <td style="text-align: center">[[${list.price}]] VNĐ</td>
                         <td style="text-align: center">
                             <form th:action="@{/them-don-hang/{id}(id=${idHoaDon})}" method="post">
@@ -207,40 +212,72 @@
                                 </button>
                             </form>
                         </td>
-
                     </tr>
-                </th:block>
-            </table>
-            <div>
-                <!--phân trang cho sản phẩm-->
-                <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">
-                    <ul class="pagination">
-                        <!--trang đầu-->
-                        <li class="page-item">
-                            <a class="page-link" th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=0)}"
-                               onclick="return open1();">Trang
-                                Đầu</a>
-                        </li>
-                        <!--Previous-->
-                        <!--số thứ tự trang-->
-                        <!--dùng for i trong thymleaf-->
-                        <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">
-                            <li class="page-item">
-                                <a class="page-link" onclick="open1();"
-                                   th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${index})}"
-                                   th:text="${index+1}"></a>
-                            </li>
-                        </div>
-                        <!--Next-->
-                        <!--trang cuối-->
-                        <li class="page-item">
-                            <a class="page-link" onclick="open1();"
-                               th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${pageProductPage -1})}">Trang
-                                Cuối</a>
-                        </li>
-                    </ul>
-                </nav>
+
+                </table>
+                <div class="col-12">
+                    <div id="noResults" class="alert alert-warning" style="display: none; margin-top: 10px">
+                        <h5 style="text-align: center; height: 60px; margin-top: 40px">
+                            Không có dữ liệu phù hợp với bộ lọc hiện tại!
+                        </h5>
+                    </div>
+                </div>
             </div>
+
+            <script>
+                function filterProducts() {
+                    var anyResults = false;
+                    var products = document.querySelectorAll('.product-item');
+                    var tenGiayFilter = document.getElementById('searchInput').value.toLowerCase();
+                    products.forEach(function (product) {
+                        var productName = product.querySelector('.card-title').textContent.toLowerCase();
+                        var nameCondition = tenGiayFilter === '' || productName.includes(tenGiayFilter);
+                        if (nameCondition) {
+                            product.style.display = 'block';
+                            anyResults = true;
+                        } else {
+                            product.style.display = 'none';
+                        }
+                    });
+                    var noResultsMessage = document.getElementById('noResults');
+                    if (!anyResults) {
+                        noResultsMessage.style.display = 'block';
+                    } else {
+                        noResultsMessage.style.display = 'none';
+                    }
+                }
+            </script>
+
+            <!--            <div>-->
+            <!--                &lt;!&ndash;phân trang cho sản phẩm&ndash;&gt;-->
+            <!--                <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">-->
+            <!--                    <ul class="pagination">-->
+            <!--                        &lt;!&ndash;trang đầu&ndash;&gt;-->
+            <!--                        <li class="page-item">-->
+            <!--                            <a class="page-link" th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=0)}"-->
+            <!--                               onclick="return open1();">Trang-->
+            <!--                                Đầu</a>-->
+            <!--                        </li>-->
+            <!--                        &lt;!&ndash;Previous&ndash;&gt;-->
+            <!--                        &lt;!&ndash;số thứ tự trang&ndash;&gt;-->
+            <!--                        &lt;!&ndash;dùng for i trong thymleaf&ndash;&gt;-->
+            <!--                        <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">-->
+            <!--                            <li class="page-item">-->
+            <!--                                <a class="page-link" onclick="open1();"-->
+            <!--                                   th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${index})}"-->
+            <!--                                   th:text="${index+1}"></a>-->
+            <!--                            </li>-->
+            <!--                        </div>-->
+            <!--                        &lt;!&ndash;Next&ndash;&gt;-->
+            <!--                        &lt;!&ndash;trang cuối&ndash;&gt;-->
+            <!--                        <li class="page-item">-->
+            <!--                            <a class="page-link" onclick="open1();"-->
+            <!--                               th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${pageProductPage -1})}">Trang-->
+            <!--                                Cuối</a>-->
+            <!--                        </li>-->
+            <!--                    </ul>-->
+            <!--                </nav>-->
+            <!--            </div>-->
             <br>
             <button onclick="out();" class="btn-primary" style="margin-left: 803px;">Thoát</button>
         </dialog>
@@ -282,7 +319,8 @@
                             </td>
 
                             <td><span th:id="'gia' + ${index.index + 1}" th:text="${y.unit_price} + ' ₫'"></span>
-                                <input th:id="'giaTien' + ${index.index + 1}"  th:name="'giaTien' + ${index.index + 1}" type="hidden" th:value="${y.unit_price}">
+                                <input th:id="'giaTien' + ${index.index + 1}" th:name="'giaTien' + ${index.index + 1}"
+                                       type="hidden" th:value="${y.unit_price}">
                             </td>
 
                             <script>
@@ -320,7 +358,7 @@
                     </th:block>
                 </table>
                 <button style="margin-left: 603px;" class="btn-primary" type="submit">Lưu số lượng và giá tiền
-                    </button>
+                </button>
             </form>
             <p>
                 <strong class="margin-bottom-5">Địa Chỉ: </strong>

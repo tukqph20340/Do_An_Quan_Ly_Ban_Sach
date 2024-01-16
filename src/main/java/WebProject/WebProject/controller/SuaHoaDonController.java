@@ -44,7 +44,9 @@ public class SuaHoaDonController {
 
 
     @GetMapping("/sua-hang/{id}")
-    public String Statistic1(@PathVariable int id, Model model, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+    public String Statistic1(@PathVariable int id, Model model
+//            , @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo
+    ) {
 
         Order order = orderService.findById(id);
 
@@ -56,7 +58,9 @@ public class SuaHoaDonController {
         }
 
 
-        Page<Product> pageProduct = productService.findAll(pageNo, 5);
+        List<Product> pageProduct = productService.getAllProduct();
+
+//        Page<Product> pageProduct = productService.findAll(pageNo, 5);
         for (Product product : pageProduct) {
             if (product.getProductImage().isEmpty()) {
                 model.addAttribute("img", null);
@@ -64,9 +68,10 @@ public class SuaHoaDonController {
                 model.addAttribute("img", "img");
             }
         }
-        model.addAttribute("pageProduct", pageProduct.getContent());
-        model.addAttribute("pageProductPage", pageProduct.getTotalPages());
-        model.addAttribute("pageNumber", pageNo);
+        model.addAttribute("pageProduct", pageProduct);
+//        model.addAttribute("pageProduct", pageProduct.getContent());
+//        model.addAttribute("pageProductPage", pageProduct.getTotalPages());
+//        model.addAttribute("pageNumber", pageNo);
 
         model.addAttribute("listOrder_Item", listOrder_Item);
         model.addAttribute("order", order);
