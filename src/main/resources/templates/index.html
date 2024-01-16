@@ -4967,7 +4967,7 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
-                    <a href="/thong-tin" class=""><img
+                    <a th:if="${session.acc != null}" href="/thong-tin" class=""><img
                             src="img/logiImgVi.jpg" alt="" style="height: 37px;"></a>
                     </a> <a th:href="@{/cart}"><img
                         src="img/icon/cart.png" alt=""> <span
