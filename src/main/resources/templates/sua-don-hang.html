@@ -183,7 +183,9 @@
         <dialog id="data-modal" class="tab-pane" role="tabpanel">
             <form>
                 <label>Tìm kiếm sản phẩm</label>
-                <input id="searchInput" name="timKiem" oninput="filterProducts()">
+                <input style="
+    border-radius: 20px;
+    margin-left: 30px;" id="searchInput" name="timKiem" oninput="filterProducts()">
             </form>
 
 
@@ -195,7 +197,7 @@
                         <th th:if="${img!=null}" style="text-align: center; vertical-align: middle;">Ảnh Sản Phẩm</th>
 
                         <th style="text-align: center; vertical-align: middle;">Giá Sản Phẩm</th>
-                        <th></th>
+                        <th style="text-align: center; vertical-align: middle;"> Action</th>
                     </tr>
                     <tr th:each="list:${pageProduct}" class="product-item" style="display: table-row;">
                         <td style="text-align: center"><p  class="card-title">[[${list.product_Name}]]</p></td>
@@ -233,7 +235,7 @@
                         var productName = product.querySelector('.card-title').textContent.toLowerCase();
                         var nameCondition = tenGiayFilter === '' || productName.includes(tenGiayFilter);
                         if (nameCondition) {
-                            product.style.display = 'block';
+                            product.style.display = 'table-row';
                             anyResults = true;
                         } else {
                             product.style.display = 'none';
@@ -248,36 +250,7 @@
                 }
             </script>
 
-            <!--            <div>-->
-            <!--                &lt;!&ndash;phân trang cho sản phẩm&ndash;&gt;-->
-            <!--                <nav aria-label="..." style="margin-left: 560px ;font-size: 15px;color: black">-->
-            <!--                    <ul class="pagination">-->
-            <!--                        &lt;!&ndash;trang đầu&ndash;&gt;-->
-            <!--                        <li class="page-item">-->
-            <!--                            <a class="page-link" th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=0)}"-->
-            <!--                               onclick="return open1();">Trang-->
-            <!--                                Đầu</a>-->
-            <!--                        </li>-->
-            <!--                        &lt;!&ndash;Previous&ndash;&gt;-->
-            <!--                        &lt;!&ndash;số thứ tự trang&ndash;&gt;-->
-            <!--                        &lt;!&ndash;dùng for i trong thymleaf&ndash;&gt;-->
-            <!--                        <div th:each="index : ${#numbers.sequence(0, pageProductPage-1)}">-->
-            <!--                            <li class="page-item">-->
-            <!--                                <a class="page-link" onclick="open1();"-->
-            <!--                                   th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${index})}"-->
-            <!--                                   th:text="${index+1}"></a>-->
-            <!--                            </li>-->
-            <!--                        </div>-->
-            <!--                        &lt;!&ndash;Next&ndash;&gt;-->
-            <!--                        &lt;!&ndash;trang cuối&ndash;&gt;-->
-            <!--                        <li class="page-item">-->
-            <!--                            <a class="page-link" onclick="open1();"-->
-            <!--                               th:href="@{/sua-hang/{id}(id=${idHoaDon},pageNo=${pageProductPage -1})}">Trang-->
-            <!--                                Cuối</a>-->
-            <!--                        </li>-->
-            <!--                    </ul>-->
-            <!--                </nav>-->
-            <!--            </div>-->
+
             <br>
             <button onclick="out();" class="btn-primary" style="margin-left: 803px;">Thoát</button>
         </dialog>
