@@ -274,7 +274,7 @@
                         <tr>
                             <th>Tên Sản Phẩm</th>
                             <th>Số Lượng</th>
-                            <th>Giá</th>
+                            <th>Thành Tiền</th>
                             <th></th>
                         </tr>
                         <th:block th:each="y: ${listOrder_Item}">
@@ -356,7 +356,7 @@
 
                     <table id="totals">
                         <tr>
-                            <th>Tổng Giá</th>
+                            <th>Tổng Tiền</th>
                             <th><span
                                     th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span>
                             </th>
