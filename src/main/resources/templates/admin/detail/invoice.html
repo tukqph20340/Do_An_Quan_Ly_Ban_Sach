@@ -54,7 +54,7 @@
 				<tr>
 					<th>Sản Phẩm</th>
 					<th>Số Lượng</th>
-					<th>Giá</th>
+					<th>Thành Tiền</th>
 				</tr>
 				<th:block th:each="y: ${listOrder_Item}">
 					<tr>
@@ -85,7 +85,7 @@
 					<th><span th:text="${#numbers.formatDecimal(order.totalShip, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
 				</tr>
 				<tr>
-					<th>Tổng Giá</th>
+					<th>Tổng Tiền</th>
 					<th><span th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 0, 'POINT')} + ' VNĐ'"></span></th>
 
 				</tr>
